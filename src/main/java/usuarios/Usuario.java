@@ -1,37 +1,26 @@
 package usuarios;
 
-import usuarios.Contraseña.ValidadorDeContraseña;
+import lombok.Getter;
+import lombok.Setter;
+import usuarios.Contrasenia.ValidadorDeContrasenia;
 
+@Getter @Setter
 public class Usuario {
-
 
   private String nombreUsuario;
   private String contrasena;
 
-  public Usuario(String nombreUsuario, String contrasena) {
+  public Usuario(String nombreUsuario, String contrasenia) throws Exception {
     this.nombreUsuario = nombreUsuario;
-    this.contrasena = contrasena;
 
-    // Revisar esto
-    ValidadorDeContraseña validador = new ValidadorDeContraseña();
-    if (!validador.validarContraseña(contrasena)) {
-      throw new RuntimeException("Contraseña no válida");
+    ValidadorDeContrasenia validador = new ValidadorDeContrasenia();
+    if (!validador.validarContrasenia(contrasenia)) {
+      throw new Exception("Contrasenia inválida");
     }
-    this.contrasena = contrasena;
-  }
-  public String getNombreUsuario() {
-    return nombreUsuario;
-  }
 
-  public void setNombreUsuario(String nombreUsuario) {
-    this.nombreUsuario = nombreUsuario;
+    this.contrasena = contrasenia;
   }
-
-  public String getContrasena() {
-    return contrasena;
-  }
-
-  public void setContrasena(String contrasena) {
-    this.contrasena = contrasena;
+  public static void main(String[]args) throws Exception {
+    Usuario usuario = new Usuario("usuario", "contrasenia");
   }
 }

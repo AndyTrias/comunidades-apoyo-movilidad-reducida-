@@ -1,7 +1,7 @@
-package usuarios.Contraseña;
+package usuarios.Contrasenia;
 
-public class ValidadorDeContraseña {
-  public boolean validarContraseña(String contraseña){
-    return true;
+public class ValidadorDeContrasenia {
+  public boolean validarContrasenia(String contraseña){
+    return false;
   }
 }
