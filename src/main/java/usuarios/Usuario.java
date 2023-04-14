@@ -11,7 +11,11 @@ public class Usuario {
     this.contrasena = contrasena;
 
     // Revisar esto
-    new ValidadorDeContraseña().validarContraseña(contrasena);
+    ValidadorDeContraseña validador = new ValidadorDeContraseña();
+    if (!validador.validarContraseña(contrasena)) {
+      throw new RuntimeException("Contraseña no válida");
+    }
+    this.contrasena = contrasena;
   }
   public String getNombreUsuario() {
     return nombreUsuario;
