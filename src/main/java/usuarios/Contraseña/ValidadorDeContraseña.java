@@ -1,4 +1,4 @@
-package usuarios;
+package usuarios.Contraseña;
 
 public class ValidadorDeContraseña {
   public boolean validarContraseña(String contraseña){
