@@ -1,5 +1,7 @@
 package usuarios;
 
+import usuarios.Contraseña.ValidadorDeContraseña;
+
 public class Usuario {
 
 
