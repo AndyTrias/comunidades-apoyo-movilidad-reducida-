@@ -26,9 +26,4 @@ public class Usuario {
     this.contrasena = contrasenia;
   }
 
-
-  public static void main(String[]args) throws Exception {
-    Usuario usuario = new Usuario("usuario");
-    usuario.setContrasena("123456");
-  }
 }
