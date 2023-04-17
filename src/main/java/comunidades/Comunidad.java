@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Setter @Getter
 public class Comunidad {
@@ -17,10 +16,10 @@ public class Comunidad {
 
     //mas adelante agregar una lista de comunidades para que se conozcon entre soi
 
-
+    public void agregarPersonas(Persona personas){
+         this.integrantes.add(personas);
+    }
 
 
 
 }
-
-
