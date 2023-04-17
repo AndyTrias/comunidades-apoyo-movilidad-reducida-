@@ -18,7 +18,6 @@ public class Usuario {
 
   public void setContrasenia(String contrasenia) throws Exception {
 
-    //ValidadorDeContrasenia validador = new ValidadorDeContrasenia();
     if (!ValidadorDeContrasenia.validarContrasenia(contrasenia)) {
       throw new Exception("Contrasenia inválida");
     }

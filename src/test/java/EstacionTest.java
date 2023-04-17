@@ -38,7 +38,7 @@ public class EstacionTest {
     }
 
     @Test
-    public void testNoFuncionanElBanioDeHombres(){
+    public void testNoFuncionaElBanioDeHombres(){
         Servicio escaleraMecanica = new EscaleraMecanica();
         Servicio ascensor = new Ascensor();
         Servicio banioMujeres = new Banio();

@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class UsuarioTest {
     @Test
-    public void testVerificarContrasenia() throws Exception {
+    public void testSeLeSeteaLaContraseniaAlUsuario() throws Exception {
         Usuario usuario = new Usuario("JuanP2");
         String contrasenia = "ashjkdashjkdasdhjkaskhjafbjkawdbkj";
 
@@ -16,11 +16,10 @@ public class UsuarioTest {
     }
 
     @Test
-    public void testContraseniaSegura() throws Exception {
+    public void testSeLeSeteaUnaContraseniaInseguraAlUsuario() throws Exception {
         Usuario usuario = new Usuario("JuanP2");
+        String contrasenia = "password";
 
-        usuario.setContrasenia("ñplokijugfv6h");
-
-        assertEquals("ñplokijugfv6h", usuario.getContrasena());
+        assertThrows(Exception.class, () -> usuario.setContrasenia(contrasenia));
     }
 }

@@ -18,7 +18,7 @@ public class ValidadorDeContraseniaTest {
 
     @Test
     public void testValidarContraseniaMasDe63Caracteres() {
-        String contrasenia = "EstaContraseniaTieneMasDeSesentaYCincoCaracteres1234";
+        String contrasenia = "EstaContraseniaTieneMasDeSesentaYCincoCaracteres1234asdhkiasjhdaskjdahskjdsahdkasjdhaskjdahsdkjashdaskjdahdks";
         assertFalse(ValidadorDeContrasenia.validarContrasenia(contrasenia));
     }
 
