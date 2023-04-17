@@ -6,9 +6,7 @@ import java.io.IOException;
 
 public class DiezMilPeoresContrasenias {
 
-    private static String path = "10000Peores.txt"; //ordenado para la busqueda
-
-
+    private static String path = "src/main/java/usuarios/Contrasenia/10000Peores.txt"; //ordenado para la busqueda
 
     public static boolean estaEnLaLista(String contrasenia) {
         try (BufferedReader br = new BufferedReader(new FileReader(DiezMilPeoresContrasenias.path))) {

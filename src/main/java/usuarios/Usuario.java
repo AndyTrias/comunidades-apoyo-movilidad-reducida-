@@ -16,9 +16,9 @@ public class Usuario {
     this.nombreUsuario = nombreUsuario;
   }
 
-  public void setContrasena(String contrasenia) throws Exception {
+  public void setContrasenia(String contrasenia) throws Exception {
 
-//    ValidadorDeContrasenia validador = new ValidadorDeContrasenia();
+    //ValidadorDeContrasenia validador = new ValidadorDeContrasenia();
     if (!ValidadorDeContrasenia.validarContrasenia(contrasenia)) {
       throw new Exception("Contrasenia inválida");
     }
