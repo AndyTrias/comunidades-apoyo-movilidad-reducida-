@@ -6,7 +6,7 @@ import usuarios.Contrasenia.ValidadorDeContrasenia;
 
 public class Usuario {
 
-  @Getter @Setter
+  @Getter
   private String nombreUsuario;
 
   @Getter
