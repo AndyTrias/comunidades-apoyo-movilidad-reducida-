@@ -4,6 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class Servicio {
+public abstract class Servicio {
     private boolean funciona = true;
 }
