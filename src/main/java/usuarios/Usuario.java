@@ -1,15 +1,15 @@
 package usuarios;
 
 import lombok.Getter;
-import lombok.Setter;
 import usuarios.Contrasenia.ValidadorDeContrasenia;
 
+@Getter
 public class Usuario {
 
-  @Getter
   private String nombreUsuario;
 
-  @Getter
+  private Rol rol;
+
   private String contrasena;
 
   public Usuario(String nombreUsuario) {
