@@ -18,8 +18,9 @@ public class Usuario {
 
   public void setContrasenia(String contrasenia) throws Exception {
 
-    if (!ValidadorDeContrasenia.validarContrasenia(contrasenia)) {
-      throw new Exception("Contrasenia inválida");
+    ValidadorDeContrasenia validadorDeContrasenia = new ValidadorDeContrasenia();
+    if (!validadorDeContrasenia.validarContrasenia(contrasenia)) {
+      throw new Exception("La contraseña no es valida");
     }
 
     this.contrasena = contrasenia;

@@ -2,8 +2,8 @@ package usuarios.Contrasenia;
 
 public class ValidarLongitud extends PuedeValidar {
 
-    private int MINIMO = 8;
-    private int MAXIMO = 64;
+    private static final int MINIMO = 8;
+    private static final int MAXIMO = 64;
 
     public ValidarLongitud(ValidadorDeContrasenia elValidador) {
         super(elValidador);
