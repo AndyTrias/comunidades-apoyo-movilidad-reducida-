@@ -2,18 +2,36 @@ package usuarios.Contrasenia;
 import java.util.List;
 import java.util.stream.Stream;
 
+import java.util.ArrayList;
+
 public class ValidadorDeContrasenia {
+  private ArrayList<PuedeValidar> disponibles;
+  private ArrayList<PuedeValidar> activos;
 
-  private static final List<StringABool> condiciones = Stream.<StringABool>of(
-          (String contrasenia) -> !DiezMilPeoresContrasenias.estaEnLaLista(contrasenia),
-          (String contrasenia) -> contrasenia.length() >= 8,
-          (String contrasenia) -> contrasenia.length() < 64
-  ).toList();
+  public ValidadorDeContrasenia() {
+    this.disponibles = new ArrayList<>(); //los que existen
+    this.activos = new ArrayList<>();
+  }
 
+  public boolean validarContrasenia(String contrasenia) {
+    return activos.stream()
+            .allMatch(validador -> validador.validar(contrasenia));
+  }
 
+  /*
+  public List<String> mostrarActivos() { //implementar despues si es necesario
 
-  public static boolean validarContrasenia(String contrasenia){
+  }
+*/
+  public void agregarValidador(PuedeValidar validador) {
+    activos.add(validador);
+  }
 
-    return condiciones.stream().allMatch(condicion -> condicion.apply(contrasenia));
+  public void sacarValidador(PuedeValidar validador) {
+    activos.remove(validador);
+  }
+
+  public void inicializarse(PuedeValidar validador) { //el validador lo llama cuando esta listo
+    disponibles.add(validador);
   }
 }

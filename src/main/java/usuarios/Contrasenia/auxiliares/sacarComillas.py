@@ -8,3 +8,4 @@ def remove_quotes_and_commas(filename):
 
 
 remove_quotes_and_commas("10000Peores.txt")
+

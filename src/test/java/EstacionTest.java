@@ -62,3 +62,4 @@ public class EstacionTest {
         assertFalse(lineaA.estacionDeOrigen().todosLosServiciosFuncionan());
     }
 }
+
