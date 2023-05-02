@@ -5,15 +5,14 @@ import java.util.stream.Stream;
 import java.util.ArrayList;
 
 public class ValidadorDeContrasenia {
-  private ArrayList<PuedeValidar> disponibles;
-  private ArrayList<PuedeValidar> activos;
+  private final ArrayList<PuedeValidar> disponibles;
+  private static final ArrayList<PuedeValidar> activos = new ArrayList<>();
 
   public ValidadorDeContrasenia() {
     this.disponibles = new ArrayList<>(); //los que existen
-    this.activos = new ArrayList<>();
   }
 
-  public boolean validarContrasenia(String contrasenia) {
+  public static boolean validarContrasenia(String contrasenia) {
     return activos.stream()
             .allMatch(validador -> validador.validar(contrasenia));
   }

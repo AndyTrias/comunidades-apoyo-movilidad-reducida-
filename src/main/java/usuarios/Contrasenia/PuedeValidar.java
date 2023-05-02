@@ -2,11 +2,14 @@ package usuarios.Contrasenia;
 
 public abstract class PuedeValidar {
     // public boolean validar(String contrasenia);
-    public static ValidadorDeContrasenia unValidador;
+    private final ValidadorDeContrasenia validador;
     public PuedeValidar(ValidadorDeContrasenia elValidador) {
+        this.validador = elValidador;
+        this.validador.inicializarse(this);
+    }
 
-        this.unValidador = elValidador;
-        this.unValidador.inicializarse(this);
+    public boolean validar(String contrasenia) {
+        return this.validador.validarContrasenia(contrasenia);
     }
 
 }
