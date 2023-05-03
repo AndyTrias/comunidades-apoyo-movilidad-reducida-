@@ -1,19 +1,28 @@
 package usuarios;
 
+import comunidades.Comunidad;
+import comunidades.roles.Miembro;
+import comunidades.Rol;
 import lombok.Getter;
 import usuarios.Contrasenia.ValidadorDeContrasenia;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 public class Usuario {
 
-  private String nombreUsuario;
-
-  private Rol rol;
-
+  private String nombre;
+  private String apellido;
+  private String correoElectronico;
   private String contrasena;
+  private Set<Rol> comunidades;
 
-  public Usuario(String nombreUsuario) {
-    this.nombreUsuario = nombreUsuario;
+  public Usuario(String nombre, String apellido, String correoElectronico) {
+    this.nombre = nombre;
+    this.apellido = apellido;
+    this.correoElectronico = correoElectronico;
+    this.comunidades = new HashSet<>();
   }
 
   public void setContrasenia(String contrasenia) throws Exception {
@@ -26,4 +35,9 @@ public class Usuario {
     this.contrasena = contrasenia;
   }
 
+  public void unirseAComunidad(Comunidad comunidad) {
+    Miembro miembro = new Miembro(this, comunidad);
+    comunidades.add(miembro);
+    comunidad.agregarMiembro(miembro);
+  }
 }
