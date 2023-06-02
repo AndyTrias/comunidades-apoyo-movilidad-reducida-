@@ -1,3 +1,4 @@
+package entidades;
 
 import java.util.List;
 
@@ -6,5 +7,5 @@ public class Entidad {
     private Localizacion localizacion;
     private String nombre;
 
-    // Implementación
+    // Implementaciï¿½n
 }

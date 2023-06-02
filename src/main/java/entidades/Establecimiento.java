@@ -1,3 +1,4 @@
+package entidades;
 
 import java.util.List;
 
@@ -6,5 +7,5 @@ public class Establecimiento {
     private Localizacion localizacion;
     private List<PrestacionDeServicio> servicios;
 
-    // Implementación
+    // Implementaciï¿½n
 }

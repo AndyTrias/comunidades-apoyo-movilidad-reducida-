@@ -1,4 +1,5 @@
 import org.junit.jupiter.api.Test;
+import comunidades.Usuario;
 import usuarios.Contrasenia.ValidadorDeContrasenia;
 import usuarios.Usuario;
 

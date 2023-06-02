@@ -1,3 +1,4 @@
+import comunidades.servicios.Servicio;
 import org.junit.jupiter.api.Test;
 import servicios.*;
 import servicios.clasesAuxiliares.Coordenadas;
@@ -6,8 +7,6 @@ import servicios.serviciosPublicos.Ascensor;
 import servicios.serviciosPublicos.Banio;
 import servicios.serviciosPublicos.EscaleraMecanica;
 import servicios.serviciosPublicos.Servicio;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;

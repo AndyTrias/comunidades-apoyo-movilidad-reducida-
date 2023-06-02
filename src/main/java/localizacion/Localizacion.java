@@ -1,8 +1,12 @@
+package localizacion;
+
+import lombok.Setter;
 
 public class Localizacion {
-    private AdapterLocalizacion adapter;
+    @Setter
+    AdapterLocalizacion adapter;
 
     public Localizacion ejecutarConsulta(String id) {
-        // Implementación
+        // Implementaciï¿½n
     }
 }

@@ -1,3 +1,4 @@
+package comunidades;
 
 import java.util.List;
 
@@ -6,6 +7,6 @@ public class Intereses {
     private List<Entidad> entidades;
 
     public boolean estaInteresado(Servicio servicio, Entidad entidad) {
-        // Implementación
+        // Implementaciï¿½n
     }
 }

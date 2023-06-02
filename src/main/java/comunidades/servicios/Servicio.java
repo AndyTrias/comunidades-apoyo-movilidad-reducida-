@@ -1,6 +1,7 @@
+package comunidades.servicios;
 
 public class Servicio {
     public String informacion() {
-        // Implementación
+        return "info";
     }
 }
