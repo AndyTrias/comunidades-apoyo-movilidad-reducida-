@@ -1,5 +1,7 @@
 package entidades;
 
+import localizacion.Localizacion;
+
 import java.util.List;
 
 public class Entidad {

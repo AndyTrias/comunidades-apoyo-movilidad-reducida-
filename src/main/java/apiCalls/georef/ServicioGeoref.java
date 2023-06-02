@@ -3,7 +3,6 @@ package apiCalls.georef;
 import apiCalls.georef.responseClases.ListadoLocalidades;
 import apiCalls.georef.responseClases.ListadoMunicipios;
 import apiCalls.georef.responseClases.ListadoProvincias;
-import apiCalls.georef.responseClases.Ubicacion;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -30,11 +29,26 @@ public class ServicioGeoref {
         return instancia;
     }
 
-    public Ubicacion getUbicacion(String id, String tipoDeLocalizacion) throws IOException {
+    public ListadoProvincias listadoProvincias() throws IOException {
         GeorefService georefService = this.retrofit.create(GeorefService.class);
-        Call<Ubicacion> requestProvinciasArg = georefService.tipoDeLocalizacion(tipoDeLocalizacion, id, "id, nombre");
-        Response<Ubicacion> responseProvinciasArg = requestProvinciasArg.execute();
+        Call<ListadoProvincias> requestProvinciasArg = georefService.provincias();
+        Response<ListadoProvincias> responseProvinciasArg = requestProvinciasArg.execute();
         return responseProvinciasArg.body();
     }
+
+    public ListadoMunicipios listadoMunicipios(int idProvincia) throws IOException {
+        GeorefService georefService = this.retrofit.create(GeorefService.class);
+        Call<ListadoMunicipios> requestMunicipiosArg = georefService.municipios(idProvincia);
+        Response<ListadoMunicipios> responseMunicipiosArg = requestMunicipiosArg.execute();
+        return responseMunicipiosArg.body();
+    }
+
+    public ListadoLocalidades listadoLocalidades(int idProvincia, int idMunicipio) throws IOException {
+        GeorefService georefService = this.retrofit.create(GeorefService.class);
+        Call<ListadoLocalidades> requestLocalidadesArg = georefService.localidades(idProvincia, idMunicipio);
+        Response<ListadoLocalidades> responseLocalidadesArg = requestLocalidadesArg.execute();
+        return responseLocalidadesArg.body();
+    }
+
 
 }

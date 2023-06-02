@@ -1,5 +1,7 @@
 package comunidades;
 
+import comunidades.servicios.PrestacionDeServicio;
+
 import java.util.Set;
 
 public class Comunidad {

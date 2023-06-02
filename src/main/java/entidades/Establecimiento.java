@@ -1,5 +1,8 @@
 package entidades;
 
+import comunidades.servicios.PrestacionDeServicio;
+import localizacion.Localizacion;
+
 import java.util.List;
 
 public class Establecimiento {

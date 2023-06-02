@@ -1,5 +1,8 @@
 package comunidades;
 
+import comunidades.servicios.Servicio;
+import entidades.Entidad;
+
 import java.util.List;
 
 public class Intereses {
@@ -7,6 +10,6 @@ public class Intereses {
     private List<Entidad> entidades;
 
     public boolean estaInteresado(Servicio servicio, Entidad entidad) {
-        // Implementaci�n
+        return true;
     }
 }
