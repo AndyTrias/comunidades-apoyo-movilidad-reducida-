@@ -36,6 +36,20 @@ public class ServicioGeoref {
         return responseProvinciasArg.body();
     }
 
+    public ListadoProvincias listadoProvincias(int idProvincia) throws IOException {
+        GeorefService georefService = this.retrofit.create(GeorefService.class);
+        Call<ListadoProvincias> requestProvinciasArg = georefService.provincias(idProvincia);
+        Response<ListadoProvincias> responseProvinciasArg = requestProvinciasArg.execute();
+        return responseProvinciasArg.body();
+    }
+
+    public ListadoMunicipios listadoMunicipios(String id) throws IOException {
+        GeorefService georefService = this.retrofit.create(GeorefService.class);
+        Call<ListadoMunicipios> requestMunicipiosArg = georefService.municipios(id);
+        Response<ListadoMunicipios> responseMunicipiosArg = requestMunicipiosArg.execute();
+        return responseMunicipiosArg.body();
+    }
+
     public ListadoMunicipios listadoMunicipios(int idProvincia) throws IOException {
         GeorefService georefService = this.retrofit.create(GeorefService.class);
         Call<ListadoMunicipios> requestMunicipiosArg = georefService.municipios(idProvincia);
@@ -43,12 +57,17 @@ public class ServicioGeoref {
         return responseMunicipiosArg.body();
     }
 
-    public ListadoLocalidades listadoLocalidades(int idProvincia, int idMunicipio) throws IOException {
+    public ListadoLocalidades listadoLocalidades(String idProvincia, String idMunicipio) throws IOException {
         GeorefService georefService = this.retrofit.create(GeorefService.class);
         Call<ListadoLocalidades> requestLocalidadesArg = georefService.localidades(idProvincia, idMunicipio);
         Response<ListadoLocalidades> responseLocalidadesArg = requestLocalidadesArg.execute();
         return responseLocalidadesArg.body();
     }
 
-
+    public ListadoLocalidades listadoLocalidades(long id) throws IOException {
+        GeorefService georefService = this.retrofit.create(GeorefService.class);
+        Call<ListadoLocalidades> requestLocalidadesArg = georefService.localidades(id);
+        Response<ListadoLocalidades> responseLocalidadesArg = requestLocalidadesArg.execute();
+        return responseLocalidadesArg.body();
+    }
 }

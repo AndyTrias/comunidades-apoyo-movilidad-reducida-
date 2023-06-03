@@ -1,6 +1,6 @@
 package apiCalls.georef.responseClases;
 
 public class Localidad {
-    public int id;
+    public long id;
     public String nombre;
 }
