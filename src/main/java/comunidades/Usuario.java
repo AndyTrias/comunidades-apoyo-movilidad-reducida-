@@ -15,7 +15,9 @@ public class Usuario {
     }
 
     public void unirseAComunidad(Comunidad comunidad) {
-        // Implementación
+        Rol rol = comunidad.solicitarUnirse(this);
+        Membresia membresia = new Membresia(comunidad, rol);
+        this.membresias.add(membresia);
     }
 
     public void abandonarComunidad(Comunidad comunidad) {
