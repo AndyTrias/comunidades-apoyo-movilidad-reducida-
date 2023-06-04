@@ -13,21 +13,18 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 public class fileStream {
 
-    public static void main(String[] args) {
-        String filePath = "src/main/java/readerCSV/Instancias.csv";
-        List<Entidad> entidadades = new ArrayList<>();
+    private String filePath = "src/main/java/readerCSV/Instancias.csv";
+    private List<Entidad> entidadades = new ArrayList<>();
 
-        try(Stream<String> streamFile = Files.lines(Paths.get(filePath))){
-             entidadades = streamFile.map(Line -> Line.split(",")).map(arreglo ->{
-                Entidad ent= new Entidad(arreglo[0]);
-                return ent;
+    public List<String> levantarCSV() {
+        try (Stream<String> streamFile = Files.lines(Paths.get(filePath))) {
+            entidadades = streamFile.map(Line -> Line.split(",")).map(arreglo -> {
+                return new Entidad(arreglo[0]);
             }).collect(Collectors.toList());
 
-            entidadades.forEach(entidad -> System.out.println(entidad.getNombre()));
-        }catch (IOException csv){
-            System.err.println("Error al leer el archivo");
+            return streamFile.collect(Collectors.toList());
+        } catch (IOException csv) {
+            return null;
         }
-
-
     }
 }
