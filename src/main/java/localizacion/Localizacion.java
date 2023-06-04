@@ -11,6 +11,7 @@ public class Localizacion {
     @Getter private Municipio municipio;
     @Getter private Localidad localidad;
 
+
     public ListadoProvincias getListadoProvincias() throws Exception {
         return adapter.getListadoProvincias();
     }
