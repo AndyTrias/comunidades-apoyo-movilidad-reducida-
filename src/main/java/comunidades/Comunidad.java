@@ -9,7 +9,13 @@ public class Comunidad {
     private String nombre;
     private Set<PrestacionDeServicio> serviciosDeInteres;
 
-    public void asginarRol(Usuario usuario) {
-        // Implementación
+    public void aceptarUsuario(Usuario usuario) {
+        Rol rol = this.asignarRol(usuario);
+        rolBase.setUsuario(usuario);
+    }
+
+    public Rol asignarRol(Usuario usuario) {
+        // EN base a los distintos filtros que dijeron (???
+        // le devuelve uno de sus roles
     }
 }

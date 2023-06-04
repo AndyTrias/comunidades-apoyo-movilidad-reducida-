@@ -15,15 +15,15 @@ public class fileStream {
 
     public static void main(String[] args) {
         String filePath = "src/main/java/readerCSV/Instancias.csv";
-        List<Entidad> entidadades = new ArrayList<>();
+        List<Entidad> entidades = new ArrayList<>();
 
         try(Stream<String> streamFile = Files.lines(Paths.get(filePath))){
-             entidadades = streamFile.map(Line -> Line.split(",")).map(arreglo ->{
+             entidades = streamFile.map(Line -> Line.split(",")).map(arreglo ->{
                 Entidad ent= new Entidad(arreglo[0]);
                 return ent;
             }).collect(Collectors.toList());
 
-            entidadades.forEach(entidad -> System.out.println(entidad.getNombre()));
+            entidades.forEach(entidad -> System.out.println(entidad.getNombre()));
         }catch (IOException csv){
             System.err.println("Error al leer el archivo");
         }

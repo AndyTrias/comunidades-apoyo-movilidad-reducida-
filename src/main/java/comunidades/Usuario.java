@@ -11,14 +11,18 @@ public class Usuario {
     private List<Membresia> membresias;
 
     public void setContrasenia(String contrasena) {
-        // Implementación
+        // Implementaciï¿½n
     }
 
-    public void unirseAComunidad(Comunidad comunidad) {
-        // Implementación
+    public void crearMembresia(comunidad Comunidad) {
+        Rol rol = comunidad.getRol(this);
+        Membresia membresia = new Membresia(comunidad, rol);
+        membresias.add(membresia);
     }
 
     public void abandonarComunidad(Comunidad comunidad) {
-        // Implementación
+        // Implementaciï¿½n
     }
 }
+
+
