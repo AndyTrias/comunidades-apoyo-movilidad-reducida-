@@ -1,6 +1,5 @@
 import org.junit.jupiter.api.Test;
 import comunidades.usuario.Usuario;
-import usuarios.Usuario;
 
 import static org.junit.jupiter.api.Assertions.*;
 

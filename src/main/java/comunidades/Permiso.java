@@ -1,5 +1,7 @@
 package comunidades;
 
+import lombok.Getter;
+
 public class Permiso {
-    // Implementación
+    @Getter String nombre;
 }
