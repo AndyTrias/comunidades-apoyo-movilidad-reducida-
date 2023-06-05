@@ -1,6 +1,7 @@
 package comunidades;
 
 import comunidades.servicios.PrestacionDeServicio;
+import comunidades.usuario.Usuario;
 import configs.Config;
 
 import java.util.ArrayList;
@@ -18,7 +19,6 @@ public class Comunidad {
         this.serviciosDeInteres = serviciosDeInteres;
         this.roles = new ArrayList<>();
         roles.add(Config.ROL_BASE);
-        roles.add(new Rol("Administrador", new HashSet<>()));
     }
 
     public Rol aceptarUsuario(Usuario usuario) {
@@ -28,13 +28,16 @@ public class Comunidad {
     }
 
     public void cambiarRol(Usuario usuario, Rol rol) {
-        roles.removeIf(r -> r.getUsuarios().equals(usuario));
-        roles.getUsuario().remove(usuario);
+        eliminarUsuarioDeRol(usuario, rol);
         rol.setUsuario(usuario);
     }
 
     public void eliminarUsuario(Usuario usuario) {
-        roles.removeIf(r -> r.getUsuarios().equals(usuario));
+        eliminarUsuarioDeRol(usuario, roles.stream().filter(r -> r.getUsuarios().contains(usuario)).findFirst().get());
+    }
+
+    private void eliminarUsuarioDeRol(Usuario usuario, Rol rol) {
+        roles.stream().filter(r -> r.getUsuarios().contains(usuario)).forEach(r -> r.eliminarUsuario(usuario));
     }
 
 }

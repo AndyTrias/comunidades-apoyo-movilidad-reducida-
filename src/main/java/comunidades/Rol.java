@@ -1,5 +1,6 @@
 package comunidades;
 
+import comunidades.usuario.Usuario;
 import lombok.Getter;
 import lombok.Setter;
 

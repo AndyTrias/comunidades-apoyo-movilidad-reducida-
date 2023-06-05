@@ -1,8 +1,5 @@
-package usuarios.Contrasenia;
-import java.util.Collection;
+package comunidades.usuario.Contrasenia;
 import java.util.Collections;
-import java.util.List;
-import java.util.stream.Stream;
 
 import java.util.ArrayList;
 

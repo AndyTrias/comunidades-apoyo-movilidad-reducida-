@@ -11,6 +11,9 @@ public class Config {
         return instance;
     }
 
-    public static final String CSV_PATH = "src/main/java/readerCSV/entidad.csv";
-    public static final Rol ROL_BASE = new Rol(null);
+
+    public static final String CSV_PATH = "src/main/java/readerCSV/Instancias.csv";
+    public static final Rol ROL_BASE = new Rol("Miembro", null);
+    public static final Rol ROL_DUENIO = new Rol("Dueño", null);
+
 }

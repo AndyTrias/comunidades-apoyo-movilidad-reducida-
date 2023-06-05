@@ -1,4 +1,10 @@
-package comunidades;
+package comunidades.usuario;
+
+import comunidades.Comunidad;
+import comunidades.Intereses;
+import comunidades.Membresia;
+import comunidades.Rol;
+import lombok.Getter;
 
 import java.util.List;
 
@@ -6,7 +12,7 @@ public class Usuario {
     private String nombre;
     private String apellido;
     private String correoElectronico;
-    private String contrasenia;
+    @Getter private String contrasenia;
     private Intereses intereses;
     private List<Membresia> membresias;
 
