@@ -1,8 +1,10 @@
 package comunidades;
 
+import lombok.Getter;
+
 public class Membresia {
-    private Comunidad comunidad;
-    private Rol roles;
+    @Getter private Comunidad comunidad;
+    private Rol rol;
 
     public Membresia(Comunidad comunidad, Rol rol) {
         this.comunidad = comunidad;

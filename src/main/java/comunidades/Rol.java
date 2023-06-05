@@ -8,16 +8,13 @@ import java.util.List;
 import java.util.Set;
 
 public class Rol {
-    @Getter @Setter
-    private List<Usuario> usuarios;
-    private Set<Permiso> permisos;
-    @Getter @Setter
-    private String nombre;
+    @Getter @Setter private String nombre;
+    @Getter private List<Usuario> usuarios;
+    @Getter private Set<Permiso> permisos;
 
     public Rol(String nombre, Set<Permiso> permisos) {
         this.permisos = permisos;
-        this.usuarios = new ArrayList<>(); {
-        }
+        this.usuarios = new ArrayList<>();
     }
 
     public void setUsuario(Usuario usuario) {
@@ -27,5 +24,10 @@ public class Rol {
     public boolean tenesPermiso(Permiso permiso) {
         return this.permisos.contains(permiso);
     }
+
+    public void eliminarUsuario(Usuario usuario) {
+        this.usuarios.remove(usuario);
+    }
+
 }
 

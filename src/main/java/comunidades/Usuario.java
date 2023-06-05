@@ -14,15 +14,12 @@ public class Usuario {
         // Implementaci�n
     }
 
-    public void crearMembresia(comunidad Comunidad) {
-        Rol rol = comunidad.getRol(this);
+    public void unirseAComunidad(Comunidad comunidad, Rol rol) {
         Membresia membresia = new Membresia(comunidad, rol);
-        membresias.add(membresia);
+        this.membresias.add(membresia);
     }
 
     public void abandonarComunidad(Comunidad comunidad) {
         // Implementaci�n
     }
 }
-
-
