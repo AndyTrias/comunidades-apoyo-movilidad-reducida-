@@ -11,13 +11,10 @@ public class LectorOrganismoDeControl {
 
     public void leerCSV() {
         List<String[]> csvComoLista = fileStream.levantarCSV(ruta);
-        csvComoLista.forEach(l -> {
-            OrganismoDeControl organismo = new OrganismoDeControl(l[1]);
-        });
+        for (int i = 1; i < csvComoLista.size(); i++) {
+            OrganismoDeControl organismoDeControl = new OrganismoDeControl(csvComoLista.get(i)[0]);
+            System.out.println(organismoDeControl.getNombre());
+        }
     }
 
-    public static void main(String[] args) {
-        LectorOrganismoDeControl lector = new LectorOrganismoDeControl();
-        lector.leerCSV();
-    }
 }

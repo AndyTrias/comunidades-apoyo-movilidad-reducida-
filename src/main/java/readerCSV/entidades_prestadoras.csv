@@ -1,2 +1,4 @@
-id;nombre;idEntidad,nombreEntidad;idEntidad,nombreEntidad;idEntidad,nombreEntidad
-0;trenes argentinos;0,ferrocarril belgrano;1,ferrocarril roca;2,ferrocarril san martin
+nombre;ubicacion
+trenesArgentinos;2
+metroviasSA;6
+santanderRio;1

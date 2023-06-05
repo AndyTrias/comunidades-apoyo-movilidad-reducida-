@@ -49,4 +49,11 @@ public class GeorefServiceTest {
         assertEquals("BAHIA BLANCA", this.localizacion.getUbicacion().getLocalidad().nombre);
     }
 
+    @Test
+    public void testSetProvincia() throws Exception {
+        this.localizacion.setProvincia(6);
+
+        assertEquals("Buenos Aires", this.localizacion.getUbicacion().getProvincia().nombre);
+    }
+
 }

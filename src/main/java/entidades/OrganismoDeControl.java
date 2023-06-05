@@ -1,11 +1,12 @@
 package entidades;
 
 import comunidades.usuario.Usuario;
+import lombok.Getter;
 
 import java.util.List;
 
 public class OrganismoDeControl {
-    private String nombre;
+    @Getter private String nombre;
     private Usuario personaDesignada;
     private List<EntidadPrestadora> entidadesQuePosee;
 
