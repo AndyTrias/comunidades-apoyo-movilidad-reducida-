@@ -1,8 +1,7 @@
 package readerCSV;
 
-import comunidades.Usuario;
+import configs.Config;
 import entidades.Entidad;
-import localizacion.Localizacion;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -13,7 +12,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 public class fileStream {
 
-    private String filePath = "src/main/java/readerCSV/Instancias.csv";
+    private String filePath = Config.CSV_PATH;
     private List<Entidad> entidadades = new ArrayList<>();
 
     public List<Entidad> levantarCSV() {

@@ -1,13 +1,29 @@
 package comunidades;
 
+import lombok.Getter;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 public class Rol {
-    private List<Usuario> usuario;
-    private Set<Permiso> permisos;
+    @Getter private List<Usuario> usuarios;
+    @Getter private Set<Permiso> permisos;
 
-    public void TenesPermiso() {
-        // Implementación
+    public Rol(Set<Permiso> permisos) {
+        this.permisos = permisos;
+        this.usuarios = new ArrayList<>();
+    }
+
+    public void agregarUsuario(Usuario usuario) {
+        this.usuarios.add(usuario);
+    }
+
+    public void eliminarUsuario(Usuario usuario) {
+        this.usuarios.remove(usuario);
+    }
+
+    public void tenesPermiso() {
+        // Implementaciï¿½n
     }
 }
