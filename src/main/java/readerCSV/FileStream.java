@@ -1,11 +1,8 @@
 package readerCSV;
 
-import configs.Config;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 public class FileStream {
@@ -18,9 +15,4 @@ public class FileStream {
         }
     }
 
-    public static void main(String[] args) {
-        FileStream file = new FileStream();
-        List<String[]> csv = file.levantarCSV(Config.CSV_PATH_ORGANISMOS);
-        csv.forEach(l -> Arrays.stream(l).spliterator());
-    }
 }
