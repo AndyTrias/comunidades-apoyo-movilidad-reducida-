@@ -1,10 +1,10 @@
 package comunidades;
 
 import comunidades.servicios.PrestacionDeServicio;
+import comunidades.usuario.Usuario;
 import configs.Config;
 
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 
 public class Comunidad {

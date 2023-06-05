@@ -1,6 +1,6 @@
 package entidades;
 
-import comunidades.Usuario;
+import comunidades.usuario.Usuario;
 
 import java.util.List;
 

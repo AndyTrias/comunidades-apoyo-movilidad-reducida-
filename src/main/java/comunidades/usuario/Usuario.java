@@ -1,4 +1,9 @@
-package comunidades;
+package comunidades.usuario;
+
+import comunidades.Comunidad;
+import comunidades.Intereses;
+import comunidades.Membresia;
+import comunidades.Rol;
 
 import java.util.List;
 
@@ -11,16 +16,16 @@ public class Usuario {
     private List<Membresia> membresias;
 
     public void setContrasenia(String contrasena) {
-        // Implementación
+        // Implementaciï¿½n
     }
 
     public void unirseAComunidad(Comunidad comunidad) {
-        Rol rol = comunidad.solicitarUnirse(this);
+        Rol rol = comunidad.aceptarUsuario(this);
         Membresia membresia = new Membresia(comunidad, rol);
         this.membresias.add(membresia);
     }
 
     public void abandonarComunidad(Comunidad comunidad) {
-        // Implementación
+        // Implementaciï¿½n
     }
 }

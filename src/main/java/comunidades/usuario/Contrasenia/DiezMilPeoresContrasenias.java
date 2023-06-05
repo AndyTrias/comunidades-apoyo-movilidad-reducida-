@@ -1,4 +1,4 @@
-package usuarios.Contrasenia;
+package comunidades.usuario.Contrasenia;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
