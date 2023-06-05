@@ -3,6 +3,7 @@ package comunidades;
 import comunidades.servicios.PrestacionDeServicio;
 import comunidades.usuario.Usuario;
 import configs.Config;
+import configs.ServiceLocator;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.flogger.Flogger;
@@ -21,7 +22,7 @@ public class Comunidad {
         this.nombre = nombre;
         this.serviciosDeInteres = new HashSet<>();
         this.roles = new ArrayList<>();
-        roles.add(Config.ROL_BASE);
+        roles.add(ServiceLocator.ROL_BASE);
     }
     
     public void agregarServicioDeInteres(PrestacionDeServicio servicio) {
