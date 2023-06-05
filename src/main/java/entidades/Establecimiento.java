@@ -10,5 +10,4 @@ public class Establecimiento {
     private Localizacion localizacion;
     private List<PrestacionDeServicio> servicios;
 
-    // Implementaci�n
 }

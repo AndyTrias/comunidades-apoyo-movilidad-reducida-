@@ -1,6 +1,7 @@
 package configs;
 
 import comunidades.Rol;
+import comunidades.usuario.Contrasenia.ValidadorDeContrasenia;
 
 public class Config {
   private static Config instance = null;
@@ -11,7 +12,8 @@ public class Config {
         return instance;
     }
 
-    public static final String CSV_PATH = "src/main/java/readerCSV/Instancias.csv";
+    public static final String CSV_PATH_ORGANISMOS = "src/main/java/readerCSV/organismos_de_control.csv";
+    public static final String CSV_PATH_PRESTADORAS = "src/main/java/readerCSV/entidades_prestadoras.csv";
     public static final Rol ROL_BASE = new Rol("Miembro", null);
-    public static final Rol ROL_DUENIO = new Rol("Dueño", null);
+    public static final ValidadorDeContrasenia VALIDADOR = new ValidadorDeContrasenia();
 }

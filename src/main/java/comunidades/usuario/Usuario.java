@@ -4,9 +4,11 @@ import comunidades.Comunidad;
 import comunidades.Intereses;
 import comunidades.Membresia;
 import comunidades.Rol;
+import localizacion.Localizacion;
 import lombok.Getter;
 
 import java.util.List;
+import java.util.Set;
 
 public class Usuario {
     private String nombre;
@@ -15,6 +17,7 @@ public class Usuario {
     @Getter private String contrasenia;
     private Intereses intereses;
     private List<Membresia> membresias;
+    private Set<Localizacion> localizacion;
 
     public void setContrasenia(String contrasena) {
         // Implementaci�n

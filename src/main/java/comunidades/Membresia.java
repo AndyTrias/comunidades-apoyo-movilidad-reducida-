@@ -11,5 +11,4 @@ public class Membresia {
         this.rol = rol;
     }
 
-    // Implementaci�n
 }

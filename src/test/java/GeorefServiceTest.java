@@ -46,7 +46,7 @@ public class GeorefServiceTest {
     public void testSetLocalizacion() throws Exception {
         this.localizacion.setLocalidad(6056010001L);
 
-        assertEquals("BAHIA BLANCA", this.localizacion.getLocalidad().nombre);
+        assertEquals("BAHIA BLANCA", this.localizacion.getUbicacion().getLocalidad().nombre);
     }
 
 }
