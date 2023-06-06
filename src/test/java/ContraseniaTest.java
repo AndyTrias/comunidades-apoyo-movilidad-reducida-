@@ -8,7 +8,7 @@ import comunidades.usuario.Usuario;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class UsuarioTest {
+public class ContraseniaTest {
 
     ValidadorDeContrasenia validadorDeContrasenia;
     @BeforeEach
