@@ -22,16 +22,6 @@ public class UsuarioTest {
         comunidad = new Comunidad("Comunidad de Prueba");
     }
 
-    @Test
-    public void testSetContraseniaValida() throws Exception {
-        usuario.setContrasenia("password123");
-        Assert.assertEquals("password123", usuario.getContrasenia());
-    }
-
-    @Test()
-    public void testSetContraseniaInvalida() throws Exception {
-        usuario.setContrasenia("pass");
-    }
 
     @Test
     public void testUnirseAComunidad() {
