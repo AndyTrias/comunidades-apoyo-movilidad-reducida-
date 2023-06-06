@@ -18,9 +18,4 @@ public class FileStream {
         }
     }
 
-    public static void main(String[] args) {
-        FileStream file = new FileStream();
-        List<String[]> csv = file.levantarCSV(Config.CSV_PATH_ORGANISMOS);
-        csv.forEach(l -> Arrays.stream(l).spliterator());
-    }
 }
