@@ -1,13 +1,10 @@
-import comunidades.usuario.Contrasenia.DiezMilPeoresContrasenias;
-import comunidades.usuario.Contrasenia.ValidarLongitud;
-import configs.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import comunidades.usuario.Usuario;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class UsuarioTest {
+public class ContraseniaTest {
 
     validador = new ValidadorDeContrasenia();
     @BeforeEach
