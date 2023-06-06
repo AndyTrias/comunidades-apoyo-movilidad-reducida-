@@ -14,7 +14,7 @@ public abstract class FileStream {
     }
 
 
-    public List<String[]> csvALista(String ruta) {
+    protected List<String[]> csvALista(String ruta) {
         try (Stream<String> streamFile = Files.lines(Paths.get(ruta))) {
             return streamFile.map(line -> line.split(";")).toList();
         } catch (IOException csv) {
@@ -22,6 +22,6 @@ public abstract class FileStream {
         }
     }
 
-    public abstract void levantarObjetos(List<String[]> csvComoLista);
+    protected abstract void levantarObjetos(List<String[]> csvComoLista);
 
 }

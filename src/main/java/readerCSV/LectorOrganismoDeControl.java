@@ -16,7 +16,7 @@ public class LectorOrganismoDeControl extends FileStream {
         this.organismosLeidos = new HashSet<>();
     }
 
-    public void levantarObjetos(List<String[]> csvComoLista) {
+    protected void levantarObjetos(List<String[]> csvComoLista) {
         for (int i = 1; i < csvComoLista.size(); i++) {
             OrganismoDeControl organismoDeControl = new OrganismoDeControl(csvComoLista.get(i)[0]);
             organismosLeidos.add(organismoDeControl);
