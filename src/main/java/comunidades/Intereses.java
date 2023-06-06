@@ -13,4 +13,14 @@ public class Intereses {
     public boolean estaInteresado(Servicio servicio, Entidad entidad) {
         return servicios.contains(servicio) && entidades.contains(entidad);
     }
+
+    public void agregarServicio(Servicio servicio) {
+        servicios.add(servicio);
+    }
+
+    public void agregarEntidad(Entidad entidad) {
+        entidades.add(entidad);
+    }
+
+
 }

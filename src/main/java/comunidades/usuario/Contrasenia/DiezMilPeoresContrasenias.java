@@ -1,4 +1,6 @@
 package comunidades.usuario.Contrasenia;
+import configs.Config;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -6,7 +8,7 @@ import java.io.IOException;
 
 public class DiezMilPeoresContrasenias extends PuedeValidar {
 
-    private static String path = "src/main/java/usuarios/Contrasenia/10000Peores.txt"; //ordenado para la busqueda
+    private static final String path = Config.PEORES_CONTRASENIAS; //ordenado para la busqueda
 
     public DiezMilPeoresContrasenias(ValidadorDeContrasenia elValidador) {
         super(elValidador);

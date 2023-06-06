@@ -3,6 +3,10 @@ package comunidades;
 import comunidades.servicios.PrestacionDeServicio;
 import comunidades.usuario.Usuario;
 import configs.Config;
+import configs.ServiceLocator;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.flogger.Flogger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,16 +14,21 @@ import java.util.Set;
 import java.util.HashSet;
 
 public class Comunidad {
-    private List<Rol> roles;
-    private String nombre;
-    private Set<PrestacionDeServicio> serviciosDeInteres;
+    @Getter private List<Rol> roles;
+    @Getter @Setter private String nombre;
+    @Getter private Set<PrestacionDeServicio> serviciosDeInteres;
 
-    public Comunidad(String nombre, Set<PrestacionDeServicio> serviciosDeInteres) {
+    public Comunidad(String nombre) {
         this.nombre = nombre;
-        this.serviciosDeInteres = serviciosDeInteres;
+        this.serviciosDeInteres = new HashSet<>();
         this.roles = new ArrayList<>();
-        roles.add(Config.ROL_BASE);
+        roles.add(ServiceLocator.ROL_BASE);
     }
+    
+    public void agregarServicioDeInteres(PrestacionDeServicio servicio) {
+        serviciosDeInteres.add(servicio);
+    }
+    
 
     public Rol aceptarUsuario(Usuario usuario) {
         Rol rol = roles.get(0);
