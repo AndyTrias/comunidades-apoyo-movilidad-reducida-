@@ -9,9 +9,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-//comente cosas para probar lo del csv porque por ahora solo instancio en nombre de la clase
 public class Entidad {
-    private Set<Establecimiento> establecimientos;
+    @Getter private Set<Establecimiento> establecimientos;
     @Setter private Localizacion localizacion;
     @Getter private String nombre;
 
