@@ -1,0 +1,42 @@
+@startuml 
+
+Linea --> Estacion
+Linea -> Tipo
+Estacion --> Servicio
+
+Servicio <|-- Banio
+Servicio <|-- EscaleraMecanica
+Servicio <|-- Ascensor
+
+Enum Tipo{
+SUBTERRANEO
+FERROCARRIL
+}
+
+Class Linea{
+Estaciones : List
+Nombre : String
+Tipo : Enum 
+
+EstacionDeOrigen() : Estacion
+EstacionDeDestino() : Estacion
+}
+
+Abstract Servicio{
+Funciona : Bool
+
+}
+
+Class Estacion{
+Nombre : String
+UbicacionGeografica : List [Float, Float]
+Servicios: List
+}
+
+
+
+Class Banio{}
+Class EscaleraMecanica{}
+Class Ascensor{}
+
+@enduml

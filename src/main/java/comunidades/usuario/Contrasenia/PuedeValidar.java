@@ -1,5 +1,6 @@
 package comunidades.usuario.Contrasenia;
 
+
 public abstract class PuedeValidar {
 
     private final ValidadorDeContrasenia validador;

@@ -6,13 +6,10 @@ import java.io.FileReader;
 import java.io.IOException;
 
 
-public class DiezMilPeoresContrasenias extends PuedeValidar {
+public class DiezMilPeoresContrasenias implements PuedeValidar2{
 
     private static final String path = Config.PEORES_CONTRASENIAS; //ordenado para la busqueda
 
-    public DiezMilPeoresContrasenias(ValidadorDeContrasenia elValidador) {
-        super(elValidador);
-    }
 
     public boolean validar(String contrasenia) {
         try (BufferedReader br = new BufferedReader(new FileReader(DiezMilPeoresContrasenias.path))) {

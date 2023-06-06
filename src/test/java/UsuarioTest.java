@@ -9,12 +9,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class UsuarioTest {
 
+    validador = new ValidadorDeContrasenia();
     @BeforeEach
     public void setUp() throws Exception {
-        ServiceLocator.getValidador().activarValidador(
-                new ValidarLongitud(ServiceLocator.getValidador()),
-                new DiezMilPeoresContrasenias(ServiceLocator.getValidador())
-        );
+
     }
 
     @Test
