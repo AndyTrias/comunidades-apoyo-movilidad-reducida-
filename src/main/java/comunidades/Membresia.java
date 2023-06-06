@@ -4,7 +4,7 @@ import lombok.Getter;
 
 public class Membresia {
     @Getter private Comunidad comunidad;
-    private Rol rol;
+    @Getter private Rol rol;
 
     public Membresia(Comunidad comunidad, Rol rol) {
         this.comunidad = comunidad;

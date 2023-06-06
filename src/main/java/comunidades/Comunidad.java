@@ -29,6 +29,13 @@ public class Comunidad {
         serviciosDeInteres.add(servicio);
     }
     
+    public void agregarRol(Rol rol) {
+        roles.add(rol);
+    }
+
+    public void eliminarRol(Rol rol) {
+        roles.remove(rol);
+    }
 
     public Rol aceptarUsuario(Usuario usuario) {
         Rol rol = roles.get(0);
@@ -37,16 +44,28 @@ public class Comunidad {
     }
 
     public void cambiarRol(Usuario usuario, Rol rol) {
-        eliminarUsuarioDeRol(usuario, rol);
+        exiteRol(rol);
+        eliminarUsuarioDeSuRol(usuario);
         rol.setUsuario(usuario);
     }
 
     public void eliminarUsuario(Usuario usuario) {
-        eliminarUsuarioDeRol(usuario, roles.stream().filter(r -> r.getUsuarios().contains(usuario)).findFirst().get());
+        eliminarUsuarioDeSuRol(usuario);
     }
 
-    private void eliminarUsuarioDeRol(Usuario usuario, Rol rol) {
+    private void eliminarUsuarioDeSuRol(Usuario usuario) {
         roles.stream().filter(r -> r.getUsuarios().contains(usuario)).forEach(r -> r.eliminarUsuario(usuario));
+    }
+
+    private boolean exiteRol(Rol rol) {
+        if (!roles.contains(rol)) {
+            throw new RuntimeException("El rol no existe en la comunidad");
+        }
+        return true;
+    }
+
+    public Integer getCantidadDeUsuarios(){
+        return roles.stream().mapToInt(r -> r.getUsuarios().size()).sum();
     }
 
 }
