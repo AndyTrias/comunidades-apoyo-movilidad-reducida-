@@ -16,7 +16,7 @@ public class LectorEntidadPrestadora extends FileStream {
         this.entidadesLeidas = new HashSet<>();
     }
 
-    public void levantarObjetos(List<String[]> csvComoLista) {
+    protected void levantarObjetos(List<String[]> csvComoLista) {
         for (int i = 1; i < csvComoLista.size(); i++) {
             EntidadPrestadora entidadPrestadora = new EntidadPrestadora(csvComoLista.get(i)[0], Integer.parseInt(csvComoLista.get(i)[1]));
             entidadesLeidas.add(entidadPrestadora);
