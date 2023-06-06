@@ -4,6 +4,7 @@ import comunidades.Comunidad;
 import comunidades.Intereses;
 import comunidades.Membresia;
 import comunidades.Rol;
+import comunidades.usuario.Contrasenia.ValidadorDeContrasenia;
 import configs.Config;
 import configs.ServiceLocator;
 import localizacion.Localizacion;
@@ -33,9 +34,9 @@ public class Usuario {
         this.membresias = new ArrayList<>();
     }
 
-    public void setContrasenia(String contrasena) throws Exception {
-        if (ServiceLocator.getValidador().validarContrasenia(contrasena)) {
-            this.contrasenia = contrasena;
+    public void setContrasenia(String contrasenia) throws Exception {
+        if (ServiceLocator.getValidador().validarContrasenia(contrasenia)) {
+            this.contrasenia = contrasenia;
         }
         else {
             throw new Exception("La contraseña no es valida");

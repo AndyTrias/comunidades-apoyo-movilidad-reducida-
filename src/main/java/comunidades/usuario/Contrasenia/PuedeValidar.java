@@ -1,3 +1,4 @@
+/*
 package comunidades.usuario.Contrasenia;
 
 
@@ -13,3 +14,4 @@ public abstract class PuedeValidar {
 
 }
 
+*/

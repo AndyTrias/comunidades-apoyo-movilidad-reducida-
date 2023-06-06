@@ -4,8 +4,8 @@ import java.util.Collections;
 import java.util.ArrayList;
 
 public class ValidadorDeContrasenia {
-  private final ArrayList<PuedeValidar> disponibles;
-  private final ArrayList<PuedeValidar> activos;
+  private final ArrayList<PuedeValidar2> disponibles;
+  private final ArrayList<PuedeValidar2> activos;
 
   public ValidadorDeContrasenia() {
     this.disponibles = new ArrayList<>();
@@ -15,15 +15,16 @@ public class ValidadorDeContrasenia {
   public boolean validarContrasenia(String contrasenia) {
     return activos.stream().allMatch(validador -> validador.validar(contrasenia));
   }
-  public void activarValidador(PuedeValidar ... validador) {
+
+  public void activarValidador(PuedeValidar2 ... validador) {
     Collections.addAll(activos, validador);
   }
 
-  public void desactivarValidador(PuedeValidar validador) {
+  public void desactivarValidador(PuedeValidar2 validador) {
     activos.remove(validador);
   }
 
-  public void agregarADisponible(PuedeValidar validador) { //el validador lo llama cuando esta listo
+  public void agregarADisponible(PuedeValidar2 validador) { //el validador lo llama cuando esta listo
     disponibles.add(validador);
   }
 }

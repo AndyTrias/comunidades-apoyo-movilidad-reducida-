@@ -1,3 +1,3 @@
-nombre;
-CNRT;
-Banco Central;
+id;nombre;idEnitdad,nombre;idEnitdad,nombre;idEnitdad,nombre;idEnitdad,nombre;
+0;trenes;0,mitre;1,sarmiento,2,roca;3,urquiza;4,belgrano;
+1;subtes;0,a;1,b;2,c;3,d;4,e;5,h;6,p;7,e;

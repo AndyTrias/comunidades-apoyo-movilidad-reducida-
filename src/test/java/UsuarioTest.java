@@ -1,4 +1,5 @@
 import comunidades.usuario.Contrasenia.DiezMilPeoresContrasenias;
+import comunidades.usuario.Contrasenia.ValidadorDeContrasenia;
 import comunidades.usuario.Contrasenia.ValidarLongitud;
 import configs.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,10 +10,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class UsuarioTest {
 
-    validador = new ValidadorDeContrasenia();
+    ValidadorDeContrasenia validadorDeContrasenia;
     @BeforeEach
     public void setUp() throws Exception {
-
+        this.validadorDeContrasenia = ServiceLocator.getValidador();
+        this.validadorDeContrasenia.activarValidador(new ValidarLongitud(), new DiezMilPeoresContrasenias());
     }
 
     @Test
@@ -29,6 +31,8 @@ public class UsuarioTest {
     public void testSeLeSeteaUnaContraseniaInseguraAlUsuario() throws Exception {
         Usuario usuario = new Usuario("ejemplo", "ejemplo", "ejemplo@ejemplo.com");
         String contrasenia = "password";
+
+        usuario.setContrasenia(contrasenia);
 
         assertThrows(Exception.class, () -> usuario.setContrasenia(contrasenia));
     }
