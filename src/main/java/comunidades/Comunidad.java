@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.concurrent.ExecutionException;
 
 public class Comunidad {
     @Getter private List<Rol> roles;
@@ -43,7 +44,7 @@ public class Comunidad {
         return rol;
     }
 
-    public void cambiarRol(Usuario usuario, Rol rol) {
+    public void cambiarRol(Usuario usuario, Rol rol) throws Exception {
         exiteRol(rol);
         eliminarUsuarioDeSuRol(usuario);
         rol.setUsuario(usuario);
@@ -57,9 +58,9 @@ public class Comunidad {
         roles.stream().filter(r -> r.getUsuarios().contains(usuario)).forEach(r -> r.eliminarUsuario(usuario));
     }
 
-    private boolean exiteRol(Rol rol) {
+    private boolean exiteRol(Rol rol) throws Exception {
         if (!roles.contains(rol)) {
-            throw new RuntimeException("El rol no existe en la comunidad");
+            throw new Exception("El rol no existe en la comunidad");
         }
         return true;
     }
