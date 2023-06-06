@@ -1,20 +1,27 @@
 package readerCSV;
 
 import configs.Config;
+import entidades.EntidadPrestadora;
 import entidades.OrganismoDeControl;
+import lombok.Getter;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-public class LectorOrganismoDeControl {
-    private FileStream fileStream = new FileStream();
-    private static String ruta = Config.CSV_PATH_ORGANISMOS;
+public class LectorOrganismoDeControl extends FileStream {
 
-    public void leerCSV() {
-        List<String[]> csvComoLista = fileStream.levantarCSV(ruta);
+    @Getter Set<OrganismoDeControl> organismosLeidos;
+    public LectorOrganismoDeControl() {
+        this.organismosLeidos = new HashSet<>();
+    }
+
+    public void levantarObjetos(List<String[]> csvComoLista) {
         for (int i = 1; i < csvComoLista.size(); i++) {
             OrganismoDeControl organismoDeControl = new OrganismoDeControl(csvComoLista.get(i)[0]);
-            System.out.println(organismoDeControl.getNombre());
+            organismosLeidos.add(organismoDeControl);
         }
     }
+
 
 }

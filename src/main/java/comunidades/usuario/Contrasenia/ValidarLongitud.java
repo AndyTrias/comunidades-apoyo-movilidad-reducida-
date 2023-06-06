@@ -1,6 +1,6 @@
 package comunidades.usuario.Contrasenia;
 
-public class ValidarLongitud implements PuedeValidar2{
+public class ValidarLongitud implements PuedeValidar {
 
     private static final int MINIMO = 8;
     private static final int MAXIMO = 64;
