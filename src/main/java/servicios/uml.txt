@@ -1,0 +1,186 @@
+@startuml
+Class PrestacionDeServicio {
+    - servicio: Servicio
+    + funciona() : String
+}
+
+
+Class Servicio {
+    + informacion(): String
+}
+
+
+class Rol{
+    -usuario: List<Usuario>
+    -permisos: Set<Permiso>
+
+    +tenesPermiso(): void
+}
+
+
+
+
+class Permiso{
+ - String: Nombre
+
+}
+
+
+class Comunidad {
+    -roles: set<Rol>
+    -nombre: String
+    -serviciosDeInteres: Set<PrestacionDeServicio>
+
+
+    +asginarRol(usuario: Usuario)
+    +aceptarUsuario(usuario: Usuario)
+    +eliminarUsuario(Usuario: Usuario)
+}
+
+
+
+class Usuario{
+    -nombre: String
+    -apellido: String
+    -correoElectronico: String
+    -contrasenia: String
+    -intereses: Intereses
+    - membresias: List<Membresia>
+
+
+
+
+    +setContrasenia(contrasena: String): void
+    +unirseAComunidad(comunidad: Comunidad, rol: Rol): void
+    +abandonarComunidad(comunidad: Comunidad): void
+}
+
+
+
+
+Class Entidad {
+    - establecimientos : List<Establecimiento>
+    - localizacion : Localizacion
+    - nombre : String
+}
+
+
+
+
+Class Establecimiento {
+    - nombre : String
+    - localizacion : Localizacion
+    - servicios: List<PrestacionDeServicio>
+}
+
+
+
+
+Class Membresia {
+    - comunidad: Comunidad
+    - Roles: Rol
+}
+
+
+
+
+Class Localizacion {
+    - adapter: AdapterLocalizacion
+
+    + ejecutarConsulta(String id) : Localizacion
+}
+
+
+
+
+Interface AdapterLocalizacion {
+    + ejecutarConsulta(String id) : Localizacion
+}
+
+
+
+
+Class AdapterLocalizacionGeorefApi {
+    - adaptada: ServicioGeoref
+
+
+
+
+    + ejecutarConsulta(String id) : Localizacion
+}
+
+
+
+
+Class ServicioGeoref {
+    + obtenerLocalizacion(String id) : Localizacion
+}
+
+
+
+
+Class Intereses {
+    - List<Servicio>
+    - List<Entidad>
+
+
+
+
+    + estaInteresado(Servicio, Entidad)
+}
+
+
+Class EntidadPrestadora {
+    - nombre : String
+    - personaDesignada: Usuario
+    - serviciosPrestados: List<Entidad>
+}
+
+
+Class OrganismoDeControl {
+    - nombre : String
+    - personaDesignada: Usuario
+    - entidadesQuePosee: List<EntidadPrestadora>
+}
+
+class Ubicacion {
+- provincia: String
+- municipio: String
+- localidad: String
+}
+
+Usuario -> Localizacion
+Entidad -> Localizacion
+
+
+EntidadPrestadora --> "*" Entidad
+OrganismoDeControl --> "*" EntidadPrestadora
+
+
+Servicio <- PrestacionDeServicio
+Comunidad -> "*" PrestacionDeServicio
+Entidad --> "*" Establecimiento
+Intereses --> "*" Entidad
+Intereses --> "*" Servicio
+Establecimiento --> "*" PrestacionDeServicio
+Establecimiento -> Localizacion
+Localizacion -> Ubicacion
+
+
+Usuario <-- EntidadPrestadora
+Usuario <-- OrganismoDeControl
+Rol --> "*" Usuario
+Permiso "*" <-- Rol
+Rol "*" <- Comunidad
+Usuario -> "*" Membresia
+Membresia -> Comunidad
+Rol <-- Membresia
+Intereses <- Usuario
+
+
+
+
+AdapterLocalizacion <-- Localizacion
+AdapterLocalizacionGeorefApi --|> AdapterLocalizacion
+ServicioGeoref <-- AdapterLocalizacionGeorefApi
+@enduml
