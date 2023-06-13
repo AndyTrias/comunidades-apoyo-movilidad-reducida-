@@ -46,6 +46,10 @@ public class GeorefServiceTest {
     public void testSetLocalizacion() throws Exception {
         this.localizacion.setLocalidad(6056010001L);
 
+        System.out.println(this.localizacion.getUbicacion().getLocalidad().nombre);
+        System.out.println(this.localizacion.getUbicacion().getMunicipio().nombre);
+        System.out.println(this.localizacion.getUbicacion().getProvincia().nombre);
+
         assertEquals("BAHIA BLANCA", this.localizacion.getUbicacion().getLocalidad().nombre);
     }
 
@@ -54,6 +58,16 @@ public class GeorefServiceTest {
         this.localizacion.setProvincia(6);
 
         assertEquals("Buenos Aires", this.localizacion.getUbicacion().getProvincia().nombre);
+    }
+
+    @Test
+    public void testSetMunicipio() throws Exception {
+        this.localizacion.setMunicipio(386273);
+
+        System.out.println(this.localizacion.getUbicacion().getMunicipio().nombre);
+        System.out.println(this.localizacion.getUbicacion().getProvincia().nombre);
+
+        assertEquals("Yavi", this.localizacion.getUbicacion().getMunicipio().nombre);
     }
 
 }

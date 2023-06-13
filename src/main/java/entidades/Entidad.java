@@ -23,4 +23,9 @@ public class Entidad {
     public void agregarEstablecimiento(Establecimiento establecimiento) {
         this.establecimientos.add(establecimiento);
     }
+
+    public static void main(String[] args) {
+        Entidad entidad = new Entidad("Entidad");
+        System.out.println(entidad.getNombre());
+    }
 }

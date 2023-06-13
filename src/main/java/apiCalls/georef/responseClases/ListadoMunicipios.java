@@ -7,10 +7,11 @@ public class ListadoMunicipios {
     public int inicio;
     public int total;
     public List<Municipio> municipios;
+    public Parametro parametros;
 
     public class Parametro {
         public List<String> campos;
         public int max;
-        public List<String> provincia;
+        public List<String> provincias;
     }
 }
