@@ -1,7 +1,12 @@
 package comunidades.servicios;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class Servicio {
-    public String informacion() {
-        return "info";
+    @Getter @Setter private String nombre;
+
+    public Servicio(String nombre) {
+        this.nombre = nombre;
     }
 }

@@ -1,17 +1,7 @@
-/*
 package comunidades.usuario.Contrasenia;
 
+public interface PuedeValidar {
 
-public abstract class PuedeValidar {
-
-    private final ValidadorDeContrasenia validador;
-    public PuedeValidar(ValidadorDeContrasenia elValidador) {
-        this.validador = elValidador;
-        this.validador.agregarADisponible(this);
-    }
-
-    public abstract boolean validar(String contrasenia);
+    public boolean validar(String contrasenia);
 
 }
-
-*/

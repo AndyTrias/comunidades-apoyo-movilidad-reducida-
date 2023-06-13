@@ -1,9 +1,19 @@
 package comunidades.servicios;
 
-public class PrestacionDeServicio {
-    private Servicio servicio;
+import lombok.Getter;
+import lombok.Setter;
 
-    public String funciona() {
-        return "Funciona";
+public class PrestacionDeServicio {
+    @Getter
+    private Servicio servicio;
+    @Getter @Setter
+    private boolean funciona;
+
+    public PrestacionDeServicio(Servicio servicio) {
+        this.servicio = servicio;
+        this.funciona = true;
     }
+
 }
+
+

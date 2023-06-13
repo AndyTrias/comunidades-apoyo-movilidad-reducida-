@@ -5,20 +5,26 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-//comente cosas para probar lo del csv porque por ahora solo instancio en nombre de la clase
 public class Entidad {
-    private List<Establecimiento> establecimientos;
+    @Getter private Set<Establecimiento> establecimientos;
     @Setter private Localizacion localizacion;
     @Getter private String nombre;
 
     public Entidad(String nombre) {
         this.nombre = nombre;
-        this.establecimientos = new ArrayList<>();
+        this.establecimientos = new HashSet<>();
     }
 
     public void agregarEstablecimiento(Establecimiento establecimiento) {
         this.establecimientos.add(establecimiento);
+    }
+
+    public static void main(String[] args) {
+        Entidad entidad = new Entidad("Entidad");
+        System.out.println(entidad.getNombre());
     }
 }

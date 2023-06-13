@@ -17,5 +17,5 @@ public interface AdapterLocalizacion {
 
     public ListadoLocalidades getLocalidadesDeMunicipio(String idProvincia, String idMunicipio) throws IOException;
 
-    public ListadoLocalidades getLocalidadesDeMunicipio(long idLocalidad) throws IOException;
+    public ListadoLocalidades getLocalidadId(long idLocalidad) throws IOException;
 }

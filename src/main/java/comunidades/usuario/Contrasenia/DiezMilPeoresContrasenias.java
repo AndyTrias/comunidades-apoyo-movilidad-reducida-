@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 
-public class DiezMilPeoresContrasenias implements PuedeValidar2{
+public class DiezMilPeoresContrasenias implements PuedeValidar {
 
     private static final String path = Config.PEORES_CONTRASENIAS; //ordenado para la busqueda
 

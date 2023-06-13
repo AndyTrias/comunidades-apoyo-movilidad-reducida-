@@ -37,17 +37,16 @@ public class ComunidadesTest {
     }
 
     @Test
-    public void cambiarRolDeUsuarioARolQueNoExiste() {
+    public void cambiarRolDeUsuarioARolQueNoExiste() throws Exception {
         Rol rolDelUsuario = comunidad1.aceptarUsuario(franco);
         franco.unirseAComunidad(comunidad1, rolDelUsuario);
         Rol nuevoRol = new Rol("rol2", new HashSet<>());
-        comunidad1.cambiarRol(franco, nuevoRol);
 
-        assertThrows(RuntimeException.class, () -> comunidad1.cambiarRol(franco, nuevoRol));
+        assertThrows(Exception.class, () -> comunidad1.cambiarRol(franco, nuevoRol));
     }
 
     @Test
-    public void cambiarRolDeUsuario(){
+    public void cambiarRolDeUsuario() throws Exception {
         Rol rolDelUsuario = comunidad1.aceptarUsuario(franco);
         franco.unirseAComunidad(comunidad1, rolDelUsuario);
         Rol nuevoRol = new Rol("rol2", new HashSet<>());
