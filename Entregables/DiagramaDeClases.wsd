@@ -32,6 +32,7 @@ class Comunidad {
     -roles: set<Rol>
     -nombre: String
     -serviciosDeInteres: Set<PrestacionDeServicio>
+    - incidentes: Set<Incidente>
 
 
     +asginarRol(usuario: Usuario)
@@ -46,8 +47,9 @@ class Usuario{
     -apellido: String
     -correoElectronico: String
     -contrasenia: String
-    -intereses: Intereses
-    - membresias: List<Membresia>
+    -interes: Intereses
+    - membresias: Set<Membresia>
+    - estraegiaDeNotificacion: EstrategiaDeNotificacion
 
 
 
@@ -61,7 +63,7 @@ class Usuario{
 
 
 Class Entidad {
-    - establecimientos : List<Establecimiento>
+    - establecimientos : Set<Establecimiento>
     - localizacion : Localizacion
     - nombre : String
 }
@@ -72,7 +74,7 @@ Class Entidad {
 Class Establecimiento {
     - nombre : String
     - localizacion : Localizacion
-    - servicios: List<PrestacionDeServicio>
+    - servicios: Set<PrestacionDeServicio>
 }
 
 
@@ -122,8 +124,8 @@ Class ServicioGeoref {
 
 
 Class Intereses {
-    - List<Servicio>
-    - List<Entidad>
+    - Set<Servicio>
+    - Set<Entidad>
 
 
 
@@ -135,14 +137,14 @@ Class Intereses {
 Class EntidadPrestadora {
     - nombre : String    
     - personaDesignada: Usuario
-    - serviciosPrestados: List<Entidad>
+    - serviciosPrestados: Set<Entidad>
 }
 
 
 Class OrganismoDeControl {
     - nombre : String    
     - personaDesignada: Usuario
-    - entidadesQuePosee: List<EntidadPrestadora>
+    - entidadesQuePosee: Set<EntidadPrestadora>
 }
 
 class Ubicacion {
@@ -187,6 +189,86 @@ AdapterLocalizacionGeorefApi --|> AdapterLocalizacion
 ServicioGeoref <-- AdapterLocalizacionGeorefApi
 
 
+/' Entrega 3 '/
+
+/' INCIDENTES '/
+Class Incidente {
+    - prestacionDeServicioAfectada: PrestacionDeServicio
+    - observaciones: String
+    - fecha: Date
+    - resuelto: Boolean 
+}
+
+/' CONFIGURACION DE NOTIFICACIONES '/
+Class EstrategiaDeNotificacion {
+    - formaDeRecibir: FormaDeRecibir
+    - medioPreferido: MedioDeNotificacion
+}
+
+Interface MedioDeNotificacion {
+
+}
+
+Class NotificarPorWhatsApp {
+
+}
+
+Class NotificarPorMail {
+
+}
+
+Interface FormaDeRecibir {
+    
+}
+
+Class CuandoSuceden {
+
+}
+
+Class SinApuros {
+
+}
+
+/' NOTIFICACIONES '/
+
+Class FactoryNotificacion {
+    + crearNotificacion(notificacion: INotificacion) 
+}
+
+Interface INotificacion{
+    + algunaOperacion(): void
+}
+
+Class AperturaDeIncidente{
+    + algunaOperacion(): void
+}
+
+Class CierreDeIncidente{
+    + algunaOperacion(): void
+}
+
+Class RevisionManualDeIncidente{
+    + algunaOperacion(): void
+}
+
+Comunidad --> "*" Incidente
+Incidente --> PrestacionDeServicio
+
+Usuario --> EstrategiaDeNotificacion
+
+EstrategiaDeNotificacion --> FormaDeRecibir
+EstrategiaDeNotificacion --> MedioDeNotificacion
+
+FormaDeRecibir <|.. CuandoSuceden
+FormaDeRecibir <|.. SinApuros
+
+MedioDeNotificacion <|.. NotificarPorWhatsApp
+MedioDeNotificacion <|.. NotificarPorMail
+
+FactoryNotificacion .> INotificacion
+INotificacion <|.. AperturaDeIncidente
+INotificacion <|.. CierreDeIncidente
+INotificacion <|.. RevisionManualDeIncidente
 
 
 @enduml
