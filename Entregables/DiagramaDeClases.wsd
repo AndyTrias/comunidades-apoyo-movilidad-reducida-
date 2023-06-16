@@ -1,94 +1,4 @@
 @startuml
-Linea -> Tipo
-Linea --> "*" Estacion
-Estacion -> Coordenadas
-Estacion --> "*" PrestacionDeServicio 
-PrestacionDeServicio --> Servicio
-Comunidad -> "*" PrestacionDeServicio
-
-Permiso "*" <- Rol
-Usuario "*" <-- Rol
-Rol <- Comunidad
-Usuario --> Comunidad
-Usuario <.. Comunidad
-
-
-Enum Tipo{
- + SUBTERRANEO
- + FERROCARRIL
-}
-
-Class Linea{
-    - estaciones : List<Estacion>
-    - nombre : String
-    - tipo : Enum 
-
-    + estacionDeOrigen() : Estacion
-    + estacionDeDestino() : Estacion
-    + estacionSiguiente(Estacion) : Estacion
-    + estacionAnterior(Estacion) : Estacion
-}
-
-Class Coordenadas {
-    - latitud : Float
-    - longitud : Float
-
-    + coordenadas() : String
-}
-
-Class Estacion{
-    - nombre : String
-    - ubicacionGeografica : Coordenadas
-    - servicios : List<PrestacionDeServicio>
-}
-
- class PrestacionDeServicio {    
- - servicio: Servicio
- + funciona() : String
-} 
-
-Class Servicio {
-    + informacion(): String
-}
-
-
-class Rol{
--usuario: List<Usuario>
--permisos: Set<Permiso>
-
-+TenesPermiso(): void
-}
-
-class Permiso{
-
-}
-
-
-class Comunidad {
-    -roles: set<Rol>
-    -nombre: String
-    -serviciosDeInteres: Set<PrestacionDeServicio>
-
-    +asginarRol(usuario: Usuario)
-}
-
-
-class Usuario{
-    -nombre: String
-    -apellido: String
-    -correoElectronico: String
-    -contrasenia: String
-    -comunidades: List<Comunidad>
-
-    +setContrasenia(contrasena: String): void
-    +unirseAComunidad(comunidad: Comunidad): void
-    +abandonarComunidad(comunidad: Comunidad): void
-}
-@enduml
-
-
-
-@startuml
 
 
 Class PrestacionDeServicio {    
@@ -151,7 +61,7 @@ class Usuario{
 
 
 Class Entidad {
-    - establecimientos : Set<Establecimiento>
+    - establecimientos : List<Establecimiento>
     - localizacion : Localizacion
     - nombre : String
 }
@@ -162,7 +72,7 @@ Class Entidad {
 Class Establecimiento {
     - nombre : String
     - localizacion : Localizacion
-    - servicios: Set<PrestacionDeServicio>
+    - servicios: List<PrestacionDeServicio>
 }
 
 
@@ -225,14 +135,14 @@ Class Intereses {
 Class EntidadPrestadora {
     - nombre : String    
     - personaDesignada: Usuario
-    - EntidadesPrestadas: List<Entidad>
+    - serviciosPrestados: List<Entidad>
 }
 
 
 Class OrganismoDeControl {
     - nombre : String    
     - personaDesignada: Usuario
-    - PrestadorasReguladas: List<EntidadPrestadora>
+    - entidadesQuePosee: List<EntidadPrestadora>
 }
 
 class Ubicacion {
@@ -275,9 +185,6 @@ Intereses <- Usuario
 AdapterLocalizacion <-- Localizacion
 AdapterLocalizacionGeorefApi --|> AdapterLocalizacion
 ServicioGeoref <-- AdapterLocalizacionGeorefApi
-
-
-
 
 
 
