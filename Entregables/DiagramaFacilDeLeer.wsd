@@ -1,0 +1,88 @@
+@startuml
+/' INCIDENTES '/
+Class Incidente {
+    - fechaApertura: Date
+    - resuelto: Boolean 
+}
+
+Class AperturaDeIncidente {
+
+}
+
+Class CierreDeIncidente {
+
+}
+
+PrestacionDeServicio --> "*" Incidente
+
+
+
+/' CONFIGURACION DE NOTIFICACIONES '/
+Class EstrategiaDeNotificacion {
+    - formaDeRecibir: FormaDeRecibir
+    - medioPreferido: MedioDeNotificacion
+}
+
+Interface MedioDeNotificacion {
+
+}
+
+Class NotificarPorWhatsApp {
+
+}
+
+Class NotificarPorMail {
+
+}
+
+Interface FormaDeRecibir {
+    
+}
+
+Class CuandoSuceden {
+
+}
+
+Class SinApuros {
+
+}
+
+/' NOTIFICACIONES '/
+
+Class FactoryNotificacion {
+    + crearNotificacion(notificacion: INotificacion) 
+}
+
+Interface INotificacion{
+    + algunaOperacion(): void
+}
+
+Class AperturaDeIncidente{
+    + algunaOperacion(): void
+}
+
+Class CierreDeIncidente{
+    + algunaOperacion(): void
+}
+
+Class RevisionManualDeIncidente{
+    + algunaOperacion(): void
+}
+
+Usuario --> EstrategiaDeNotificacion
+
+EstrategiaDeNotificacion --> FormaDeRecibir
+EstrategiaDeNotificacion --> MedioDeNotificacion
+
+FormaDeRecibir <|.. CuandoSuceden
+FormaDeRecibir <|.. SinApuros
+
+MedioDeNotificacion <|.. NotificarPorWhatsApp
+MedioDeNotificacion <|.. NotificarPorMail
+
+FactoryNotificacion .> INotificacion
+INotificacion <|.. AperturaDeIncidente
+INotificacion <|.. CierreDeIncidente
+INotificacion <|.. RevisionManualDeIncidente
+
+@enduml

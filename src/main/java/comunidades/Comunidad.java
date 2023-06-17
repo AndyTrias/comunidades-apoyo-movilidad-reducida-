@@ -1,5 +1,7 @@
 package comunidades;
 
+import comunidades.incidentes.Incidente;
+import comunidades.incidentes.IncidenteDeComunidad;
 import comunidades.servicios.PrestacionDeServicio;
 import comunidades.usuario.Usuario;
 import configs.Config;
@@ -18,11 +20,13 @@ public class Comunidad {
     @Getter private List<Rol> roles;
     @Getter @Setter private String nombre;
     @Getter private Set<PrestacionDeServicio> serviciosDeInteres;
+    @Getter private List<IncidenteDeComunidad> incidentes;
 
     public Comunidad(String nombre) {
         this.nombre = nombre;
         this.serviciosDeInteres = new HashSet<>();
         this.roles = new ArrayList<>();
+        this.incidentes = new ArrayList<>();
         roles.add(ServiceLocator.ROL_BASE);
     }
     
@@ -69,4 +73,8 @@ public class Comunidad {
         return roles.stream().mapToInt(r -> r.getUsuarios().size()).sum();
     }
 
+    public void nuevoIncidenteEn(Incidente incidente, Membresia miembro, String observaciones) {
+        IncidenteDeComunidad incidenteDeComunidad = new IncidenteDeComunidad(incidente, miembro, observaciones);
+        incidentes.add(incidenteDeComunidad);
+    }
 }

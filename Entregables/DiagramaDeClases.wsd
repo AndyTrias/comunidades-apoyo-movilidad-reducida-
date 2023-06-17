@@ -3,7 +3,10 @@
 
 Class PrestacionDeServicio {    
     - servicio: Servicio
+    - incidentes: List<Incidente>
+
     + funciona() : String
+    + nuevoIncidente() : Incidente
 }
 
 
@@ -32,12 +35,13 @@ class Comunidad {
     -roles: set<Rol>
     -nombre: String
     -serviciosDeInteres: Set<PrestacionDeServicio>
-    - incidentes: Set<Incidente>
+    - incidentes: List<Incidente>
 
 
-    +asginarRol(usuario: Usuario)
-    +aceptarUsuario(usuario: Usuario)
-    +eliminarUsuario(Usuario: Usuario)
+    + asginarRol(usuario: Usuario)
+    + aceptarUsuario(usuario: Usuario)
+    + eliminarUsuario(Usuario: Usuario)
+    + nuevoIncidenteEn(Incidente: incidente, miembro: Membresia, observaciones: String)
 }
 
 
@@ -83,6 +87,8 @@ Class Establecimiento {
 Class Membresia {
     - comunidad: Comunidad
     - Roles: Rol
+
+    + abrirIncidente(prestacionDeServicio: PrestacionDeServicio, observaciones: String)
 }
 
 
@@ -184,20 +190,30 @@ Intereses <- Usuario
 
 
 
-AdapterLocalizacion <-- Localizacion
-AdapterLocalizacionGeorefApi --|> AdapterLocalizacion
-ServicioGeoref <-- AdapterLocalizacionGeorefApi
+Localizacion --> AdapterLocalizacion
+AdapterLocalizacion <|-- AdapterLocalizacionGeorefApi
+AdapterLocalizacionGeorefApi --> ServicioGeoref
 
 
 /' Entrega 3 '/
 
 /' INCIDENTES '/
 Class Incidente {
-    - prestacionDeServicioAfectada: PrestacionDeServicio
-    - observaciones: String
-    - fecha: Date
+    - fechaApertura: Date
     - resuelto: Boolean 
 }
+
+Class IncidenteDeComunidad {
+    - incidente: Incidente
+    - miembro: Membresia
+    - observaciones: String
+    - fechaCierre: Date
+}
+
+PrestacionDeServicio --> "*" Incidente
+Comunidad --> "*" IncidenteDeComunidad
+IncidenteDeComunidad --> Incidente
+IncidenteDeComunidad --> Membresia
 
 /' CONFIGURACION DE NOTIFICACIONES '/
 Class EstrategiaDeNotificacion {
@@ -251,19 +267,16 @@ Class RevisionManualDeIncidente{
     + algunaOperacion(): void
 }
 
-Comunidad --> "*" Incidente
-Incidente --> PrestacionDeServicio
+EstrategiaDeNotificacion <-- Usuario
 
-Usuario --> EstrategiaDeNotificacion
+FormaDeRecibir <-- EstrategiaDeNotificacion
+MedioDeNotificacion <-- EstrategiaDeNotificacion
 
-EstrategiaDeNotificacion --> FormaDeRecibir
-EstrategiaDeNotificacion --> MedioDeNotificacion
+CuandoSuceden ..|> FormaDeRecibir
+SinApuros ..|> FormaDeRecibir
 
-FormaDeRecibir <|.. CuandoSuceden
-FormaDeRecibir <|.. SinApuros
-
-MedioDeNotificacion <|.. NotificarPorWhatsApp
-MedioDeNotificacion <|.. NotificarPorMail
+NotificarPorWhatsApp ..|> MedioDeNotificacion
+NotificarPorMail ..|> MedioDeNotificacion
 
 FactoryNotificacion .> INotificacion
 INotificacion <|.. AperturaDeIncidente
