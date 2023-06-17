@@ -101,9 +101,9 @@ Class Localizacion {
     + getListadoProvincias() : ListadoProvincias
     + getMunicipiosDeProvincia(String idProvincia) : ListadoMunicipios
     + getLocalidadesDeMunicipio(String idProvincia, String idMunicipio) : ListadoLocalidades
-    + setProvincia(int idProvincia) : void
-    + setMunicipio(int idMunicipio) : void
-    + setLocalidad(int idLocalidad) : void
+    + setUbicacionAsProvincia(int idProvincia) : void
+    + setUbicacionAsMunicipio(int idMunicipio) : void
+    + setUbicacionAsLocalidad(int idLocalidad) : void
 }
 
 
@@ -113,9 +113,9 @@ Interface AdapterLocalizacion {
     + getListadoProvincias() : ListadoProvincias
     + getMunicipiosDeProvincia(String idProvincia) : ListadoMunicipios
     + getLocalidadesDeMunicipio(String idProvincia, String idMunicipio) : ListadoLocalidades
-    + getProvinciaId(int idProvincia) : ListadoProvincias
-    + getMunicipioId(int idMunicipio) : ListadoMunicipios
-    + getLocalidadId(long idLocalidad) : ListadoLocalidades
+    + getProvinciaById(int idProvincia) : ListadoProvincias
+    + getMunicipioById(int idMunicipio) : ListadoMunicipios
+    + getLocalidadById(long idLocalidad) : ListadoLocalidades
 }
 
 
@@ -127,9 +127,9 @@ Class AdapterLocalizacionGeorefApi {
     + getListadoProvincias() : ListadoProvincias
     + getMunicipiosDeProvincia(String idProvincia) : ListadoMunicipios
     + getLocalidadesDeMunicipio(String idProvincia, String idMunicipio) : ListadoLocalidades
-    + getProvinciaId(int idProvincia) : ListadoProvincias
-    + getMunicipioId(int idMunicipio) : ListadoMunicipios
-    + getLocalidadId(long idLocalidad) : ListadoLocalidades
+    + getProvinciaById(int idProvincia) : ListadoProvincias
+    + getMunicipioById(int idMunicipio) : ListadoMunicipios
+    + getLocalidadById(long idLocalidad) : ListadoLocalidades
 }
 
 
