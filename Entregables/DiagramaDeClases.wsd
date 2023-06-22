@@ -1,6 +1,5 @@
 @startuml
 
-
 Class PrestacionDeServicio {    
     - servicio: Servicio
     - incidentes: List<Incidente>
@@ -42,6 +41,7 @@ class Comunidad {
     + aceptarUsuario(usuario: Usuario)
     + eliminarUsuario(Usuario: Usuario)
     + nuevoIncidenteEn(Incidente: incidente, miembro: Membresia, observaciones: String)
+    + cantidadDeMiembros(): int
 }
 
 
@@ -70,6 +70,8 @@ Class Entidad {
     - establecimientos : Set<Establecimiento>
     - localizacion : Localizacion
     - nombre : String
+
+    + getPrestacionesDeServicio() : Set<PrestacionDeServicio>
 }
 
 
@@ -87,7 +89,6 @@ Class Establecimiento {
 Class Membresia {
     - comunidad: Comunidad
     - Roles: Rol
-
     + abrirIncidente(prestacionDeServicio: PrestacionDeServicio, observaciones: String)
 }
 
@@ -224,6 +225,7 @@ ServicioGeoref <-- AdapterLocalizacionGeorefApi
 /' INCIDENTES '/
 Class Incidente {
     - fechaApertura: Date
+    - fechaCierre: Date
     - resuelto: Boolean 
 }
 
@@ -258,16 +260,38 @@ Class NotificarPorMail {
 
 }
 
-Interface FormaDeRecibir {
+/' ADAPTERS MEDIO DE NOTIFICACION '/
+
+Interface AdapterNotificarPorWhatsapp {
     
 }
 
-Class CuandoSuceden {
+Interface AdapterNotificarPorMail {
+    
+}
+
+Class AdapterWhatsApp {
 
 }
 
-Class SinApuros {
+Class AdapterMail {
 
+}
+
+Interface FormaDeRecibir {
+    + enviarNotificacion()
+}
+
+Class CuandoSuceden {
+    + enviarNotificacion()
+}
+
+Class SinApuros {
+    - horarios: Set<Date>
+    - incidentesANotificar: Set<IncidenteDeComunidad>
+
+    + enviarNotificacion()
+    + agregarIncidenteANotificar(incidente: IncidenteDeComunidad)
 }
 
 /' NOTIFICACIONES '/
@@ -280,16 +304,9 @@ Interface INotificacion{
     + algunaOperacion(): void
 }
 
-Class AperturaDeIncidente{
-    + algunaOperacion(): void
-}
-
-Class CierreDeIncidente{
-    + algunaOperacion(): void
-}
-
-Class RevisionManualDeIncidente{
-    + algunaOperacion(): void
+Class Notificacion {
+    - titulo: String
+    - mensaje: String
 }
 
 EstrategiaDeNotificacion <-- Usuario
@@ -300,13 +317,99 @@ MedioDeNotificacion <-- EstrategiaDeNotificacion
 CuandoSuceden ..|> FormaDeRecibir
 SinApuros ..|> FormaDeRecibir
 
+
+/' Whatsapp '/
+AdapterWhatsApp ..|> AdapterNotificarPorWhatsapp
+AdapterNotificarPorWhatsapp ..|> NotificarPorWhatsApp
 NotificarPorWhatsApp ..|> MedioDeNotificacion
+
+/' Mail '/
+AdapterMail ..|> AdapterNotificarPorMail
+AdapterNotificarPorMail ..|> NotificarPorMail
 NotificarPorMail ..|> MedioDeNotificacion
 
 FactoryNotificacion .> INotificacion
-INotificacion <|.. AperturaDeIncidente
-INotificacion <|.. CierreDeIncidente
-INotificacion <|.. RevisionManualDeIncidente
+INotificacion <|.. Notificacion
 
+/' SUGERENCIA REVISION DE INCIDENTE '/
+
+Class RevisionDeIncidente {
+    + estaCerca(miembro: Miembro, incidente: Incidente): Boolean
+    + avisarRevisionDeIncidente(miembro: Miembro, incidente: Incidente): void
+}
+
+
+/' RANKINGS '/
+
+Class FactoryGenerarRankings {
+    - rankings: Set<Ranking>
+
+    + generarRankings()
+}
+
+Interface Ranking {
+    + generarRanking()
+}
+
+Class RankingPromedioCierreIncidentes {
+    + generarRanking()
+    + tiempoDeCierreDeIncidente(incidente: Incidente): Float
+}
+
+Class RankingMayorCantidadDeIncidentesSemana {
+    + generarRanking()
+    + incidenteOcurrioEnLaSemana(incidente: Incidente): Boolean
+    + incidenteSeGeneroEnDespuesDe24Hs(incidente: Incidente): Boolean
+}
+
+Class RankingImpactoProblematicas {
+    + generarRanking()
+    + comunidadConMayorImpacto() : Comunidad
+}
+
+
+
+FactoryGenerarRankings --> "*" Ranking
+Ranking <|.. RankingPromedioCierreIncidentes
+Ranking <|.. RankingMayorCantidadDeIncidentesSemana
+Ranking <|.. RankingImpactoProblematicas
+
+/' AFECTADO U OBSERVADOR '/
+
+Class Membresia {
+    - tipoDeUsuario: TipoDeUsuario
+
+    + cambiarDeTipoDeUsuario(tipoDeUsuario: TipoDeUsuario)
+    + actuar()
+}
+
+Interface TipoDeUsuario {
+    + actuar(Membresia: Membresia)
+}
+
+Class Afectado {
+    - prestacionesDeServicio: Set<PrestacionDeServicio>    
+    + actuar(Membresia: Membresia)
+}
+
+Class Observador {
+    + actuar(Membresia: Membresia)
+}
+
+Membresia --> TipoDeUsuario
+TipoDeUsuario <|.. Afectado
+TipoDeUsuario <|.. Observador
+Afectado --> "*" PrestacionDeServicio
+
+/' Class TipoDeUsuario {
+    - nombre: String
+    - prestacionesDeServicio: Set<PrestacionDeServicio>
+}
+
+Membresia --> TipoDeUsuario '/
+
+PrestacionDeServicio -[hidden]-> FactoryNotificacion
+PrestacionDeServicio -[hidden]-> RevisionDeIncidente
+PrestacionDeServicio -[hidden]-> FactoryGenerarRankings
 
 @enduml
