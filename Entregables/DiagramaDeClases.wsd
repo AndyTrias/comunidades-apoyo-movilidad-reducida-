@@ -5,7 +5,8 @@ Class PrestacionDeServicio {
     - incidentes: List<Incidente>
 
     + funciona() : String
-    + nuevoIncidente() : Incidente
+    + abrirIncidente(): void
+
 }
 
 
@@ -34,7 +35,7 @@ class Comunidad {
     -roles: set<Rol>
     -nombre: String
     -serviciosDeInteres: Set<PrestacionDeServicio>
-    - incidentes: List<Incidente>
+    - incidentes: List<IncidenteDeComunidad>
 
 
     + asginarRol(usuario: Usuario)
@@ -89,7 +90,6 @@ Class Establecimiento {
 Class Membresia {
     - comunidad: Comunidad
     - Roles: Rol
-    + abrirIncidente(prestacionDeServicio: PrestacionDeServicio, observaciones: String)
 }
 
 
@@ -240,7 +240,7 @@ Incidente "*" <-- PrestacionDeServicio
 Comunidad --> "*" IncidenteDeComunidad
 IncidenteDeComunidad --> Incidente
 IncidenteDeComunidad --> Membresia
-Membresia ..> PrestacionDeServicio
+' Membresia ..> PrestacionDeServicio
 
 /' CONFIGURACION DE NOTIFICACIONES '/
 Class EstrategiaDeNotificacion {
