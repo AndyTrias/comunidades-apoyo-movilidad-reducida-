@@ -236,11 +236,11 @@ Class IncidenteDeComunidad #bbffcc{
     - fechaCierre: Date
 }
 
-Class NotificarIncidente #bbffcc {
+/' Class NotificarIncidente #bbffcc {
     + notificar()
     + notificarComunidadesDeUsuario(Usuario, Incidente)
     + notificarUsuarioConInteres(Incidente)
-}
+} '/
 
 Incidente "*" <-- PrestacionDeServicio 
 Comunidad --> "*" IncidenteDeComunidad
@@ -293,10 +293,10 @@ Class CuandoSuceden #bbffcc{
 
 Class SinApuros #bbffcc{
     - horarios: Set<Date>
-    - incidentesANotificar: Set<IncidenteDeComunidad>
+    - incidentesANotificar: List<Notificaciones>
 
-    + enviarNotificacion()
-    + agregarIncidenteANotificar(incidente: IncidenteDeComunidad)
+    + notificar()
+    + enviarNotificacionesEnEspera()
 }
 
 /' NOTIFICACIONES '/
@@ -416,5 +416,51 @@ Membresia --> TipoDeUsuario '/
 PrestacionDeServicio -[hidden]-> FactoryNotificacion
 PrestacionDeServicio -[hidden]-> RevisionDeIncidente
 PrestacionDeServicio -[hidden]-> FactoryGenerarRankings
+
+Class Notificador #bbffcc{
+    - comandos: List<Comando>
+
+    + enviarNotificacion(incidente: Incidente, usuario: Usuario)
+}
+
+Interface Comando #bbffcc{
+    + enviarNotificacion(incidente: Incidente, usuario: Usuario)
+}
+
+Class EnviarNotificacionAUsuariosInteresados #bbffcc{
+    + enviarNotificacion(incidente: Incidente, usuario: Usuario)
+}
+
+Class EnviarNotificacionAComunidadesDeUsuario #bbffcc{
+    + enviarNotificacion(incidente: Incidente, usuario: Usuario)
+}
+
+Class EnviarRevisionManualDeIncidente #bbffcc{
+    + enviarNotificacion(incidente: Incidente, usuario: Usuario)
+}
+
+note left of EnviarNotificacionAComunidadesDeUsuario
+enviarNotificacion(incidente: Incidente, usuario: Usuario) {
+    List<Comunidad> comunidades = usuario.getComunidades()
+    comunidades = comunidades.filter(comunidad -> comunidad.getServiciosDeInteres().contains(incidente))
+    Set<Usuario> usuariosANotificar = comunidades.forEach(comunidad -> comunidad.getUsuarios()))
+    
+    Notificacion notificacion = FactoryNotificacion.crearNotificacion(incidente)
+    usuariosANotificar.forEach(usuario -> usuario.enviarNotificacion(notificacion))
+}
+end note
+
+note left of FormaDeRecibir
+// usuario
+enviarNotificacion(notificacion: Notificacion) {
+    estrategiaDeNotificacion.formaDeRecibir.enviarNotificacion(notificacion)
+}
+end note
+
+Notificador --> "*" Comando
+Comando <|.. EnviarNotificacionAUsuariosInteresados
+Comando <|.. EnviarNotificacionAComunidadesDeUsuario
+Comando <|.. EnviarRevisionManualDeIncidente
+
 
 @enduml
