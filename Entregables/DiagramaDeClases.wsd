@@ -1,99 +1,12 @@
 @startuml
-Linea -> Tipo
-Linea --> "*" Estacion
-Estacion -> Coordenadas
-Estacion --> "*" PrestacionDeServicio 
-PrestacionDeServicio --> Servicio
-Comunidad -> "*" PrestacionDeServicio
-
-Permiso "*" <- Rol
-Usuario "*" <-- Rol
-Rol <- Comunidad
-Usuario --> Comunidad
-Usuario <.. Comunidad
-
-
-Enum Tipo{
- + SUBTERRANEO
- + FERROCARRIL
-}
-
-Class Linea{
-    - estaciones : List<Estacion>
-    - nombre : String
-    - tipo : Enum 
-
-    + estacionDeOrigen() : Estacion
-    + estacionDeDestino() : Estacion
-    + estacionSiguiente(Estacion) : Estacion
-    + estacionAnterior(Estacion) : Estacion
-}
-
-Class Coordenadas {
-    - latitud : Float
-    - longitud : Float
-
-    + coordenadas() : String
-}
-
-Class Estacion{
-    - nombre : String
-    - ubicacionGeografica : Coordenadas
-    - servicios : List<PrestacionDeServicio>
-}
-
- class PrestacionDeServicio {    
- - servicio: Servicio
- + funciona() : String
-} 
-
-Class Servicio {
-    + informacion(): String
-}
-
-
-class Rol{
--usuario: List<Usuario>
--permisos: Set<Permiso>
-
-+TenesPermiso(): void
-}
-
-class Permiso{
-
-}
-
-
-class Comunidad {
-    -roles: set<Rol>
-    -nombre: String
-    -serviciosDeInteres: Set<PrestacionDeServicio>
-
-    +asginarRol(usuario: Usuario)
-}
-
-
-class Usuario{
-    -nombre: String
-    -apellido: String
-    -correoElectronico: String
-    -contrasenia: String
-    -comunidades: List<Comunidad>
-
-    +setContrasenia(contrasena: String): void
-    +unirseAComunidad(comunidad: Comunidad): void
-    +abandonarComunidad(comunidad: Comunidad): void
-}
-@enduml
-
-
-
-@startuml
-
 
 Class PrestacionDeServicio {    
     - servicio: Servicio
+    - incidentes: List<Incidente>
+
     + funciona() : String
+    + abrirIncidente(): void
+
 }
 
 
@@ -122,11 +35,14 @@ class Comunidad {
     -roles: set<Rol>
     -nombre: String
     -serviciosDeInteres: Set<PrestacionDeServicio>
+    - incidentes: List<IncidenteDeComunidad>
 
 
-    +asginarRol(usuario: Usuario)
-    +aceptarUsuario(usuario: Usuario)
-    +eliminarUsuario(Usuario: Usuario)
+    + asginarRol(usuario: Usuario)
+    + aceptarUsuario(usuario: Usuario)
+    + eliminarUsuario(Usuario: Usuario)
+    + nuevoIncidenteEn(Incidente: incidente, miembro: Membresia, observaciones: String)
+    + cantidadDeMiembros(): int
 }
 
 
@@ -136,8 +52,9 @@ class Usuario{
     -apellido: String
     -correoElectronico: String
     -contrasenia: String
-    -intereses: Intereses
-    - membresias: List<Membresia>
+    -interes: Intereses
+    - membresias: Set<Membresia>
+    - estraegiaDeNotificacion: EstrategiaDeNotificacion
 
 
 
@@ -154,6 +71,8 @@ Class Entidad {
     - establecimientos : Set<Establecimiento>
     - localizacion : Localizacion
     - nombre : String
+
+    + getPrestacionesDeServicio() : Set<PrestacionDeServicio>
 }
 
 
@@ -178,42 +97,65 @@ Class Membresia {
 
 Class Localizacion {
     - adapter: AdapterLocalizacion
+    - ubicacion: Ubicacion
 
-    + ejecutarConsulta(String id) : Localizacion
+    + getListadoProvincias() : ListadoProvincias
+    + getMunicipiosDeProvincia(String idProvincia) : ListadoMunicipios
+    + getLocalidadesDeMunicipio(String idProvincia, String idMunicipio) : ListadoLocalidades
+    + setUbicacionAsProvincia(int idProvincia) : void
+    + setUbicacionAsMunicipio(int idMunicipio) : void
+    + setUbicacionAsLocalidad(int idLocalidad) : void
 }
 
 
 
 
 Interface AdapterLocalizacion {
-    + ejecutarConsulta(String id) : Localizacion
+    + getListadoProvincias() : ListadoProvincias
+    + getMunicipiosDeProvincia(String idProvincia) : ListadoMunicipios
+    + getLocalidadesDeMunicipio(String idProvincia, String idMunicipio) : ListadoLocalidades
+    + getProvinciaById(int idProvincia) : ListadoProvincias
+    + getMunicipioById(int idMunicipio) : ListadoMunicipios
+    + getLocalidadById(long idLocalidad) : ListadoLocalidades
 }
 
 
 
 
 Class AdapterLocalizacionGeorefApi {
-    - adaptada: ServicioGeoref
+    - adapterServicioGeoref: ServicioGeoref
 
-
-
-
-    + ejecutarConsulta(String id) : Localizacion
+    + getListadoProvincias() : ListadoProvincias
+    + getMunicipiosDeProvincia(String idProvincia) : ListadoMunicipios
+    + getLocalidadesDeMunicipio(String idProvincia, String idMunicipio) : ListadoLocalidades
+    + getProvinciaById(int idProvincia) : ListadoProvincias
+    + getMunicipioById(int idMunicipio) : ListadoMunicipios
+    + getLocalidadById(long idLocalidad) : ListadoLocalidades
 }
 
 
 
 
 Class ServicioGeoref {
-    + obtenerLocalizacion(String id) : Localizacion
+    - instancia: ServicioGeoref
+    - urlAPI: String
+    - retrofit: Retrofit
+
+    + getInstancia() : ServicioGeoref
+    + listadoProvincias() : ListadoProvincias
+    + listadoProvincias(int id) : ListadoProvincias
+    + listadoMunicipios(String id) : ListadoMunicipios
+    + listadoMunicipios(int idProvincia) : ListadoMunicipios
+    + listadoLocalidades(String idProvincia, String idMunicipio) : ListadoLocalidades
+    + listadoLocalidades(long id) : ListadoLocalidades
 }
 
 
 
 
 Class Intereses {
-    - List<Servicio>
-    - List<Entidad>
+    - Set<Servicio>
+    - Set<Entidad>
 
 
 
@@ -225,28 +167,29 @@ Class Intereses {
 Class EntidadPrestadora {
     - nombre : String    
     - personaDesignada: Usuario
-    - EntidadesPrestadas: List<Entidad>
+    - serviciosPrestados: Set<Entidad>
 }
 
 
 Class OrganismoDeControl {
     - nombre : String    
     - personaDesignada: Usuario
-    - PrestadorasReguladas: List<EntidadPrestadora>
+    - entidadesQuePosee: Set<EntidadPrestadora>
 }
 
 class Ubicacion {
-- provincia: String
-- municipio: String
-- localidad: String
+    - provincia: Provincia
+    - municipio: Municipio
+    - localidad: Localidad
 }
 
-Usuario -> Localizacion 
-Entidad -> Localizacion
-
+Localizacion <-- Usuario 
+Localizacion <- Entidad
+Localizacion <- Establecimiento
+Localizacion -> Ubicacion
 
 EntidadPrestadora --> "*" Entidad
-OrganismoDeControl --> "*" EntidadPrestadora
+OrganismoDeControl -> "*" EntidadPrestadora
 
 
 Servicio <- PrestacionDeServicio
@@ -255,8 +198,8 @@ Entidad --> "*" Establecimiento
 Intereses --> "*" Entidad
 Intereses --> "*" Servicio 
 Establecimiento --> "*" PrestacionDeServicio
-Establecimiento -> Localizacion
-Localizacion -> Ubicacion
+
+
 
 
 Usuario <-- EntidadPrestadora
@@ -277,9 +220,196 @@ AdapterLocalizacionGeorefApi --|> AdapterLocalizacion
 ServicioGeoref <-- AdapterLocalizacionGeorefApi
 
 
+/' Entrega 3 '/
+
+/' INCIDENTES '/
+Class Incidente {
+    - fechaApertura: Date
+    - fechaCierre: Date
+    - resuelto: Boolean 
+}
+
+Class IncidenteDeComunidad {
+    - incidente: Incidente
+    - miembro: Membresia
+    - observaciones: String
+    - fechaCierre: Date
+}
+
+Incidente "*" <-- PrestacionDeServicio 
+Comunidad --> "*" IncidenteDeComunidad
+IncidenteDeComunidad --> Incidente
+IncidenteDeComunidad --> Membresia
+' Membresia ..> PrestacionDeServicio
+
+/' CONFIGURACION DE NOTIFICACIONES '/
+Class EstrategiaDeNotificacion {
+    - formaDeRecibir: FormaDeRecibir
+    - medioPreferido: MedioDeNotificacion
+}
+
+Interface MedioDeNotificacion {
+
+}
+
+Class NotificarPorWhatsApp {
+
+}
+
+Class NotificarPorMail {
+
+}
+
+/' ADAPTERS MEDIO DE NOTIFICACION '/
+
+Interface AdapterNotificarPorWhatsapp {
+    
+}
+
+Interface AdapterNotificarPorMail {
+    
+}
+
+Class AdapterWhatsApp {
+
+}
+
+Class AdapterMail {
+
+}
+
+Interface FormaDeRecibir {
+    + enviarNotificacion()
+}
+
+Class CuandoSuceden {
+    + enviarNotificacion()
+}
+
+Class SinApuros {
+    - horarios: Set<Date>
+    - incidentesANotificar: Set<IncidenteDeComunidad>
+
+    + enviarNotificacion()
+    + agregarIncidenteANotificar(incidente: IncidenteDeComunidad)
+}
+
+/' NOTIFICACIONES '/
+
+Class FactoryNotificacion {
+    + crearNotificacion(notificacion: INotificacion) 
+}
+
+Interface INotificacion{
+    + algunaOperacion(): void
+}
+
+Class Notificacion {
+    - titulo: String
+    - mensaje: String
+}
+
+EstrategiaDeNotificacion <-- Usuario
+
+FormaDeRecibir <-- EstrategiaDeNotificacion
+MedioDeNotificacion <-- EstrategiaDeNotificacion
+
+CuandoSuceden ..|> FormaDeRecibir
+SinApuros ..|> FormaDeRecibir
+
+
+/' Whatsapp '/
+AdapterWhatsApp ..|> AdapterNotificarPorWhatsapp
+AdapterNotificarPorWhatsapp ..|> NotificarPorWhatsApp
+NotificarPorWhatsApp ..|> MedioDeNotificacion
+
+/' Mail '/
+AdapterMail ..|> AdapterNotificarPorMail
+AdapterNotificarPorMail ..|> NotificarPorMail
+NotificarPorMail ..|> MedioDeNotificacion
+
+FactoryNotificacion .> INotificacion
+INotificacion <|.. Notificacion
+
+/' SUGERENCIA REVISION DE INCIDENTE '/
+
+Class RevisionDeIncidente {
+    + estaCerca(miembro: Miembro, incidente: Incidente): Boolean
+    + avisarRevisionDeIncidente(miembro: Miembro, incidente: Incidente): void
+}
+
+
+/' RANKINGS '/
+
+Class FactoryGenerarRankings {
+    - rankings: Set<Ranking>
+
+    + generarRankings()
+}
+
+Interface Ranking {
+    + generarRanking()
+}
+
+Class RankingPromedioCierreIncidentes {
+    + generarRanking()
+    + tiempoDeCierreDeIncidente(incidente: Incidente): Float
+}
+
+Class RankingMayorCantidadDeIncidentesSemana {
+    + generarRanking()
+    + incidenteOcurrioEnLaSemana(incidente: Incidente): Boolean
+    + incidenteSeGeneroEnDespuesDe24Hs(incidente: Incidente): Boolean
+}
+
+Class RankingImpactoProblematicas {
+    + generarRanking()
+    + comunidadConMayorImpacto() : Comunidad
+}
 
 
 
+FactoryGenerarRankings --> "*" Ranking
+Ranking <|.. RankingPromedioCierreIncidentes
+Ranking <|.. RankingMayorCantidadDeIncidentesSemana
+Ranking <|.. RankingImpactoProblematicas
 
+/' AFECTADO U OBSERVADOR '/
+
+Class Membresia {
+    - tipoDeUsuario: TipoDeUsuario
+
+    + cambiarDeTipoDeUsuario(tipoDeUsuario: TipoDeUsuario)
+    + actuar()
+}
+
+Interface TipoDeUsuario {
+    + actuar(Membresia: Membresia)
+}
+
+Class Afectado {
+    - prestacionesDeServicio: Set<PrestacionDeServicio>    
+    + actuar(Membresia: Membresia)
+}
+
+Class Observador {
+    + actuar(Membresia: Membresia)
+}
+
+Membresia --> TipoDeUsuario
+TipoDeUsuario <|.. Afectado
+TipoDeUsuario <|.. Observador
+Afectado --> "*" PrestacionDeServicio
+
+/' Class TipoDeUsuario {
+    - nombre: String
+    - prestacionesDeServicio: Set<PrestacionDeServicio>
+}
+
+Membresia --> TipoDeUsuario '/
+
+PrestacionDeServicio -[hidden]-> FactoryNotificacion
+PrestacionDeServicio -[hidden]-> RevisionDeIncidente
+PrestacionDeServicio -[hidden]-> FactoryGenerarRankings
 
 @enduml

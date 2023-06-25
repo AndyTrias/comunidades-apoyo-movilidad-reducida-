@@ -1,7 +1,6 @@
 package localizacion;
 
 import apiCalls.georef.responseClases.*;
-import com.google.gson.Gson;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,18 +20,18 @@ public class Localizacion {
         return adapter.getLocalidadesDeMunicipio(idProvincia, idMunicipio);
     }
 
-    public void setProvincia(int idProvincia) throws Exception {
-        this.ubicacion.setProvincia(adapter.getProvinciaId(idProvincia).provincias.get(0));
+    public void setUbicacionAsProvincia(int idProvincia) throws Exception {
+        this.ubicacion.setProvincia(adapter.getProvinciaById(idProvincia).provincias.get(0));
     }
 
-    public void setMunicipio(int idMunicipio) throws Exception {
-        ListadoMunicipios municipio = adapter.getMunicipioId(idMunicipio);
+    public void setUbicacionAsMunicipio(int idMunicipio) throws Exception {
+        ListadoMunicipios municipio = adapter.getMunicipioById(idMunicipio);
         this.ubicacion.setMunicipio(municipio.municipios.get(0));
         this.ubicacion.setProvincia(municipio.municipios.get(0).provincia);
     }
 
-    public void setLocalidad(long idLocalidad) throws Exception {
-        ListadoLocalidades localidad = adapter.getLocalidadId(idLocalidad);
+    public void setUbicacionAsLocalidad(long idLocalidad) throws Exception {
+        ListadoLocalidades localidad = adapter.getLocalidadById(idLocalidad);
         this.ubicacion.setLocalidad(localidad.localidades.get(0));
         this.ubicacion.setMunicipio(localidad.localidades.get(0).municipio);
         this.ubicacion.setProvincia(localidad.localidades.get(0).provincia);

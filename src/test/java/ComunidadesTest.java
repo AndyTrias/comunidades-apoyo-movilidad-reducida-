@@ -1,6 +1,8 @@
 import comunidades.Comunidad;
 import comunidades.Permiso;
 import comunidades.Rol;
+import comunidades.servicios.PrestacionDeServicio;
+import comunidades.servicios.Servicio;
 import comunidades.usuario.Usuario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -65,5 +67,17 @@ public class ComunidadesTest {
 
         assertEquals(comunidad1.getCantidadDeUsuarios(), 0);
         assertEquals(franco.getMembresias().size(), 0);
+    }
+
+    @Test
+    public void testAperturaDeIncidente(){
+        Rol rolDelUsuario = comunidad1.aceptarUsuario(franco);
+        franco.unirseAComunidad(comunidad1, rolDelUsuario);
+        Servicio servicio = new Servicio("baño hombres");
+        PrestacionDeServicio prestacionDeServicio = new PrestacionDeServicio(servicio);
+        franco.getMembresias().get(0).abrirIncidente(prestacionDeServicio, "baño roto");
+
+        assertEquals(comunidad1.getIncidentes().size(), 1);
+        assertEquals(prestacionDeServicio.getIncidentes().size(), 1);
     }
 }
