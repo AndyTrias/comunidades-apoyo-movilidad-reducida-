@@ -38,7 +38,8 @@ public class ServicioGeoref {
 
     public ListadoProvincias listadoProvincias(int idProvincia) throws IOException {
         GeorefService georefService = this.retrofit.create(GeorefService.class);
-        Call<ListadoProvincias> requestProvinciasArg = georefService.provincias(idProvincia);
+        String campos = "id,nombre";
+        Call<ListadoProvincias> requestProvinciasArg = georefService.provincias(idProvincia, campos);
         Response<ListadoProvincias> responseProvinciasArg = requestProvinciasArg.execute();
         return responseProvinciasArg.body();
     }
@@ -52,7 +53,8 @@ public class ServicioGeoref {
 
     public ListadoMunicipios listadoMunicipios(int idProvincia) throws IOException {
         GeorefService georefService = this.retrofit.create(GeorefService.class);
-        Call<ListadoMunicipios> requestMunicipiosArg = georefService.municipios(idProvincia);
+        String campos = "id,nombre,provincia";
+        Call<ListadoMunicipios> requestMunicipiosArg = georefService.municipios(idProvincia, campos);
         Response<ListadoMunicipios> responseMunicipiosArg = requestMunicipiosArg.execute();
         return responseMunicipiosArg.body();
     }
@@ -66,7 +68,8 @@ public class ServicioGeoref {
 
     public ListadoLocalidades listadoLocalidades(long id) throws IOException {
         GeorefService georefService = this.retrofit.create(GeorefService.class);
-        Call<ListadoLocalidades> requestLocalidadesArg = georefService.localidades(id);
+        String campos = "id,nombre,municipio,provincia";
+        Call<ListadoLocalidades> requestLocalidadesArg = georefService.localidades(id, campos);
         Response<ListadoLocalidades> responseLocalidadesArg = requestLocalidadesArg.execute();
         return responseLocalidadesArg.body();
     }

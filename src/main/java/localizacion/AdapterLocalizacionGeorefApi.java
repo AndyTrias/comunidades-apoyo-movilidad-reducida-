@@ -30,7 +30,7 @@ public class AdapterLocalizacionGeorefApi implements AdapterLocalizacion {
         return adapterServicioGeoref.listadoLocalidades(idProvincia, idMunicipio);
     }
 
-    public ListadoLocalidades getLocalidadesDeMunicipio(long idLocalidad) throws IOException {
+    public ListadoLocalidades getLocalidadId(long idLocalidad) throws IOException {
         return adapterServicioGeoref.listadoLocalidades(idLocalidad);
     }
 }

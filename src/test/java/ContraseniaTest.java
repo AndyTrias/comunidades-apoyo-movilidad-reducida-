@@ -32,8 +32,6 @@ public class ContraseniaTest {
         Usuario usuario = new Usuario("ejemplo", "ejemplo", "ejemplo@ejemplo.com");
         String contrasenia = "password";
 
-        usuario.setContrasenia(contrasenia);
-
         assertThrows(Exception.class, () -> usuario.setContrasenia(contrasenia));
     }
 }
