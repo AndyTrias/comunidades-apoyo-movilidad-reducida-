@@ -1,9 +1,9 @@
 package localizacion;
 
-import apiCalls.georef.ServicioGeoref;
-import apiCalls.georef.responseClases.ListadoLocalidades;
-import apiCalls.georef.responseClases.ListadoMunicipios;
-import apiCalls.georef.responseClases.ListadoProvincias;
+import external.georef.ServicioGeoref;
+import external.georef.responseClases.ListadoLocalidades;
+import external.georef.responseClases.ListadoMunicipios;
+import external.georef.responseClases.ListadoProvincias;
 
 import java.io.IOException;
 

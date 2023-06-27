@@ -19,18 +19,16 @@ import java.util.Set;
 public class Usuario {
     private String nombre;
     private String apellido;
-    @Setter private String correoElectronico;
+    @Setter private Email correoElectronico;
     @Getter private String contrasenia;
     @Getter private Intereses intereses;
     @Getter private List<Membresia> membresias;
     @Setter private Set<Localizacion> localizacion;
 
-    public Usuario(String nombre, String apellido, String correoElectronico) {
+    public Usuario(String nombre, String apellido, Email correoElectronico) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.correoElectronico = correoElectronico;
-        this.contrasenia = contrasenia;
-        this.intereses = intereses;
         this.membresias = new ArrayList<>();
     }
 

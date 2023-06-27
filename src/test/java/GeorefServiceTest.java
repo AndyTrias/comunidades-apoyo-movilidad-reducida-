@@ -1,5 +1,5 @@
-import apiCalls.georef.responseClases.ListadoMunicipios;
-import apiCalls.georef.responseClases.ListadoProvincias;
+import external.georef.responseClases.ListadoMunicipios;
+import external.georef.responseClases.ListadoProvincias;
 import localizacion.AdapterLocalizacionGeorefApi;
 import localizacion.Localizacion;
 import org.junit.jupiter.api.BeforeEach;
