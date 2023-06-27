@@ -189,11 +189,11 @@ Localizacion <- Establecimiento
 Localizacion -> Ubicacion
 
 EntidadPrestadora --> "*" Entidad
-OrganismoDeControl -> "*" EntidadPrestadora
+OrganismoDeControl --> "*" EntidadPrestadora
 
 
-Servicio <- PrestacionDeServicio
-Comunidad -> "*" PrestacionDeServicio
+Servicio <-- PrestacionDeServicio
+Comunidad --> "*" PrestacionDeServicio
 Entidad --> "*" Establecimiento
 Intereses --> "*" Entidad
 Intereses --> "*" Servicio 
@@ -203,14 +203,14 @@ Establecimiento --> "*" PrestacionDeServicio
 
 
 Usuario <-- EntidadPrestadora
-Usuario <-- OrganismoDeControl
+OrganismoDeControl -> Usuario
 Rol --> "*" Usuario
-Permiso "*" <-- Rol
+Rol -> "*" Permiso
 Rol "*" <- Comunidad
 Usuario -> "*" Membresia
 Membresia -> Comunidad
 Rol <-- Membresia
-Intereses <- Usuario
+Usuario --> Intereses
 
 
 
@@ -236,6 +236,8 @@ Class IncidenteDeComunidad #bbffcc{
     - usuario: Usuario
     - observaciones: String
     - fechaCierre: Date
+
+    + notificar()
 }
 
 Incidente "*" <-- PrestacionDeServicio 
@@ -244,6 +246,7 @@ IncidenteDeComunidad --> Incidente
 IncidenteDeComunidad --> Usuario
 
 /' CONFIGURACION DE NOTIFICACIONES '/
+
 Class EstrategiaDeNotificacion #bbffcc{
     - formaDeRecibir: FormaDeRecibir
     - medioPreferido: MedioDeNotificacion
@@ -297,12 +300,13 @@ Class SinApuros #bbffcc{
     + enviarNotificacion(medioPreferido: MedioDeNotificacion)
 }
 
-note right of SinApuros
-    enviarNotificacion() lo agrega a una cola de ejecucion
-    notificar() se ejecuta con el cron job y ejecuta todas las notificaciones en la lista
-end note
-
 /' NOTIFICACIONES '/
+
+Class Notificador #bbffcc{
+    + enviarNotificacionAUsuariosInteresados(incidente: Incidente)
+    + enviarNotificacionAComunidadesDeUsuario(incidente: Incidente, usuario: Usuario)
+    + enviarRevisionManualDeIncidente(incidente: Incidente)
+}
 
 Class FactoryNotificacion #bbffcc{
     + crearNotificacion(notificacion: INotificacion) 
@@ -339,43 +343,17 @@ NotificarPorMail ..|> MedioDeNotificacion
 FactoryNotificacion .> INotificacion
 INotificacion <|.. Notificacion
 
-Class Notificador #bbffcc{
-    + enviarNotificacionAUsuariosInteresados(incidente: Incidente)
-    + enviarNotificacionAComunidadesDeUsuario(incidente: Incidente, usuario: Usuario)
-    + enviarRevisionManualDeIncidente(incidente: Incidente)
-}
-
-note right of Notificador
-enviarNotificacionAComunidadesDeUsuario(incidente: Incidente, usuario: Usuario) {
-    List<Comunidad> comunidades = usuario.getComunidades()
-    comunidades = comunidades.filter(comunidad -> comunidad.getServiciosDeInteres().contains(incidente))
-    Set<Usuario> usuariosANotificar = comunidades.forEach(comunidad -> comunidad.getUsuarios()))
-    
-    Notificacion notificacion = FactoryNotificacion.crearNotificacion(incidente)
-    usuariosANotificar.forEach(usuario -> usuario.getEstrategiaDeNotificacion().notificar(notificacion))
-}
-end note
-
-note left of FormaDeRecibir
-// clase estraegia de notificacion:
-    notificar(){
-        formaDeRecibir.enviarNotificacion(medioPreferido)
-    }
-
-// clase que implemente forma de recibir:
-    enviarNotificacion(medioPreferido){
-        medioPreferido.enviarNotificacion()
-    }
-end note
-
-Incidente ..> Notificador
+Incidente .> Notificador
+IncidenteDeComunidad .> Notificador
 
 /' SUGERENCIA REVISION DE INCIDENTE '/
 
-/' Class RevisionDeIncidente {
-    + estaCerca(miembro: Miembro, incidente: Incidente): Boolean
-    + avisarRevisionDeIncidente(miembro: Miembro, incidente: Incidente): void
-} '/
+Class RevisionDeIncidente #bbffcc{
+    + estaCerca(usuario: Usuario, incidente: Incidente): Boolean
+    + avisarRevisionDeIncidente(usuario: Usuario, incidente: Incidente): void
+}
+
+RevisionDeIncidente ..> Notificador
 
 
 /' RANKINGS '/
@@ -448,7 +426,6 @@ Class TipoDeUsuario {
 Membresia --> TipoDeUsuario '/
 
 PrestacionDeServicio -[hidden]-> FactoryNotificacion
-PrestacionDeServicio -[hidden]-> RevisionDeIncidente
 PrestacionDeServicio -[hidden]-> FactoryGenerarRankings
 
 @enduml

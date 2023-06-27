@@ -73,8 +73,8 @@ public class Comunidad {
         return roles.stream().mapToInt(r -> r.getUsuarios().size()).sum();
     }
 
-    public void nuevoIncidenteEn(Incidente incidente, Membresia miembro, String observaciones) {
-        IncidenteDeComunidad incidenteDeComunidad = new IncidenteDeComunidad(incidente, miembro, observaciones);
+    public void nuevoIncidenteEn(Incidente incidente, Usuario usuario, String observaciones) {
+        IncidenteDeComunidad incidenteDeComunidad = new IncidenteDeComunidad(incidente, usuario, observaciones);
         incidentes.add(incidenteDeComunidad);
     }
 }

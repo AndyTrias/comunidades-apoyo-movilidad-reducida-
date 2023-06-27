@@ -28,6 +28,10 @@ public class PrestacionDeServicio {
         }
     }
 
+    public void cerrarIncidente(Incidente incidente) {
+        incidente.cerrar();
+    }
+
 }
 
 

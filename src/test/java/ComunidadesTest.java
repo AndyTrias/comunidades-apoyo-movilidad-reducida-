@@ -1,6 +1,7 @@
 import comunidades.Comunidad;
 import comunidades.Permiso;
 import comunidades.Rol;
+import comunidades.incidentes.Incidente;
 import comunidades.servicios.PrestacionDeServicio;
 import comunidades.servicios.Servicio;
 import comunidades.usuario.Usuario;
@@ -73,11 +74,36 @@ public class ComunidadesTest {
     public void testAperturaDeIncidente(){
         Rol rolDelUsuario = comunidad1.aceptarUsuario(franco);
         franco.unirseAComunidad(comunidad1, rolDelUsuario);
+
         Servicio servicio = new Servicio("baño hombres");
         PrestacionDeServicio prestacionDeServicio = new PrestacionDeServicio(servicio);
-        franco.getMembresias().get(0).abrirIncidente(prestacionDeServicio, "baño roto");
+
+        // abrir o crear incidente generico
+        Incidente incidente = prestacionDeServicio.nuevoIncidente();
+        // crear incidente en cada una de las comunidades del usuario
+        franco.getMembresias().forEach(membresia -> membresia.getComunidad().nuevoIncidenteEn(incidente, franco, "observaciones"));
 
         assertEquals(comunidad1.getIncidentes().size(), 1);
         assertEquals(prestacionDeServicio.getIncidentes().size(), 1);
+    }
+
+    @Test
+    public void testCerrarIncidente(){
+        Rol rolDelUsuario = comunidad1.aceptarUsuario(franco);
+        franco.unirseAComunidad(comunidad1, rolDelUsuario);
+
+        Servicio servicio = new Servicio("baño hombres");
+        PrestacionDeServicio prestacionDeServicio = new PrestacionDeServicio(servicio);
+
+        // abrir o crear incidente generico
+        Incidente incidente = prestacionDeServicio.nuevoIncidente();
+        // crear incidente en cada una de las comunidades del usuario
+        franco.getMembresias().forEach(membresia -> membresia.getComunidad().nuevoIncidenteEn(incidente, franco, "observaciones"));
+
+        // cerrar incidente
+
+
+        assertEquals(comunidad1.getIncidentes().size(), 0);
+        assertEquals(prestacionDeServicio.getIncidentes().size(), 0);
     }
 }
