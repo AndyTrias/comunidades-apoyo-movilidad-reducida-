@@ -1,7 +1,7 @@
-package comunidades.usuario.configNotificaciones;
+package notificaciones.mail;
 
 import comunidades.usuario.Email;
 
-public interface AdapterNotificarPorMail {
+public interface IAdapterNotificarPorMail {
     public void notificar(Email email, String asunto, String cuerpo);
 }

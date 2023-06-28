@@ -19,8 +19,9 @@ import java.util.Set;
 public class Usuario {
     private String nombre;
     private String apellido;
-    @Setter private Email correoElectronico;
+    @Getter @Setter private Email correoElectronico;
     @Getter private String contrasenia;
+    @Getter @Setter private String telefono;
     @Getter private Intereses intereses;
     @Getter private List<Membresia> membresias;
     @Setter private Set<Localizacion> localizacion;
