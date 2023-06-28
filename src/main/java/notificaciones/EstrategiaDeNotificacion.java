@@ -2,7 +2,9 @@ package notificaciones;
 
 public class EstrategiaDeNotificacion {
   private FormaDeRecibir formaDeRecibir;
-  private medioPreferido MedioDeNotificacion;
+  private MedioPreferido medioDeNotificacion;
 
-
+  public void notificar(){
+    formaDeRecibir.enviarNotificacion(medioDeNotificacion);
+  }
 }

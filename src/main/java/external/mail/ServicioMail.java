@@ -8,8 +8,9 @@ import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
 public class ServicioMail {
+    private static ServicioMail instancia = null;
 
-    public static void enviarCorreo(Email destinatario, String asunto, String cuerpo) {
+    public void enviarCorreo(Email destinatario, String asunto, String cuerpo) {
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587"); // TLS Port
@@ -36,4 +37,10 @@ public class ServicioMail {
         }
     }
 
+    public static ServicioMail getInstance() {
+        if (instancia == null) {
+            instancia = new ServicioMail();
+        }
+        return instancia;
+    }
 }

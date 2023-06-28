@@ -13,21 +13,20 @@ public class AdapterWhatsapp implements IAdapterWhatsapp{
 
 
   public void notificar(Usuario usuario, Notificacion notificacion) {
-
     this.enviarWhatsapp(usuario.getTelefono(), notificacion.getMensaje());
   }
 
 
   public void enviarWhatsapp(String destinatario, String mensaje) {
-    final String telefonoDestino = String.format("whatsapp:%s", destinatario);
-    final String telefonoOrigen = "whatsapp:+14155238886";
+      final String telefonoDestino = String.format("whatsapp:%s", destinatario);
+      final String telefonoOrigen = "whatsapp:+14155238886";
 
-    Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
-      Message message = Message.creator(
-          new com.twilio.type.PhoneNumber(telefonoDestino),
-          new com.twilio.type.PhoneNumber(telefonoOrigen),
-          mensaje
-      ).create();
-    }
+      Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+          Message message = Message.creator(
+                new com.twilio.type.PhoneNumber(telefonoDestino),
+                new com.twilio.type.PhoneNumber(telefonoOrigen),
+                mensaje
+          ).create();
+      }
 
 }
