@@ -225,25 +225,25 @@ ServicioGeoref <-- AdapterLocalizacionGeorefApi
 /' INCIDENTES '/
 Class Incidente #bbffcc{
     - fechaApertura: Date
-    - fechaCierre: Date
-    - resuelto: Boolean 
+    - incidentesDeComunidad: List<IncidenteDeComunidad>
+    - observaciones: String
+    - abiertoPor: Usuario
 
     + notificar()
 }
 
 Class IncidenteDeComunidad #bbffcc{
     - incidente: Incidente
-    - usuario: Usuario
-    - observaciones: String
     - fechaCierre: Date
 
-    + notificar()
+    + cerrarIncidente()
 }
 
+IncidenteDeComunidad --> Incidente
+Incidente --> "*" IncidenteDeComunidad
 Incidente "*" <-- PrestacionDeServicio 
 Comunidad --> "*" IncidenteDeComunidad
-IncidenteDeComunidad --> Incidente
-IncidenteDeComunidad --> Usuario
+Incidente --> Usuario
 
 /' CONFIGURACION DE NOTIFICACIONES '/
 
@@ -344,7 +344,6 @@ FactoryNotificacion .> INotificacion
 INotificacion <|.. Notificacion
 
 Incidente .> Notificador
-IncidenteDeComunidad .> Notificador
 
 /' SUGERENCIA REVISION DE INCIDENTE '/
 
