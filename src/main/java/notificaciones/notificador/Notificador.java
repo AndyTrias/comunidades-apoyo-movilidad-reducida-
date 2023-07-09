@@ -1,11 +1,11 @@
 package notificaciones.notificador;
 
+import comunidades.usuario.Usuario;
 import comunidades.usuario.configuraciones.formas.FormaDeRecibir;
 import notificaciones.Notificacion;
 
-public class Notificador{
+import java.util.List;
 
-    public void notificar(Notificacion notificacion, FormaDeRecibir formaDeRecibir) {
-        formaDeRecibir.notificar(notificacion);
-    }
+public interface Notificador {
+    public void notificar(List<Usuario> usuarios);
 }

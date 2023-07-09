@@ -13,6 +13,10 @@ public class SinApuros extends FormaDeRecibir {
     private List<Notificacion> aNotificar;
 
     public void notificar(Notificacion notificacion) {
-        // TODO implement here
+        aNotificar.add(notificacion);
+    }
+
+    public void enviarNotificacionesCuandoCorresponda() {
+        // cron job
     }
 }

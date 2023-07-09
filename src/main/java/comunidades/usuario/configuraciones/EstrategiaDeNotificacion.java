@@ -9,4 +9,8 @@ import notificaciones.Notificacion;
 public class EstrategiaDeNotificacion {
   @Getter @Setter private FormaDeRecibir formaDeRecibir;
   @Getter @Setter private MedioPreferido medioDeNotificacion;
+
+  public void notificar(Notificacion notificacion) {
+    formaDeRecibir.notificar(notificacion);
+  }
 }

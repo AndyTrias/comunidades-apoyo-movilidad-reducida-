@@ -66,8 +66,7 @@ public class Usuario {
         return comunidades;
     }
 
-    public void notificar(String mensaje) {
-        /*Notificacion notificacion = FactoryNotificacion.crear(mensaje);
-        estrategiaDeNotificacion.notificar(notificacion);*/
+    public void notificar(Notificacion notificacion) {
+        estrategiaDeNotificacion.notificar(notificacion);
     }
 }

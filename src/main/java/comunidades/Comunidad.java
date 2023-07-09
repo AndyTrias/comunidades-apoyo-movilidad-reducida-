@@ -83,7 +83,6 @@ public class Comunidad {
 
     public void abrirIncidente(Incidente incidente) {
         incidentesAbiertos.add(incidente);
-        notificarAUsuarios("Apertura de incidente");
     }
 
     public void cerrarIncidente(Incidente incidente) {
