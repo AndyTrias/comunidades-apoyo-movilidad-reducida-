@@ -13,7 +13,7 @@ public class Incidente {
     private List<Date> fechasDeCierre;
     private String observaciones;
     @Getter private Usuario abiertoPor;
-    private PrestacionDeServicio prestacionDeServicio;
+    @Getter private PrestacionDeServicio prestacionDeServicio;
 
     public Incidente(Usuario usuario, String observaciones, PrestacionDeServicio prestacionDeServicio) {
         this.fechaDeApertura = new Date();

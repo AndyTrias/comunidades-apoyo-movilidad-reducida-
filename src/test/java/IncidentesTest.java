@@ -6,6 +6,12 @@ import comunidades.servicios.PrestacionDeServicio;
 import comunidades.servicios.Servicio;
 import comunidades.usuario.Email;
 import comunidades.usuario.Usuario;
+import comunidades.usuario.configuraciones.EstrategiaDeNotificacion;
+import comunidades.usuario.configuraciones.formas.CuandoSuceden;
+import comunidades.usuario.configuraciones.medios.MedioPreferido;
+import comunidades.usuario.configuraciones.medios.mail.AdapterMail;
+import comunidades.usuario.configuraciones.medios.mail.IAdapterMail;
+import comunidades.usuario.configuraciones.medios.mail.NotificarPorMail;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -28,9 +34,25 @@ public class IncidentesTest {
         permisos.add(enviarMensajes);
         Rol rol = new Rol("rol1", permisos);
         comunidad1.agregarRol(rol);
+        Email email1 = new Email();
+        email1.nombreDeUsuario = "tandres";
+        email1.dominio = "frba.utn.edu.ar";
+        Email email2 = new Email();
+        email2.nombreDeUsuario = "griccelli";
+        email2.dominio = "frba.utn.edu.ar";
 
-        this.franco = new Usuario("franco", "pesce", new Email());
-        this.juan = new Usuario("juan", "perez", new Email());
+        MedioPreferido medioPreferido = new NotificarPorMail(new AdapterMail());
+        CuandoSuceden cuandoSuceden = new CuandoSuceden();
+        cuandoSuceden.setMedioPreferido(medioPreferido);
+
+        EstrategiaDeNotificacion estrategia = new EstrategiaDeNotificacion();
+        estrategia.setFormaDeRecibir(cuandoSuceden);
+        estrategia.setMedioDeNotificacion(medioPreferido);
+
+        this.franco = new Usuario("franco", "pesce", email1);
+        this.juan = new Usuario("juan", "perez", email2);
+        franco.setEstrategiaDeNotificacion(estrategia);
+        juan.setEstrategiaDeNotificacion(estrategia);
 
         Rol rolDeComunidad = comunidad1.aceptarUsuario(juan);
         juan.unirseAComunidad(comunidad1, rolDeComunidad);

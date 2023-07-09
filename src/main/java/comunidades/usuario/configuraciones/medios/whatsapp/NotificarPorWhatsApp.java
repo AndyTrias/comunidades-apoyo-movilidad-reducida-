@@ -12,8 +12,8 @@ public class NotificarPorWhatsApp implements MedioPreferido {
     this.adapter = adapter;
   }
 
-  public void notificar(Usuario usuario, Notificacion notificacion) {
-    adapter.notificar(usuario, notificacion);
+  public void notificar(Notificacion notificacion) {
+    adapter.notificar(notificacion.getDestinatario(), notificacion);
   }
 }
 

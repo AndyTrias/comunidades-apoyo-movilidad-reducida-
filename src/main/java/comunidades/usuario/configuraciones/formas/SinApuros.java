@@ -8,15 +8,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-public class SinApuros implements FormaDeRecibir {
+public class SinApuros extends FormaDeRecibir {
     private Set<Date> horarios;
     private List<Notificacion> aNotificar;
 
-    public void notificar(){
-
-    }
-
-    public void enviarNotificacion(MedioPreferido medioDeNotificacion) {
-        medioDeNotificacion.notificar(null, null);
+    public void notificar(Notificacion notificacion) {
+        // TODO implement here
     }
 }

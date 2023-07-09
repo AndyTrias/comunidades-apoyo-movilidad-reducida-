@@ -6,6 +6,9 @@ import comunidades.usuario.Usuario;
 import configs.ServiceLocator;
 import lombok.Getter;
 import lombok.Setter;
+import notificaciones.FactoryNotificacion;
+import notificaciones.Notificacion;
+import notificaciones.notificador.Notificador;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +21,7 @@ public class Comunidad {
     @Getter private Set<PrestacionDeServicio> serviciosDeInteres;
     @Getter private List<Incidente> incidentesAbiertos;
     @Getter private List<Incidente> incidentesCerrados;
+    @Setter private Notificador notificador;
 
     public Comunidad(String nombre) {
         this.nombre = nombre;
@@ -79,18 +83,21 @@ public class Comunidad {
 
     public void abrirIncidente(Incidente incidente) {
         incidentesAbiertos.add(incidente);
-        notificarAUsuarios();
+        notificarAUsuarios("Apertura de incidente");
     }
 
     public void cerrarIncidente(Incidente incidente) {
         incidente.cerrar();
         incidentesAbiertos.remove(incidente);
         incidentesCerrados.add(incidente);
+        notificarAUsuarios("Cierre de incidente");
     }
 
-    private void notificarAUsuarios() {
+    private void notificarAUsuarios(String tipoDeNotificacion) {
         List<Usuario> usuarios = getUsuarios();
+        Notificacion notificacion = FactoryNotificacion.crearNotificacion(tipoDeNotificacion);
         usuarios.forEach(usuario -> {
+            notificacion.setDestinatario(usuario);
             notificador.notificar(notificacion, usuario.getEstrategiaDeNotificacion().getFormaDeRecibir());
         });
     }

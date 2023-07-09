@@ -1,8 +1,10 @@
 package comunidades.usuario.configuraciones.formas;
 
 import comunidades.usuario.configuraciones.medios.MedioPreferido;
+import lombok.Setter;
 import notificaciones.Notificacion;
 
-public interface FormaDeRecibir {
-    public void notificar(Notificacion notificacion);
+public abstract class FormaDeRecibir {
+    @Setter protected MedioPreferido medioPreferido;
+    public abstract void notificar(Notificacion notificacion);
 }

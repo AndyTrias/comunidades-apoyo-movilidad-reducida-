@@ -20,7 +20,7 @@ import java.util.Set;
 
 
 public class Usuario {
-    private String nombre;
+    @Getter private String nombre;
     private String apellido;
     @Getter @Setter private Email correoElectronico;
     @Getter private String contrasenia;
@@ -67,7 +67,7 @@ public class Usuario {
     }
 
     public void notificar(String mensaje) {
-        Notificacion notificacion = FactoryNotificacion.crear(mensaje);
-        estrategiaDeNotificacion.notificar(notificacion);
+        /*Notificacion notificacion = FactoryNotificacion.crear(mensaje);
+        estrategiaDeNotificacion.notificar(notificacion);*/
     }
 }

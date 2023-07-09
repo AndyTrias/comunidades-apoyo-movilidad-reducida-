@@ -7,7 +7,11 @@ import notificaciones.Notificacion;
 public class NotificarPorMail implements MedioPreferido {
     private IAdapterMail adapter;
 
-    public void notificar(Usuario usuario, Notificacion notificacion) {
-        adapter.notificar(usuario.getCorreoElectronico(), notificacion.getAsunto(), notificacion.getCuerpo());
+    public NotificarPorMail(IAdapterMail adapter) {
+        this.adapter = adapter;
+    }
+
+    public void notificar(Notificacion notificacion) {
+        adapter.notificar(notificacion.getDestinatario().getCorreoElectronico(), notificacion.getAsunto(), notificacion.getCuerpo());
     }
 }
