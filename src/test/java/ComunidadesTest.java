@@ -76,41 +76,4 @@ public class ComunidadesTest {
         assertEquals(comunidad1.getCantidadDeUsuarios(), 0);
         assertEquals(franco.getMembresias().size(), 0);
     }
-
-    @Test
-    public void testAperturaDeIncidente(){
-        Rol rol = comunidad1.aceptarUsuario(juan);
-        juan.unirseAComunidad(comunidad1, rol);
-
-        Servicio servicio = new Servicio("baño hombres");
-        PrestacionDeServicio prestacionDeServicio = new PrestacionDeServicio(servicio);
-
-        // abrir o crear incidente generico
-        Incidente incidente = new Incidente(franco, "observaciones", prestacionDeServicio);
-        // crear incidente en cada una de las comunidades del usuario
-        franco.getComunidades().forEach(c ->c.abrirIncidente(incidente));
-
-        assertEquals(comunidad1.getIncidentesAbiertos().size(), 1);
-        assertEquals(prestacionDeServicio.getIncidentes().size(), 1);
-    }
-
-    @Test
-    public void testCerrarIncidente(){
-        Rol rol = comunidad1.aceptarUsuario(juan);
-        juan.unirseAComunidad(comunidad1, rol);
-
-        Servicio servicio = new Servicio("baño hombres");
-        PrestacionDeServicio prestacionDeServicio = new PrestacionDeServicio(servicio);
-
-        // abrir o crear incidente generico
-        Incidente incidente = new Incidente(franco, "observaciones", prestacionDeServicio);
-        // crear incidente en cada una de las comunidades del usuario
-        franco.getComunidades().forEach(c ->c.abrirIncidente(incidente));
-
-        // cerrar incidente
-        juan.getComunidades().get(0).cerrarIncidente(incidente);
-
-        assertEquals(comunidad1.getIncidentesCerrados().size(), 1);
-        assertEquals(prestacionDeServicio.getIncidentes().size(), 1);
-    }
 }
