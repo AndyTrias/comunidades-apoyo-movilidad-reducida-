@@ -34,7 +34,12 @@ public class Incidente {
         fechasDeCierre.add(new Date());
     }
 
+<<<<<<< HEAD
+    public boolean estaAbierto() {
+        return fechasDeCierre.isEmpty();
+=======
     public void notificarApertura(){
         //notificador.notificar(this);
+>>>>>>> 67697ea001b4a1747112eb5b96968e7e36c5e334
     }
 }
