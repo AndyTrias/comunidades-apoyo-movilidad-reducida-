@@ -2,9 +2,9 @@ package comunidades.usuario.configuraciones.formas;
 
 import notificaciones.Notificacion;
 
-public class CuandoSuceden extends FormaDeRecibir{
+public class CuandoSuceden extends EstrategiaDeNotificacion {
 
     public void notificar(Notificacion notificacion){
-        notificacion.getDestinatario().getEstrategiaDeNotificacion().getMedioDeNotificacion().notificar(notificacion);
+        notificacion.getDestinatario().getConfiguracionDeNotificaciones().getMedioDeNotificacion().notificar(notificacion);
     }
 }

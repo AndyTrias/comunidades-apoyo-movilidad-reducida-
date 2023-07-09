@@ -1,4 +1,8 @@
+import comunidades.Comunidad;
+import org.junit.Assert;
 import org.junit.Test;
+import rankings.RankingComunidades;
+
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
@@ -13,9 +17,9 @@ public class RankingComunidadesTest {
         Comunidad comunidad2 = mock(Comunidad.class);
         Comunidad comunidad3 = mock(Comunidad.class);
 
-        when(comunidad1.cantidadDeMiembros()).thenReturn(50);
-        when(comunidad2.cantidadDeMiembros()).thenReturn(30);
-        when(comunidad3.cantidadDeMiembros()).thenReturn(20);
+        when(comunidad1.getCantidadDeUsuarios()).thenReturn(50);
+        when(comunidad2.getCantidadDeUsuarios()).thenReturn(30);
+        when(comunidad3.getCantidadDeUsuarios()).thenReturn(20);
 
         List<Comunidad> comunidades = new ArrayList<>();
         comunidades.add(comunidad1);

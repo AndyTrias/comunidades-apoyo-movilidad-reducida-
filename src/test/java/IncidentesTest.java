@@ -6,11 +6,10 @@ import comunidades.servicios.PrestacionDeServicio;
 import comunidades.servicios.Servicio;
 import comunidades.usuario.Email;
 import comunidades.usuario.Usuario;
-import comunidades.usuario.configuraciones.EstrategiaDeNotificacion;
+import comunidades.usuario.configuraciones.ConfiguracionDeNotificaciones;
 import comunidades.usuario.configuraciones.formas.CuandoSuceden;
 import comunidades.usuario.configuraciones.medios.MedioPreferido;
 import comunidades.usuario.configuraciones.medios.mail.AdapterMail;
-import comunidades.usuario.configuraciones.medios.mail.IAdapterMail;
 import comunidades.usuario.configuraciones.medios.mail.NotificarPorMail;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -45,14 +44,14 @@ public class IncidentesTest {
         CuandoSuceden cuandoSuceden = new CuandoSuceden();
         cuandoSuceden.setMedioPreferido(medioPreferido);
 
-        EstrategiaDeNotificacion estrategia = new EstrategiaDeNotificacion();
-        estrategia.setFormaDeRecibir(cuandoSuceden);
+        ConfiguracionDeNotificaciones estrategia = new ConfiguracionDeNotificaciones();
+        estrategia.setEstrategiaDeNotificacion(cuandoSuceden);
         estrategia.setMedioDeNotificacion(medioPreferido);
 
         this.franco = new Usuario("franco", "pesce", email1);
         this.juan = new Usuario("juan", "perez", email2);
-        franco.setEstrategiaDeNotificacion(estrategia);
-        juan.setEstrategiaDeNotificacion(estrategia);
+        franco.setConfiguracionDeNotificaciones(estrategia);
+        juan.setConfiguracionDeNotificaciones(estrategia);
 
         Rol rolDeComunidad = comunidad1.aceptarUsuario(juan);
         juan.unirseAComunidad(comunidad1, rolDeComunidad);

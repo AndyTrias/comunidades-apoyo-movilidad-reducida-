@@ -1,5 +1,6 @@
 package entidades;
 
+import comunidades.servicios.PrestacionDeServicio;
 import localizacion.Localizacion;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +21,7 @@ public class Entidad {
     }
 
     public List<PrestacionDeServicio> getPrestacionesDeServicios() {
-        List<PrestacionDeServicio> prestaciones = new ArrayList<>(PrestacionesDeServicio);
+        List<PrestacionDeServicio> prestaciones = new ArrayList<>();
         for (Establecimiento establecimiento : this.establecimientos) {
             prestaciones.addAll(establecimiento.getServicios());
         }

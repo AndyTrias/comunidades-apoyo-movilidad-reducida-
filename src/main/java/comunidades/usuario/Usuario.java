@@ -4,14 +4,11 @@ import comunidades.Comunidad;
 import comunidades.Intereses;
 import comunidades.Membresia;
 import comunidades.Rol;
-import comunidades.usuario.Contrasenia.ValidadorDeContrasenia;
-import comunidades.usuario.configuraciones.EstrategiaDeNotificacion;
-import configs.Config;
+import comunidades.usuario.configuraciones.ConfiguracionDeNotificaciones;
 import configs.ServiceLocator;
 import localizacion.Localizacion;
 import lombok.Getter;
 import lombok.Setter;
-import notificaciones.FactoryNotificacion;
 import notificaciones.Notificacion;
 
 import java.util.ArrayList;
@@ -28,7 +25,8 @@ public class Usuario {
     @Getter private Intereses intereses;
     @Getter private List<Membresia> membresias;
     @Setter private Set<Localizacion> localizacion;
-    @Getter @Setter EstrategiaDeNotificacion estrategiaDeNotificacion;
+    @Getter @Setter
+    ConfiguracionDeNotificaciones configuracionDeNotificaciones;
 
     public Usuario(String nombre, String apellido, Email correoElectronico) {
         this.nombre = nombre;
@@ -67,6 +65,7 @@ public class Usuario {
     }
 
     public void notificar(Notificacion notificacion) {
-        estrategiaDeNotificacion.notificar(notificacion);
+        configuracionDeNotificaciones.notificar(notificacion);
     }
+
 }

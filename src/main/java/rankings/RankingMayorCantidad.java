@@ -1,5 +1,12 @@
 package rankings;
 
+import comunidades.incidentes.Incidente;
+import entidades.Entidad;
+
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 public class RankingMayorCantidad extends RankingEntidades {
 
     @Override

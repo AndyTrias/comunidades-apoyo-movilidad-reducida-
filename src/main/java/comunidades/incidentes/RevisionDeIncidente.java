@@ -22,6 +22,6 @@ public class RevisionDeIncidente {
     }
 
     public void avisarRevisionDeIncidente(Usuario usuario, Incidente incidente) {
-        notificador.notificar(incidente);
+        notificador.notificar(usuario, incidente);
     }
 }

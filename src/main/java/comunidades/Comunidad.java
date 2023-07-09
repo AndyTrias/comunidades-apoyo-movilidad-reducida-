@@ -91,4 +91,11 @@ public class Comunidad {
         incidentesCerrados.add(incidente);
 
     }
+
+    public List<Incidente> getTodosLosIncidentes(){
+        List<Incidente> incidentes = new ArrayList<>();
+        incidentes.addAll(incidentesAbiertos);
+        incidentes.addAll(incidentesCerrados);
+        return incidentes;
+    }
 }

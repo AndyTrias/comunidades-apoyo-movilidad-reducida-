@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Incidente {
-    private Date fechaDeApertura;
+    @Getter private Date fechaDeApertura;
     private List<Date> fechasDeCierre;
     private String observaciones;
     @Getter private Usuario abiertoPor;
@@ -34,12 +34,13 @@ public class Incidente {
         fechasDeCierre.add(new Date());
     }
 
-<<<<<<< HEAD
-    public boolean estaAbierto() {
-        return fechasDeCierre.isEmpty();
-=======
+
     public void notificarApertura(){
         //notificador.notificar(this);
->>>>>>> 67697ea001b4a1747112eb5b96968e7e36c5e334
     }
+
+    public boolean estaAbierto(){
+        return fechasDeCierre.isEmpty();
+    }
+
 }

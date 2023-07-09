@@ -1,6 +1,13 @@
 package rankings;
 
+import comunidades.incidentes.Incidente;
+import comunidades.servicios.PrestacionDeServicio;
+import entidades.Entidad;
+
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 public abstract class RankingEntidades {
 
@@ -11,18 +18,15 @@ public abstract class RankingEntidades {
     }
 
     protected boolean validarIncidente(Incidente incidente, List<Incidente> incidentesPrestacion) {
-        return True;
+        return true;
     }
 
-    protected List<Incidentes> obtenerIncidentesDeEntidad(Entidad entidad) {
+    protected List<Incidente> obtenerIncidentesDeEntidad(Entidad entidad) {
         //create an empty list of incidents
 
-        List<Incidentes> incidentes = new ArrayList<Incidentes>();
-        //foreach entity.getprestacionesdeservicios
-        List<PrestacionDeServicio> prestaciones = new ArrayList<>(PrestacionDeServicio);
-        prestaciones.addAll(entidad.getPrestacionesDeServicios());
-        for (PrestacionDeServicio prestacion : prestaciones) {
-            List<Incidentes> incidentesPrestacion = new ArrayList<>(Incidente);
+        List<Incidente> incidentes = new ArrayList<Incidente>();
+        for (PrestacionDeServicio prestacion : entidad.getPrestacionesDeServicios()) {
+            List<Incidente> incidentesPrestacion = new ArrayList<>();
             for (Incidente incidente : prestacion.getIncidentes()) {
 
                 //si no existe ningun incidente en la lista incidentesPrestacion cuya fecha de apertura tenga una diferencia de menos de 24 horas, agregar a la lista

@@ -1,9 +1,18 @@
+import comunidades.incidentes.Incidente;
+import comunidades.servicios.PrestacionDeServicio;
+import comunidades.servicios.Servicio;
+import comunidades.usuario.Email;
+import comunidades.usuario.Usuario;
+import entidades.Entidad;
+import entidades.Establecimiento;
+import localizacion.Localizacion;
 import org.junit.Assert;
 import org.junit.Test;
+import org.mockito.Mockito;
+import rankings.RankingMayorTiempo;
+
 import java.util.ArrayList;
 import java.util.List;
-import static org.junit.Assert;
-import static org.mockito.Mockito.*;
 
 public class RankingMayorTiempoTest {
 
@@ -18,17 +27,23 @@ public class RankingMayorTiempoTest {
         PrestacionDeServicio prestacion2 = new PrestacionDeServicio(new Servicio("Servicio 2"));
         PrestacionDeServicio prestacion3 = new PrestacionDeServicio(new Servicio("Servicio 3"));
 
-        Incidente incidente1 = new Incidente(new Usuario("Usuario 1"), "Observaciones 1", prestacion1);
-        incidente1.cerrar();
-        Incidente incidente2 = new Incidente(new Usuario("Usuario 2"), "Observaciones 2", prestacion2);
-        incidente2.cerrar();
-        Incidente incidente3 = new Incidente(new Usuario("Usuario 3"), "Observaciones 3", prestacion3);
+        Usuario usuario1 = new Usuario("Manu", "Torrente", new Email());
+        Usuario usuario2 = new Usuario("Andy", "Trias", new Email());
+        Usuario usuario3 = new Usuario("Franco", "Pesce", new Email());
 
-        entidad1.agregarEstablecimiento(new Establecimiento("Establecimiento 1"));
+        Incidente incidente1 = new Incidente(usuario1, "Observaciones 1", prestacion1);
+        incidente1.cerrar();
+        Incidente incidente2 = new Incidente(usuario2, "Observaciones 2", prestacion2);
+        incidente2.cerrar();
+        Incidente incidente3 = new Incidente(usuario3, "Observaciones 3", prestacion3);
+
+        Localizacion localizacion1 = Mockito.mock(Localizacion.class);
+
+        entidad1.agregarEstablecimiento(new Establecimiento("Establecimiento 1", localizacion1));
         entidad1.getPrestacionesDeServicios().add(prestacion1);
-        entidad2.agregarEstablecimiento(new Establecimiento("Establecimiento 2"));
+        entidad2.agregarEstablecimiento(new Establecimiento("Establecimiento 2", localizacion1));
         entidad2.getPrestacionesDeServicios().add(prestacion2);
-        entidad3.agregarEstablecimiento(new Establecimiento("Establecimiento 3"));
+        entidad3.agregarEstablecimiento(new Establecimiento("Establecimiento 3", localizacion1));
         entidad3.getPrestacionesDeServicios().add(prestacion3);
 
         List<Entidad> entidades = new ArrayList<>();
