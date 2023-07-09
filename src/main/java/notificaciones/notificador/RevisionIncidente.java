@@ -1,4 +1,10 @@
 package notificaciones.notificador;
 
-public class RevisionIncidente {
+import comunidades.usuario.configuraciones.formas.FormaDeRecibir;
+import notificaciones.Notificacion;
+
+public class RevisionIncidente implements Notificador {
+    public void notificar() {
+        // notificar solamente al usuario requerido
+    }
 }

@@ -3,6 +3,7 @@ package comunidades.incidentes;
 import comunidades.usuario.Usuario;
 import lombok.Setter;
 import notificaciones.Notificacion;
+import notificaciones.notificador.Notificador;
 
 public class RevisionDeIncidente {
     @Setter private Notificador notificador;

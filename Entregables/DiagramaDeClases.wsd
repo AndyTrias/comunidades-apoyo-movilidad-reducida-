@@ -249,7 +249,7 @@ Comunidad -> Notificador
 
 /' CONFIGURACION DE NOTIFICACIONES '/
 
-Class EstrategiaDeNotificacion #bbffcc{
+Class Configuracion #bbffcc{
     - formaDeRecibir: FormaDeRecibir
     - medioPreferido: MedioDeNotificacion
 
@@ -268,7 +268,7 @@ Interface AdapterNotificarPorMail #bbffcc{}
 Class AdapterWhatsApp #bbffcc{}
 Class AdapterMail #bbffcc{}
 
-abstract class FormaDeRecibir #bbffcc{
+abstract class EstrategiaDeNotificacion #bbffcc{
     # mediodeNotificacion: MedioDeNotificacion
 
     + notificar(notificacion: Notificacion)
@@ -286,12 +286,24 @@ Class SinApuros #bbffcc{
     + enviarNotificacion(medioPreferido: MedioDeNotificacion)
 }
 
-MedioDeNotificacion <- FormaDeRecibir
+MedioDeNotificacion <- EstrategiaDeNotificacion
 /' NOTIFICACIONES '/
 
 Interface Notificador #bbffcc{
-    + notificar(notificacion: Notificacion, formaDeRecibir: FormaDeRecibir)
+    + notificar(incidente: Incidente)
 }
+
+Class AperturaDeIncidente #bbffcc{
+    + notificar(incidente: Incidente)
+}
+
+Class CierreDeIncidente #bbffcc{
+    + notificar(incidente: Incidente)
+} 
+
+Class RevisionManualDeIncidente #bbffcc{
+    + notificar(incidente: Incidente)
+} 
 
 Class FactoryNotificacion #bbffcc{
     + crearNotificacion(tipoDeNotificacion: String): Notificacion
@@ -304,14 +316,19 @@ Class Notificacion #bbffcc{
 }
 
 FactoryNotificacion .> Notificacion
+Notificador <|.. AperturaDeIncidente
+Notificador <|.. CierreDeIncidente
+Notificador <|.. RevisionManualDeIncidente
 
-EstrategiaDeNotificacion <-- Usuario
 
-FormaDeRecibir <-- EstrategiaDeNotificacion
-MedioDeNotificacion <-- EstrategiaDeNotificacion
 
-CuandoSuceden ..|> FormaDeRecibir
-SinApuros ..|> FormaDeRecibir
+Configuracion <-- Usuario
+
+EstrategiaDeNotificacion <-- Configuracion
+MedioDeNotificacion <-- Configuracion
+
+CuandoSuceden ..|> EstrategiaDeNotificacion
+SinApuros ..|> EstrategiaDeNotificacion
 
 
 /' Whatsapp '/
