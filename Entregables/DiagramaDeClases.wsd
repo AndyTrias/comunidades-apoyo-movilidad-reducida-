@@ -289,7 +289,7 @@ Class SinApuros #bbffcc{
 MedioDeNotificacion <- FormaDeRecibir
 /' NOTIFICACIONES '/
 
-Class Notificador #bbffcc{
+Interface Notificador #bbffcc{
     + notificar(notificacion: Notificacion, formaDeRecibir: FormaDeRecibir)
 }
 
