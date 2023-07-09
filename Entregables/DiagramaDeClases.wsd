@@ -35,13 +35,11 @@ class Comunidad {
     -roles: set<Rol>
     -nombre: String
     -serviciosDeInteres: Set<PrestacionDeServicio>
-    - incidentes: List<IncidenteDeComunidad>
 
 
     + asginarRol(usuario: Usuario)
     + aceptarUsuario(usuario: Usuario)
     + eliminarUsuario(Usuario: Usuario)
-    + nuevoIncidenteEn(Incidente: incidente, miembro: Membresia, observaciones: String)
     + cantidadDeMiembros(): int
 }
 
@@ -189,11 +187,11 @@ Localizacion <- Establecimiento
 Localizacion -> Ubicacion
 
 EntidadPrestadora --> "*" Entidad
-OrganismoDeControl -> "*" EntidadPrestadora
+OrganismoDeControl --> "*" EntidadPrestadora
 
 
-Servicio <- PrestacionDeServicio
-Comunidad -> "*" PrestacionDeServicio
+Servicio <-- PrestacionDeServicio
+Comunidad --> "*" PrestacionDeServicio
 Entidad --> "*" Establecimiento
 Intereses --> "*" Entidad
 Intereses --> "*" Servicio 
@@ -203,14 +201,14 @@ Establecimiento --> "*" PrestacionDeServicio
 
 
 Usuario <-- EntidadPrestadora
-Usuario <-- OrganismoDeControl
+OrganismoDeControl -> Usuario
 Rol --> "*" Usuario
-Permiso "*" <-- Rol
+Rol -> "*" Permiso
 Rol "*" <- Comunidad
 Usuario -> "*" Membresia
 Membresia -> Comunidad
 Rol <-- Membresia
-Intereses <- Usuario
+Usuario --> Intereses
 
 
 
@@ -223,91 +221,89 @@ ServicioGeoref <-- AdapterLocalizacionGeorefApi
 /' Entrega 3 '/
 
 /' INCIDENTES '/
-Class Incidente {
+Class Incidente #bbffcc{
     - fechaApertura: Date
-    - fechaCierre: Date
-    - resuelto: Boolean 
+    - fechasDeCierre: List<Date>
+    - observaciones: String
+    - abiertoPor: Usuario
+
+    + notificar()
 }
 
-Class IncidenteDeComunidad {
-    - incidente: Incidente
-    - miembro: Membresia
-    - observaciones: String
-    - fechaCierre: Date
+Class Comunidad {
+    - incidentesAbiertos: Set<Incidente> 
+    - incidentesCerrados: Set<Incidente>
+    - notificador: Notificador
+
+    + abrirIncidente(incidente: Incidente): void
+    + cerrarIncidente(incidente: Incidente): void
+    
+    - notificarAUsuarios(tipoDeNotificacion: String): void
 }
 
 Incidente "*" <-- PrestacionDeServicio 
-Comunidad --> "*" IncidenteDeComunidad
-IncidenteDeComunidad --> Incidente
-IncidenteDeComunidad --> Membresia
-' Membresia ..> PrestacionDeServicio
+Comunidad --> "*" Incidente
+Incidente --> Usuario
+Comunidad ..> FactoryNotificacion
+Comunidad -> Notificador
 
 /' CONFIGURACION DE NOTIFICACIONES '/
-Class EstrategiaDeNotificacion {
+
+Class EstrategiaDeNotificacion #bbffcc{
     - formaDeRecibir: FormaDeRecibir
     - medioPreferido: MedioDeNotificacion
+
+    + notificar()
 }
 
-Interface MedioDeNotificacion {
+Interface MedioDeNotificacion #bbffcc{}
 
-}
-
-Class NotificarPorWhatsApp {
-
-}
-
-Class NotificarPorMail {
-
-}
+Class NotificarPorWhatsApp #bbffcc{}
+Class NotificarPorMail #bbffcc{}
 
 /' ADAPTERS MEDIO DE NOTIFICACION '/
 
-Interface AdapterNotificarPorWhatsapp {
-    
+Interface AdapterNotificarPorWhatsapp #bbffcc{}
+Interface AdapterNotificarPorMail #bbffcc{}
+Class AdapterWhatsApp #bbffcc{}
+Class AdapterMail #bbffcc{}
+
+abstract class FormaDeRecibir #bbffcc{
+    # mediodeNotificacion: MedioDeNotificacion
+
+    + notificar(notificacion: Notificacion)
 }
 
-Interface AdapterNotificarPorMail {
-    
+Class CuandoSuceden #bbffcc{
+    + notificar(notificacion: Notificacion)
 }
 
-Class AdapterWhatsApp {
-
-}
-
-Class AdapterMail {
-
-}
-
-Interface FormaDeRecibir {
-    + enviarNotificacion()
-}
-
-Class CuandoSuceden {
-    + enviarNotificacion()
-}
-
-Class SinApuros {
+Class SinApuros #bbffcc{
     - horarios: Set<Date>
-    - incidentesANotificar: Set<IncidenteDeComunidad>
+    - incidentesANotificar: List<Notificaciones>
 
-    + enviarNotificacion()
-    + agregarIncidenteANotificar(incidente: IncidenteDeComunidad)
+    + notificar()
+    + enviarNotificacion(medioPreferido: MedioDeNotificacion)
 }
 
+MedioDeNotificacion <- FormaDeRecibir
 /' NOTIFICACIONES '/
 
-Class FactoryNotificacion {
-    + crearNotificacion(notificacion: INotificacion) 
+Interface Notificador #bbffcc{
+    + notificar(notificacion: Notificacion, formaDeRecibir: FormaDeRecibir)
 }
 
-Interface INotificacion{
-    + algunaOperacion(): void
+Class FactoryNotificacion #bbffcc{
+    + crearNotificacion(tipoDeNotificacion: String): Notificacion
 }
 
-Class Notificacion {
-    - titulo: String
-    - mensaje: String
+Class Notificacion #bbffcc{
+    - asunto: String
+    - cuerpo: String
+    - destinatario: Usuario
 }
+
+FactoryNotificacion .> Notificacion
 
 EstrategiaDeNotificacion <-- Usuario
 
@@ -328,41 +324,42 @@ AdapterMail ..|> AdapterNotificarPorMail
 AdapterNotificarPorMail ..|> NotificarPorMail
 NotificarPorMail ..|> MedioDeNotificacion
 
-FactoryNotificacion .> INotificacion
-INotificacion <|.. Notificacion
-
 /' SUGERENCIA REVISION DE INCIDENTE '/
 
-Class RevisionDeIncidente {
-    + estaCerca(miembro: Miembro, incidente: Incidente): Boolean
-    + avisarRevisionDeIncidente(miembro: Miembro, incidente: Incidente): void
+Class RevisionDeIncidente #bbffcc{
+    + estaCerca(usuario: Usuario, incidente: Incidente): Boolean
+    + avisarRevisionDeIncidente(usuario: Usuario, incidente: Incidente): void
 }
 
 
 /' RANKINGS '/
 
+<<<<<<< HEAD
 Class GenerarRankings {
+=======
+Class FactoryGenerarRankings #bbffcc{
+>>>>>>> 3f5ef77cd29fcc7f00a0d92489ba8cecc74f554c
     - rankings: Set<Ranking>
 
     + generarRankings()
 }
 
-Interface Ranking {
+Interface Ranking #bbffcc{
     + generarRanking()
 }
 
-Class RankingPromedioCierreIncidentes {
+Class RankingPromedioCierreIncidentes #bbffcc{
     + generarRanking()
     + tiempoDeCierreDeIncidente(incidente: Incidente): Float
 }
 
-Class RankingMayorCantidadDeIncidentesSemana {
+Class RankingMayorCantidadDeIncidentesSemana #bbffcc{
     + generarRanking()
     + incidenteOcurrioEnLaSemana(incidente: Incidente): Boolean
     + incidenteSeGeneroEnDespuesDe24Hs(incidente: Incidente): Boolean
 }
 
-Class RankingImpactoProblematicas {
+Class RankingImpactoProblematicas #bbffcc{
     + generarRanking()
     + comunidadConMayorImpacto() : Comunidad
 }
@@ -376,7 +373,7 @@ Ranking <|.. RankingImpactoProblematicas
 
 /' AFECTADO U OBSERVADOR '/
 
-Class Membresia {
+/' Class Membresia {
     - tipoDeUsuario: TipoDeUsuario
 
     + cambiarDeTipoDeUsuario(tipoDeUsuario: TipoDeUsuario)
@@ -401,15 +398,19 @@ TipoDeUsuario <|.. Afectado
 TipoDeUsuario <|.. Observador
 Afectado --> "*" PrestacionDeServicio
 
-/' Class TipoDeUsuario {
+Class TipoDeUsuario {
     - nombre: String
     - prestacionesDeServicio: Set<PrestacionDeServicio>
 }
 
 Membresia --> TipoDeUsuario '/
 
+<<<<<<< HEAD
 PrestacionDeServicio -[hidden]-> FactoryNotificacion
 PrestacionDeServicio -[hidden]-> RevisionDeIncidente
 PrestacionDeServicio -[hidden]-> GenerarRankings
+=======
+PrestacionDeServicio -[hidden]-> FactoryGenerarRankings
+>>>>>>> 3f5ef77cd29fcc7f00a0d92489ba8cecc74f554c
 
 @enduml

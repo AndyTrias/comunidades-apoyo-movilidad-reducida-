@@ -1,4 +1,4 @@
-package apiCalls.georef.responseClases;
+package external.georef.responseClases;
 
 public class Municipio {
     public int id;

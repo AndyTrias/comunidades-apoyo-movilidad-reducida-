@@ -5,11 +5,14 @@ import comunidades.Intereses;
 import comunidades.Membresia;
 import comunidades.Rol;
 import comunidades.usuario.Contrasenia.ValidadorDeContrasenia;
+import comunidades.usuario.configuraciones.EstrategiaDeNotificacion;
 import configs.Config;
 import configs.ServiceLocator;
 import localizacion.Localizacion;
 import lombok.Getter;
 import lombok.Setter;
+import notificaciones.FactoryNotificacion;
+import notificaciones.Notificacion;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,20 +20,20 @@ import java.util.Set;
 
 
 public class Usuario {
-    private String nombre;
+    @Getter private String nombre;
     private String apellido;
-    @Setter private String correoElectronico;
+    @Getter @Setter private Email correoElectronico;
     @Getter private String contrasenia;
+    @Getter @Setter private String telefono;
     @Getter private Intereses intereses;
     @Getter private List<Membresia> membresias;
     @Setter private Set<Localizacion> localizacion;
+    @Getter @Setter EstrategiaDeNotificacion estrategiaDeNotificacion;
 
-    public Usuario(String nombre, String apellido, String correoElectronico) {
+    public Usuario(String nombre, String apellido, Email correoElectronico) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.correoElectronico = correoElectronico;
-        this.contrasenia = contrasenia;
-        this.intereses = intereses;
         this.membresias = new ArrayList<>();
     }
 
@@ -55,5 +58,16 @@ public class Usuario {
         else{
             membresias.remove(membresias.stream().filter(m -> m.getComunidad().equals(comunidad)).findFirst().get());
         }
+    }
+
+    public List<Comunidad> getComunidades(){
+        List<Comunidad> comunidades = new ArrayList<>();
+        membresias.forEach(m -> comunidades.add(m.getComunidad()));
+        return comunidades;
+    }
+
+    public void notificar(String mensaje) {
+        /*Notificacion notificacion = FactoryNotificacion.crear(mensaje);
+        estrategiaDeNotificacion.notificar(notificacion);*/
     }
 }

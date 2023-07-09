@@ -1,4 +1,4 @@
-package apiCalls.georef.responseClases;
+package external.georef.responseClases;
 
 public class Provincia {
     public int id;

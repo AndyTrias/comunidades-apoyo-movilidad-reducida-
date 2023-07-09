@@ -1,32 +1,34 @@
 package comunidades;
 
 import comunidades.incidentes.Incidente;
-import comunidades.incidentes.IncidenteDeComunidad;
 import comunidades.servicios.PrestacionDeServicio;
 import comunidades.usuario.Usuario;
-import configs.Config;
 import configs.ServiceLocator;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.flogger.Flogger;
+import notificaciones.FactoryNotificacion;
+import notificaciones.Notificacion;
+import notificaciones.notificador.Notificador;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
-import java.util.concurrent.ExecutionException;
 
 public class Comunidad {
     @Getter private List<Rol> roles;
     @Getter @Setter private String nombre;
     @Getter private Set<PrestacionDeServicio> serviciosDeInteres;
-    @Getter private List<IncidenteDeComunidad> incidentes;
+    @Getter private List<Incidente> incidentesAbiertos;
+    @Getter private List<Incidente> incidentesCerrados;
+    @Setter private Notificador notificador;
 
     public Comunidad(String nombre) {
         this.nombre = nombre;
         this.serviciosDeInteres = new HashSet<>();
         this.roles = new ArrayList<>();
-        this.incidentes = new ArrayList<>();
+        this.incidentesAbiertos = new ArrayList<>();
+        this.incidentesCerrados = new ArrayList<>();
         roles.add(ServiceLocator.ROL_BASE);
     }
     
@@ -73,8 +75,30 @@ public class Comunidad {
         return roles.stream().mapToInt(r -> r.getUsuarios().size()).sum();
     }
 
-    public void nuevoIncidenteEn(Incidente incidente, Membresia miembro, String observaciones) {
-        IncidenteDeComunidad incidenteDeComunidad = new IncidenteDeComunidad(incidente, miembro, observaciones);
-        incidentes.add(incidenteDeComunidad);
+    public List<Usuario> getUsuarios(){
+        List<Usuario> miembros = new ArrayList<>();
+        roles.forEach(r -> miembros.addAll(r.getUsuarios()));
+        return miembros;
+    }
+
+    public void abrirIncidente(Incidente incidente) {
+        incidentesAbiertos.add(incidente);
+        notificarAUsuarios("Apertura de incidente");
+    }
+
+    public void cerrarIncidente(Incidente incidente) {
+        incidente.cerrar();
+        incidentesAbiertos.remove(incidente);
+        incidentesCerrados.add(incidente);
+        notificarAUsuarios("Cierre de incidente");
+    }
+
+    private void notificarAUsuarios(String tipoDeNotificacion) {
+        List<Usuario> usuarios = getUsuarios();
+        Notificacion notificacion = FactoryNotificacion.crearNotificacion(tipoDeNotificacion);
+        usuarios.forEach(usuario -> {
+            notificacion.setDestinatario(usuario);
+            notificador.notificar(notificacion, usuario.getEstrategiaDeNotificacion().getFormaDeRecibir());
+        });
     }
 }

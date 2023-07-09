@@ -1,11 +1,10 @@
-package apiCalls.georef;
+package external.georef;
 
-import apiCalls.georef.responseClases.ListadoLocalidades;
-import apiCalls.georef.responseClases.ListadoMunicipios;
-import apiCalls.georef.responseClases.ListadoProvincias;
+import external.georef.responseClases.ListadoLocalidades;
+import external.georef.responseClases.ListadoMunicipios;
+import external.georef.responseClases.ListadoProvincias;
 import retrofit2.Call;
 import retrofit2.http.GET;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface GeorefService {

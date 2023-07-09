@@ -6,6 +6,12 @@ import comunidades.servicios.PrestacionDeServicio;
 import comunidades.servicios.Servicio;
 import comunidades.usuario.Email;
 import comunidades.usuario.Usuario;
+import comunidades.usuario.configuraciones.EstrategiaDeNotificacion;
+import comunidades.usuario.configuraciones.formas.CuandoSuceden;
+import comunidades.usuario.configuraciones.medios.MedioPreferido;
+import comunidades.usuario.configuraciones.medios.mail.AdapterMail;
+import comunidades.usuario.configuraciones.medios.mail.IAdapterMail;
+import comunidades.usuario.configuraciones.medios.mail.NotificarPorMail;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +21,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class ComunidadesTest {
+public class IncidentesTest {
     private Comunidad comunidad1;
     private Usuario franco;
     private Usuario juan;
@@ -28,59 +34,35 @@ public class ComunidadesTest {
         permisos.add(enviarMensajes);
         Rol rol = new Rol("rol1", permisos);
         comunidad1.agregarRol(rol);
+        Email email1 = new Email();
+        email1.nombreDeUsuario = "tandres";
+        email1.dominio = "frba.utn.edu.ar";
+        Email email2 = new Email();
+        email2.nombreDeUsuario = "griccelli";
+        email2.dominio = "frba.utn.edu.ar";
 
-        Email email = new Email();
-        email.nombreDeUsuario = "francopescee";
-        email.dominio = "gmail.com";
-        this.franco = new Usuario("franco", "pesce", email);
+        MedioPreferido medioPreferido = new NotificarPorMail(new AdapterMail());
+        CuandoSuceden cuandoSuceden = new CuandoSuceden();
+        cuandoSuceden.setMedioPreferido(medioPreferido);
 
-        this.juan = new Usuario("juan", "perez", new Email());
-    }
+        EstrategiaDeNotificacion estrategia = new EstrategiaDeNotificacion();
+        estrategia.setFormaDeRecibir(cuandoSuceden);
+        estrategia.setMedioDeNotificacion(medioPreferido);
 
-    @Test
-    public void testAgregarUsuarioAComunidadVacia() {
-        Rol rolDelUsuario = comunidad1.aceptarUsuario(franco);
-        franco.unirseAComunidad(comunidad1, rolDelUsuario);
+        this.franco = new Usuario("franco", "pesce", email1);
+        this.juan = new Usuario("juan", "perez", email2);
+        franco.setEstrategiaDeNotificacion(estrategia);
+        juan.setEstrategiaDeNotificacion(estrategia);
 
-        assertEquals(franco.getMembresias().size(), 1);
-        assertEquals(comunidad1.getCantidadDeUsuarios(), 1);
-    }
+        Rol rolDeComunidad = comunidad1.aceptarUsuario(juan);
+        juan.unirseAComunidad(comunidad1, rolDeComunidad);
+        rolDeComunidad = comunidad1.aceptarUsuario(franco);
+        franco.unirseAComunidad(comunidad1, rolDeComunidad);
 
-    @Test
-    public void cambiarRolDeUsuarioARolQueNoExiste() throws Exception {
-        Rol rolDelUsuario = comunidad1.aceptarUsuario(franco);
-        franco.unirseAComunidad(comunidad1, rolDelUsuario);
-        Rol nuevoRol = new Rol("rol2", new HashSet<>());
-
-        assertThrows(Exception.class, () -> comunidad1.cambiarRol(franco, nuevoRol));
-    }
-
-    @Test
-    public void cambiarRolDeUsuario() throws Exception {
-        Rol rolDelUsuario = comunidad1.aceptarUsuario(franco);
-        franco.unirseAComunidad(comunidad1, rolDelUsuario);
-        Rol nuevoRol = new Rol("rol2", new HashSet<>());
-        comunidad1.agregarRol(nuevoRol);
-        comunidad1.cambiarRol(franco, nuevoRol);
-
-        assertEquals(nuevoRol.getUsuarios().size(), 1);
-    }
-
-    @Test
-    public void eliminarUsuarioDeComunidad() throws Exception {
-        Rol rolDelUsuario = comunidad1.aceptarUsuario(franco);
-        franco.unirseAComunidad(comunidad1, rolDelUsuario);
-        comunidad1.eliminarUsuario(franco);
-        franco.abandonarComunidad(comunidad1);
-
-        assertEquals(comunidad1.getCantidadDeUsuarios(), 0);
-        assertEquals(franco.getMembresias().size(), 0);
     }
 
     @Test
     public void testAperturaDeIncidente(){
-        Rol rol = comunidad1.aceptarUsuario(juan);
-        juan.unirseAComunidad(comunidad1, rol);
 
         Servicio servicio = new Servicio("baño hombres");
         PrestacionDeServicio prestacionDeServicio = new PrestacionDeServicio(servicio);
@@ -92,14 +74,12 @@ public class ComunidadesTest {
 
         assertEquals(comunidad1.getIncidentesAbiertos().size(), 1);
         assertEquals(prestacionDeServicio.getIncidentes().size(), 1);
+        assertEquals(juan.getComunidades().get(0).getIncidentesAbiertos().size(), 1);
     }
 
     @Test
     public void testCerrarIncidente(){
-        Rol rol = comunidad1.aceptarUsuario(juan);
-        juan.unirseAComunidad(comunidad1, rol);
-
-        Servicio servicio = new Servicio("baño hombres");
+        Servicio servicio = new Servicio("baño mujeres");
         PrestacionDeServicio prestacionDeServicio = new PrestacionDeServicio(servicio);
 
         // abrir o crear incidente generico
