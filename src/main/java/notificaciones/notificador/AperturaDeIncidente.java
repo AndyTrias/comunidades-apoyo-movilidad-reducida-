@@ -1,5 +1,7 @@
 package notificaciones.notificador;
 
+import comunidades.Comunidad;
+import comunidades.incidentes.Incidente;
 import comunidades.usuario.Usuario;
 import comunidades.usuario.configuraciones.formas.FormaDeRecibir;
 import notificaciones.FactoryNotificacion;
@@ -9,11 +11,14 @@ import java.util.List;
 
 public class AperturaDeIncidente implements Notificador{
 
-    public void notificar(List<Usuario> usuarios) {
+    public void notificar(Incidente incidente) {
         Notificacion notificacion = FactoryNotificacion.crearNotificacion("Apertura de incidente");
-        for (Usuario usuario : usuarios) {
-            notificacion.setFormaDeRecibir(usuario.getEstrategiaDeNotificacion().getFormaDeRecibir());
-            usuario.notificar(notificacion);
+        for (Comunidad comunidad : incidente.getAbiertoPor().getComunidades()) {
+            List<Usuario> usuariosANotificar = comunidad.getUsuarios();
+            usuariosANotificar.forEach(usuario -> {
+                notificacion.setFormaDeRecibir(usuario.getEstrategiaDeNotificacion().getFormaDeRecibir());
+                usuario.notificar(notificacion);
+            });
         }
     }
 }

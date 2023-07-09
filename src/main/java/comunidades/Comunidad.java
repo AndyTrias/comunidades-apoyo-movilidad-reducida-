@@ -25,10 +25,10 @@ public class Comunidad {
 
     public Comunidad(String nombre) {
         this.nombre = nombre;
-        this.serviciosDeInteres = new HashSet<>(PrestacionDeServicio);
+        this.serviciosDeInteres = new HashSet<>();
         this.roles = new ArrayList<>();
-        this.incidentesAbiertos = new ArrayList<>(Incidente);
-        this.incidentesCerrados = new ArrayList<>(Incidente);
+        this.incidentesAbiertos = new ArrayList<>();
+        this.incidentesCerrados = new ArrayList<>();
         this.roles.add(ServiceLocator.ROL_BASE);
     }
     
@@ -76,9 +76,9 @@ public class Comunidad {
     }
 
     public List<Usuario> getUsuarios(){
-        List<Usuario> miembros = new ArrayList<>(Usuario);
-        roles.forEach(r -> miembros.addAll(r.getUsuarios()));
-        return miembros;
+        List<Usuario> usuarios = new ArrayList<>();
+        roles.forEach(r -> usuarios.addAll(r.getUsuarios()));
+        return usuarios;
     }
 
     public void abrirIncidente(Incidente incidente) {
@@ -89,15 +89,6 @@ public class Comunidad {
         incidente.cerrar();
         incidentesAbiertos.remove(incidente);
         incidentesCerrados.add(incidente);
-        notificarAUsuarios("Cierre de incidente");
-    }
 
-    private void notificarAUsuarios(String tipoDeNotificacion) {
-        List<Usuario> usuarios = getUsuarios();
-        Notificacion notificacion = FactoryNotificacion.crearNotificacion(tipoDeNotificacion);
-        usuarios.forEach(usuario -> {
-            notificacion.setDestinatario(usuario);
-            notificador.notificar(notificacion, usuario.getEstrategiaDeNotificacion().getFormaDeRecibir());
-        });
     }
 }
