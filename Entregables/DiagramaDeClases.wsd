@@ -341,7 +341,7 @@ Class RevisionDeIncidente {
 
 /' RANKINGS '/
 
-Class FactoryGenerarRankings {
+Class GenerarRankings {
     - rankings: Set<Ranking>
 
     + generarRankings()
@@ -369,7 +369,7 @@ Class RankingImpactoProblematicas {
 
 
 
-FactoryGenerarRankings --> "*" Ranking
+GenerarRankings --> "*" Ranking
 Ranking <|.. RankingPromedioCierreIncidentes
 Ranking <|.. RankingMayorCantidadDeIncidentesSemana
 Ranking <|.. RankingImpactoProblematicas
@@ -410,6 +410,6 @@ Membresia --> TipoDeUsuario '/
 
 PrestacionDeServicio -[hidden]-> FactoryNotificacion
 PrestacionDeServicio -[hidden]-> RevisionDeIncidente
-PrestacionDeServicio -[hidden]-> FactoryGenerarRankings
+PrestacionDeServicio -[hidden]-> GenerarRankings
 
 @enduml
