@@ -2,6 +2,7 @@ package comunidades.incidentes;
 
 import comunidades.servicios.PrestacionDeServicio;
 import comunidades.usuario.Usuario;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,7 +12,7 @@ public class Incidente {
     private Date fechaDeApertura;
     private List<Date> fechasDeCierre;
     private String observaciones;
-    private Usuario abiertoPor;
+    @Getter private Usuario abiertoPor;
     private PrestacionDeServicio prestacionDeServicio;
 
     public Incidente(Usuario usuario, String observaciones, PrestacionDeServicio prestacionDeServicio) {

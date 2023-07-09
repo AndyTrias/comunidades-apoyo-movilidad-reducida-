@@ -1,7 +1,6 @@
 package comunidades;
 
 import comunidades.incidentes.Incidente;
-import comunidades.incidentes.IncidenteDeComunidad;
 import comunidades.servicios.PrestacionDeServicio;
 import comunidades.usuario.Usuario;
 import configs.ServiceLocator;
@@ -72,8 +71,15 @@ public class Comunidad {
         return roles.stream().mapToInt(r -> r.getUsuarios().size()).sum();
     }
 
+    public List<Usuario> getMiembros(){
+        List<Usuario> miembros = new ArrayList<>();
+        roles.forEach(r -> miembros.addAll(r.getUsuarios()));
+        return miembros;
+    }
+
     public void abrirIncidente(Incidente incidente) {
         incidentesAbiertos.add(incidente);
+        
     }
 
     public void cerrarIncidente(Incidente incidente) {

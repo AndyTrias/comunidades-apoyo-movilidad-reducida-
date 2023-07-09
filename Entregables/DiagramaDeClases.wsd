@@ -233,6 +233,9 @@ Class Incidente #bbffcc{
 Class Comunidad {
     - incidentesAbiertos: Set<Incidente> 
     - incidentesCerrados: Set<Incidente>
+
+    + abrirIncidente(incidente: Incidente): void
+    + cerrarIncidente(incidente: Incidente): void
 }
 
 Incidente "*" <-- PrestacionDeServicio 
@@ -248,35 +251,17 @@ Class EstrategiaDeNotificacion #bbffcc{
     + notificar()
 }
 
-Interface MedioDeNotificacion #bbffcc{
+Interface MedioDeNotificacion #bbffcc{}
 
-}
-
-Class NotificarPorWhatsApp #bbffcc{
-
-}
-
-Class NotificarPorMail #bbffcc{
-
-}
+Class NotificarPorWhatsApp #bbffcc{}
+Class NotificarPorMail #bbffcc{}
 
 /' ADAPTERS MEDIO DE NOTIFICACION '/
 
-Interface AdapterNotificarPorWhatsapp #bbffcc{
-    
-}
-
-Interface AdapterNotificarPorMail #bbffcc{
-    
-}
-
-Class AdapterWhatsApp #bbffcc{
-
-}
-
-Class AdapterMail #bbffcc{
-
-}
+Interface AdapterNotificarPorWhatsapp #bbffcc{}
+Interface AdapterNotificarPorMail #bbffcc{}
+Class AdapterWhatsApp #bbffcc{}
+Class AdapterMail #bbffcc{}
 
 Interface FormaDeRecibir #bbffcc{
     + enviarNotificacion(medioPreferido: MedioDeNotificacion)
@@ -296,23 +281,24 @@ Class SinApuros #bbffcc{
 
 /' NOTIFICACIONES '/
 
-Class Notificador #bbffcc{
-    + enviarNotificacionAUsuariosInteresados(incidente: Incidente)
-    + enviarNotificacionAComunidadesDeUsuario(incidente: Incidente, usuario: Usuario)
-    + enviarRevisionManualDeIncidente(incidente: Incidente)
+Interface Notificador #bbffcc{
+    + notificar(emisor: Usuario, mensaje: Mensaje, receptor: Usuario)
 }
 
 Class FactoryNotificacion #bbffcc{
-    + crearNotificacion(notificacion: INotificacion) 
+    + crearNotificacion(emisor: Usuario, mensaje: Mensaje, receptor: Usuario): Notificacion
 }
 
 Interface INotificacion #bbffcc{
-    + algunaOperacion(): void
+    + notificar()
 }
 
-Class Notificacion #bbffcc{
-    - titulo: String
+Class NotificacionIncidente #bbffcc{
+    - emisor: Usuario
     - mensaje: String
+    - receptor: Usuario
+
+    + notificar()
 }
 
 EstrategiaDeNotificacion <-- Usuario
@@ -335,9 +321,7 @@ AdapterNotificarPorMail ..|> NotificarPorMail
 NotificarPorMail ..|> MedioDeNotificacion
 
 FactoryNotificacion .> INotificacion
-INotificacion <|.. Notificacion
-
-Incidente .> Notificador
+INotificacion <|.. NotificacionIncidente
 
 /' SUGERENCIA REVISION DE INCIDENTE '/
 
@@ -418,7 +402,6 @@ Class TipoDeUsuario {
 
 Membresia --> TipoDeUsuario '/
 
-PrestacionDeServicio -[hidden]-> FactoryNotificacion
 PrestacionDeServicio -[hidden]-> FactoryGenerarRankings
 
 @enduml
