@@ -35,13 +35,11 @@ class Comunidad {
     -roles: set<Rol>
     -nombre: String
     -serviciosDeInteres: Set<PrestacionDeServicio>
-    - incidentes: List<IncidenteDeComunidad>
 
 
     + asginarRol(usuario: Usuario)
     + aceptarUsuario(usuario: Usuario)
     + eliminarUsuario(Usuario: Usuario)
-    + nuevoIncidenteEn(Incidente: incidente, usuario: Usuario, observaciones: String)
     + cantidadDeMiembros(): int
 }
 
@@ -225,24 +223,20 @@ ServicioGeoref <-- AdapterLocalizacionGeorefApi
 /' INCIDENTES '/
 Class Incidente #bbffcc{
     - fechaApertura: Date
-    - incidentesDeComunidad: List<IncidenteDeComunidad>
+    - fechasDeCierre: List<Date>
     - observaciones: String
     - abiertoPor: Usuario
 
     + notificar()
 }
 
-Class IncidenteDeComunidad #bbffcc{
-    - incidente: Incidente
-    - fechaCierre: Date
-
-    + cerrarIncidente()
+Class Comunidad {
+    - incidentesAbiertos: Set<Incidente> 
+    - incidentesCerrados: Set<Incidente>
 }
 
-IncidenteDeComunidad --> Incidente
-Incidente --> "*" IncidenteDeComunidad
 Incidente "*" <-- PrestacionDeServicio 
-Comunidad --> "*" IncidenteDeComunidad
+Comunidad --> "*" Incidente
 Incidente --> Usuario
 
 /' CONFIGURACION DE NOTIFICACIONES '/

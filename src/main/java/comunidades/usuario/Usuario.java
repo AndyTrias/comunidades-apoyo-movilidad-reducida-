@@ -55,4 +55,10 @@ public class Usuario {
             membresias.remove(membresias.stream().filter(m -> m.getComunidad().equals(comunidad)).findFirst().get());
         }
     }
+
+    public List<Comunidad> getComunidades(){
+        List<Comunidad> comunidades = new ArrayList<>();
+        membresias.forEach(m -> comunidades.add(m.getComunidad()));
+        return comunidades;
+    }
 }

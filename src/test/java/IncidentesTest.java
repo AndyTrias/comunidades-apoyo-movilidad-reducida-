@@ -15,7 +15,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class ComunidadesTest {
+public class IncidentesTest {
     private Comunidad comunidad1;
     private Usuario franco;
     private Usuario juan;
@@ -29,58 +29,18 @@ public class ComunidadesTest {
         Rol rol = new Rol("rol1", permisos);
         comunidad1.agregarRol(rol);
 
-        Email email = new Email();
-        email.nombreDeUsuario = "francopescee";
-        email.dominio = "gmail.com";
-        this.franco = new Usuario("franco", "pesce", email);
-
+        this.franco = new Usuario("franco", "pesce", new Email());
         this.juan = new Usuario("juan", "perez", new Email());
-    }
 
-    @Test
-    public void testAgregarUsuarioAComunidadVacia() {
-        Rol rolDelUsuario = comunidad1.aceptarUsuario(franco);
-        franco.unirseAComunidad(comunidad1, rolDelUsuario);
+        Rol rolDeComunidad = comunidad1.aceptarUsuario(juan);
+        juan.unirseAComunidad(comunidad1, rolDeComunidad);
+        rolDeComunidad = comunidad1.aceptarUsuario(franco);
+        franco.unirseAComunidad(comunidad1, rolDeComunidad);
 
-        assertEquals(franco.getMembresias().size(), 1);
-        assertEquals(comunidad1.getCantidadDeUsuarios(), 1);
-    }
-
-    @Test
-    public void cambiarRolDeUsuarioARolQueNoExiste() throws Exception {
-        Rol rolDelUsuario = comunidad1.aceptarUsuario(franco);
-        franco.unirseAComunidad(comunidad1, rolDelUsuario);
-        Rol nuevoRol = new Rol("rol2", new HashSet<>());
-
-        assertThrows(Exception.class, () -> comunidad1.cambiarRol(franco, nuevoRol));
-    }
-
-    @Test
-    public void cambiarRolDeUsuario() throws Exception {
-        Rol rolDelUsuario = comunidad1.aceptarUsuario(franco);
-        franco.unirseAComunidad(comunidad1, rolDelUsuario);
-        Rol nuevoRol = new Rol("rol2", new HashSet<>());
-        comunidad1.agregarRol(nuevoRol);
-        comunidad1.cambiarRol(franco, nuevoRol);
-
-        assertEquals(nuevoRol.getUsuarios().size(), 1);
-    }
-
-    @Test
-    public void eliminarUsuarioDeComunidad() throws Exception {
-        Rol rolDelUsuario = comunidad1.aceptarUsuario(franco);
-        franco.unirseAComunidad(comunidad1, rolDelUsuario);
-        comunidad1.eliminarUsuario(franco);
-        franco.abandonarComunidad(comunidad1);
-
-        assertEquals(comunidad1.getCantidadDeUsuarios(), 0);
-        assertEquals(franco.getMembresias().size(), 0);
     }
 
     @Test
     public void testAperturaDeIncidente(){
-        Rol rol = comunidad1.aceptarUsuario(juan);
-        juan.unirseAComunidad(comunidad1, rol);
 
         Servicio servicio = new Servicio("baño hombres");
         PrestacionDeServicio prestacionDeServicio = new PrestacionDeServicio(servicio);
@@ -92,14 +52,12 @@ public class ComunidadesTest {
 
         assertEquals(comunidad1.getIncidentesAbiertos().size(), 1);
         assertEquals(prestacionDeServicio.getIncidentes().size(), 1);
+        assertEquals(juan.getComunidades().get(0).getIncidentesAbiertos().size(), 1);
     }
 
     @Test
     public void testCerrarIncidente(){
-        Rol rol = comunidad1.aceptarUsuario(juan);
-        juan.unirseAComunidad(comunidad1, rol);
-
-        Servicio servicio = new Servicio("baño hombres");
+        Servicio servicio = new Servicio("baño mujeres");
         PrestacionDeServicio prestacionDeServicio = new PrestacionDeServicio(servicio);
 
         // abrir o crear incidente generico

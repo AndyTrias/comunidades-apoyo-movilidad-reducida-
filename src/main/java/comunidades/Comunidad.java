@@ -4,29 +4,28 @@ import comunidades.incidentes.Incidente;
 import comunidades.incidentes.IncidenteDeComunidad;
 import comunidades.servicios.PrestacionDeServicio;
 import comunidades.usuario.Usuario;
-import configs.Config;
 import configs.ServiceLocator;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.flogger.Flogger;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
-import java.util.concurrent.ExecutionException;
 
 public class Comunidad {
     @Getter private List<Rol> roles;
     @Getter @Setter private String nombre;
     @Getter private Set<PrestacionDeServicio> serviciosDeInteres;
-    @Getter private List<IncidenteDeComunidad> incidentes;
+    @Getter private List<Incidente> incidentesAbiertos;
+    @Getter private List<Incidente> incidentesCerrados;
 
     public Comunidad(String nombre) {
         this.nombre = nombre;
         this.serviciosDeInteres = new HashSet<>();
         this.roles = new ArrayList<>();
-        this.incidentes = new ArrayList<>();
+        this.incidentesAbiertos = new ArrayList<>();
+        this.incidentesCerrados = new ArrayList<>();
         roles.add(ServiceLocator.ROL_BASE);
     }
     
@@ -73,8 +72,13 @@ public class Comunidad {
         return roles.stream().mapToInt(r -> r.getUsuarios().size()).sum();
     }
 
-    public void nuevoIncidenteEn(Incidente incidente, Usuario usuario, String observaciones) {
-        IncidenteDeComunidad incidenteDeComunidad = new IncidenteDeComunidad(incidente, usuario, observaciones);
-        incidentes.add(incidenteDeComunidad);
+    public void abrirIncidente(Incidente incidente) {
+        incidentesAbiertos.add(incidente);
+    }
+
+    public void cerrarIncidente(Incidente incidente) {
+        incidente.cerrar();
+        incidentesAbiertos.remove(incidente);
+        incidentesCerrados.add(incidente);
     }
 }

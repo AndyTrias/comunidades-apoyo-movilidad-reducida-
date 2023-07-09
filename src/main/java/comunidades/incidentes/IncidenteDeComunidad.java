@@ -7,15 +7,13 @@ import java.util.Date;
 
 public class IncidenteDeComunidad {
     private Incidente incidente;
-    private Usuario usuario;
-    private String observaciones;
     private Date fechaDeCierre;
 
-    public IncidenteDeComunidad(Incidente incidente, Usuario usuario, String observaciones) {
+    public IncidenteDeComunidad(Incidente incidente) {
         this.incidente = incidente;
-        this.usuario = usuario;
-        this.observaciones = observaciones;
     }
 
-
+    public void cerrarIncidente() {
+        fechaDeCierre = new Date();
+    }
 }

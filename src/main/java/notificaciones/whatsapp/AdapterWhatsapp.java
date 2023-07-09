@@ -13,7 +13,7 @@ public class AdapterWhatsapp implements IAdapterWhatsapp{
 
 
   public void notificar(Usuario usuario, Notificacion notificacion) {
-    this.enviarWhatsapp(usuario.getTelefono(), notificacion.getMensaje());
+    //this.enviarWhatsapp(usuario.getTelefono(), notificacion.getMensaje());
   }
 
 
