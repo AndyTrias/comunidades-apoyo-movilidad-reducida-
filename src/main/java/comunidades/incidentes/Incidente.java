@@ -27,4 +27,8 @@ public class Incidente {
     public void cerrar() {
         fechasDeCierre.add(new Date());
     }
+
+    public boolean estaAbierto() {
+        return fechasDeCierre.isEmpty();
+    }
 }
