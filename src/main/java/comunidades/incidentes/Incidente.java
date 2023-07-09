@@ -2,17 +2,19 @@ package comunidades.incidentes;
 
 import comunidades.servicios.PrestacionDeServicio;
 import comunidades.usuario.Usuario;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+
 public class Incidente {
-    private Date fechaDeApertura;
-    private List<Date> fechasDeCierre;
-    private String observaciones;
-    private Usuario abiertoPor;
-    private PrestacionDeServicio prestacionDeServicio;
+@Getter    private Date fechaDeApertura;
+@Getter    private List<Date> fechasDeCierre; // El size es segun la cantidad de comunidades
+           private String observaciones;
+           private Usuario abiertoPor;
+@Getter private PrestacionDeServicio prestacionDeServicio;
 
     public Incidente(Usuario usuario, String observaciones, PrestacionDeServicio prestacionDeServicio) {
         this.fechaDeApertura = new Date();
@@ -26,4 +28,36 @@ public class Incidente {
     public void cerrar() {
         fechasDeCierre.add(new Date());
     }
+
+
+    public Date calcularPromedioFechasCierre() {
+        if (fechasDeCierre.isEmpty()) {
+            return null;
+        }
+
+        long totalMillis = 0;
+        for (Date fechaCierre : fechasDeCierre) {
+            totalMillis += fechaCierre.getTime();
+        }
+
+        long promedioMillis = totalMillis / fechasDeCierre.size();
+        return new Date(promedioMillis);
+    }
+
+
+    public long tiempoActivo() {
+        Date fechaPromedioCierre = calcularPromedioFechasCierre();
+
+        if (fechaPromedioCierre == null) {
+            return 0;  // O devuelve otro valor adecuado en caso de que no haya fechas de cierre
+        }
+
+        long aperturaMillis = fechaDeApertura.getTime();
+        long promedioCierreMillis = fechaPromedioCierre.getTime();
+        long diferenciaMillis = promedioCierreMillis - aperturaMillis;
+
+        return diferenciaMillis / (1000 * 60);  // Convertir de milisegundos a minutos
+    }
+
 }
+

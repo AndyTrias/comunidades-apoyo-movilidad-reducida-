@@ -296,10 +296,11 @@ Class SinApuros #bbffcc{
 
 /' NOTIFICACIONES '/
 
-Class Notificador #bbffcc{
+Interface Notificador #bbffcc{
     + enviarNotificacionAUsuariosInteresados(incidente: Incidente)
     + enviarNotificacionAComunidadesDeUsuario(incidente: Incidente, usuario: Usuario)
     + enviarRevisionManualDeIncidente(incidente: Incidente)
+    + enviarNotificacion(origen: Usuario, destino: Usuario, mensaje: String)
 }
 
 Class FactoryNotificacion #bbffcc{

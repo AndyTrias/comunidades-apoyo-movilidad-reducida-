@@ -1,7 +1,6 @@
 package comunidades;
 
 import comunidades.incidentes.Incidente;
-import comunidades.incidentes.IncidenteDeComunidad;
 import comunidades.servicios.PrestacionDeServicio;
 import comunidades.usuario.Usuario;
 import configs.ServiceLocator;
@@ -73,7 +72,17 @@ public class Comunidad {
     }
 
     public void abrirIncidente(Incidente incidente) {
-        incidentesAbiertos.add(incidente);
+        // Habria que ver si ese incidente ya esta abierto
+        for (Incidente i : incidentesAbiertos) {
+            if (i.getPrestacionDeServicio().equals(incidente.getPrestacionDeServicio())) {
+                return;
+            }
+        }
+
+        // Unicamente se agrega si lo tiene como interes
+        if (serviciosDeInteres.contains(incidente.getPrestacionDeServicio())) {
+            incidentesAbiertos.add(incidente);
+        }
     }
 
     public void cerrarIncidente(Incidente incidente) {
