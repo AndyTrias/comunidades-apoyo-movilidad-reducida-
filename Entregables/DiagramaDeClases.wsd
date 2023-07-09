@@ -351,7 +351,11 @@ Class RevisionDeIncidente #bbffcc{
 
 /' RANKINGS '/
 
+<<<<<<< HEAD
+Class GenerarRankings {
+=======
 Class FactoryGenerarRankings #bbffcc{
+>>>>>>> 3f5ef77cd29fcc7f00a0d92489ba8cecc74f554c
     - rankings: Set<Ranking>
 
     + generarRankings()
@@ -379,7 +383,7 @@ Class RankingImpactoProblematicas #bbffcc{
 
 
 
-FactoryGenerarRankings --> "*" Ranking
+GenerarRankings --> "*" Ranking
 Ranking <|.. RankingPromedioCierreIncidentes
 Ranking <|.. RankingMayorCantidadDeIncidentesSemana
 Ranking <|.. RankingImpactoProblematicas
@@ -418,6 +422,12 @@ Class TipoDeUsuario {
 
 Membresia --> TipoDeUsuario '/
 
+<<<<<<< HEAD
+PrestacionDeServicio -[hidden]-> FactoryNotificacion
+PrestacionDeServicio -[hidden]-> RevisionDeIncidente
+PrestacionDeServicio -[hidden]-> GenerarRankings
+=======
 PrestacionDeServicio -[hidden]-> FactoryGenerarRankings
+>>>>>>> 3f5ef77cd29fcc7f00a0d92489ba8cecc74f554c
 
 @enduml

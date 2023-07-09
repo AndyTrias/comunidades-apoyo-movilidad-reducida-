@@ -7,8 +7,8 @@ public class Membresia {
     @Getter private Rol rol;
 
     public Membresia(Comunidad comunidad, Rol rol) {
-        this.comunidad = comunidad;
-        this.rol = rol;
+        comunidad = comunidad;
+        rol = rol;
     }
 
 }

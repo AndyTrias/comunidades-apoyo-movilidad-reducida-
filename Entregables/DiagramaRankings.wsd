@@ -1,0 +1,35 @@
+@startuml GenerarRankings
+
+
+
+abstract RankingEntidades {
+    + generarRanking(List<Entidad>): List<Entidad>
+    - obtenerIncidenteDeEntidad(Entidad): List<Incidente>
+    - validarIncidente(Incidente): Boolean
+}
+
+class RankingMayorCantidad extends RankingEntidades {
+    - validarIncidente(Incidente): Boolean 
+    + generarRanking(List<Entidad>): List<Entidad>
+}
+
+note left of RankingMayorCantidad::validarIncidente
+    Es es lo que cambia lo de solo uno en 24 horas
+end note
+
+
+
+class RankingMayorTiempo extends RankingEntidades {
+    - calcularPromedio(Entidad): float
+    + generarRanking(List<Entidad>): List<Entidad>
+}
+
+class RankingComunidades {
+    + generarRanking(List<Comunidad>): List<Comunidad>
+    - calcularImpacto(Comunidad): float
+}
+
+
+
+
+@enduml
