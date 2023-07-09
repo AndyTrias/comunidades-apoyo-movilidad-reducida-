@@ -233,57 +233,49 @@ Class Incidente #bbffcc{
 Class Comunidad {
     - incidentesAbiertos: Set<Incidente> 
     - incidentesCerrados: Set<Incidente>
+    - notificador: Notificador
+
+    + abrirIncidente(incidente: Incidente): void
+    + cerrarIncidente(incidente: Incidente): void
+    
+    - notificarAUsuarios(tipoDeNotificacion: String): void
 }
 
 Incidente "*" <-- PrestacionDeServicio 
 Comunidad --> "*" Incidente
 Incidente --> Usuario
+Comunidad ..> FactoryNotificacion
+Comunidad -> Notificador
 
 /' CONFIGURACION DE NOTIFICACIONES '/
 
-Class EstrategiaDeNotificacion #bbffcc{
+Class Configuracion #bbffcc{
     - formaDeRecibir: FormaDeRecibir
     - medioPreferido: MedioDeNotificacion
 
     + notificar()
 }
 
-Interface MedioDeNotificacion #bbffcc{
+Interface MedioDeNotificacion #bbffcc{}
 
-}
-
-Class NotificarPorWhatsApp #bbffcc{
-
-}
-
-Class NotificarPorMail #bbffcc{
-
-}
+Class NotificarPorWhatsApp #bbffcc{}
+Class NotificarPorMail #bbffcc{}
 
 /' ADAPTERS MEDIO DE NOTIFICACION '/
 
-Interface AdapterNotificarPorWhatsapp #bbffcc{
-    
-}
+Interface AdapterNotificarPorWhatsapp #bbffcc{}
+Interface AdapterNotificarPorMail #bbffcc{}
+Class AdapterWhatsApp #bbffcc{}
+Class AdapterMail #bbffcc{}
 
-Interface AdapterNotificarPorMail #bbffcc{
-    
-}
+abstract class EstrategiaDeNotificacion #bbffcc{
+    # mediodeNotificacion: MedioDeNotificacion
 
-Class AdapterWhatsApp #bbffcc{
-
-}
-
-Class AdapterMail #bbffcc{
-
-}
-
-Interface FormaDeRecibir #bbffcc{
-    + enviarNotificacion(medioPreferido: MedioDeNotificacion)
+    + notificar(notificacion: Notificacion)
 }
 
 Class CuandoSuceden #bbffcc{
-    + enviarNotificacion(medioPreferido: MedioDeNotificacion)
+    + notificar(notificacion: Notificacion)
 }
 
 Class SinApuros #bbffcc{
@@ -294,35 +286,49 @@ Class SinApuros #bbffcc{
     + enviarNotificacion(medioPreferido: MedioDeNotificacion)
 }
 
+MedioDeNotificacion <- EstrategiaDeNotificacion
 /' NOTIFICACIONES '/
 
 Interface Notificador #bbffcc{
-    + enviarNotificacionAUsuariosInteresados(incidente: Incidente)
-    + enviarNotificacionAComunidadesDeUsuario(incidente: Incidente, usuario: Usuario)
-    + enviarRevisionManualDeIncidente(incidente: Incidente)
-    + enviarNotificacion(origen: Usuario, destino: Usuario, mensaje: String)
+    + notificar(incidente: Incidente)
 }
+
+Class AperturaDeIncidente #bbffcc{
+    + notificar(incidente: Incidente)
+}
+
+Class CierreDeIncidente #bbffcc{
+    + notificar(incidente: Incidente)
+} 
+
+Class RevisionManualDeIncidente #bbffcc{
+    + notificar(incidente: Incidente)
+} 
 
 Class FactoryNotificacion #bbffcc{
-    + crearNotificacion(notificacion: INotificacion) 
-}
-
-Interface INotificacion #bbffcc{
-    + algunaOperacion(): void
+    + crearNotificacion(tipoDeNotificacion: String): Notificacion
 }
 
 Class Notificacion #bbffcc{
-    - titulo: String
-    - mensaje: String
+    - asunto: String
+    - cuerpo: String
+    - destinatario: Usuario
 }
 
-EstrategiaDeNotificacion <-- Usuario
+FactoryNotificacion .> Notificacion
+Notificador <|.. AperturaDeIncidente
+Notificador <|.. CierreDeIncidente
+Notificador <|.. RevisionManualDeIncidente
 
-FormaDeRecibir <-- EstrategiaDeNotificacion
-MedioDeNotificacion <-- EstrategiaDeNotificacion
 
-CuandoSuceden ..|> FormaDeRecibir
-SinApuros ..|> FormaDeRecibir
+
+Configuracion <-- Usuario
+
+EstrategiaDeNotificacion <-- Configuracion
+MedioDeNotificacion <-- Configuracion
+
+CuandoSuceden ..|> EstrategiaDeNotificacion
+SinApuros ..|> EstrategiaDeNotificacion
 
 
 /' Whatsapp '/
@@ -335,11 +341,6 @@ AdapterMail ..|> AdapterNotificarPorMail
 AdapterNotificarPorMail ..|> NotificarPorMail
 NotificarPorMail ..|> MedioDeNotificacion
 
-FactoryNotificacion .> INotificacion
-INotificacion <|.. Notificacion
-
-Incidente .> Notificador
-
 /' SUGERENCIA REVISION DE INCIDENTE '/
 
 Class RevisionDeIncidente #bbffcc{
@@ -347,10 +348,9 @@ Class RevisionDeIncidente #bbffcc{
     + avisarRevisionDeIncidente(usuario: Usuario, incidente: Incidente): void
 }
 
-RevisionDeIncidente ..> Notificador
-
 
 /' RANKINGS '/
+
 
 Class FactoryGenerarRankings #bbffcc{
     - rankings: Set<Ranking>
@@ -380,7 +380,7 @@ Class RankingImpactoProblematicas #bbffcc{
 
 
 
-FactoryGenerarRankings --> "*" Ranking
+GenerarRankings --> "*" Ranking
 Ranking <|.. RankingPromedioCierreIncidentes
 Ranking <|.. RankingMayorCantidadDeIncidentesSemana
 Ranking <|.. RankingImpactoProblematicas
@@ -419,7 +419,6 @@ Class TipoDeUsuario {
 
 Membresia --> TipoDeUsuario '/
 
-PrestacionDeServicio -[hidden]-> FactoryNotificacion
 PrestacionDeServicio -[hidden]-> FactoryGenerarRankings
 
 @enduml

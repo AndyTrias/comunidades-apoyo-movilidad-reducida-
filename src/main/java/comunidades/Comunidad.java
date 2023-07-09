@@ -6,6 +6,9 @@ import comunidades.usuario.Usuario;
 import configs.ServiceLocator;
 import lombok.Getter;
 import lombok.Setter;
+import notificaciones.FactoryNotificacion;
+import notificaciones.Notificacion;
+import notificaciones.notificador.Notificador;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +21,7 @@ public class Comunidad {
     @Getter private Set<PrestacionDeServicio> serviciosDeInteres;
     @Getter private List<Incidente> incidentesAbiertos;
     @Getter private List<Incidente> incidentesCerrados;
+    @Setter private Notificador notificador;
 
     public Comunidad(String nombre) {
         this.nombre = nombre;
@@ -25,7 +29,7 @@ public class Comunidad {
         this.roles = new ArrayList<>();
         this.incidentesAbiertos = new ArrayList<>();
         this.incidentesCerrados = new ArrayList<>();
-        roles.add(ServiceLocator.ROL_BASE);
+        this.roles.add(ServiceLocator.ROL_BASE);
     }
     
     public void agregarServicioDeInteres(PrestacionDeServicio servicio) {
@@ -71,6 +75,12 @@ public class Comunidad {
         return roles.stream().mapToInt(r -> r.getUsuarios().size()).sum();
     }
 
+    public List<Usuario> getUsuarios(){
+        List<Usuario> usuarios = new ArrayList<>();
+        roles.forEach(r -> usuarios.addAll(r.getUsuarios()));
+        return usuarios;
+    }
+
     public void abrirIncidente(Incidente incidente) {
         // Habria que ver si ese incidente ya esta abierto
         for (Incidente i : incidentesAbiertos) {
@@ -89,5 +99,6 @@ public class Comunidad {
         incidente.cerrar();
         incidentesAbiertos.remove(incidente);
         incidentesCerrados.add(incidente);
+
     }
 }

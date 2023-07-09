@@ -1,8 +1,8 @@
-package notificaciones.whatsapp;
+package comunidades.usuario.configuraciones.medios.whatsapp;
 
 import comunidades.usuario.Usuario;
 import notificaciones.Notificacion;
-import notificaciones.MedioPreferido;
+import comunidades.usuario.configuraciones.medios.MedioPreferido;
 
 public class NotificarPorWhatsApp implements MedioPreferido {
 
@@ -12,8 +12,8 @@ public class NotificarPorWhatsApp implements MedioPreferido {
     this.adapter = adapter;
   }
 
-  public void notificar(Usuario usuario, Notificacion notificacion) {
-    adapter.notificar(usuario, notificacion);
+  public void notificar(Notificacion notificacion) {
+    adapter.notificar(notificacion.getDestinatario(), notificacion);
   }
 }
 

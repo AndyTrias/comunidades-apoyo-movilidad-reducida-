@@ -1,4 +1,4 @@
-package notificaciones.mail;
+package comunidades.usuario.configuraciones.medios.mail;
 
 import comunidades.usuario.Email;
 
