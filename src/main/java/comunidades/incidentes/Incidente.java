@@ -10,9 +10,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+
 public class Incidente {
-    private Date fechaDeApertura;
-    private List<Date> fechasDeCierre;
+    @Getter private Date fechaDeApertura;
+    @Getter private List<Date> fechasDeCierre;
     private String observaciones;
     @Getter private Usuario abiertoPor;
     @Getter private PrestacionDeServicio prestacionDeServicio;
@@ -34,12 +35,41 @@ public class Incidente {
         fechasDeCierre.add(new Date());
     }
 
-<<<<<<< HEAD
+    public Date calcularPromedioFechasCierre() {
+        if (fechasDeCierre.isEmpty()) {
+            return null;
+        }
+
+        long totalMillis = 0;
+        for (Date fechaCierre : fechasDeCierre) {
+            totalMillis += fechaCierre.getTime();
+        }
+
+        long promedioMillis = totalMillis / fechasDeCierre.size();
+        return new Date(promedioMillis);
+    }
+
+
+    public long tiempoActivo() {
+        Date fechaPromedioCierre = calcularPromedioFechasCierre();
+
+        if (fechaPromedioCierre == null) {
+            return 0;  // O devuelve otro valor adecuado en caso de que no haya fechas de cierre
+        }
+
+        long aperturaMillis = fechaDeApertura.getTime();
+        long promedioCierreMillis = fechaPromedioCierre.getTime();
+        long diferenciaMillis = promedioCierreMillis - aperturaMillis;
+
+        return diferenciaMillis / (1000 * 60);  // Convertir de milisegundos a minutos
+    }
+
     public boolean estaAbierto() {
         return fechasDeCierre.isEmpty();
-=======
+    }
     public void notificarApertura(){
         //notificador.notificar(this);
->>>>>>> 67697ea001b4a1747112eb5b96968e7e36c5e334
     }
+
 }
+

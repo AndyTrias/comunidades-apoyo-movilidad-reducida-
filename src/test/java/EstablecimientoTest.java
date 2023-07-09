@@ -23,9 +23,9 @@ public class EstablecimientoTest {
     localizacion = new Localizacion();
 
     establecimiento = new Establecimiento("Sucursal Olivos", localizacion);
-    banioPlantaBaja = new PrestacionDeServicio(banio);
-    escaleraSuperior = new PrestacionDeServicio(escalera);
-    banioGerentes =  new PrestacionDeServicio(banio);
+    banioPlantaBaja = new PrestacionDeServicio(banio, "Banio Planta Baja");
+    escaleraSuperior = new PrestacionDeServicio(escalera, "Escalera Superior");
+    banioGerentes =  new PrestacionDeServicio(banio, "Banio Gerentes");
   }
 
   @Test
