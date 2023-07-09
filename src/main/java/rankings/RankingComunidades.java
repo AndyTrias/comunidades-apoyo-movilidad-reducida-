@@ -3,7 +3,7 @@ package rankings;
 public class RankingComunidades {
 
     private float calcularImpacto(Comunidades comunidad){
-        List<IncidenteDeComunidad> incidentes = getIncidentes(comunidad);
+        List<IncidenteDeComunidad> incidentes = getIncidentes(comunidad); //falta chequear observadores
         return comunidad.cantidadDeMiembros() / incidentes.size();
     }
 

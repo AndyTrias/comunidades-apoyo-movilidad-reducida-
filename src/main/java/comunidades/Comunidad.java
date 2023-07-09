@@ -25,11 +25,11 @@ public class Comunidad {
 
     public Comunidad(String nombre) {
         this.nombre = nombre;
-        this.serviciosDeInteres = new HashSet<>();
+        this.serviciosDeInteres = new HashSet<>(PrestacionDeServicio);
         this.roles = new ArrayList<>();
-        this.incidentesAbiertos = new ArrayList<>();
-        this.incidentesCerrados = new ArrayList<>();
-        roles.add(ServiceLocator.ROL_BASE);
+        this.incidentesAbiertos = new ArrayList<>(Incidente);
+        this.incidentesCerrados = new ArrayList<>(Incidente);
+        this.roles.add(ServiceLocator.ROL_BASE);
     }
     
     public void agregarServicioDeInteres(PrestacionDeServicio servicio) {
@@ -76,7 +76,7 @@ public class Comunidad {
     }
 
     public List<Usuario> getUsuarios(){
-        List<Usuario> miembros = new ArrayList<>();
+        List<Usuario> miembros = new ArrayList<>(Usuario);
         roles.forEach(r -> miembros.addAll(r.getUsuarios()));
         return miembros;
     }

@@ -15,7 +15,7 @@ public class Rol {
 
     public Rol(String nombre, Set<Permiso> permisos) {
         this.permisos = permisos;
-        this.usuarios = new ArrayList<>();
+        this.usuarios = new ArrayList<>(Usuario);
     }
 
     public void setUsuario(Usuario usuario) {
