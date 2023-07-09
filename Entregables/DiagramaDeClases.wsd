@@ -233,14 +233,19 @@ Class Incidente #bbffcc{
 Class Comunidad {
     - incidentesAbiertos: Set<Incidente> 
     - incidentesCerrados: Set<Incidente>
+    - notificador: Notificador
 
     + abrirIncidente(incidente: Incidente): void
     + cerrarIncidente(incidente: Incidente): void
+    
+    - notificarAUsuarios(tipoDeNotificacion: String): void
 }
 
 Incidente "*" <-- PrestacionDeServicio 
 Comunidad --> "*" Incidente
 Incidente --> Usuario
+Comunidad ..> FactoryNotificacion
+Comunidad -> Notificador
 
 /' CONFIGURACION DE NOTIFICACIONES '/
 
@@ -263,12 +268,14 @@ Interface AdapterNotificarPorMail #bbffcc{}
 Class AdapterWhatsApp #bbffcc{}
 Class AdapterMail #bbffcc{}
 
-Interface FormaDeRecibir #bbffcc{
-    + enviarNotificacion(medioPreferido: MedioDeNotificacion)
+abstract class FormaDeRecibir #bbffcc{
+    # mediodeNotificacion: MedioDeNotificacion
+
+    + notificar(notificacion: Notificacion)
 }
 
 Class CuandoSuceden #bbffcc{
-    + enviarNotificacion(medioPreferido: MedioDeNotificacion)
+    + notificar(notificacion: Notificacion)
 }
 
 Class SinApuros #bbffcc{
@@ -279,29 +286,24 @@ Class SinApuros #bbffcc{
     + enviarNotificacion(medioPreferido: MedioDeNotificacion)
 }
 
+MedioDeNotificacion <- FormaDeRecibir
 /' NOTIFICACIONES '/
 
-Interface Notificador #bbffcc{
-    + notificar(emisor: Usuario, mensaje: Mensaje, receptor: Usuario)
+Class Notificador #bbffcc{
+    + notificar(notificacion: Notificacion, formaDeRecibir: FormaDeRecibir)
 }
 
-Class AperturaIncidente #bbffcc{
-    + notificar(emisor: Usuario, mensaje: Mensaje, receptor: Usuario)
+Class FactoryNotificacion #bbffcc{
+    + crearNotificacion(tipoDeNotificacion: String): Notificacion
 }
 
-Class CierreIncidente #bbffcc{
-    + notificar(emisor: Usuario, mensaje: Mensaje, receptor: Usuario)
+Class Notificacion #bbffcc{
+    - asunto: String
+    - cuerpo: String
+    - destinatario: Usuario
 }
 
-Class RevisionIncidente #bbffcc{
-    + notificar(emisor: Usuario, mensaje: Mensaje, receptor: Usuario)
-}
-
-Notificador <|.. AperturaIncidente
-Notificador <|.. CierreIncidente
-Notificador <|.. RevisionIncidente
-
-
+FactoryNotificacion .> Notificacion
 
 EstrategiaDeNotificacion <-- Usuario
 
