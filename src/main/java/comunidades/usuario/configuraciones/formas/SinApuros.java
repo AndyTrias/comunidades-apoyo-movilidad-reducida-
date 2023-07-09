@@ -1,7 +1,7 @@
-package notificaciones.formaDeRecibir;
+package comunidades.usuario.configuraciones.formas;
 
-import notificaciones.FormaDeRecibir;
-import notificaciones.MedioPreferido;
+import comunidades.usuario.configuraciones.formas.FormaDeRecibir;
+import comunidades.usuario.configuraciones.medios.MedioPreferido;
 import notificaciones.Notificacion;
 
 import java.util.Date;

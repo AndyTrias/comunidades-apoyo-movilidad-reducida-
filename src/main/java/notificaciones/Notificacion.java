@@ -6,6 +6,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Notificacion {
-  private String asunto;
-  private String cuerpo;
+  private String mensaje;
+
+  public Notificacion(String mensaje) {
+    this.mensaje = mensaje;
+  }
 }

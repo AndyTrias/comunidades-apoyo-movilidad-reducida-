@@ -1,9 +1,7 @@
-package notificaciones.mail;
+package comunidades.usuario.configuraciones.medios.mail;
 
-import comunidades.usuario.Email;
 import comunidades.usuario.Usuario;
-import external.mail.ServicioMail;
-import notificaciones.MedioPreferido;
+import comunidades.usuario.configuraciones.medios.MedioPreferido;
 import notificaciones.Notificacion;
 
 public class NotificarPorMail implements MedioPreferido {

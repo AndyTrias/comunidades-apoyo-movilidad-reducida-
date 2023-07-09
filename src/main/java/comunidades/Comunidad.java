@@ -71,7 +71,7 @@ public class Comunidad {
         return roles.stream().mapToInt(r -> r.getUsuarios().size()).sum();
     }
 
-    public List<Usuario> getMiembros(){
+    public List<Usuario> getUsuarios(){
         List<Usuario> miembros = new ArrayList<>();
         roles.forEach(r -> miembros.addAll(r.getUsuarios()));
         return miembros;
@@ -79,12 +79,19 @@ public class Comunidad {
 
     public void abrirIncidente(Incidente incidente) {
         incidentesAbiertos.add(incidente);
-        
+        notificarAUsuarios();
     }
 
     public void cerrarIncidente(Incidente incidente) {
         incidente.cerrar();
         incidentesAbiertos.remove(incidente);
         incidentesCerrados.add(incidente);
+    }
+
+    private void notificarAUsuarios() {
+        List<Usuario> usuarios = getUsuarios();
+        usuarios.forEach(usuario -> {
+            notificador.notificar(notificacion, usuario.getEstrategiaDeNotificacion().getFormaDeRecibir());
+        });
     }
 }

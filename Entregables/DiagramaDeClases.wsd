@@ -285,21 +285,23 @@ Interface Notificador #bbffcc{
     + notificar(emisor: Usuario, mensaje: Mensaje, receptor: Usuario)
 }
 
-Class FactoryNotificacion #bbffcc{
-    + crearNotificacion(emisor: Usuario, mensaje: Mensaje, receptor: Usuario): Notificacion
+Class AperturaIncidente #bbffcc{
+    + notificar(emisor: Usuario, mensaje: Mensaje, receptor: Usuario)
 }
 
-Interface INotificacion #bbffcc{
-    + notificar()
+Class CierreIncidente #bbffcc{
+    + notificar(emisor: Usuario, mensaje: Mensaje, receptor: Usuario)
 }
 
-Class NotificacionIncidente #bbffcc{
-    - emisor: Usuario
-    - mensaje: String
-    - receptor: Usuario
-
-    + notificar()
+Class RevisionIncidente #bbffcc{
+    + notificar(emisor: Usuario, mensaje: Mensaje, receptor: Usuario)
 }
+
+Notificador <|.. AperturaIncidente
+Notificador <|.. CierreIncidente
+Notificador <|.. RevisionIncidente
+
+
 
 EstrategiaDeNotificacion <-- Usuario
 
@@ -320,17 +322,12 @@ AdapterMail ..|> AdapterNotificarPorMail
 AdapterNotificarPorMail ..|> NotificarPorMail
 NotificarPorMail ..|> MedioDeNotificacion
 
-FactoryNotificacion .> INotificacion
-INotificacion <|.. NotificacionIncidente
-
 /' SUGERENCIA REVISION DE INCIDENTE '/
 
 Class RevisionDeIncidente #bbffcc{
     + estaCerca(usuario: Usuario, incidente: Incidente): Boolean
     + avisarRevisionDeIncidente(usuario: Usuario, incidente: Incidente): void
 }
-
-RevisionDeIncidente ..> Notificador
 
 
 /' RANKINGS '/

@@ -1,8 +1,8 @@
-package notificaciones.whatsapp;
+package comunidades.usuario.configuraciones.medios.whatsapp;
 
 import comunidades.usuario.Usuario;
 import notificaciones.Notificacion;
-import notificaciones.MedioPreferido;
+import comunidades.usuario.configuraciones.medios.MedioPreferido;
 
 public class NotificarPorWhatsApp implements MedioPreferido {
 

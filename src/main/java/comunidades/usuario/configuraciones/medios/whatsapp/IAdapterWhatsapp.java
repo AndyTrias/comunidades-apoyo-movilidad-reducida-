@@ -1,4 +1,4 @@
-package notificaciones.whatsapp;
+package comunidades.usuario.configuraciones.medios.whatsapp;
 
 import comunidades.usuario.Usuario;
 import notificaciones.Notificacion;
