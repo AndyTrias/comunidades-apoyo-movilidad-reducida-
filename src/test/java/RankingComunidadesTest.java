@@ -1,7 +1,7 @@
 import comunidades.Comunidad;
 import org.junit.Assert;
 import org.junit.Test;
-import rankings.RankingComunidades;
+import rankings.RankingImpacto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,7 @@ public class RankingComunidadesTest {
         comunidades.add(comunidad3);
 
         // Crear el ranking y generar el ranking
-        RankingComunidades ranking = new RankingComunidades();
+        RankingImpacto ranking = new RankingImpacto();
         List<Comunidad> resultado = ranking.generarRanking(comunidades);
 
         // Verificar el orden de las comunidades en el ranking

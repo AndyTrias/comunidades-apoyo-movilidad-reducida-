@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class RankingMayorCantidad extends RankingEntidades {
+public class RankingMayorCantidad extends RankingEntidadesQueUsanIncidentes {
 
     @Override
     protected boolean validarIncidente(Incidente incidente, List<Incidente> incidentesPrestacion) {

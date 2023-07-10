@@ -2,13 +2,13 @@
 
 
 
-abstract RankingEntidades {
+abstract RankingEntidadesQueUsanIncidentes implements RankingEntidades{
     + generarRanking(List<Entidad>): List<Entidad>
     - obtenerIncidenteDeEntidad(Entidad): List<Incidente>
     - validarIncidente(Incidente): Boolean
 }
 
-class RankingMayorCantidad extends RankingEntidades {
+class RankingMayorCantidad extends RankingEntidadesQueUsanIncidentes {
     - validarIncidente(Incidente): Boolean 
     + generarRanking(List<Entidad>): List<Entidad>
 }
@@ -19,17 +19,23 @@ end note
 
 
 
-class RankingMayorTiempo extends RankingEntidades {
+class RankingMayorTiempo extends RankingEntidadesQueUsanIncidentes {
     - calcularPromedio(Entidad): float
     + generarRanking(List<Entidad>): List<Entidad>
 }
 
-class RankingComunidades {
+class RankingImpacto implements RankingComunidades {
     + generarRanking(List<Comunidad>): List<Comunidad>
     - calcularImpacto(Comunidad): float
 }
 
+interface RankingEntidades {
+    + generarRanking(List<Entidad>): List<Entidad>
+}
 
+interface RankingComunidades {
+    + generarRanking(List<Comunidad>): List<Comunidad>
+}
 
 
 @enduml
