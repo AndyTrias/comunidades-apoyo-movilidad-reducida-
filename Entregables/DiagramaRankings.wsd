@@ -37,5 +37,18 @@ interface RankingComunidades {
     + generarRanking(List<Comunidad>): List<Comunidad>
 }
 
+class generarInforme{
+
+
+    - List<RankingEntidades> rankingEntidades
+    - List<RankingComunidades> rankingComunidades
+
+
+    + generarInforme(List<Entidad>, List<Comunidad>): void
+}
+
+generarInforme-->RankingEntidades
+generarInforme-->RankingComunidades
+
 
 @enduml

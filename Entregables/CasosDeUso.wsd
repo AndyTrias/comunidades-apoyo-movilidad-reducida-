@@ -7,10 +7,11 @@ actor "DesignadoEmpresa" as DesignadoEmpresa
 actor "Tiempo (t=1 semana)" as Tiempo
 
 rectangle "Sistema de Monitoreo de Estado de Servicios" {
-Persona -- (Configurar Notificaciones)
+Persona -- (Configurar Medio de Comunicacion Preferido)
+Persona -- (Configurar Forma de Recibir Notificaciones)
 
 MiembroComunidad -- (Abrir Incidente)
-MiembroComunidad -- (Cerrar Incidente Resuelto)
+MiembroComunidad -- (Cerrar Incidente)
 MiembroComunidad -- (Obtener Listado de Incidentes Reportados)
 MiembroComunidad -- (Indicar Afectado u Observador)
 
@@ -18,6 +19,7 @@ DesignadoEmpresa -- (Obtener Rankings)
 DesignadoEmpresa -- (Informar Incidente)
 
 Tiempo  -- (Enviar Notificaciones)
+Tiempo -- (Generar Rankings)
 
 }
 @enduml
