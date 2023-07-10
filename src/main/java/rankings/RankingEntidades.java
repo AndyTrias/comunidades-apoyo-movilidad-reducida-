@@ -11,8 +11,6 @@ import java.util.List;
 
 public abstract class RankingEntidades {
 
-
-
     public List<Entidad> generarRanking(List<Entidad> entidades) {
         return null;
     }
