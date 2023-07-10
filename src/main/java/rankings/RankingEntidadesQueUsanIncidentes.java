@@ -7,7 +7,7 @@ import entidades.Entidad;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class RankingEntidadesQueUsanIncidentes implements RankingEntidades {
+public abstract class RankingEntidadesQueUsanIncidentes extends RankingEntidades {
 
 
 
@@ -22,7 +22,7 @@ public abstract class RankingEntidadesQueUsanIncidentes implements RankingEntida
     protected List<Incidente> obtenerIncidentesDeEntidad(Entidad entidad) {
         //create an empty list of incidents
 
-        List<Incidente> incidentes = new ArrayList<Incidente>();
+        List<Incidente> incidentes = new ArrayList<>();
         for (PrestacionDeServicio prestacion : entidad.getPrestacionesDeServicios()) {
             List<Incidente> incidentesPrestacion = new ArrayList<>();
             for (Incidente incidente : prestacion.getIncidentes()) {

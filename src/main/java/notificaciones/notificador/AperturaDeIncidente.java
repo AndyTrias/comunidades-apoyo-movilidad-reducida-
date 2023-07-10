@@ -3,11 +3,15 @@ package notificaciones.notificador;
 import comunidades.Comunidad;
 import comunidades.incidentes.Incidente;
 import comunidades.usuario.Usuario;
+import entidades.Entidad;
 import notificaciones.FactoryNotificacion;
 import notificaciones.Notificacion;
+import repositiorios.RepoEntidades;
+import repositiorios.RepoUsuarios;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AperturaDeIncidente implements Notificador{
 
@@ -19,12 +23,32 @@ public class AperturaDeIncidente implements Notificador{
             List<Usuario> usuariosANotificar = comunidad.getUsuarios();
             usuariosANotificar.forEach(usuario -> {
                 if (!usuariosNotificados.contains(usuario)) {
-                    notificacion.setDestinatario(usuario);
-                    notificacion.setEstrategiaDeNotificacion(usuario.getConfiguracionDeNotificaciones().getEstrategiaDeNotificacion());
-                    usuario.notificar(notificacion);
+                    this.notificarAUsuario(usuario, notificacion);
                     usuariosNotificados.add(usuario);
                 }
             });
         }
+
+        // Notificar a interesados
+        List<Entidad> entidadesConLaPrestacion = RepoEntidades.getInstance().getEntidadesConPrestacion(incidente.getPrestacionDeServicio());
+        List<Usuario> usuariosConInteresEnElServicio = RepoUsuarios.getInstance().getUsuariosConInteresEnServicio(incidente.getPrestacionDeServicio().getServicio());
+
+        // filtro a los usuarios que no tengan alguna de las entidades relacionadas en su interes
+        List<Usuario> usuariosANotificarPorInteres = usuariosConInteresEnElServicio.stream().filter(usuario -> {
+            return usuario.getInteres().getEntidades().stream().noneMatch(entidadesConLaPrestacion::contains);
+        }).toList();
+
+        usuariosANotificarPorInteres.forEach(usuario -> {
+            if (!usuariosNotificados.contains(usuario)) {
+                this.notificarAUsuario(usuario, notificacion);
+                usuariosNotificados.add(usuario);
+            }
+        });
+    }
+
+    public void notificarAUsuario(Usuario usuario, Notificacion notificacion) {
+        notificacion.setDestinatario(usuario);
+        notificacion.setEstrategiaDeNotificacion(usuario.getConfiguracionDeNotificaciones().getEstrategiaDeNotificacion());
+        usuario.notificar(notificacion);
     }
 }

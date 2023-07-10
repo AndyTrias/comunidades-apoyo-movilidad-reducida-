@@ -28,7 +28,7 @@ public class Comunidad {
         this.roles = new ArrayList<>();
         this.incidentesAbiertos = new ArrayList<>();
         this.incidentesCerrados = new ArrayList<>();
-        this.roles.add(ServiceLocator.ROL_BASE);
+        this.roles.add(new Rol("Miembro", null));
         this.notificador = new CierreIncidente();
     }
     

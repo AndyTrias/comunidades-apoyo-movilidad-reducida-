@@ -6,7 +6,7 @@ import comunidades.incidentes.Incidente;
 import java.util.Comparator;
 import java.util.List;
 
-public class RankingImpacto implements RankingComunidades{
+public class RankingImpacto extends RankingComunidades {
 
     private float calcularImpacto(Comunidad comunidad){
         List<Incidente> incidentes = comunidad.getTodosLosIncidentes();

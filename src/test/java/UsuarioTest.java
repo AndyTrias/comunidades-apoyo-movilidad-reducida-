@@ -1,8 +1,6 @@
 import comunidades.Comunidad;
-import comunidades.Intereses;
 import comunidades.Membresia;
 import comunidades.Rol;
-import comunidades.servicios.PrestacionDeServicio;
 import comunidades.usuario.Email;
 import comunidades.usuario.Usuario;
 import org.junit.Assert;
@@ -11,7 +9,6 @@ import org.junit.Test;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class UsuarioTest {
     private Usuario usuario;
