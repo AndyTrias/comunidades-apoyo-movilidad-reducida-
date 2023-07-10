@@ -24,7 +24,7 @@ public class GeorefServiceTest {
         ListadoProvincias provincias = localizacion.getListadoProvincias();
 
         for (int i = 0; i < provincias.provincias.size(); i++) {
-            System.out.println(provincias.provincias.get(i).id + " " + provincias.provincias.get(i).nombre);
+            //System.out.println(provincias.provincias.get(i).id + " " + provincias.provincias.get(i).nombre);
         }
 
         assertEquals("Buenos Aires", provincias.provincias.get(22).nombre);
@@ -36,7 +36,7 @@ public class GeorefServiceTest {
         ListadoMunicipios municipios = localizacion.getMunicipiosDeProvincia("6");
 
         for (int i = 0; i < municipios.municipios.size(); i++) {
-            System.out.println(municipios.municipios.get(i).id + " " + municipios.municipios.get(i).nombre);
+            //System.out.println(municipios.municipios.get(i).id + " " + municipios.municipios.get(i).nombre);
         }
 
         assertEquals("Bahía Blanca", municipios.municipios.get(0).nombre);
@@ -46,9 +46,9 @@ public class GeorefServiceTest {
     public void testSetLocalizacion() throws Exception {
         this.localizacion.setUbicacionAsLocalidad(6056010001L);
 
-        System.out.println(this.localizacion.getUbicacion().getLocalidad().nombre);
-        System.out.println(this.localizacion.getUbicacion().getMunicipio().nombre);
-        System.out.println(this.localizacion.getUbicacion().getProvincia().nombre);
+        //System.out.println(this.localizacion.getUbicacion().getLocalidad().nombre);
+        //System.out.println(this.localizacion.getUbicacion().getMunicipio().nombre);
+        //System.out.println(this.localizacion.getUbicacion().getProvincia().nombre);
 
         assertEquals("BAHIA BLANCA", this.localizacion.getUbicacion().getLocalidad().nombre);
     }
@@ -64,8 +64,8 @@ public class GeorefServiceTest {
     public void testSetMunicipio() throws Exception {
         this.localizacion.setUbicacionAsMunicipio(386273);
 
-        System.out.println(this.localizacion.getUbicacion().getMunicipio().nombre);
-        System.out.println(this.localizacion.getUbicacion().getProvincia().nombre);
+        //System.out.println(this.localizacion.getUbicacion().getMunicipio().nombre);
+        //System.out.println(this.localizacion.getUbicacion().getProvincia().nombre);
 
         assertEquals("Yavi", this.localizacion.getUbicacion().getMunicipio().nombre);
     }

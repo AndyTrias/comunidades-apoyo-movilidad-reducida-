@@ -6,8 +6,7 @@ import comunidades.usuario.Usuario;
 import configs.ServiceLocator;
 import lombok.Getter;
 import lombok.Setter;
-import notificaciones.FactoryNotificacion;
-import notificaciones.Notificacion;
+import notificaciones.notificador.CierreIncidente;
 import notificaciones.notificador.Notificador;
 
 import java.util.ArrayList;
@@ -30,6 +29,7 @@ public class Comunidad {
         this.incidentesAbiertos = new ArrayList<>();
         this.incidentesCerrados = new ArrayList<>();
         this.roles.add(ServiceLocator.ROL_BASE);
+        this.notificador = new CierreIncidente();
     }
     
     public void agregarServicioDeInteres(PrestacionDeServicio servicio) {
@@ -95,11 +95,11 @@ public class Comunidad {
         }
     }
 
-    public void cerrarIncidente(Incidente incidente) {
+    public void cerrarIncidente(Incidente incidente, Usuario usuario) {
         incidente.cerrar();
         incidentesAbiertos.remove(incidente);
         incidentesCerrados.add(incidente);
-
+        notificador.notificar(usuario, incidente);
     }
 
     public List<Incidente> getTodosLosIncidentes(){

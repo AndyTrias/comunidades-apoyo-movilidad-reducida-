@@ -1,19 +1,19 @@
 import comunidades.Comunidad;
-import comunidades.Permiso;
-import comunidades.Rol;
 import comunidades.incidentes.Incidente;
 import comunidades.servicios.PrestacionDeServicio;
 import comunidades.servicios.Servicio;
 import comunidades.usuario.Email;
 import comunidades.usuario.Usuario;
-import configs.Config;
+import comunidades.usuario.configuraciones.ConfiguracionDeNotificaciones;
+import comunidades.usuario.configuraciones.formas.CuandoSuceden;
+import comunidades.usuario.configuraciones.formas.EstrategiaDeNotificacion;
+import comunidades.usuario.configuraciones.medios.mail.AdapterMail;
+import comunidades.usuario.configuraciones.medios.mail.NotificarPorMail;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -46,13 +46,20 @@ public class IncidentesTest {
     comunidad3.agregarServicioDeInteres(banioMedrano);
     comunidad3.agregarServicioDeInteres(banioCastroBarros);
     
-    
+    Email emailfranco = new Email();
+    Email emailfede = new Email();
+
+    emailfranco.nombreDeUsuario = "francopescee";
+    emailfranco.dominio = "gmail.com";
+
+    emailfede.nombreDeUsuario = "tandres";
+    emailfede.dominio = "frba.utn.edu.ar";
 
     // Creamos los 2 usuarios
-    franco = new Usuario("franco", "pesce", new Email());
-    fede = new Usuario("fede", "perez", new Email());
+    franco = new Usuario("franco", "pesce", emailfranco);
+    fede = new Usuario("fede", "perez", emailfede);
 
-    // Agregamos los usuarios a las comunidades
+    // agregamos los usuarios a las comunidades
     franco.unirseAComunidad(comunidad1, comunidad1.getRoles().get(0));
     franco.unirseAComunidad(comunidad2, comunidad2.getRoles().get(0));
     fede.unirseAComunidad(comunidad2, comunidad2.getRoles().get(0));
@@ -114,7 +121,7 @@ public class IncidentesTest {
     franco.getComunidades().forEach(c -> c.abrirIncidente(incidente));
 
     // Fede cierra el incidente
-    fede.getComunidades().get(0).cerrarIncidente(incidente);
+    fede.getComunidades().get(0).cerrarIncidente(incidente, fede);
 
     assertEquals(comunidad2.getIncidentesCerrados().size(), 1);
 
@@ -131,7 +138,7 @@ public class IncidentesTest {
     // Fede cierra el incidente de Medrano en sus comunidades
     // Necesitamos filtrar las comunidades que tienen ese incidente
     // y cerrarlo en cada una de ellas
-    fede.getComunidades().stream().filter(c -> c.getIncidentesAbiertos().contains(incidenteMedrano)).forEach(c -> c.cerrarIncidente(incidenteMedrano));
+    fede.getComunidades().stream().filter(c -> c.getIncidentesAbiertos().contains(incidenteMedrano)).forEach(c -> c.cerrarIncidente(incidenteMedrano, fede));
 
 
     assertEquals(comunidad1.getIncidentesCerrados().size(), 0);
@@ -156,7 +163,7 @@ public class IncidentesTest {
 
 
     // Fede cierra el incidente de Medrano en sus comunidades
-    fede.getComunidades().stream().filter(c -> c.getIncidentesAbiertos().contains(incidenteMedrano)).forEach(c -> c.cerrarIncidente(incidenteMedrano));
+    fede.getComunidades().stream().filter(c -> c.getIncidentesAbiertos().contains(incidenteMedrano)).forEach(c -> c.cerrarIncidente(incidenteMedrano, fede));
 
     // Debemos validar que el incidente en Castro Barros no se haya cerrado
     assertEquals(comunidad3.getIncidentesCerrados().size(), 0);

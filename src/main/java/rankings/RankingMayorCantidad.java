@@ -11,7 +11,11 @@ public class RankingMayorCantidad extends RankingEntidadesQueUsanIncidentes {
 
     @Override
     protected boolean validarIncidente(Incidente incidente, List<Incidente> incidentesPrestacion) {
-        return incidentesPrestacion.stream().noneMatch(incidentePrestacion -> incidentePrestacion.getFechaDeApertura().getTime() - incidente.getFechaDeApertura().getTime() < 24 * 60 * 60 * 1000 && incidentePrestacion.estaAbierto()) ;
+        return incidentesPrestacion.stream()
+                .noneMatch(incidentePrestacion ->
+                incidentePrestacion
+                        .getFechaDeApertura()
+                        .getTime() - incidente.getFechaDeApertura().getTime() < 24 * 60 * 60 * 1000 && incidentePrestacion.estaAbierto()) ;
     }
 
 

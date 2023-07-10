@@ -27,7 +27,7 @@ public class Incidente {
         this.notificador = new AperturaDeIncidente();
 
         this.prestacionDeServicio.agregarIncidente(this);
-        notificarApertura();
+        this.notificarApertura();
     }
 
     public void cerrar() {
@@ -65,7 +65,7 @@ public class Incidente {
     }
 
     public void notificarApertura(){
-        //notificador.notificar(this);
+        notificador.notificar(this.abiertoPor, this);
     }
 
     public boolean estaAbierto(){

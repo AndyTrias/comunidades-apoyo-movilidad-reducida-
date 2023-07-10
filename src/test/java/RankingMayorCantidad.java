@@ -24,10 +24,10 @@ public class RankingMayorCantidad {
         Entidad entidad2 = new Entidad("Entidad 2");
         Entidad entidad3 = new Entidad("Entidad 3");
 
-        PrestacionDeServicio prestacion1 = new PrestacionDeServicio(new Servicio("Servicio 1"));
-        PrestacionDeServicio prestacion2 = new PrestacionDeServicio(new Servicio("Servicio 2"));
-        PrestacionDeServicio prestacion3 = new PrestacionDeServicio(new Servicio("Servicio 3"));
-        PrestacionDeServicio prestacion4 = new PrestacionDeServicio(new Servicio("Servicio 4"));
+        PrestacionDeServicio prestacion1 = new PrestacionDeServicio(new Servicio("Servicio 1"), "Prestacion 1");
+        PrestacionDeServicio prestacion2 = new PrestacionDeServicio(new Servicio("Servicio 2"), "Prestacion 2");
+        PrestacionDeServicio prestacion3 = new PrestacionDeServicio(new Servicio("Servicio 3"), "Prestacion 3");
+        PrestacionDeServicio prestacion4 = new PrestacionDeServicio(new Servicio("Servicio 4"), "Prestacion 4");
 
         Usuario usuario1 = new Usuario("Manu", "Torrente", new Email());
         Usuario usuario2 = new Usuario("Franco", "Pesce", new Email());
