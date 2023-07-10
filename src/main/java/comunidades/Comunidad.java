@@ -82,7 +82,7 @@ public class Comunidad {
     }
 
     public void abrirIncidente(Incidente incidente) {
-        // Habria que ver si ese incidente ya esta abierto
+        // Se agrega si el incidente está abierto
         for (Incidente i : incidentesAbiertos) {
             if (i.getPrestacionDeServicio().equals(incidente.getPrestacionDeServicio())) {
                 return;
