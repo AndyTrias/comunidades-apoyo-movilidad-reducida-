@@ -12,7 +12,8 @@ Class PrestacionDeServicio {
 }
 
 Class UbicacionExacta {
-
+    - latitud: Double
+    - longitud: Double
 }
 
 
@@ -45,16 +46,11 @@ class Comunidad {
     - incidentesCerrados: List<Incidente>
     - notificador: Notificador
 
-    + agregarServicioDeInteres(servicio: PrestacionDeServicio): void
-    + agregarRol(rol: Rol): void
-    + eliminarRol(rol: Rol): void
+
     + aceptarUsuario(usuario: Usuario): Rol
     + cambiarRol(usuario: Usuario, rol: Rol): void
     + eliminarUsuario(Usuario: Usuario): void
-    - eliminarUsuarioDeSuRol(Usuario: Usuario): void
-    - existeRol(rol: Rol): Bool
     + getCantidadDeUsuarios(): int
-    + getUsuarios(): List<Usuario>
     + abrirIncidente(incidente: Incidente): void
     + cerrarIncidente(incidente: Incidente): void
     + getTodosLosIncidentes(): List<Incidente>
@@ -114,8 +110,8 @@ Class Membresia {
     - roles: Rol
     - afectaciones: List<Afectacion>
 
-    + agregarAfectacion(Afectacion): void
-    + cambiarAfectacion(PrestacionDeServicio): void
+    + agregarAfectacion(prestacionDeServicio: PrestacionDeServicio, afectado: Bool): void
+    + cambiarAfectacion(prestacionDeServicio: PrestacionDeServicio, afectado: Bool): void
 }
 
 class Afectacion{
@@ -221,8 +217,8 @@ OrganismoDeControl --> "*" EntidadPrestadora
 Servicio <-- PrestacionDeServicio
 Comunidad --> "*" PrestacionDeServicio
 Entidad --> "*" Establecimiento
-Intereses --> "*" Entidad
-Intereses --> "*" Servicio 
+Interes --> "*" Entidad
+Interes --> "*" Servicio 
 Establecimiento --> "*" PrestacionDeServicio
 
 
@@ -238,7 +234,7 @@ Afectacion -> PrestacionDeServicio
 Usuario -> "*" Membresia
 Membresia -> Comunidad
 Rol <-- Membresia
-Usuario --> Intereses
+Usuario --> Interes
 
 
 
@@ -367,6 +363,7 @@ Class Notificacion #bbffcc{
     - asunto: String
     - cuerpo: String
     - destinatario: Usuario
+    - estrategiaDeNotificacion: EstrategiaDeNotificacion
 }
 
 FactoryNotificacion ..> Notificacion
@@ -411,6 +408,8 @@ Class RevisionDeIncidente #bbffcc{
 }
 
 RevisionDeIncidente --> Notificador
+Usuario --> UbicacionExacta
+UbicacionExacta ----> PrestacionDeServicio
 
 /' AFECTADO U OBSERVADOR '/
 Class Afectacion #bbffcc{
