@@ -15,9 +15,7 @@ import notificaciones.Notificacion;
 import notificaciones.notificador.AperturaDeIncidente;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.stubbing.Answer;
+
 
 import java.util.List;
 
@@ -63,7 +61,7 @@ public class NotificacionesTest {
         fede = new Usuario("fede", "perez", emailfede);
 
         // Creamos la configuracion de notificaciones
-        ConfiguracionDeNotificaciones config = FactoryConfiguracionDeNotificaciones.crearConfiguracionDeNotificaciones("M_C");
+        ConfiguracionDeNotificaciones config = FactoryConfiguracionDeNotificaciones.crearConfiguracionDeNotificaciones("M_S");
 
         franco.setConfiguracionDeNotificaciones(config);
         fede.setConfiguracionDeNotificaciones(config);
@@ -91,7 +89,7 @@ public class NotificacionesTest {
         franco.getComunidades().forEach(comunidad -> comunidad.abrirIncidente(incidente));
 
         // Mockeamos el metodo notificar de la clase AdapterMail
-        AdapterMail adapterMail = Mockito.mock(AdapterMail.class);
+        //AdapterMail adapterMail = Mockito.mock(AdapterMail.class);
     }
 }
 
