@@ -17,7 +17,6 @@ public class RevisionDeIncidente {
     }
 
     public boolean estaCerca(Usuario usuario, Incidente incidente) {
-        // Lógica para determinar si el usuario está cerca del incidente
         return false;
     }
 

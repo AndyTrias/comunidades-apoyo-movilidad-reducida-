@@ -1,7 +1,6 @@
 package comunidades.usuario;
 
 import comunidades.Comunidad;
-import comunidades.Intereses;
 import comunidades.Membresia;
 import comunidades.Rol;
 import comunidades.usuario.configuraciones.ConfiguracionDeNotificaciones;
@@ -22,11 +21,10 @@ public class Usuario {
     @Getter @Setter private Email correoElectronico;
     @Getter private String contrasenia;
     @Getter @Setter private String telefono;
-    @Getter private Intereses intereses;
+    @Getter private Interes interes;
     @Getter private List<Membresia> membresias;
-    @Setter private Set<Localizacion> localizacion;
-    @Getter @Setter
-    ConfiguracionDeNotificaciones configuracionDeNotificaciones;
+    @Getter @Setter private Set<Localizacion> localizacion;
+    @Getter @Setter ConfiguracionDeNotificaciones configuracionDeNotificaciones;
 
     public Usuario(String nombre, String apellido, Email correoElectronico) {
         this.nombre = nombre;
