@@ -3,9 +3,15 @@
 Class PrestacionDeServicio {    
     - servicio: Servicio
     - incidentes: List<Incidente>
+    - nombre: String
+    - ubicacionExacta: UbicacionExacta
 
     + funciona() : String
     + abrirIncidente(): void
+
+}
+
+Class UbicacionExacta {
 
 }
 
@@ -32,34 +38,52 @@ class Permiso{
 
 
 class Comunidad {
-    -roles: set<Rol>
-    -nombre: String
-    -serviciosDeInteres: Set<PrestacionDeServicio>
+    - roles: set<Rol>
+    - nombre: String
+    - serviciosDeInteres: Set<PrestacionDeServicio>
+    - incidentesAbiertos: List<Incidente>
+    - incidentesCerrados: List<Incidente>
+    - notificador: Notificador
 
-
-    + asginarRol(usuario: Usuario)
-    + aceptarUsuario(usuario: Usuario)
-    + eliminarUsuario(Usuario: Usuario)
-    + cantidadDeMiembros(): int
+    + agregarServicioDeInteres(servicio: PrestacionDeServicio): void
+    + agregarRol(rol: Rol): void
+    + eliminarRol(rol: Rol): void
+    + aceptarUsuario(usuario: Usuario): Rol
+    + cambiarRol(usuario: Usuario, rol: Rol): void
+    + eliminarUsuario(Usuario: Usuario): void
+    - eliminarUsuarioDeSuRol(Usuario: Usuario): void
+    - existeRol(rol: Rol): Bool
+    + getCantidadDeUsuarios(): int
+    + getUsuarios(): List<Usuario>
+    + abrirIncidente(incidente: Incidente): void
+    + cerrarIncidente(incidente: Incidente): void
+    + getTodosLosIncidentes(): List<Incidente>
+    + getCantidadDeAfectados(): int
 }
 
 
 
 class Usuario{
-    -nombre: String
-    -apellido: String
-    -correoElectronico: String
-    -contrasenia: String
-    -interes: Intereses
-    - membresias: Set<Membresia>
-    - estraegiaDeNotificacion: EstrategiaDeNotificacion
+    - nombre: String
+    - apellido: String
+    - correoElectronico: Email
+    - contrasenia: String
+    - telefono: String
+    - interes: Intereses
+    - membresias: List<Membresia>
+    - localizaciones: Set<Localizacion>
+    - configuracionDeNotificaciones: ConfiguracionDeNotificaciones
+    - ubicacionExacta: UbicacionExacta
 
 
 
 
-    +setContrasenia(contrasena: String): void
-    +unirseAComunidad(comunidad: Comunidad, rol: Rol): void
-    +abandonarComunidad(comunidad: Comunidad): void
+    + setContrasenia(contrasena: String): void
+    + unirseAComunidad(comunidad: Comunidad, rol: Rol): void
+    + abandonarComunidad(comunidad: Comunidad): void
+    + getComunidades(): List<Comunidad>
+    + getMembresia(comunidad: Comunidad): Membresia
+    + notificar(notificacion: Notificacion): void
 }
 
 
@@ -141,8 +165,6 @@ Class AdapterLocalizacionGeorefApi {
 }
 
 
-
-
 Class ServicioGeoref {
     - instancia: ServicioGeoref
     - urlAPI: String
@@ -158,16 +180,13 @@ Class ServicioGeoref {
 }
 
 
-
-
-Class Intereses {
+Class Interes {
     - Set<Servicio>
     - Set<Entidad>
 
-
-
-
     + estaInteresado(Servicio, Entidad)
+    + agregarServicio(Servicio)
+    + agregarEntidad(Entidad)
 }
 
 
@@ -237,83 +256,107 @@ Class Incidente #bbffcc{
     - fechasDeCierre: List<Date>
     - observaciones: String
     - abiertoPor: Usuario
-
-    + notificar()
-}
-
-Class Comunidad {
-    - incidentesAbiertos: Set<Incidente> 
-    - incidentesCerrados: Set<Incidente>
+    - prestacionDeServicio: PrestacionDeServicio
     - notificador: Notificador
 
-    + abrirIncidente(incidente: Incidente): void
-    + cerrarIncidente(incidente: Incidente): void
-    
-    - notificarAUsuarios(tipoDeNotificacion: String): void
+    + notificarApertura(): void
+    + cerrar(): void
+    + calcularPromedioFechasCierre(): Date
+    + tiempoActivo(): long
+    + estaAbierto(): boolean
 }
 
 Incidente "*" <-- PrestacionDeServicio 
 Comunidad --> "*" Incidente
 Incidente --> Usuario
-Comunidad ..> FactoryNotificacion
-Comunidad -> Notificador
+Incidente -> Notificador
+Comunidad --> Notificador
 
 /' CONFIGURACION DE NOTIFICACIONES '/
 
-Class Configuracion #bbffcc{
+Class ConfiguracionDeNotificaciones #bbffcc{
     - formaDeRecibir: FormaDeRecibir
     - medioPreferido: MedioDeNotificacion
 
     + notificar()
 }
 
-Interface MedioDeNotificacion #bbffcc{}
+Interface MedioPreferido #bbffcc{
+    + notificar(notificacion: Notificacion): void
+}
 
-Class NotificarPorWhatsApp #bbffcc{}
-Class NotificarPorMail #bbffcc{}
+Class NotificarPorWhatsApp #bbffcc{
+    - adapter: IAdapterWhatsapp
+
+    + notificar(notificacion: Notificacion): void
+}
+
+Class NotificarPorMail #bbffcc{
+    - adapter: IAdapterMail
+
+    + notificar(notificacion: Notificacion): void
+}
 
 /' ADAPTERS MEDIO DE NOTIFICACION '/
 
-Interface AdapterNotificarPorWhatsapp #bbffcc{}
-Interface AdapterNotificarPorMail #bbffcc{}
-Class AdapterWhatsApp #bbffcc{}
-Class AdapterMail #bbffcc{}
+Interface IAdapterWhatsapp #bbffcc{
+    + notificar(usuario: Usuario, notificacion: Notificacion): void
+}
 
-abstract class EstrategiaDeNotificacion #bbffcc{
-    # mediodeNotificacion: MedioDeNotificacion
+Interface IAdapterMail #bbffcc{
+    + notificar(email: Email, asunto: String, cuerpo: String): void
+}
 
-    + notificar(notificacion: Notificacion)
+Class AdapterWhatsApp #bbffcc{
+    + ACCOUNT_SID: String
+    + AUTH_TOKEN: String
+
+    + notificar(usuario: Usuario, notificacion: Notificacion): void
+    - enviarWhatsapp(destinatario: String, mensaje: String): void
+}
+
+Class AdapterMail #bbffcc{
+    - servicioMail: ServicioMail
+
+    + notificar(email: Email, asunto: String, cuerpo: String): void
+}
+
+Interface EstrategiaDeNotificacion #bbffcc{
+    + notificar(notificacion: Notificacion): void
 }
 
 Class CuandoSuceden #bbffcc{
-    + notificar(notificacion: Notificacion)
+    + notificar(notificacion: Notificacion): void
 }
 
 Class SinApuros #bbffcc{
     - horarios: Set<Date>
-    - incidentesANotificar: List<Notificaciones>
+    - aNotificar: List<Notificaciones>
 
-    + notificar()
-    + enviarNotificacion(medioPreferido: MedioDeNotificacion)
+    + agregarHorario(horario: Date): void
+    + notificar(notificacion: Notificacion): void
+    + enviarNotificacionCuandoCorresponda(): void
 }
 
-MedioDeNotificacion <- EstrategiaDeNotificacion
+
 /' NOTIFICACIONES '/
 
 Interface Notificador #bbffcc{
-    + notificar(incidente: Incidente)
+    + notificar(usuario: Usuario, incidente: Incidente)
 }
 
 Class AperturaDeIncidente #bbffcc{
-    + notificar(incidente: Incidente)
+    + notificar(usuario: Usuario, incidente: Incidente)
+    - notificarAUsuario(usuario: Usuario, notificacion: Notificacion)
 }
 
 Class CierreDeIncidente #bbffcc{
-    + notificar(incidente: Incidente)
+    + notificar(usuario: Usuario, incidente: Incidente)
+    - notificarAUsuario(usuario: Usuario, notificacion: Notificacion)
 } 
 
 Class RevisionManualDeIncidente #bbffcc{
-    + notificar(incidente: Incidente)
+    + notificar(usuario: Usuario, incidente: Incidente)
 } 
 
 Class FactoryNotificacion #bbffcc{
@@ -326,39 +369,54 @@ Class Notificacion #bbffcc{
     - destinatario: Usuario
 }
 
-FactoryNotificacion .> Notificacion
+FactoryNotificacion ..> Notificacion
 Notificador <|.. AperturaDeIncidente
 Notificador <|.. CierreDeIncidente
 Notificador <|.. RevisionManualDeIncidente
+AperturaDeIncidente ..> FactoryNotificacion
+CierreDeIncidente ..> FactoryNotificacion
+RevisionManualDeIncidente ..> FactoryNotificacion
 
 
+ConfiguracionDeNotificaciones <-- Usuario
 
-Configuracion <-- Usuario
-
-EstrategiaDeNotificacion <-- Configuracion
-MedioDeNotificacion <-- Configuracion
+EstrategiaDeNotificacion <-- ConfiguracionDeNotificaciones
+MedioPreferido <-- ConfiguracionDeNotificaciones
 
 CuandoSuceden ..|> EstrategiaDeNotificacion
 SinApuros ..|> EstrategiaDeNotificacion
 
 
 /' Whatsapp '/
-AdapterWhatsApp ..|> AdapterNotificarPorWhatsapp
-AdapterNotificarPorWhatsapp ..|> NotificarPorWhatsApp
-NotificarPorWhatsApp ..|> MedioDeNotificacion
+AdapterWhatsApp ..|> IAdapterWhatsapp
+IAdapterWhatsapp <-- NotificarPorWhatsApp
+NotificarPorWhatsApp ..|> MedioPreferido
 
 /' Mail '/
-AdapterMail ..|> AdapterNotificarPorMail
-AdapterNotificarPorMail ..|> NotificarPorMail
-NotificarPorMail ..|> MedioDeNotificacion
+AdapterMail ..|> IAdapterMail
+IAdapterMail <-- NotificarPorMail
+NotificarPorMail ..|> MedioPreferido
 
 /' SUGERENCIA REVISION DE INCIDENTE '/
 
 Class RevisionDeIncidente #bbffcc{
+    - notificador: Notificador
+    - incidentes: List<Incidente>
+    - LATITUD_MAXIMA: double
+    - LONGITUD_MAXIMA: double
+
     + estaCerca(usuario: Usuario, incidente: Incidente): Boolean
-    + avisarRevisionDeIncidente(usuario: Usuario, incidente: Incidente): void
+    + notificar(usuario: Usuario, incidente: Incidente): void
+    + agregarIncidente(incidente: Incidente): void
 }
 
+RevisionDeIncidente --> Notificador
+
+/' AFECTADO U OBSERVADOR '/
+Class Afectacion #bbffcc{
+    - afectado: boolean
+    - prestacionDeServicio: PrestacionDeServicio
+}
 
 /' RANKINGS '/
 
