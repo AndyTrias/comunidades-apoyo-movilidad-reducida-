@@ -87,10 +87,14 @@ Class Establecimiento {
 
 Class Membresia {
     - comunidad: Comunidad
-    - Roles: Rol
+    - roles: Rol
+    - afectaciones: List<Afectacion>
 }
 
-
+class Afectacion{
+    - prestacionDeServicio: PrestacionDeServicio
+    - afectado: Bool
+}
 
 
 Class Localizacion {
@@ -205,6 +209,8 @@ OrganismoDeControl -> Usuario
 Rol --> "*" Usuario
 Rol -> "*" Permiso
 Rol "*" <- Comunidad
+Membresia -> "*" Afectacion
+Afectacion -> PrestacionDeServicio
 Usuario -> "*" Membresia
 Membresia -> Comunidad
 Rol <-- Membresia
@@ -379,46 +385,9 @@ Class RankingImpactoProblematicas #bbffcc{
 }
 
 
-
 GenerarRankings --> "*" Ranking
 Ranking <|.. RankingPromedioCierreIncidentes
 Ranking <|.. RankingMayorCantidadDeIncidentesSemana
 Ranking <|.. RankingImpactoProblematicas
-
-/' AFECTADO U OBSERVADOR '/
-
-/' Class Membresia {
-    - tipoDeUsuario: TipoDeUsuario
-
-    + cambiarDeTipoDeUsuario(tipoDeUsuario: TipoDeUsuario)
-    + actuar()
-}
-
-Interface TipoDeUsuario {
-    + actuar(Membresia: Membresia)
-}
-
-Class Afectado {
-    - prestacionesDeServicio: Set<PrestacionDeServicio>    
-    + actuar(Membresia: Membresia)
-}
-
-Class Observador {
-    + actuar(Membresia: Membresia)
-}
-
-Membresia --> TipoDeUsuario
-TipoDeUsuario <|.. Afectado
-TipoDeUsuario <|.. Observador
-Afectado --> "*" PrestacionDeServicio
-
-Class TipoDeUsuario {
-    - nombre: String
-    - prestacionesDeServicio: Set<PrestacionDeServicio>
-}
-
-Membresia --> TipoDeUsuario '/
-
-PrestacionDeServicio -[hidden]-> FactoryGenerarRankings
 
 @enduml
