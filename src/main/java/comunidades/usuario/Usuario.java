@@ -64,6 +64,10 @@ public class Usuario {
         return comunidades;
     }
 
+    public Membresia getMembresia(Comunidad comunidad){
+        return membresias.stream().filter(m -> m.getComunidad().equals(comunidad)).findFirst().get();
+    }
+
     public void notificar(Notificacion notificacion) {
         configuracionDeNotificaciones.notificar(notificacion);
     }

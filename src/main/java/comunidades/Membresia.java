@@ -31,12 +31,16 @@ public class Membresia {
     this.afectaciones.add(afectacion);
   }
 
-  public void cambiarAfectacion(PrestacionDeServicio prestacion, Comunidad comunidad){
+  public void cambiarAfectacion(PrestacionDeServicio prestacion, boolean b){
     for (Afectacion afectacion : this.afectaciones) {
       if (afectacion.getPrestacionDeServicio().equals(prestacion)) {
-        afectacion.setAfectado(!afectacion.isAfectado());
+        afectacion.setAfectado(b);
       }
     }
+  }
+
+  public Afectacion getAfectacion(PrestacionDeServicio prestacion) {
+    return this.afectaciones.stream().filter(a -> a.getPrestacionDeServicio().equals(prestacion)).findFirst().get();
   }
 
 }

@@ -89,11 +89,16 @@ Class Membresia {
     - comunidad: Comunidad
     - roles: Rol
     - afectaciones: List<Afectacion>
+
+    + agregarAfectacion(Afectacion): void
+    + cambiarAfectacion(PrestacionDeServicio): void
 }
 
 class Afectacion{
     - prestacionDeServicio: PrestacionDeServicio
     - afectado: Bool
+
+    + cambiarEstado(): void
 }
 
 
