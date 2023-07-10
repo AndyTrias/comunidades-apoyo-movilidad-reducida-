@@ -20,6 +20,7 @@ public class SinApuros extends EstrategiaDeNotificacion {
 
     public void notificar(Notificacion notificacion) {
         aNotificar.add(notificacion);
+        enviarNotificacionesCuandoCorresponda();
     }
 
     public void enviarNotificacionesCuandoCorresponda() {
