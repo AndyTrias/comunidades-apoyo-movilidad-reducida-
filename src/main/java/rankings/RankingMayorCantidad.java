@@ -1,6 +1,6 @@
 package rankings;
 
-import comunidades.incidentes.Incidente;
+import incidentes.Incidente;
 import entidades.Entidad;
 
 import java.util.Collections;

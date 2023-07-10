@@ -1,6 +1,6 @@
-import comunidades.incidentes.Incidente;
-import comunidades.servicios.PrestacionDeServicio;
-import comunidades.servicios.Servicio;
+import incidentes.Incidente;
+import servicios.PrestacionDeServicio;
+import servicios.Servicio;
 import comunidades.usuario.Email;
 import comunidades.usuario.Usuario;
 import entidades.Entidad;
@@ -13,7 +13,6 @@ import rankings.RankingMayorTiempo;
 
 import java.util.ArrayList;
 import java.util.List;
-import static org.mockito.Mockito.*;
 
 public class RankingMayorCantidad {
 

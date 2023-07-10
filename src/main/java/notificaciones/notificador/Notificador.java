@@ -1,6 +1,6 @@
 package notificaciones.notificador;
 
-import comunidades.incidentes.Incidente;
+import incidentes.Incidente;
 import comunidades.usuario.Usuario;
 
 public interface Notificador {

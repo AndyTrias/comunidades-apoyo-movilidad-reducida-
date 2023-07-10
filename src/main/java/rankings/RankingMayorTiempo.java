@@ -1,6 +1,6 @@
 package rankings;
 
-import comunidades.incidentes.Incidente;
+import incidentes.Incidente;
 import entidades.Entidad;
 
 import java.util.Collections;
@@ -13,7 +13,7 @@ public class RankingMayorTiempo extends RankingEntidadesQueUsanIncidentes {
         List<Incidente> incidentes = obtenerIncidentesDeEntidad(entidad);
         float suma = 0;
         for (Incidente incidente : incidentes) {
-            //suma += incidente.tiempoActivo();
+            suma += incidente.tiempoActivo();
         }
         return suma / incidentes.size();
     }

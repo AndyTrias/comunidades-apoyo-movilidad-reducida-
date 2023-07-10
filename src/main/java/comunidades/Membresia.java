@@ -1,6 +1,6 @@
 package comunidades;
 
-import comunidades.servicios.PrestacionDeServicio;
+import servicios.PrestacionDeServicio;
 import lombok.Getter;
 
 import java.util.ArrayList;

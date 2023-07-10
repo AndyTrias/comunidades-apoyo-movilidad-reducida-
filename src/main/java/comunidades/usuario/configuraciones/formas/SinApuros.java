@@ -4,7 +4,7 @@ import notificaciones.Notificacion;
 
 import java.util.*;
 
-public class SinApuros extends EstrategiaDeNotificacion {
+public class SinApuros implements EstrategiaDeNotificacion {
     private Set<Date> horarios;
     private List<Notificacion> aNotificar;
 

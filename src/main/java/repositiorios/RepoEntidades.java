@@ -1,8 +1,6 @@
 package repositiorios;
 
-import comunidades.servicios.PrestacionDeServicio;
-import comunidades.servicios.Servicio;
-import comunidades.usuario.Usuario;
+import servicios.PrestacionDeServicio;
 import entidades.Entidad;
 
 import java.util.ArrayList;

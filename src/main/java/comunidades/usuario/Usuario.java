@@ -24,7 +24,7 @@ public class Usuario {
     @Getter @Setter private String telefono;
     @Getter private Interes interes;
     @Getter private List<Membresia> membresias;
-    @Getter @Setter private Set<Localizacion> localizacion;
+    @Getter @Setter private Set<Localizacion> localizaciones;
     @Getter @Setter ConfiguracionDeNotificaciones configuracionDeNotificaciones;
     @Getter private UbicacionExacta ubicacionExacta;
 

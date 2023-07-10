@@ -1,16 +1,13 @@
-package comunidades.incidentes;
+package incidentes;
 
 import comunidades.usuario.Usuario;
 import lombok.Setter;
 import notificaciones.notificador.Notificador;
 import notificaciones.notificador.RevisionIncidente;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class RevisionDeIncidente {
     @Setter private Notificador notificador;
-    List<Incidente> incidentes;
+    private List<Incidente> incidentes;
     private static final double LATITUD_MAXIMA = 0.1;
     private static final double LONGITUD_MAXIMA = 0.1;
 

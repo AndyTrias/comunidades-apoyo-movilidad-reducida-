@@ -1,10 +1,8 @@
-package comunidades.servicios;
+package servicios;
 
-import comunidades.incidentes.Incidente;
-import localizacion.Localizacion;
+import incidentes.Incidente;
 import localizacion.UbicacionExacta;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;

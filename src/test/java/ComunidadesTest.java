@@ -1,9 +1,8 @@
 import comunidades.Comunidad;
 import comunidades.Permiso;
 import comunidades.Rol;
-import comunidades.incidentes.Incidente;
-import comunidades.servicios.PrestacionDeServicio;
-import comunidades.servicios.Servicio;
+import servicios.PrestacionDeServicio;
+import servicios.Servicio;
 import comunidades.usuario.Email;
 import comunidades.usuario.Usuario;
 import org.junit.jupiter.api.BeforeEach;

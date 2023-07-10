@@ -55,6 +55,7 @@ class Comunidad {
     + cerrarIncidente(incidente: Incidente): void
     + getTodosLosIncidentes(): List<Incidente>
     + getCantidadDeAfectados(): int
+
 }
 
 
@@ -70,8 +71,6 @@ class Usuario{
     - localizaciones: Set<Localizacion>
     - configuracionDeNotificaciones: ConfiguracionDeNotificaciones
     - ubicacionExacta: UbicacionExacta
-
-
 
 
     + setContrasenia(contrasena: String): void

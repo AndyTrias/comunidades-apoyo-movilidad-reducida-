@@ -1,7 +1,7 @@
 package notificaciones.notificador;
 
 import comunidades.Comunidad;
-import comunidades.incidentes.Incidente;
+import incidentes.Incidente;
 import comunidades.usuario.Usuario;
 import entidades.Entidad;
 import notificaciones.FactoryNotificacion;
@@ -43,7 +43,7 @@ public class AperturaDeIncidente implements Notificador{
         });
     }
 
-    public void notificarAUsuario(Usuario usuario, Notificacion notificacion) {
+    private void notificarAUsuario(Usuario usuario, Notificacion notificacion) {
         notificacion.setDestinatario(usuario);
         notificacion.setEstrategiaDeNotificacion(usuario.getConfiguracionDeNotificaciones().getEstrategiaDeNotificacion());
         usuario.notificar(notificacion);

@@ -1,28 +1,15 @@
 import comunidades.Comunidad;
-import comunidades.incidentes.Incidente;
-import comunidades.servicios.PrestacionDeServicio;
-import comunidades.servicios.Servicio;
+import incidentes.Incidente;
+import servicios.PrestacionDeServicio;
+import servicios.Servicio;
 import comunidades.usuario.Email;
 import comunidades.usuario.Usuario;
 import comunidades.usuario.configuraciones.ConfiguracionDeNotificaciones;
-import comunidades.usuario.configuraciones.formas.CuandoSuceden;
-import comunidades.usuario.configuraciones.formas.EstrategiaDeNotificacion;
-import comunidades.usuario.configuraciones.formas.SinApuros;
-import comunidades.usuario.configuraciones.medios.MedioPreferido;
-import comunidades.usuario.configuraciones.medios.mail.AdapterMail;
-import comunidades.usuario.configuraciones.medios.mail.NotificarPorMail;
 import notificaciones.FactoryConfiguracionDeNotificaciones;
-import notificaciones.FactoryNotificacion;
 import notificaciones.Notificacion;
-import notificaciones.notificador.AperturaDeIncidente;
-import notificaciones.notificador.Notificador;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-
-
-import java.util.List;
 
 public class NotificacionesTest {
     private Comunidad comunidad1;

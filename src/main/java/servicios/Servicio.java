@@ -1,4 +1,4 @@
-package comunidades.servicios;
+package servicios;
 
 import lombok.Getter;
 import lombok.Setter;
