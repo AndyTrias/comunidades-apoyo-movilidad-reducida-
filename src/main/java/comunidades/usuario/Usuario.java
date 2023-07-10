@@ -6,6 +6,7 @@ import comunidades.Rol;
 import comunidades.usuario.configuraciones.ConfiguracionDeNotificaciones;
 import configs.ServiceLocator;
 import localizacion.Localizacion;
+import localizacion.UbicacionExacta;
 import lombok.Getter;
 import lombok.Setter;
 import notificaciones.Notificacion;
@@ -23,8 +24,9 @@ public class Usuario {
     @Getter @Setter private String telefono;
     @Getter private Interes interes;
     @Getter private List<Membresia> membresias;
-    @Getter @Setter private Set<Localizacion> localizacion;
+    @Getter @Setter private Set<Localizacion> localizaciones;
     @Getter @Setter ConfiguracionDeNotificaciones configuracionDeNotificaciones;
+    @Getter private UbicacionExacta ubicacionExacta;
 
     public Usuario(String nombre, String apellido, Email correoElectronico) {
         this.nombre = nombre;

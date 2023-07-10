@@ -11,6 +11,6 @@ public class ConfiguracionDeNotificaciones {
   @Getter @Setter private MedioPreferido medioDeNotificacion;
 
   public void notificar(Notificacion notificacion) {
-    estrategiaDeNotificacion.notificar(notificacion);
+    notificacion.getEstrategiaDeNotificacion().notificar(notificacion);
   }
 }

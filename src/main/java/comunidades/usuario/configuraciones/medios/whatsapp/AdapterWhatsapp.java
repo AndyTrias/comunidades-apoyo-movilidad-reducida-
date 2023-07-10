@@ -8,15 +8,15 @@ import notificaciones.Notificacion;
 public class AdapterWhatsapp implements IAdapterWhatsapp{
 
   public static final String ACCOUNT_SID = System.getenv("TWILIO_ACCOUNT_SID");
-  public static final String AUTH_TOKEN = System.getenv("TWILIO_ACCOUNT_SID");
+  public static final String AUTH_TOKEN = System.getenv("TWILIO_ACCOUNT_TOKEN");
 
 
   public void notificar(Usuario usuario, Notificacion notificacion) {
-    //this.enviarWhatsapp(usuario.getTelefono(), notificacion.getMensaje());
+    this.enviarWhatsapp(usuario.getTelefono(), notificacion.getCuerpo());
   }
 
 
-  public void enviarWhatsapp(String destinatario, String mensaje) {
+  private void enviarWhatsapp(String destinatario, String mensaje) {
       final String telefonoDestino = String.format("whatsapp:%s", destinatario);
       final String telefonoOrigen = "whatsapp:+14155238886";
 

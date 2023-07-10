@@ -1,6 +1,7 @@
 package servicios;
 
 import incidentes.Incidente;
+import localizacion.UbicacionExacta;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ public class PrestacionDeServicio {
     @Getter private Servicio servicio;
     @Getter private List<Incidente> incidentes;
     @Getter private String nombre;
+    @Getter private UbicacionExacta ubicacionExacta;
 
     public PrestacionDeServicio(Servicio servicio, String nombre) {
         this.servicio = servicio;
