@@ -11,7 +11,6 @@ import repositiorios.RepoUsuarios;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class AperturaDeIncidente implements Notificador{
 
@@ -34,9 +33,7 @@ public class AperturaDeIncidente implements Notificador{
         List<Usuario> usuariosConInteresEnElServicio = RepoUsuarios.getInstance().getUsuariosConInteresEnServicio(incidente.getPrestacionDeServicio().getServicio());
 
         // filtro a los usuarios que no tengan alguna de las entidades relacionadas en su interes
-        List<Usuario> usuariosANotificarPorInteres = usuariosConInteresEnElServicio.stream().filter(usuario -> {
-            return usuario.getInteres().getEntidades().stream().noneMatch(entidadesConLaPrestacion::contains);
-        }).toList();
+        List<Usuario> usuariosANotificarPorInteres = usuariosConInteresEnElServicio.stream().filter(usuario -> usuario.getInteres().getEntidades().stream().noneMatch(entidadesConLaPrestacion::contains)).toList();
 
         usuariosANotificarPorInteres.forEach(usuario -> {
             if (!usuariosNotificados.contains(usuario)) {

@@ -23,7 +23,7 @@ public class Usuario {
     @Getter @Setter private String telefono;
     @Getter private Interes interes;
     @Getter private List<Membresia> membresias;
-    @Setter private Set<Localizacion> localizacion;
+    @Getter @Setter private Set<Localizacion> localizacion;
     @Getter @Setter ConfiguracionDeNotificaciones configuracionDeNotificaciones;
 
     public Usuario(String nombre, String apellido, Email correoElectronico) {
