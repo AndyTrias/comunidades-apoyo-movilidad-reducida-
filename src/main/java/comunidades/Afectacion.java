@@ -12,4 +12,6 @@ public class Afectacion {
     this.prestacionDeServicio = prestacionDeServicio;
     this.afectado = true;
   }
+
+
 }

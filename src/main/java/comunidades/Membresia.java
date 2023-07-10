@@ -12,6 +12,7 @@ public class Membresia {
   @Getter private List<Afectacion> afectaciones;
 
 
+
   public Membresia(Comunidad comunidad, Rol rol) {
     this.comunidad = comunidad;
     this.rol = rol;
@@ -21,7 +22,7 @@ public class Membresia {
 
   private void afectacionesPorDefecto() {
     for (PrestacionDeServicio prestacion : this.comunidad.getServiciosDeInteres()) {
-      this.agregarAfectacion(prestacion, true);
+      this.agregarAfectacion(prestacion, false);
     }
   }
 
@@ -41,6 +42,10 @@ public class Membresia {
 
   public Afectacion getAfectacion(PrestacionDeServicio prestacion) {
     return this.afectaciones.stream().filter(a -> a.getPrestacionDeServicio().equals(prestacion)).findFirst().get();
+  }
+
+  public boolean esAfectado(){
+    return this.afectaciones.stream().anyMatch(Afectacion::isAfectado);
   }
 
 }

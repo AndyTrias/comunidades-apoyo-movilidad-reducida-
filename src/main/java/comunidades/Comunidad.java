@@ -108,4 +108,9 @@ public class Comunidad {
         incidentes.addAll(incidentesCerrados);
         return incidentes;
     }
+
+    public int getCantidadDeAfectados() {
+        return getUsuarios().stream().filter(u -> u.getMembresia(this).esAfectado()).mapToInt(u -> 1).sum();
+    }
 }
+

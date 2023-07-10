@@ -20,9 +20,35 @@ public class ComunidadesTest {
     private Usuario franco;
     private Usuario juan;
 
+    private Servicio servicio;
+
+    private PrestacionDeServicio banioMedrano;
+
+    private PrestacionDeServicio banioCastroBarros;
+
+    private Comunidad comunidad2;
+
+    private Comunidad comunidad3;
+
+
     @BeforeEach
     public void setUp() throws Exception {
-        this.comunidad1 = new Comunidad("comunidad1");
+
+        // Creamos la prestacion de prestacion de servicio
+        servicio = new Servicio("baño hombres");
+        banioMedrano = new PrestacionDeServicio(servicio, "baño Medrano");
+        banioCastroBarros= new PrestacionDeServicio(servicio, "baño Castro Barros");
+
+        // Creamos las 3 comunidades
+        comunidad1 = new Comunidad("comunidad1");
+        comunidad1.agregarServicioDeInteres(banioMedrano);
+        comunidad2 = new Comunidad("comunidad2");
+        comunidad2.agregarServicioDeInteres(banioMedrano);
+        comunidad3 = new Comunidad("comunidad3");
+        comunidad3.agregarServicioDeInteres(banioMedrano);
+        comunidad3.agregarServicioDeInteres(banioCastroBarros);
+
+
         Set<Permiso> permisos = new HashSet<>();
         Permiso enviarMensajes = new Permiso();
         permisos.add(enviarMensajes);
@@ -75,5 +101,13 @@ public class ComunidadesTest {
 
         assertEquals(comunidad1.getCantidadDeUsuarios(), 0);
         assertEquals(franco.getMembresias().size(), 0);
+    }
+
+    @Test
+    public void testCantidadDeAfectados(){
+        franco.unirseAComunidad(comunidad1, comunidad1.aceptarUsuario(franco));
+       franco.getMembresia(comunidad1).cambiarAfectacion(banioMedrano, true);
+       assertEquals(comunidad1.getCantidadDeAfectados(), 1);
+
     }
 }

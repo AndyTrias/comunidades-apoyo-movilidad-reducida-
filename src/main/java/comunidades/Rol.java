@@ -30,5 +30,6 @@ public class Rol {
         this.usuarios.remove(usuario);
     }
 
+
 }
 
