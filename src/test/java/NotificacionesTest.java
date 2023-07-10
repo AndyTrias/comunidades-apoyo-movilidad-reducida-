@@ -1,5 +1,14 @@
 import comunidades.Comunidad;
+import comunidades.usuario.configuraciones.formas.CuandoSuceden;
+import comunidades.usuario.configuraciones.formas.EstrategiaDeNotificacion;
+import comunidades.usuario.configuraciones.formas.SinApuros;
+import comunidades.usuario.configuraciones.medios.MedioPreferido;
+import comunidades.usuario.configuraciones.medios.mail.NotificarPorMail;
+import comunidades.usuario.configuraciones.medios.whatsapp.AdapterWhatsapp;
+import comunidades.usuario.configuraciones.medios.whatsapp.NotificarPorWhatsApp;
 import incidentes.Incidente;
+import incidentes.RevisionDeIncidente;
+import org.mockito.Mock;
 import servicios.PrestacionDeServicio;
 import servicios.Servicio;
 import comunidades.usuario.Email;
@@ -74,15 +83,8 @@ public class NotificacionesTest {
         this.configMockFede = Mockito.mock(ConfiguracionDeNotificaciones.class);
     }
 
-    // casos a testear:
-    // 1. medio = "Mail" y estrategia = "Cuando suceden"
-    // 2. medio = "Mail" y estrategia = "Sin apuros"
-    // 3. medio = "Whatsapp" y estrategia = "Cuando suceden"
-    // 4. medio = "Whatsapp" y estrategia = "Sin apuros"
-
-    // se envia una sola notificacion a franco por mail cuando se crea un incidente en la comunidad1
     @Test
-    public void testEnviaMailAFrancoCuandoCreaUnIncidente() {
+    public void testEnviaNotificacionAFrancoCuandoCreaUnIncidente() {
         // Seteamos la configuracion de notificaciones de franco y fede como mocks
         franco.setConfiguracionDeNotificaciones(configMockFranco);
         fede.setConfiguracionDeNotificaciones(configMockFede);
@@ -94,7 +96,7 @@ public class NotificacionesTest {
     }
 
     @Test
-    public void testEnviaMailAFedeCuandoFrancoCreaUnIncidente(){
+    public void testEnviaNotificacionAFedeCuandoFrancoCreaUnIncidente(){
         // Seteamos la configuracion de notificaciones de franco y fede como mocks
         franco.setConfiguracionDeNotificaciones(configMockFranco);
         fede.setConfiguracionDeNotificaciones(configMockFede);
@@ -105,7 +107,7 @@ public class NotificacionesTest {
     }
 
     @Test
-    public void testNoSeLeEnviaMailAFedeCuandoFrancoCreaUnIncidenteEnOtraComunidad() throws Exception {
+    public void testNoSeLeEnviaNotificacionAFedeCuandoFrancoCreaUnIncidenteEnOtraComunidad() throws Exception {
         // Franco se va de la comunidad 2 entonces no comparten comunidad
         comunidad2.eliminarUsuario(franco);
         franco.abandonarComunidad(comunidad2);
@@ -121,7 +123,7 @@ public class NotificacionesTest {
     }
 
     @Test
-    public void testSeLeEnviaMailAFedePorEstarInteresado(){
+    public void testSeLeEnviaNotificacionAFedePorEstarInteresado(){
         franco.setConfiguracionDeNotificaciones(configMockFranco);
         fede.setConfiguracionDeNotificaciones(configMockFede);
 
@@ -130,6 +132,78 @@ public class NotificacionesTest {
 
         // Aunque franco no este en la comunidad 3, fede esta interesado en el baño de castro barros y se le deberia notificar
         Mockito.verify(configMockFede, Mockito.times(1)).notificar(Mockito.any(Notificacion.class));
+    }
+
+    @Test
+    public void testSeEnviaWhatsappAFrancoCuandoCreaIncidente() {
+        MedioPreferido medioPreferidoFranco = Mockito.mock(NotificarPorWhatsApp.class);
+        franco.getConfiguracionDeNotificaciones().setMedioPreferido(medioPreferidoFranco);
+        fede.setConfiguracionDeNotificaciones(configMockFede);
+
+        Incidente incidente = new Incidente(franco, "baño sucio", banioMedrano);
+
+        Mockito.verify(medioPreferidoFranco, Mockito.times(1)).notificar(Mockito.any(Notificacion.class));
+    }
+
+    @Test
+    public void testSeEnviaMailAFrancoCuandoCreaIncidente() {
+        MedioPreferido medioPreferidoFranco = Mockito.mock(NotificarPorMail.class);
+        franco.getConfiguracionDeNotificaciones().setMedioPreferido(medioPreferidoFranco);
+        fede.setConfiguracionDeNotificaciones(configMockFede);
+
+        Incidente incidente = new Incidente(franco, "baño sucio", banioMedrano);
+
+        Mockito.verify(medioPreferidoFranco, Mockito.times(1)).notificar(Mockito.any(Notificacion.class));
+    }
+
+    @Test
+    public void testSeEnviaNotificacionCuandoSucedeAFrancoCuandoCreaIncidente() {
+        EstrategiaDeNotificacion estrategiaDeNotificacionFranco = Mockito.mock(CuandoSuceden.class);
+        franco.getConfiguracionDeNotificaciones().setEstrategiaDeNotificacion(estrategiaDeNotificacionFranco);
+        fede.setConfiguracionDeNotificaciones(configMockFede);
+
+        Incidente incidente = new Incidente(franco, "baño sucio", banioMedrano);
+
+        Mockito.verify(estrategiaDeNotificacionFranco, Mockito.times(1)).notificar(Mockito.any(Notificacion.class));
+    }
+
+    @Test
+    public void testSeEnviaNotificacionSinApurosAFrancoCuandoCreaIncidente() {
+        EstrategiaDeNotificacion estrategiaDeNotificacionFranco = Mockito.mock(SinApuros.class);
+        franco.getConfiguracionDeNotificaciones().setEstrategiaDeNotificacion(estrategiaDeNotificacionFranco);
+        fede.setConfiguracionDeNotificaciones(configMockFede);
+
+        Incidente incidente = new Incidente(franco, "baño sucio", banioMedrano);
+
+        Mockito.verify(estrategiaDeNotificacionFranco, Mockito.times(1)).notificar(Mockito.any(Notificacion.class));
+    }
+
+    @Test
+    public void testSeEnviaNotificacionDeCierreDeIncidente(){
+        franco.setConfiguracionDeNotificaciones(configMockFranco);
+        fede.setConfiguracionDeNotificaciones(configMockFede);
+
+        // Franco crea el incidente
+        Incidente incidente = new Incidente(franco, "baño sucio", banioMedrano);
+        // Se abre el incidente en todas las comunidades de franco
+        franco.getComunidades().forEach(comunidad -> comunidad.abrirIncidente(incidente));
+        // Se cierra el incidente
+        comunidad2.cerrarIncidente(incidente, fede);
+
+        // fede deberia recibir 2 notificaciones
+        Mockito.verify(configMockFede, Mockito.times(2)).notificar(Mockito.any(Notificacion.class));
+    }
+
+    @Test
+    public void testSeEnviaNotificacionDeRevisionDeIncidente(){
+        franco.setConfiguracionDeNotificaciones(configMockFranco);
+        fede.setConfiguracionDeNotificaciones(configMockFede);
+
+        // Franco crea el incidente
+        RevisionDeIncidente revisionDeIncidente = new RevisionDeIncidente();
+
+        // fede deberia recibir 2 notificaciones
+        Mockito.verify(configMockFede, Mockito.times(2)).notificar(Mockito.any(Notificacion.class));
     }
 }
 

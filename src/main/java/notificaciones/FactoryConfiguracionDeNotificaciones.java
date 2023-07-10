@@ -18,24 +18,24 @@ public class FactoryConfiguracionDeNotificaciones {
         switch (tipo){
             case "W_C":
                 estrategiaDeNotificacion = new CuandoSuceden();
-                configuracionDeNotificaciones.setMedioDeNotificacion(new NotificarPorWhatsApp(new AdapterWhatsapp()));
+                configuracionDeNotificaciones.setMedioPreferido(new NotificarPorWhatsApp(new AdapterWhatsapp()));
                 configuracionDeNotificaciones.setEstrategiaDeNotificacion(estrategiaDeNotificacion);
                 break;
             case "M_C":
                 estrategiaDeNotificacion = new CuandoSuceden();
-                configuracionDeNotificaciones.setMedioDeNotificacion(new NotificarPorMail(new AdapterMail()));
+                configuracionDeNotificaciones.setMedioPreferido(new NotificarPorMail(new AdapterMail()));
                 configuracionDeNotificaciones.setEstrategiaDeNotificacion(estrategiaDeNotificacion);
                 break;
 
             case "W_S":
                 estrategiaDeNotificacion = new SinApuros(new Date());
-                configuracionDeNotificaciones.setMedioDeNotificacion(new NotificarPorWhatsApp(new AdapterWhatsapp()));
+                configuracionDeNotificaciones.setMedioPreferido(new NotificarPorWhatsApp(new AdapterWhatsapp()));
                 configuracionDeNotificaciones.setEstrategiaDeNotificacion(estrategiaDeNotificacion);
                 break;
 
             case "M_S":
                 estrategiaDeNotificacion = new SinApuros(new Date());
-                configuracionDeNotificaciones.setMedioDeNotificacion(new NotificarPorMail(new AdapterMail()));
+                configuracionDeNotificaciones.setMedioPreferido(new NotificarPorMail(new AdapterMail()));
                 configuracionDeNotificaciones.setEstrategiaDeNotificacion(estrategiaDeNotificacion);
                 break;
 

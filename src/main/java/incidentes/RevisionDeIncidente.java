@@ -5,6 +5,9 @@ import lombok.Setter;
 import notificaciones.notificador.Notificador;
 import notificaciones.notificador.RevisionIncidente;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RevisionDeIncidente {
     @Setter private Notificador notificador;
     private List<Incidente> incidentes;

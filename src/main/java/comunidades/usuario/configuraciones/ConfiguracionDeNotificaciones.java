@@ -8,7 +8,7 @@ import notificaciones.Notificacion;
 
 public class ConfiguracionDeNotificaciones {
   @Getter @Setter private EstrategiaDeNotificacion estrategiaDeNotificacion;
-  @Getter @Setter private MedioPreferido medioDeNotificacion;
+  @Getter @Setter private MedioPreferido medioPreferido;
 
   public void notificar(Notificacion notificacion) {
     notificacion.getEstrategiaDeNotificacion().notificar(notificacion);
