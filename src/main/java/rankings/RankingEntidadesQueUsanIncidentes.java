@@ -1,7 +1,7 @@
 package rankings;
 
-import comunidades.incidentes.Incidente;
-import comunidades.servicios.PrestacionDeServicio;
+import incidentes.Incidente;
+import servicios.PrestacionDeServicio;
 import entidades.Entidad;
 
 import java.util.ArrayList;

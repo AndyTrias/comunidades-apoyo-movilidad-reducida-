@@ -1,8 +1,7 @@
-package comunidades.servicios;
+package servicios;
 
-import comunidades.incidentes.Incidente;
+import incidentes.Incidente;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;

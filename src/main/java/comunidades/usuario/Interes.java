@@ -1,6 +1,6 @@
 package comunidades.usuario;
 
-import comunidades.servicios.Servicio;
+import servicios.Servicio;
 import entidades.Entidad;
 import lombok.Getter;
 

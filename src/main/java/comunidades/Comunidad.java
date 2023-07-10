@@ -1,9 +1,8 @@
 package comunidades;
 
-import comunidades.incidentes.Incidente;
-import comunidades.servicios.PrestacionDeServicio;
+import incidentes.Incidente;
+import servicios.PrestacionDeServicio;
 import comunidades.usuario.Usuario;
-import configs.ServiceLocator;
 import lombok.Getter;
 import lombok.Setter;
 import notificaciones.notificador.CierreIncidente;
@@ -82,6 +81,7 @@ public class Comunidad {
     }
 
     public void abrirIncidente(Incidente incidente) {
+
         // Habria que ver si ese incidente ya esta abierto
         for (Incidente i : incidentesAbiertos) {
             if (i.getPrestacionDeServicio().equals(incidente.getPrestacionDeServicio())) {
@@ -95,7 +95,13 @@ public class Comunidad {
         }
     }
 
-    public void cerrarIncidente(Incidente incidente, Usuario usuario) {
+    public void cerrarIncidente(Incidente incidente, Usuario usuario)  {
+
+        if (this.estaCerradoElIncidente(incidente))
+        {
+            throw new RuntimeException("El incidente ya esta cerrado");
+        }
+
         incidente.cerrar();
         incidentesAbiertos.remove(incidente);
         incidentesCerrados.add(incidente);
@@ -111,6 +117,14 @@ public class Comunidad {
 
     public int getCantidadDeAfectados() {
         return getUsuarios().stream().filter(u -> u.getMembresia(this).esAfectado()).mapToInt(u -> 1).sum();
+    }
+
+    public boolean estaCerradoElIncidente(Incidente incidente)  {
+        if (!getTodosLosIncidentes().contains(incidente)) {
+            throw new RuntimeException("El incidente no pertenece a la comunidad");
+        }
+
+        return this.incidentesCerrados.contains(incidente);
     }
 }
 

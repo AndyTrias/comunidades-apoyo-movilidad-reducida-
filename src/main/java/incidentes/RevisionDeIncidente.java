@@ -1,13 +1,9 @@
-package comunidades.incidentes;
+package incidentes;
 
 import comunidades.usuario.Usuario;
 import lombok.Setter;
-import notificaciones.Notificacion;
 import notificaciones.notificador.Notificador;
 import notificaciones.notificador.RevisionIncidente;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class RevisionDeIncidente {
     @Setter private Notificador notificador;
