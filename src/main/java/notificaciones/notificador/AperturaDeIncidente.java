@@ -43,7 +43,7 @@ public class AperturaDeIncidente implements Notificador{
         });
     }
 
-    public void notificarAUsuario(Usuario usuario, Notificacion notificacion) {
+    private void notificarAUsuario(Usuario usuario, Notificacion notificacion) {
         notificacion.setDestinatario(usuario);
         notificacion.setEstrategiaDeNotificacion(usuario.getConfiguracionDeNotificaciones().getEstrategiaDeNotificacion());
         usuario.notificar(notificacion);

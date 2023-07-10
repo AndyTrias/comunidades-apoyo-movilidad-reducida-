@@ -10,7 +10,7 @@ import java.util.List;
 
 public class RevisionDeIncidente {
     @Setter private Notificador notificador;
-    List<Incidente> incidentes;
+    private List<Incidente> incidentes;
     private static final double LATITUD_MAXIMA = 0.1;
     private static final double LONGITUD_MAXIMA = 0.1;
 
