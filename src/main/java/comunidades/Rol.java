@@ -30,8 +30,6 @@ public class Rol {
         this.usuarios.remove(usuario);
     }
 
-    public int getAfectadosPorRol(Comunidad comunidad){
-        return usuarios.stream().filter(u -> u.esAfectado(comunidad)).mapToInt(u -> 1).sum();
-    }
+
 }
 

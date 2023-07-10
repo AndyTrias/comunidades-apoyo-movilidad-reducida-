@@ -48,7 +48,7 @@ public class ComunidadesTest {
         comunidad3.agregarServicioDeInteres(banioMedrano);
         comunidad3.agregarServicioDeInteres(banioCastroBarros);
 
-        this.comunidad1 = new Comunidad("comunidad1");
+
         Set<Permiso> permisos = new HashSet<>();
         Permiso enviarMensajes = new Permiso();
         permisos.add(enviarMensajes);
@@ -105,6 +105,7 @@ public class ComunidadesTest {
 
     @Test
     public void testCantidadDeAfectados(){
+        franco.unirseAComunidad(comunidad1, comunidad1.aceptarUsuario(franco));
        franco.getMembresia(comunidad1).cambiarAfectacion(banioMedrano, true);
        assertEquals(comunidad1.getCantidadDeAfectados(), 1);
 

@@ -22,7 +22,7 @@ public class Membresia {
 
   private void afectacionesPorDefecto() {
     for (PrestacionDeServicio prestacion : this.comunidad.getServiciosDeInteres()) {
-      this.agregarAfectacion(prestacion, true);
+      this.agregarAfectacion(prestacion, false);
     }
   }
 
