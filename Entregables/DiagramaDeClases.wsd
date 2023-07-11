@@ -420,14 +420,19 @@ Class Afectacion #bbffcc{
 
 
 Class GenerarRankings #bbffcc{
-    - rankings: List<Ranking>
+    - rankingsEntidades: List<RankingEntidades>
+    - rankingComunidades: RankingComunidades
 
     + generarRankings(): void
 }
 
-abstract Class Ranking #bbffcc{
-    + generarRanking(): List<?>
+abstract Class RankingEntidades #bbffcc{
+    + generarRanking(): List<Entidad>
     # obtenerIncidentesDeEntidad(entidad: Entidad): List<Incidente>
+}
+
+Interface RankingComunidades #bbffcc{
+    + generarRanking(): List<Comunidad>
 }
 
 Class RankingCantidadIncidentes #bbffcc{
@@ -446,9 +451,10 @@ Class RankingImapcto #bbffcc{
 }
 
 
-GenerarRankings --> "*" Ranking
-Ranking <|.. RankingPromedioTiempo
-Ranking <|.. RankingCantidadIncidentes
-Ranking <|.. RankingImapcto
+GenerarRankings --> "*" RankingEntidades
+GenerarRankings --> "*" RankingComunidades
+RankingEntidades <|.. RankingPromedioTiempo
+RankingEntidades <|.. RankingCantidadIncidentes
+RankingComunidades <|.. RankingImapcto
 
 @enduml

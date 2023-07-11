@@ -7,7 +7,7 @@ import repositiorios.RepoComunidades;
 import java.util.Comparator;
 import java.util.List;
 
-public class RankingImapcto extends Ranking {
+public class RankingImapcto implements RankingComunidades {
 
     public List<Comunidad> generarRanking() {
         List<Comunidad> comunidades = RepoComunidades.getInstance().getComunidades();

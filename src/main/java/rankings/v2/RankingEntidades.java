@@ -6,7 +6,7 @@ import incidentes.Incidente;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Ranking {
+public abstract class RankingEntidades {
     public abstract List<?> generarRanking();
 
     protected List<Incidente> obtenerIncidentesDeEntidad(Entidad entidad) {
