@@ -419,36 +419,36 @@ Class Afectacion #bbffcc{
 /' RANKINGS '/
 
 
-Class FactoryGenerarRankings #bbffcc{
-    - rankings: Set<Ranking>
+Class GenerarRankings #bbffcc{
+    - rankings: List<Ranking>
 
-    + generarRankings()
+    + generarRankings(): void
 }
 
-Interface Ranking #bbffcc{
-    + generarRanking()
+abstract Class Ranking #bbffcc{
+    + generarRanking(): List<?>
+    # obtenerIncidentesDeEntidad(entidad: Entidad): List<Incidente>
 }
 
-Class RankingPromedioCierreIncidentes #bbffcc{
-    + generarRanking()
-    + tiempoDeCierreDeIncidente(incidente: Incidente): Float
+Class RankingCantidadIncidentes #bbffcc{
+    + generarRanking(): List<Entidad>
+    + cantidadDeIncidentesEnLaSemana(entidad: Entidad): int
 }
 
-Class RankingMayorCantidadDeIncidentesSemana #bbffcc{
-    + generarRanking()
-    + incidenteOcurrioEnLaSemana(incidente: Incidente): Boolean
-    + incidenteSeGeneroEnDespuesDe24Hs(incidente: Incidente): Boolean
+Class RankingPromedioTiempo #bbffcc{
+    + generarRanking(): List<Entidad>
+    + promedioTiempoDeCierre(entidad: Entidad): float
 }
 
-Class RankingImpactoProblematicas #bbffcc{
-    + generarRanking()
-    + comunidadConMayorImpacto() : Comunidad
+Class RankingImapcto #bbffcc{
+    + generarRanking(): List<Comunidad>
+    + calcularImpacto(comunidad: Comunidad) : float
 }
 
 
 GenerarRankings --> "*" Ranking
-Ranking <|.. RankingPromedioCierreIncidentes
-Ranking <|.. RankingMayorCantidadDeIncidentesSemana
-Ranking <|.. RankingImpactoProblematicas
+Ranking <|.. RankingPromedioTiempo
+Ranking <|.. RankingCantidadIncidentes
+Ranking <|.. RankingImapcto
 
 @enduml

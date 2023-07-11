@@ -1,3 +1,4 @@
+import localizacion.UbicacionExacta;
 import servicios.PrestacionDeServicio;
 import servicios.Servicio;
 import entidades.Establecimiento;
@@ -23,9 +24,9 @@ public class EstablecimientoTest {
     localizacion = new Localizacion();
 
     establecimiento = new Establecimiento("Sucursal Olivos", localizacion);
-    banioPlantaBaja = new PrestacionDeServicio(banio, "Banio Planta Baja");
-    escaleraSuperior = new PrestacionDeServicio(escalera, "Escalera Superior");
-    banioGerentes =  new PrestacionDeServicio(banio, "Banio Gerentes");
+    banioPlantaBaja = new PrestacionDeServicio(banio, "Banio Planta Baja", new UbicacionExacta(1, 1));
+    escaleraSuperior = new PrestacionDeServicio(escalera, "Escalera Superior", new UbicacionExacta(1, 1));
+    banioGerentes =  new PrestacionDeServicio(banio, "Banio Gerentes", new UbicacionExacta(1, 1));
   }
 
   @Test

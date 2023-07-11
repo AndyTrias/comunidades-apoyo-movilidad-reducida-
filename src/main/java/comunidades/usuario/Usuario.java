@@ -5,6 +5,7 @@ import comunidades.Membresia;
 import comunidades.Rol;
 import comunidades.usuario.configuraciones.ConfiguracionDeNotificaciones;
 import configs.ServiceLocator;
+import incidentes.RevisionDeIncidente;
 import localizacion.Localizacion;
 import localizacion.UbicacionExacta;
 import lombok.Getter;
@@ -72,5 +73,8 @@ public class Usuario {
         configuracionDeNotificaciones.notificar(notificacion);
     }
 
-
+    public void setUbicacionExacta(UbicacionExacta ubicacionExacta) {
+        this.ubicacionExacta = ubicacionExacta;
+        RevisionDeIncidente.getInstance().comprobarCercania(this);
+    }
 }

@@ -31,10 +31,12 @@ public class Incidente {
         // La pusimos en los tests
         // usuario.getComunidades().stream().filter(c -> c.getServiciosDeInteres().contains(prestacionDeServicio)).forEach(c -> c.abrirIncidente(this));
         this.notificarApertura();
+        RevisionDeIncidente.getInstance().agregarIncidente(this);
     }
 
     public void cerrar() {
         fechasDeCierre.add(new Date());
+        RevisionDeIncidente.getInstance().eliminarIncidente(this);
     }
 
 

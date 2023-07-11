@@ -1,4 +1,5 @@
 import comunidades.Comunidad;
+import localizacion.UbicacionExacta;
 import servicios.PrestacionDeServicio;
 import servicios.Servicio;
 import comunidades.usuario.Email;
@@ -22,8 +23,8 @@ public class AfectadosTest {
   public void setUp()  {
     this.banio = new Servicio("banio");
     this.escalera = new Servicio("escalera");
-    this.banioMedrano = new PrestacionDeServicio(banio, "medrano");
-    this.escaleraMedrano = new PrestacionDeServicio(escalera, "medrano");
+    this.banioMedrano = new PrestacionDeServicio(banio, "medrano", new UbicacionExacta(1, 1));
+    this.escaleraMedrano = new PrestacionDeServicio(escalera, "medrano", new UbicacionExacta(1, 1));
 
     this.andy = new Usuario("andy", "perez", new Email());
 

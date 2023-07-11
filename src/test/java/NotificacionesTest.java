@@ -8,6 +8,7 @@ import comunidades.usuario.configuraciones.medios.whatsapp.AdapterWhatsapp;
 import comunidades.usuario.configuraciones.medios.whatsapp.NotificarPorWhatsApp;
 import incidentes.Incidente;
 import incidentes.RevisionDeIncidente;
+import localizacion.UbicacionExacta;
 import org.mockito.Mock;
 import servicios.PrestacionDeServicio;
 import servicios.Servicio;
@@ -38,8 +39,8 @@ public class NotificacionesTest {
     public void setUp() throws Exception {
         // Creamos la prestacion de prestacion de servicio
         servicio = new Servicio("baño hombres");
-        banioMedrano = new PrestacionDeServicio(servicio, "baño Medrano");
-        banioCastroBarros = new PrestacionDeServicio(servicio, "baño Castro Barros");
+        banioMedrano = new PrestacionDeServicio(servicio, "baño Medrano", new UbicacionExacta(1, 1));
+        banioCastroBarros = new PrestacionDeServicio(servicio, "baño Castro Barros", new UbicacionExacta(2, 2));
 
         // Creamos las 3 comunidades
         comunidad1 = new Comunidad("comunidad1");
@@ -199,11 +200,13 @@ public class NotificacionesTest {
         franco.setConfiguracionDeNotificaciones(configMockFranco);
         fede.setConfiguracionDeNotificaciones(configMockFede);
 
-        // Franco crea el incidente
-        RevisionDeIncidente revisionDeIncidente = new RevisionDeIncidente();
+        Incidente incidente = new Incidente(franco, "baño sucio", banioMedrano);
 
-        // fede deberia recibir 2 notificaciones
-        Mockito.verify(configMockFede, Mockito.times(2)).notificar(Mockito.any(Notificacion.class));
+        UbicacionExacta ubicacionExactaFranco = new UbicacionExacta(1,1);
+        franco.setUbicacionExacta(ubicacionExactaFranco);
+
+        // deberia recibir una notificacion por la revision del incidente y otra por la creacion del incidente
+        Mockito.verify(configMockFranco, Mockito.times(2)).notificar(Mockito.any(Notificacion.class));
     }
 }
 

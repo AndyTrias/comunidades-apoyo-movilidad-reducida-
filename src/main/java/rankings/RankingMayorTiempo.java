@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class RankingMayorTiempo extends RankingEntidadesQueUsanIncidentes {
+public class RankingMayorTiempo extends RankingEntidades {
 
     private float calcularPromedio(Entidad entidad){
         List<Incidente> incidentes = obtenerIncidentesDeEntidad(entidad);
@@ -22,6 +22,10 @@ public class RankingMayorTiempo extends RankingEntidadesQueUsanIncidentes {
     public List<Entidad> generarRanking(List<Entidad> entidades) {
         Collections.sort(entidades, Comparator.comparingDouble(this::calcularPromedio));
         return entidades;
+    }
+
+    protected boolean validarIncidente(Incidente incidente, List<Incidente> incidentesPrestacion) {
+        return false;
     }
 
 }

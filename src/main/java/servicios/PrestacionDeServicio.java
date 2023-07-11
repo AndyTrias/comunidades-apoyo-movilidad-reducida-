@@ -13,10 +13,11 @@ public class PrestacionDeServicio {
     @Getter private String nombre;
     @Getter private UbicacionExacta ubicacionExacta;
 
-    public PrestacionDeServicio(Servicio servicio, String nombre) {
+    public PrestacionDeServicio(Servicio servicio, String nombre, UbicacionExacta ubicacionExacta) {
         this.servicio = servicio;
         this.nombre = nombre;
         this.incidentes = new ArrayList<>();
+        this.ubicacionExacta = ubicacionExacta;
     }
 
     public void agregarIncidente(Incidente incidente){

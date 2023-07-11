@@ -10,18 +10,14 @@ import java.util.List;
 
 public abstract class RankingEntidades {
 
-    public List<Entidad> generarRanking(List<Entidad> entidades) {
-        return null;
-    }
+    public abstract List<Entidad> generarRanking(List<Entidad> entidades);
 
-    protected boolean validarIncidente(Incidente incidente, List<Incidente> incidentesPrestacion) {
-        return true;
-    }
+    protected abstract boolean validarIncidente(Incidente incidente, List<Incidente> incidentesPrestacion);
 
     protected List<Incidente> obtenerIncidentesDeEntidad(Entidad entidad) {
         //create an empty list of incidents
 
-        List<Incidente> incidentes = new ArrayList<Incidente>();
+        List<Incidente> incidentes = new ArrayList<>();
         for (PrestacionDeServicio prestacion : entidad.getPrestacionesDeServicios()) {
             List<Incidente> incidentesPrestacion = new ArrayList<>();
             for (Incidente incidente : prestacion.getIncidentes()) {

@@ -1,5 +1,6 @@
 import comunidades.Comunidad;
 import incidentes.Incidente;
+import localizacion.UbicacionExacta;
 import servicios.PrestacionDeServicio;
 import servicios.Servicio;
 import comunidades.usuario.Email;
@@ -29,8 +30,8 @@ public class IncidentesTest {
   public void setUp() throws Exception {
     // Creamos la prestacion de prestacion de servicio
     servicio = new Servicio("baño hombres");
-    banioMedrano = new PrestacionDeServicio(servicio, "baño Medrano");
-    banioCastroBarros= new PrestacionDeServicio(servicio, "baño Castro Barros");
+    banioMedrano = new PrestacionDeServicio(servicio, "baño Medrano", new UbicacionExacta(1, 1));
+    banioCastroBarros= new PrestacionDeServicio(servicio, "baño Castro Barros", new UbicacionExacta(2, 2));
 
     // Creamos las 3 comunidades
     comunidad1 = new Comunidad("comunidad1");
