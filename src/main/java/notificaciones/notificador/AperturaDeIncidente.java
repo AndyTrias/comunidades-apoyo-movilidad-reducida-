@@ -18,7 +18,7 @@ public class AperturaDeIncidente implements Notificador{
         List<Usuario> usuariosNotificados = new ArrayList<>();
         Notificacion notificacion = FactoryNotificacion.crearNotificacion("Apertura de incidente");
 
-        for (Comunidad comunidad : usuarioAbridor.getComunidades()) {
+        for (Comunidad comunidad : usuarioAbridor.getComunidades().stream().filter(c -> c.getServiciosDeInteres().contains(incidente.getPrestacionDeServicio())).toList()) {
             List<Usuario> usuariosANotificar = comunidad.getUsuarios();
             usuariosANotificar.forEach(usuario -> {
                 if (!usuariosNotificados.contains(usuario)) {
@@ -29,6 +29,7 @@ public class AperturaDeIncidente implements Notificador{
         }
 
         // Notificar a interesados
+        RepoEntidades Repo = RepoEntidades.getInstance();
         List<Entidad> entidadesConLaPrestacion = RepoEntidades.getInstance().getEntidadesConPrestacion(incidente.getPrestacionDeServicio());
         List<Usuario> usuariosConInteresEnElServicio = RepoUsuarios.getInstance().getUsuariosConInteresEnServicio(incidente.getPrestacionDeServicio().getServicio());
 

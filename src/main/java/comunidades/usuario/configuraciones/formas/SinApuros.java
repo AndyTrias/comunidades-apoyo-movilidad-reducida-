@@ -5,12 +5,12 @@ import notificaciones.Notificacion;
 import java.util.*;
 
 public class SinApuros implements EstrategiaDeNotificacion {
-    private Set<Date> horarios;
+    private List<Date> horarios;
     private List<Notificacion> aNotificar;
 
     public SinApuros(Date horarioInicial){
         this.aNotificar = new ArrayList<>();
-        this.horarios = new HashSet<>();
+        this.horarios = new ArrayList<>();
         this.horarios.add(horarioInicial);
     }
 
@@ -24,16 +24,19 @@ public class SinApuros implements EstrategiaDeNotificacion {
     }
 
     public void enviarNotificacionesCuandoCorresponda() {
-        // cron job
         Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                for (Notificacion notificacion : aNotificar) {
-                    notificacion.getDestinatario().getConfiguracionDeNotificaciones().getMedioPreferido().notificar(notificacion);
-                }
-            }
-        }, (Date) horarios);
 
+        for (Date horario : horarios) {
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    for (Notificacion notificacion : aNotificar) {
+                        notificacion.getDestinatario().getConfiguracionDeNotificaciones().getMedioPreferido().notificar(notificacion);
+                        aNotificar.remove(notificacion);
+                    }
+                }
+            }, horario);
+        }
     }
+
 }

@@ -34,7 +34,10 @@ public class FactoryConfiguracionDeNotificaciones {
                 break;
 
             case "M_S":
-                estrategiaDeNotificacion = new SinApuros(new Date());
+                Date date = new Date();
+                date.setMinutes(date.getMinutes() + 1);
+                SinApuros sinApuros = new SinApuros(date);
+                estrategiaDeNotificacion = sinApuros;
                 configuracionDeNotificaciones.setMedioPreferido(new NotificarPorMail(new AdapterMail()));
                 configuracionDeNotificaciones.setEstrategiaDeNotificacion(estrategiaDeNotificacion);
                 break;

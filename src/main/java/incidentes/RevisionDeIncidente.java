@@ -59,4 +59,8 @@ public class RevisionDeIncidente {
         }
         return instancia;
     }
+
+    public void eliminarTodosLosIncidentes() {
+        this.incidentes.clear();
+    }
 }

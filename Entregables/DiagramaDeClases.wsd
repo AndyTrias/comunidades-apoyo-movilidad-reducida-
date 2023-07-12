@@ -270,8 +270,8 @@ Comunidad --> Notificador
 /' CONFIGURACION DE NOTIFICACIONES '/
 
 Class ConfiguracionDeNotificaciones #bbffcc{
-    - formaDeRecibir: FormaDeRecibir
-    - medioPreferido: MedioDeNotificacion
+    - estrategiaDeNotificacion: EstrategiaDeNotificacion
+    - medioPreferido: MedioPreferido
 
     + notificar()
 }

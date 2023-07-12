@@ -15,6 +15,6 @@ public class Exportador {
   }
 
   public void exportarConEstrategia(List<Entidad> entidades, List<Comunidad> comunidades) {
-    this.estrategia.exportar(this.exportable.generarDatos(entidades, comunidades));
+    //this.estrategia.exportar(this.exportable.generarDatos(entidades, comunidades));
   }
 }

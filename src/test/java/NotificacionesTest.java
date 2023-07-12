@@ -1,15 +1,21 @@
 import comunidades.Comunidad;
+import comunidades.usuario.Interes;
 import comunidades.usuario.configuraciones.formas.CuandoSuceden;
 import comunidades.usuario.configuraciones.formas.EstrategiaDeNotificacion;
 import comunidades.usuario.configuraciones.formas.SinApuros;
 import comunidades.usuario.configuraciones.medios.MedioPreferido;
+import comunidades.usuario.configuraciones.medios.mail.AdapterMail;
 import comunidades.usuario.configuraciones.medios.mail.NotificarPorMail;
 import comunidades.usuario.configuraciones.medios.whatsapp.AdapterWhatsapp;
 import comunidades.usuario.configuraciones.medios.whatsapp.NotificarPorWhatsApp;
+import entidades.Entidad;
+import entidades.Establecimiento;
 import incidentes.Incidente;
 import incidentes.RevisionDeIncidente;
 import localizacion.UbicacionExacta;
 import org.mockito.Mock;
+import repositiorios.RepoEntidades;
+import repositiorios.RepoUsuarios;
 import servicios.PrestacionDeServicio;
 import servicios.Servicio;
 import comunidades.usuario.Email;
@@ -20,6 +26,13 @@ import notificaciones.Notificacion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+
+import java.sql.Time;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import static org.apache.http.conn.params.ConnManagerParams.setTimeout;
 
 public class NotificacionesTest {
     private Comunidad comunidad1;
@@ -34,6 +47,8 @@ public class NotificacionesTest {
     private PrestacionDeServicio banioMedrano;
     private PrestacionDeServicio banioCastroBarros;
     private Servicio servicio;
+
+    private Entidad entidad1;
 
     @BeforeEach
     public void setUp() throws Exception {
@@ -57,12 +72,20 @@ public class NotificacionesTest {
         emailfranco.nombreDeUsuario = "francopescee";
         emailfranco.dominio = "gmail.com";
 
-        emailfede.nombreDeUsuario = "tsdaandres";
+        emailfede.nombreDeUsuario = "griccelli";
         emailfede.dominio = "frba.utn.edu.ar";
 
         // Creamos los 2 usuarios
         franco = new Usuario("franco", "pesce", emailfranco);
         fede = new Usuario("fede", "perez", emailfede);
+
+        Establecimiento establecimiento1 = new Establecimiento("establecimiento1", null);
+        establecimiento1.agregarServicioPrestado(banioCastroBarros);
+        this.entidad1 = new Entidad("entidad1");
+        entidad1.agregarEstablecimiento(establecimiento1);
+
+        RepoEntidades.getInstance().agregarEntidad(entidad1);
+        RepoUsuarios.getInstance().agregarUsuario(fede);
 
         // Creamos la configuracion de notificaciones
         ConfiguracionDeNotificaciones config = FactoryConfiguracionDeNotificaciones.crearConfiguracionDeNotificaciones("M_C");
@@ -82,6 +105,8 @@ public class NotificacionesTest {
 
         this.configMockFranco = Mockito.mock(ConfiguracionDeNotificaciones.class);
         this.configMockFede = Mockito.mock(ConfiguracionDeNotificaciones.class);
+
+        RevisionDeIncidente.getInstance().eliminarTodosLosIncidentes();
     }
 
     @Test
@@ -127,6 +152,8 @@ public class NotificacionesTest {
     public void testSeLeEnviaNotificacionAFedePorEstarInteresado(){
         franco.setConfiguracionDeNotificaciones(configMockFranco);
         fede.setConfiguracionDeNotificaciones(configMockFede);
+        fede.getInteres().agregarServicio(servicio);
+        fede.getInteres().agregarEntidad(entidad1);
 
         // Franco crea el incidente en el baño de castro barros
         Incidente incidente = new Incidente(franco, "baño sucio",banioCastroBarros);
@@ -207,6 +234,24 @@ public class NotificacionesTest {
 
         // deberia recibir una notificacion por la revision del incidente y otra por la creacion del incidente
         Mockito.verify(configMockFranco, Mockito.times(2)).notificar(Mockito.any(Notificacion.class));
+    }
+
+    @Test
+    public void testEnviarNotificacionAsyncConVariosHorarios()  {
+        //ConfiguracionDeNotificaciones config = FactoryConfiguracionDeNotificaciones.crearConfiguracionDeNotificaciones("M_S");
+        ConfiguracionDeNotificaciones config = new ConfiguracionDeNotificaciones();
+
+        Date hora1 = new Date();
+        hora1.setMinutes(hora1.getMinutes() + 1);
+        SinApuros sinApuros = new SinApuros(hora1);
+
+        config.setMedioPreferido(new NotificarPorMail(new AdapterMail()));
+        config.setEstrategiaDeNotificacion(sinApuros);
+        fede.setConfiguracionDeNotificaciones(config);
+
+        Incidente incidente = new Incidente(fede, "baño sucio", banioCastroBarros);
+
+        //Thread.sleep(60000);
     }
 }
 

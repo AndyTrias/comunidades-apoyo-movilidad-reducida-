@@ -34,6 +34,7 @@ public class Usuario {
         this.apellido = apellido;
         this.correoElectronico = correoElectronico;
         this.membresias = new ArrayList<>();
+        this.interes = new Interes();
     }
 
     public void setContrasenia(String contrasenia) throws Exception {
