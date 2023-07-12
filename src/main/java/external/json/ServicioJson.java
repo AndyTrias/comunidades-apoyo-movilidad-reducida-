@@ -13,7 +13,9 @@ import java.util.List;
 import java.util.Map;
 
 public class ServicioJson implements AdapterJson {
-  public void exportarAJson(List<List<String>> lista, String rutaArchivo) {
+
+  public String exportarAJson(List<List<String>> lista, String rutaArchivo) {
+
     List<Map<String, Object>> jsonList = new ArrayList<>();
 
     // Encabezados del Json
@@ -47,6 +49,7 @@ public class ServicioJson implements AdapterJson {
     } catch (IOException e) {
       e.getStackTrace();
     }
+    return rutaArchivo;
   }
 
 }
