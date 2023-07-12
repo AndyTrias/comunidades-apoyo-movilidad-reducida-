@@ -3,12 +3,14 @@
 
 
 abstract RankingEntidadesQueUsanIncidentes implements RankingEntidades{
+    + nombre(): String
     + generarRanking(List<Entidad>): List<Entidad>
     - obtenerIncidenteDeEntidad(Entidad): List<Incidente>
     - validarIncidente(Incidente): Boolean
 }
 
 class RankingMayorCantidad extends RankingEntidadesQueUsanIncidentes {
+    + nombre(): String
     - validarIncidente(Incidente): Boolean 
     + generarRanking(List<Entidad>): List<Entidad>
 }
@@ -20,35 +22,67 @@ end note
 
 
 class RankingMayorTiempo extends RankingEntidadesQueUsanIncidentes {
+    + nombre(): String
     - calcularPromedio(Entidad): float
     + generarRanking(List<Entidad>): List<Entidad>
 }
 
 class RankingImpacto implements RankingComunidades {
+    + nombre(): String
     + generarRanking(List<Comunidad>): List<Comunidad>
     - calcularImpacto(Comunidad): float
 }
 
 interface RankingEntidades {
+    + nombre(): String
     + generarRanking(List<Entidad>): List<Entidad>
 }
 
 interface RankingComunidades {
+    + nombre(): String 
     + generarRanking(List<Comunidad>): List<Comunidad>
 }
 
-class generarInforme{
+class generadorDatosRanking {
 
+    - rankingsEntidades: List<RankingEntidad>
+    - rankingsComunidades: List<RankingComunidad>
 
-    - List<RankingEntidades> rankingEntidades
-    - List<RankingComunidades> rankingComunidades
-
-
-    + generarInforme(List<Entidad>, List<Comunidad>): void
+    + generarDatos(List<Entidad>, List<Comunidad>): List<List<String>>
+    
 }
 
-generarInforme-->RankingEntidades
-generarInforme-->RankingComunidades
+note left of generadorDatosRanking::generarDatos
+    formato: 
+    [[nombreRanking1, nombreRanking2, ...],
+    [valorRanking1, valorRanking2, ...],
+    [valorRanking1, valorRanking2, ...],]
+
+end note
+
+
+
+class Exportador {
+
+    - datos: generadorDatosRanking
+    - estrategiaDeExportacion: PuedeExportar
+
+    + exportar(List<Entidad>, List<Comunidad>): void
+
+}
+
+interface PuedeExportar {
+    + exportar(List<List<String>>): void
+}
+
+class ExportarCSV implements PuedeExportar {
+    + exportar(List<List<String>>): void
+}
+
+Exportador --> PuedeExportar
+Exportador --> generadorDatosRanking
+generadorDatosRanking-->RankingEntidades
+generadorDatosRanking-->RankingComunidades
 
 
 @enduml
