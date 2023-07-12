@@ -2,6 +2,7 @@ import comunidades.Comunidad;
 import configs.Config;
 import entidades.Entidad;
 import external.json.ServicioJson;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -10,22 +11,28 @@ import rankings.criterios.MayorCantidad;
 import rankings.criterios.MayorTiempo;
 import rankings.informes.*;
 import repositiorios.DataRepositorios;
+import repositiorios.RepoComunidades;
+import repositiorios.RepoEntidades;
 
 import java.util.List;
 
 
 public class informesTest {
-  private DataRepositorios repositorios;
   private List<Comunidad> comunidades;
   private List<Entidad> entidades;
   private GeneradorDeInformes generadorDeInformes;
   private  List<List<String>> informes;
 
+  @BeforeAll
+  public static void generarDatos(){
+    DataRepositorios dataRepositorios = new DataRepositorios();
+    dataRepositorios.generarDatos();
+  }
+
   @BeforeEach
     public void setUp(){
-      repositorios = new DataRepositorios();
-      comunidades = repositorios.repoComunidades.getComunidades();
-      entidades = repositorios.repoEntidades.getEntidades();
+      comunidades = RepoComunidades.getInstance().getComunidades();
+      entidades = RepoEntidades.getInstance().getEntidades();
 
       generadorDeInformes = new GeneradorDeInformes();
       generadorDeInformes.agregarCriterioDeComunidad(new ImpactoComunidades("Impacto de la comunidad"));

@@ -20,7 +20,9 @@ public class DataRepositorios {
         this.repoComunidades = RepoComunidades.getInstance();
         this.repoEntidades = RepoEntidades.getInstance();
         this.repoUsuarios = RepoUsuarios.getInstance();
+    }
 
+    public void generarDatos(){
         this.AsignarComunidades();
         this.AsignarEntidades();
         this.AsignarUsuarios();
