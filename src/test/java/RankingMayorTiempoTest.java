@@ -10,7 +10,7 @@ import localizacion.Localizacion;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
-import rankings.RankingMayorTiempo;
+import rankings.MayorTiempo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 public class RankingMayorTiempoTest {
 
     @Test
-    public void generarRanking_SortedByAverageTime() {
+    public void generarRankingdeMayorTiempo() {
         Entidad entidad1 = new Entidad("Entidad 1");
         Entidad entidad2 = new Entidad("Entidad 2");
         Entidad entidad3 = new Entidad("Entidad 3");
@@ -65,7 +65,7 @@ public class RankingMayorTiempoTest {
         entidades.add(entidad3);
 
         // Create the Ranking instance
-        RankingMayorTiempo ranking = new RankingMayorTiempo();
+        MayorTiempo ranking = new MayorTiempo();
 
         // Generate the Ranking
         List<Entidad> rankingList = ranking.generarRanking(entidades);

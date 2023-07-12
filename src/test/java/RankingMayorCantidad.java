@@ -10,7 +10,7 @@ import localizacion.Localizacion;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
-import rankings.RankingMayorTiempo;
+import rankings.MayorTiempo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +67,7 @@ public class RankingMayorCantidad {
         entidades.add(entidad2);
         entidades.add(entidad3);
 
-        RankingMayorTiempo ranking = new RankingMayorTiempo();
+        MayorTiempo ranking = new MayorTiempo();
 
         List<Entidad> rankingList = ranking.generarRanking(entidades);
 

@@ -2,13 +2,15 @@ package rankings;
 
 import incidentes.Incidente;
 import entidades.Entidad;
-import repositiorios.RepoEntidades;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
-public class RankingMayorTiempo extends RankingEntidades {
+public class MayorTiempo extends RankingEntidadesQueUsanIncidentes {
+
+    public MayorTiempo(String nombre) {
+        super(nombre);
+    }
 
     public List<Entidad> generarRanking(List<Entidad> entidades) {
 //        List<Entidad> entidades = RepoEntidades.getInstance().getEntidades();

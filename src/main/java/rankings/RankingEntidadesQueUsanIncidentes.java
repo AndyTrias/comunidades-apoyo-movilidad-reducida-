@@ -2,16 +2,23 @@ package rankings;
 
 
 import incidentes.Incidente;
+import lombok.Getter;
 import servicios.PrestacionDeServicio;
 import entidades.Entidad;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class RankingEntidades {
+public abstract class RankingEntidadesQueUsanIncidentes implements RankingDeEntidades{
+
+    @Getter private String nombre;
+
+
+    public RankingEntidadesQueUsanIncidentes(String nombre) {
+        this.nombre = nombre;
+    }
 
     public abstract List<Entidad> generarRanking(List<Entidad> entidades);
-
 
     protected List<Incidente> obtenerIncidentesDeEntidad(Entidad entidad) {
 

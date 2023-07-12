@@ -2,17 +2,18 @@ package rankings;
 
 import incidentes.Incidente;
 import entidades.Entidad;
-import repositiorios.RepoEntidades;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class RankingMayorCantidad extends RankingEntidades {
+public class MayorCantidad extends RankingEntidadesQueUsanIncidentes {
 
 
-  @Override
+
+  public MayorCantidad(String nombre) {
+    super(nombre);
+  }
+
   public List<Entidad> generarRanking(List<Entidad> entidades) {
     return entidades.stream().sorted((entidad1, entidad2) -> Integer.compare(cantidadDeIncidentesEnLaSemana(entidad1), cantidadDeIncidentesEnLaSemana(entidad2))).collect(Collectors.toList());
   }
