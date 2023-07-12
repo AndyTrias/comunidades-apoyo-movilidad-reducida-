@@ -2,13 +2,13 @@
 
 
 
-abstract RankingEntidadesQueUsanIncidentes implements RankingEntidades{
+abstract CriterioEntidadQueUsanIncidentes implements CriterioEntidad{
     + nombre(): String
     + generarRanking(List<Entidad>): List<Entidad>
     - obtenerIncidenteDeEntidad(Entidad): List<Incidente>
 }
 
-class MayorCantidad extends RankingEntidadesQueUsanIncidentes {
+class MayorCantidad extends CriterioEntidadQueUsanIncidentes {
     + nombre(): String
     + generarRanking(List<Entidad>): List<Entidad>
     - cantidadDeIncidentesEnLaSemana(Entidad): int
@@ -18,33 +18,33 @@ class MayorCantidad extends RankingEntidadesQueUsanIncidentes {
 
 
 
-class MayorTiempo extends RankingEntidadesQueUsanIncidentes {
+class MayorTiempo extends CriterioEntidadQueUsanIncidentes {
     + nombre(): String
     - promedioTiempoDeCierre(Entidad): float
     + generarRanking(List<Entidad>): List<Entidad>
 }
 
 
-class ImpactoComunidades implements RankingComunidades {
+class ImpactoComunidades implements CriterioComunidad {
     + nombre(): String
     + generarRanking(List<Comunidad>): List<Comunidad>
     - calcularImpacto(Comunidad): float
 }
 
-interface RankingEntidades {
+interface CriterioEntidad {
     + nombre(): String
     + generarRanking(List<Entidad>): List<Entidad>
 }
 
-interface RankingComunidades {
+interface CriterioComunidad {
     + nombre(): String 
     + generarRanking(List<Comunidad>): List<Comunidad>
 }
 
 class generadorDatosRanking {
 
-    - rankingsEntidades: List<RankingEntidad>
-    - rankingsComunidades: List<RankingComunidad>
+    - criteriosEntidades: List<CriteriosEntidad>
+    - criterioComunidad: List<CriterioComunidad>
 
     + generarDatos(List<Entidad>, List<Comunidad>): List<List<String>>
     
@@ -70,7 +70,7 @@ class Exportador {
 }
 
 interface PuedeExportar {
-    + exportar(List<List<String>>): void
+    + exportarConEstrategia(List<List<String>>): void
 }
 
 class ExportarCSV implements PuedeExportar {
@@ -88,8 +88,8 @@ end note
 
 Exportador --> PuedeExportar
 Exportador --> generadorDatosRanking
-generadorDatosRanking-->RankingEntidades
-generadorDatosRanking-->RankingComunidades
+generadorDatosRanking-->CriterioEntidad
+generadorDatosRanking-->CriterioComunidad
 
 
 @enduml
