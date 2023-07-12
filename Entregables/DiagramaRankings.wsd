@@ -6,28 +6,26 @@ abstract RankingEntidadesQueUsanIncidentes implements RankingEntidades{
     + nombre(): String
     + generarRanking(List<Entidad>): List<Entidad>
     - obtenerIncidenteDeEntidad(Entidad): List<Incidente>
-    - validarIncidente(Incidente): Boolean
 }
 
-class RankingMayorCantidad extends RankingEntidadesQueUsanIncidentes {
+class MayorCantidad extends RankingEntidadesQueUsanIncidentes {
     + nombre(): String
-    - validarIncidente(Incidente): Boolean 
+    + generarRanking(List<Entidad>): List<Entidad>
+    - cantidadDeIncidentesEnLaSemana(Entidad): int
+    - incidenteNoOcurrioHace24Hs(Incidente, List<Incidente>): boolean
+}
+
+
+
+
+class MayorTiempo extends RankingEntidadesQueUsanIncidentes {
+    + nombre(): String
+    - promedioTiempoDeCierre(Entidad): float
     + generarRanking(List<Entidad>): List<Entidad>
 }
 
-note left of RankingMayorCantidad::validarIncidente
-    Es es lo que cambia lo de solo uno en 24 horas
-end note
 
-
-
-class RankingMayorTiempo extends RankingEntidadesQueUsanIncidentes {
-    + nombre(): String
-    - calcularPromedio(Entidad): float
-    + generarRanking(List<Entidad>): List<Entidad>
-}
-
-class RankingImpacto implements RankingComunidades {
+class ImpactoComunidades implements RankingComunidades {
     + nombre(): String
     + generarRanking(List<Comunidad>): List<Comunidad>
     - calcularImpacto(Comunidad): float
@@ -54,9 +52,9 @@ class generadorDatosRanking {
 
 note left of generadorDatosRanking::generarDatos
     formato: 
-    [[nombreRanking1, nombreRanking2, ...],
-    [valorRanking1, valorRanking2, ...],
-    [valorRanking1, valorRanking2, ...],]
+    [[nombreRanking1, valor1, valor2],
+    [nombreRanking2, valor1, valor2],
+    [nombreRanking3, valor1, valor2]]
 
 end note
 
@@ -78,6 +76,15 @@ interface PuedeExportar {
 class ExportarCSV implements PuedeExportar {
     + exportar(List<List<String>>): void
 }
+
+note left of ExportarCSV::exportar
+    formato: 
+    nombreRanking1, nombreRanking2, nombreRanking3
+    valor11, valor21, valor31
+    valor12, valor22, valor32
+    valor13, valor23, valor33
+end note
+
 
 Exportador --> PuedeExportar
 Exportador --> generadorDatosRanking
