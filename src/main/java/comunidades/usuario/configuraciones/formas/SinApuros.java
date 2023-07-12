@@ -32,8 +32,9 @@ public class SinApuros implements EstrategiaDeNotificacion {
                 public void run() {
                     for (Notificacion notificacion : aNotificar) {
                         notificacion.getDestinatario().getConfiguracionDeNotificaciones().getMedioPreferido().notificar(notificacion);
-                        aNotificar.remove(notificacion);
                     }
+
+                    aNotificar.clear();
                 }
             }, horario);
         }

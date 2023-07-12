@@ -23,6 +23,10 @@ public class DataRepositorios {
     }
 
     public void generarDatos(){
+        /* borrar datos anteriores */
+        this.repoComunidades.borrarComunidades();
+        this.repoEntidades.borrarEntidades();
+        this.repoUsuarios.borrarUsuarios();
         this.AsignarComunidades();
         this.AsignarEntidades();
         this.AsignarUsuarios();

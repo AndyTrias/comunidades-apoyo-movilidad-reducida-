@@ -72,8 +72,8 @@ public class NotificacionesTest {
         emailfranco.nombreDeUsuario = "francopescee";
         emailfranco.dominio = "gmail.com";
 
-        emailfede.nombreDeUsuario = "griccelli";
-        emailfede.dominio = "frba.utn.edu.ar";
+        emailfede.nombreDeUsuario = "francopescee";
+        emailfede.dominio = "gmail.com";
 
         // Creamos los 2 usuarios
         franco = new Usuario("franco", "pesce", emailfranco);
@@ -237,12 +237,12 @@ public class NotificacionesTest {
     }
 
     @Test
-    public void testEnviarNotificacionAsyncConVariosHorarios()  {
+    public void testEnviarNotificacionAsyncConVariosHorarios() throws InterruptedException {
         //ConfiguracionDeNotificaciones config = FactoryConfiguracionDeNotificaciones.crearConfiguracionDeNotificaciones("M_S");
         ConfiguracionDeNotificaciones config = new ConfiguracionDeNotificaciones();
 
         Date hora1 = new Date();
-        hora1.setMinutes(hora1.getMinutes() + 1);
+        hora1.setMinutes(38);
         SinApuros sinApuros = new SinApuros(hora1);
 
         config.setMedioPreferido(new NotificarPorMail(new AdapterMail()));
@@ -251,7 +251,8 @@ public class NotificacionesTest {
 
         Incidente incidente = new Incidente(fede, "baño sucio", banioCastroBarros);
 
-        //Thread.sleep(60000);
+        Thread.sleep(180000);
+
     }
 }
 

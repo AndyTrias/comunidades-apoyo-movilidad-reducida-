@@ -15,6 +15,7 @@ public class RankingComunidadesTest {
 
         // Crear el Ranking y generar el Ranking
         DataRepositorios dataRepositorios = new DataRepositorios();
+        dataRepositorios.generarDatos();
         ImpactoComunidades ranking = new ImpactoComunidades("Impacto de la comunidad");
         List<Comunidad> resultado = ranking.generarRanking(dataRepositorios.repoComunidades.getComunidades());
 

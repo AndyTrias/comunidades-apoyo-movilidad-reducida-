@@ -33,4 +33,8 @@ public class RepoUsuarios {
         return this.usuarios.stream().filter(usuario -> usuario.getInteres().getServicios().contains(servicio)).toList();
     }
 
+    public void borrarUsuarios() {
+        this.usuarios.clear();
+    }
+
 }

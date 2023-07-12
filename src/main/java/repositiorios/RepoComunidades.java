@@ -29,4 +29,7 @@ public class RepoComunidades {
         this.comunidades.remove(comunidades);
     }
 
+    public void borrarComunidades() {
+        this.comunidades.clear();
+    }
 }

@@ -29,7 +29,6 @@ public class AperturaDeIncidente implements Notificador{
         }
 
         // Notificar a interesados
-        RepoEntidades Repo = RepoEntidades.getInstance();
         List<Entidad> entidadesConLaPrestacion = RepoEntidades.getInstance().getEntidadesConPrestacion(incidente.getPrestacionDeServicio());
         List<Usuario> usuariosConInteresEnElServicio = RepoUsuarios.getInstance().getUsuariosConInteresEnServicio(incidente.getPrestacionDeServicio().getServicio());
 

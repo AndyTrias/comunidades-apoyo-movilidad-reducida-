@@ -34,4 +34,8 @@ public class RepoEntidades {
     public List<Entidad> getEntidadesConPrestacion(PrestacionDeServicio prestacionDeServicio){
         return this.entidades.stream().filter(entidad -> entidad.getPrestacionesDeServicios().contains(prestacionDeServicio)).toList();
     }
+
+    public void borrarEntidades() {
+        this.entidades.clear();
+    }
 }
