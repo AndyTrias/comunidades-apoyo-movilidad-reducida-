@@ -1,8 +1,10 @@
 import comunidades.Comunidad;
+import configs.Config;
 import entidades.Entidad;
 import external.json.ServicioJson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import rankings.criterios.ImpactoComunidades;
 import rankings.criterios.MayorCantidad;
 import rankings.criterios.MayorTiempo;
@@ -30,20 +32,30 @@ public class informesTest {
       generadorDeInformes.agregarCriterioDeEntidad(new MayorCantidad("Cantidad de incidentes"));
       generadorDeInformes.agregarCriterioDeEntidad(new MayorTiempo("Tiempo de resolucion"));
 
-      List<List<String>> informes = generadorDeInformes.generarDatos(entidades, comunidades);
+      informes = generadorDeInformes.generarDatos(entidades, comunidades);
     }
 
     @Test
     public void soyUnTest(){
-      EstrategiaDeExportacion estrategia = new ExportarCSV();
-      Exportador exportador = new Exportador(generadorDeInformes);
+      ExportarCSV exportarCSVMock = Mockito.mock(ExportarCSV.class);
+
+      Exportador exportador = new Exportador(generadorDeInformes, exportarCSVMock);
       exportador.exportarConEstrategia(entidades, comunidades, "informes.csv");
+
+      Mockito.verify(exportarCSVMock).exportar(informes, "informes.csv");
     }
 
     @Test
     public void soyOtroTest() {
-      EstrategiaDeExportacion estrategiaDeExportacion = new ExportarAJson(new ServicioJson());
-      Exportador exportador = new Exportador(generadorDeInformes, estrategiaDeExportacion);
+
+      ServicioJson servicioJsonMock = Mockito.mock(ServicioJson.class);
+      EstrategiaDeExportacion estrategia = new ExportarAJson(servicioJsonMock);
+
+      Exportador exportador = new Exportador(generadorDeInformes, estrategia);
       exportador.exportarConEstrategia(entidades, comunidades, "informes.json");
+
+      String ruta = Config.PATH_INFORMES + "informes.json";
+
+      Mockito.verify(servicioJsonMock).exportarAJson(informes, ruta);
     }
   }

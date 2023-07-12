@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class ExportarCSV implements EstrategiaDeExportacion {
-  public void exportar(List<List<String>> informe, String nombreArchivo) {
+  public String exportar(List<List<String>> informe, String nombreArchivo) {
     String csvFile = Config.PATH_INFORMES + nombreArchivo;
 
     try (FileWriter writer = new FileWriter(csvFile)) {
@@ -21,6 +21,7 @@ public class ExportarCSV implements EstrategiaDeExportacion {
     } catch (IOException e) {
       e.getStackTrace();
     }
+    return csvFile;
   }
 
 

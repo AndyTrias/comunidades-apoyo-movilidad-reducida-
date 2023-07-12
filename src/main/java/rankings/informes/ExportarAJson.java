@@ -1,5 +1,6 @@
 package rankings.informes;
 
+import configs.Config;
 import external.json.ServicioJson;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,9 +17,9 @@ public class ExportarAJson implements EstrategiaDeExportacion {
     this.adapter = adapter;
   }
 
-  public void exportar(List<List<String>> lista, String rutaArchivo)
+  public String exportar(List<List<String>> lista, String rutaArchivo)
   {
-    adapter.exportarAJson(lista, rutaArchivo);
+    return adapter.exportarAJson(lista, Config.PATH_INFORMES + rutaArchivo);
   }
 
 }

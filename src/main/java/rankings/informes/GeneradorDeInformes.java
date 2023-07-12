@@ -7,6 +7,7 @@ import rankings.criterios.CriteriosDeComunidades;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class GeneradorDeInformes {
 
@@ -37,19 +38,26 @@ public class GeneradorDeInformes {
     for (CriteriosDeEntidades criterio : criteriosDeEntidades) {
       List<String> columnas = new ArrayList<>();
       columnas.add(criterio.getNombre());
-      String rankings = String.valueOf(criterio.generarRanking(entidades));
-      rankings = rankings.substring(1, rankings.length() - 1);
-      columnas.add(rankings.replace(", ", ", "));
+      List<String> rankingNombres = criterio.generarRanking(entidades).stream()
+          .map(Entidad::getNombre)
+          .collect(Collectors.toList());
+      String rankings = String.join(", ", rankingNombres);
+      columnas.add(rankings);
 
       datos.add(columnas);
     }
 
+
     for (CriteriosDeComunidades criterio : criteriosDeComunidades) {
       List<String> columnas = new ArrayList<>();
       columnas.add(criterio.getNombre());
-      String rankings = String.valueOf(criterio.generarRanking(comunidades));
-      rankings = rankings.substring(1, rankings.length() - 1);
-      columnas.add(rankings.replace(", ", ", "));
+
+      List<String> rankingNombres = criterio.generarRanking(comunidades).stream()
+          .map(Comunidad::getNombre)
+          .collect(Collectors.toList());
+      String rankings = String.join(", ", rankingNombres);
+      columnas.add(rankings);
+
       datos.add(columnas);
     }
     return datos;
