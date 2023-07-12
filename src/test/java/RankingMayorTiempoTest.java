@@ -66,6 +66,9 @@ public class RankingMayorTiempoTest {
 
         // Create the Ranking instance
         /*MayorTiempo ranking = new MayorTiempo();
+=======
+        MayorTiempo ranking = new MayorTiempo("Mayor Tiempo");
+>>>>>>> 0d4bb060517914c4286cb02512fd1adf35a0e642
 
         // Generate the Ranking
         List<Entidad> rankingList = ranking.generarRanking(entidades);

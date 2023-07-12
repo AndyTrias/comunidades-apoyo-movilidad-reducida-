@@ -11,33 +11,17 @@ public class ExportarCSV implements EstrategiaDeExportacion {
     String csvFile = Config.PATH_INFORMES + nombreArchivo;
 
     try (FileWriter writer = new FileWriter(csvFile)) {
-      int maxRows = getMaxRows(informe);
-
-      for (int i = 0; i < maxRows; i++) {
-        for (List<String> columna : informe) {
-          if (i < columna.size()) {
-            writer.append(columna.get(i));
-          }
-          writer.append(",");
-        }
+      for (List<String> fila : informe) {
+        writer.append(fila.get(0));
+        writer.append(",");
+        writer.append(fila.get(1));
         writer.append("\n");
       }
 
-      System.out.println("Archivo CSV generado exitosamente.");
     } catch (IOException e) {
-      throw new RuntimeException("Error al generar el archivo CSV: " + e.getMessage());
+      e.getStackTrace();
     }
   }
 
-  private static int getMaxRows(List<List<String>> informe) {
-    int cantidadMaxColumnas = 0;
-
-    for (List<String> columna : informe) {
-      if (columna.size() > cantidadMaxColumnas) {
-        cantidadMaxColumnas = columna.size();
-      }
-    }
-    return cantidadMaxColumnas;
-  }
 
 }

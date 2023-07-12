@@ -11,6 +11,9 @@ public class ImpactoComunidades implements CriteriosDeComunidades {
 
     @Getter private String nombre;
 
+    public ImpactoComunidades(String nombre) {
+        this.nombre = nombre;
+    }
 
     private float calcularImpacto(Comunidad comunidad){
         List<Incidente> incidentes = comunidad.getTodosLosIncidentes();
