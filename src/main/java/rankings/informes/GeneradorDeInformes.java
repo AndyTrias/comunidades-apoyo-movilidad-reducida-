@@ -30,16 +30,16 @@ public class GeneradorDeInformes {
     List<List<String>> datos = new ArrayList<>();
 
     for (CriteriosDeEntidades criterio : criteriosDeEntidades) {
-      List<String> fila = new ArrayList<>();
-      fila.add(criterio.getNombre());
-      fila.add(String.valueOf(criterio.generarRanking(entidades)));
-      datos.add(fila);
+      List<String> filas = new ArrayList<>();
+      filas.add(criterio.getNombre());
+      filas.add(String.valueOf(criterio.generarRanking(entidades)));
+      datos.add(filas);
     }
 
     for (CriteriosDeComunidades criterio : criteriosDeComunidades) {
-      List<String> fila = new ArrayList<>();
-      fila.add(String.valueOf(criterio.generarRanking(comunidades)));
-      datos.add(fila);
+      List<String> filas = new ArrayList<>();
+      filas.add(String.valueOf(criterio.generarRanking(comunidades)));
+      datos.add(filas);
     }
     return datos;
   }
