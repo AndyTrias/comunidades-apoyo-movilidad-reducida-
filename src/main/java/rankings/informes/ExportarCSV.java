@@ -7,8 +7,8 @@ import java.io.IOException;
 import java.util.List;
 
 public class ExportarCSV implements EstrategiaDeExportacion {
-  public void exportar(List<List<String>> informe) {
-    String csvFile = Config.CSV_PATH_INFORMES;
+  public void exportar(List<List<String>> informe, String nombreArchivo) {
+    String csvFile = Config.PATH_INFORMES + nombreArchivo;
 
     try (FileWriter writer = new FileWriter(csvFile)) {
       int maxRows = getMaxRows(informe);
