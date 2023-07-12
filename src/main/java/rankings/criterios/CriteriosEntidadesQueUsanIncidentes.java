@@ -1,4 +1,4 @@
-package rankings;
+package rankings.criterios;
 
 
 import incidentes.Incidente;
@@ -9,12 +9,11 @@ import entidades.Entidad;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class RankingEntidadesQueUsanIncidentes implements RankingDeEntidades{
+public abstract class CriteriosEntidadesQueUsanIncidentes implements CriteriosDeEntidades {
 
     @Getter private String nombre;
 
-
-    public RankingEntidadesQueUsanIncidentes(String nombre) {
+    public CriteriosEntidadesQueUsanIncidentes(String nombre) {
         this.nombre = nombre;
     }
 

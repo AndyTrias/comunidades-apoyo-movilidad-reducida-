@@ -1,14 +1,13 @@
-package rankings;
+package rankings.criterios;
 
 import comunidades.Comunidad;
 import incidentes.Incidente;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Comparator;
 import java.util.List;
 
-public class ImpactoComunidades implements RankingsDeComunidades {
+public class ImpactoComunidades implements CriteriosDeComunidades {
 
     @Getter private String nombre;
 

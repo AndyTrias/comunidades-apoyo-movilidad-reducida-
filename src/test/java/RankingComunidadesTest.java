@@ -2,7 +2,7 @@ import comunidades.Comunidad;
 import org.junit.Assert;
 import org.junit.Test;
 
-import rankings.ImpactoComunidades;
+import rankings.criterios.ImpactoComunidades;
 import repositiorios.DataRepositorios;
 
 import java.util.List;

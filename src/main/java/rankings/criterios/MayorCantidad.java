@@ -1,4 +1,4 @@
-package rankings;
+package rankings.criterios;
 
 import incidentes.Incidente;
 import entidades.Entidad;
@@ -6,9 +6,7 @@ import entidades.Entidad;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class MayorCantidad extends RankingEntidadesQueUsanIncidentes {
-
-
+public class MayorCantidad extends CriteriosEntidadesQueUsanIncidentes {
 
   public MayorCantidad(String nombre) {
     super(nombre);
