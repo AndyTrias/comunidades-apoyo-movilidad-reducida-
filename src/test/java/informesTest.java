@@ -58,4 +58,19 @@ public class informesTest {
 
       Mockito.verify(servicioJsonMock).exportarAJson(informes, ruta);
     }
+
+    @Test
+    public void csvSinMock(){
+      EstrategiaDeExportacion estrategia = new ExportarCSV();
+      Exportador exportador = new Exportador(generadorDeInformes, estrategia);
+      exportador.exportarConEstrategia(entidades, comunidades, "informes.csv");
+    }
+
+    @Test
+    public void jsonSinMock() {
+      EstrategiaDeExportacion estrategiaDeExportacion = new ExportarAJson(new ServicioJson());
+      Exportador exportador = new Exportador(generadorDeInformes, estrategiaDeExportacion);
+      exportador.exportarConEstrategia(entidades, comunidades, "informes.json");
+    }
+
   }

@@ -44,7 +44,7 @@ public class ServicioJson implements AdapterJson {
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     String json = gson.toJson(jsonList);
 
-    try (FileWriter fileWriter = new FileWriter(Config.PATH_INFORMES + rutaArchivo)) {
+    try (FileWriter fileWriter = new FileWriter(rutaArchivo)) {
       fileWriter.write(json);
     } catch (IOException e) {
       e.getStackTrace();
