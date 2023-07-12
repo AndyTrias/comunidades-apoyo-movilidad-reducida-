@@ -1,6 +1,6 @@
-package comunidades.incidentes;
+package incidentes;
 
-import comunidades.servicios.PrestacionDeServicio;
+import servicios.PrestacionDeServicio;
 import comunidades.usuario.Usuario;
 import lombok.Getter;
 import notificaciones.notificador.AperturaDeIncidente;
@@ -27,11 +27,16 @@ public class Incidente {
         this.notificador = new AperturaDeIncidente();
 
         this.prestacionDeServicio.agregarIncidente(this);
+        // Creamos que esta logica va del lado del controller
+        // La pusimos en los tests
+        // usuario.getComunidades().stream().filter(c -> c.getServiciosDeInteres().contains(prestacionDeServicio)).forEach(c -> c.abrirIncidente(this));
         this.notificarApertura();
+        RevisionDeIncidente.getInstance().agregarIncidente(this);
     }
 
     public void cerrar() {
         fechasDeCierre.add(new Date());
+        RevisionDeIncidente.getInstance().eliminarIncidente(this);
     }
 
 
@@ -48,7 +53,6 @@ public class Incidente {
         long promedioMillis = totalMillis / fechasDeCierre.size();
         return new Date(promedioMillis);
     }
-
 
     public long tiempoActivo() {
         Date fechaPromedioCierre = calcularPromedioFechasCierre();
@@ -70,6 +74,12 @@ public class Incidente {
 
     public boolean estaAbierto(){
         return fechasDeCierre.isEmpty();
+    }
+
+    public boolean ocurrioEstaSemana(){
+        Date hoy = new Date();
+        Date haceUnaSemana = new Date(hoy.getTime() - 7 * 24 * 3600 * 1000);
+        return fechaDeApertura.after(haceUnaSemana);
     }
 
 

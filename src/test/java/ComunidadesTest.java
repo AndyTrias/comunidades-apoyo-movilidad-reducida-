@@ -1,9 +1,9 @@
 import comunidades.Comunidad;
 import comunidades.Permiso;
 import comunidades.Rol;
-import comunidades.incidentes.Incidente;
-import comunidades.servicios.PrestacionDeServicio;
-import comunidades.servicios.Servicio;
+import localizacion.UbicacionExacta;
+import servicios.PrestacionDeServicio;
+import servicios.Servicio;
 import comunidades.usuario.Email;
 import comunidades.usuario.Usuario;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,8 +36,8 @@ public class ComunidadesTest {
 
         // Creamos la prestacion de prestacion de servicio
         servicio = new Servicio("baño hombres");
-        banioMedrano = new PrestacionDeServicio(servicio, "baño Medrano");
-        banioCastroBarros= new PrestacionDeServicio(servicio, "baño Castro Barros");
+        banioMedrano = new PrestacionDeServicio(servicio, "baño Medrano", new UbicacionExacta(1, 1));
+        banioCastroBarros= new PrestacionDeServicio(servicio, "baño Castro Barros", new UbicacionExacta(2, 2));
 
         // Creamos las 3 comunidades
         comunidad1 = new Comunidad("comunidad1");

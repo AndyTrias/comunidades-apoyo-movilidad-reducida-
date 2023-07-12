@@ -1,7 +1,7 @@
 package notificaciones.notificador;
 
 import comunidades.Comunidad;
-import comunidades.incidentes.Incidente;
+import incidentes.Incidente;
 import comunidades.usuario.Usuario;
 import entidades.Entidad;
 import notificaciones.FactoryNotificacion;
@@ -33,7 +33,7 @@ public class AperturaDeIncidente implements Notificador{
         List<Usuario> usuariosConInteresEnElServicio = RepoUsuarios.getInstance().getUsuariosConInteresEnServicio(incidente.getPrestacionDeServicio().getServicio());
 
         // filtro a los usuarios que no tengan alguna de las entidades relacionadas en su interes
-        List<Usuario> usuariosANotificarPorInteres = usuariosConInteresEnElServicio.stream().filter(usuario -> usuario.getInteres().getEntidades().stream().noneMatch(entidadesConLaPrestacion::contains)).toList();
+        List<Usuario> usuariosANotificarPorInteres = usuariosConInteresEnElServicio.stream().filter(usuario -> usuario.getInteres().getEntidades().stream().anyMatch(entidadesConLaPrestacion::contains)).toList();
 
         usuariosANotificarPorInteres.forEach(usuario -> {
             if (!usuariosNotificados.contains(usuario)) {
@@ -43,7 +43,7 @@ public class AperturaDeIncidente implements Notificador{
         });
     }
 
-    public void notificarAUsuario(Usuario usuario, Notificacion notificacion) {
+    private void notificarAUsuario(Usuario usuario, Notificacion notificacion) {
         notificacion.setDestinatario(usuario);
         notificacion.setEstrategiaDeNotificacion(usuario.getConfiguracionDeNotificaciones().getEstrategiaDeNotificacion());
         usuario.notificar(notificacion);

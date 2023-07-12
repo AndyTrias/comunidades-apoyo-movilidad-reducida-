@@ -1,6 +1,7 @@
-import comunidades.incidentes.Incidente;
-import comunidades.servicios.PrestacionDeServicio;
-import comunidades.servicios.Servicio;
+import incidentes.Incidente;
+import localizacion.UbicacionExacta;
+import servicios.PrestacionDeServicio;
+import servicios.Servicio;
 import comunidades.usuario.Email;
 import comunidades.usuario.Usuario;
 import entidades.Entidad;
@@ -13,21 +14,19 @@ import rankings.RankingMayorTiempo;
 
 import java.util.ArrayList;
 import java.util.List;
-import static org.mockito.Mockito.*;
 
 public class RankingMayorCantidad {
 
     @Test
     public void generarRanking_SortedByAverageTime() {
-        // Create some sample entities with incidents
         Entidad entidad1 = new Entidad("Entidad 1");
         Entidad entidad2 = new Entidad("Entidad 2");
         Entidad entidad3 = new Entidad("Entidad 3");
 
-        PrestacionDeServicio prestacion1 = new PrestacionDeServicio(new Servicio("Servicio 1"), "Prestacion 1");
-        PrestacionDeServicio prestacion2 = new PrestacionDeServicio(new Servicio("Servicio 2"), "Prestacion 2");
-        PrestacionDeServicio prestacion3 = new PrestacionDeServicio(new Servicio("Servicio 3"), "Prestacion 3");
-        PrestacionDeServicio prestacion4 = new PrestacionDeServicio(new Servicio("Servicio 4"), "Prestacion 4");
+        PrestacionDeServicio prestacion1 = new PrestacionDeServicio(new Servicio("Servicio 1"), "Prestacion 1", new UbicacionExacta(1, 1));
+        PrestacionDeServicio prestacion2 = new PrestacionDeServicio(new Servicio("Servicio 2"), "Prestacion 2", new UbicacionExacta(2, 2));
+        PrestacionDeServicio prestacion3 = new PrestacionDeServicio(new Servicio("Servicio 3"), "Prestacion 3", new UbicacionExacta(3, 3));
+        PrestacionDeServicio prestacion4 = new PrestacionDeServicio(new Servicio("Servicio 4"), "Prestacion 4", new UbicacionExacta(4, 4));
 
         Usuario usuario1 = new Usuario("Manu", "Torrente", new Email());
         Usuario usuario2 = new Usuario("Franco", "Pesce", new Email());
@@ -68,13 +67,10 @@ public class RankingMayorCantidad {
         entidades.add(entidad2);
         entidades.add(entidad3);
 
-        // Create the ranking instance
         RankingMayorTiempo ranking = new RankingMayorTiempo();
 
-        // Generate the ranking
         List<Entidad> rankingList = ranking.generarRanking(entidades);
 
-        // Validate the ranking order based on average time
         Assert.assertEquals(entidad1, rankingList.get(0));
         Assert.assertEquals(entidad2, rankingList.get(1));
         Assert.assertEquals(entidad3, rankingList.get(2));

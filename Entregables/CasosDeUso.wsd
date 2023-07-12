@@ -4,7 +4,7 @@ left to right direction
 actor "Persona" as Persona
 actor "MiembroComunidad" as MiembroComunidad
 actor "DesignadoEmpresa" as DesignadoEmpresa
-actor "Tiempo (t=1 semana)" as Tiempo
+actor "Tiempo (t)" as Tiempo
 
 rectangle "Sistema de Monitoreo de Estado de Servicios" {
 Persona -- (Configurar Medio de Comunicacion Preferido)
@@ -16,7 +16,8 @@ MiembroComunidad -- (Obtener Listado de Incidentes Reportados)
 MiembroComunidad -- (Indicar Afectado u Observador)
 
 DesignadoEmpresa -- (Obtener Rankings)
-DesignadoEmpresa -- (Informar Incidente)
+DesignadoEmpresa -- (Abrir Incidente)
+
 
 Tiempo  -- (Enviar Notificaciones)
 Tiempo -- (Generar Rankings)

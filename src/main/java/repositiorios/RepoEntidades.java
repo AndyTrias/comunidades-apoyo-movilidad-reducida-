@@ -1,8 +1,8 @@
 package repositiorios;
 
-import comunidades.servicios.PrestacionDeServicio;
-import comunidades.servicios.Servicio;
-import comunidades.usuario.Usuario;
+import lombok.Getter;
+import lombok.Setter;
+import servicios.PrestacionDeServicio;
 import entidades.Entidad;
 
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import java.util.List;
 
 public class RepoEntidades {
     private static RepoEntidades instance = null;
-    private List<Entidad> entidades;
+    @Getter @Setter private List<Entidad> entidades;
 
     private RepoEntidades() {
         this.entidades = new ArrayList<>();
@@ -23,11 +23,11 @@ public class RepoEntidades {
         return instance;
     }
 
-    public void agregarUsuario(Entidad entidad) {
+    public void agregarEntidad(Entidad entidad) {
         this.entidades.add(entidad);
     }
 
-    public void eliminarUsuario(Entidad entidad) {
+    public void eliminarEntidad(Entidad entidad) {
         this.entidades.remove(entidad);
     }
 
