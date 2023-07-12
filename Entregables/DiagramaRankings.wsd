@@ -41,7 +41,7 @@ interface CriterioComunidad {
     + generarRanking(List<Comunidad>): List<Comunidad>
 }
 
-class generadorDatosRanking {
+class generadorDeInformes {
 
     - criteriosEntidades: List<CriteriosEntidad>
     - criterioComunidad: List<CriterioComunidad>
@@ -50,7 +50,7 @@ class generadorDatosRanking {
     
 }
 
-note left of generadorDatosRanking::generarDatos
+note left of generadorDeInformes::generarDatos
     formato: 
     [[nombreRanking1, valor1, valor2],
     [nombreRanking2, valor1, valor2],
@@ -62,18 +62,18 @@ end note
 
 class Exportador {
 
-    - datos: generadorDatosRanking
-    - estrategiaDeExportacion: PuedeExportar
+    - datos: generadorDeInformes
+    - estrategiaDeExportacion: estrategiaDeExportacion
 
     + exportar(List<Entidad>, List<Comunidad>): void
 
 }
 
-interface PuedeExportar {
+interface estrategiaDeExportacion {
     + exportarConEstrategia(List<List<String>>): void
 }
 
-class ExportarCSV implements PuedeExportar {
+class ExportarCSV implements estrategiaDeExportacion {
     + exportar(List<List<String>>): void
 }
 
@@ -86,10 +86,10 @@ note left of ExportarCSV::exportar
 end note
 
 
-Exportador --> PuedeExportar
-Exportador --> generadorDatosRanking
-generadorDatosRanking-->CriterioEntidad
-generadorDatosRanking-->CriterioComunidad
+Exportador --> estrategiaDeExportacion
+Exportador --> generadorDeInformes
+generadorDeInformes-->CriterioEntidad
+generadorDeInformes-->CriterioComunidad
 
 
 @enduml
