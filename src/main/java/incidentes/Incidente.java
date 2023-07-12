@@ -76,6 +76,12 @@ public class Incidente {
         return fechasDeCierre.isEmpty();
     }
 
+    public boolean ocurrioEstaSemana(){
+        Date hoy = new Date();
+        Date haceUnaSemana = new Date(hoy.getTime() - 7 * 24 * 3600 * 1000);
+        return fechaDeApertura.after(haceUnaSemana);
+    }
+
 
 }
 

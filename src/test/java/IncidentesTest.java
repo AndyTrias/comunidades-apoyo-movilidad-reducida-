@@ -96,7 +96,7 @@ public class IncidentesTest {
   public void testSeAbreElIncidenteEnComunidadesPertinente() {
     // Fede abre el incidente
     Incidente incidenteCastroBarros = new Incidente(fede, "observaciones", banioCastroBarros);
-    andy.getComunidades().stream().filter(c -> c.getServiciosDeInteres().contains(banioCastroBarros)).forEach(c -> c.abrirIncidente(incidenteCastroBarros));
+    fede.getComunidades().stream().filter(c -> c.getServiciosDeInteres().contains(banioCastroBarros)).forEach(c -> c.abrirIncidente(incidenteCastroBarros));
 
     // Debemos validar que no se abrio en C1 porque fede no participa
     // Debemos validar que no se abrio en C2 porque no es de su interes castro barros
@@ -193,6 +193,7 @@ public class IncidentesTest {
     // Verifcamos que el incidente tiene una fecha de cierre (para la comunidad 2)
     // En la comunidad 1 sigue abierto
     assertEquals(incidenteMedrano.getFechasDeCierre().size(), 1);
+    assertFalse(incidenteMedrano.estaAbierto());
     assertFalse(comunidad1.estaCerradoElIncidente(incidenteMedrano));
     assertTrue(comunidad2.estaCerradoElIncidente(incidenteMedrano));
 

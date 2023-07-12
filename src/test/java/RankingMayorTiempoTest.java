@@ -15,11 +15,12 @@ import rankings.RankingMayorTiempo;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mockito.Mockito.when;
+
 public class RankingMayorTiempoTest {
 
     @Test
     public void generarRanking_SortedByAverageTime() {
-        // Create some sample entities with incidents
         Entidad entidad1 = new Entidad("Entidad 1");
         Entidad entidad2 = new Entidad("Entidad 2");
         Entidad entidad3 = new Entidad("Entidad 3");
@@ -37,6 +38,17 @@ public class RankingMayorTiempoTest {
         Incidente incidente2 = new Incidente(usuario2, "Observaciones 2", prestacion2);
         incidente2.cerrar();
         Incidente incidente3 = new Incidente(usuario3, "Observaciones 3", prestacion3);
+        Incidente incidente4 = new Incidente(usuario1, "Observaciones 4", prestacion2);
+
+        // Afectan a la entidad 1
+        when(incidente1.tiempoActivo()).thenReturn(15L);
+
+        // Afectan a la entidad 2
+        when(incidente2.tiempoActivo()).thenReturn(20L);
+        when(incidente4.tiempoActivo()).thenReturn(1L);
+
+        // Afecta a la entidad 3
+        when(incidente3.tiempoActivo()).thenReturn(30L);
 
         Localizacion localizacion1 = Mockito.mock(Localizacion.class);
 
@@ -58,9 +70,9 @@ public class RankingMayorTiempoTest {
         // Generate the Ranking
         List<Entidad> rankingList = ranking.generarRanking(entidades);
 
-        // Validate the Ranking order based on average time
-        Assert.assertEquals(entidad1, rankingList.get(0));
-        Assert.assertEquals(entidad2, rankingList.get(1));
-        Assert.assertEquals(entidad3, rankingList.get(2));
+        // Validamos que el orden sea Entidad 3, Entidad 1, Entidad 2
+        Assert.assertEquals(entidad3, rankingList.get(0));
+        Assert.assertEquals(entidad1, rankingList.get(1));
+        Assert.assertEquals(entidad2, rankingList.get(2));
     }
 }

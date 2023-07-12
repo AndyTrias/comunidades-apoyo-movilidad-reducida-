@@ -19,7 +19,6 @@ public class RankingMayorCantidad {
 
     @Test
     public void generarRanking_SortedByAverageTime() {
-        // Create some sample entities with incidents
         Entidad entidad1 = new Entidad("Entidad 1");
         Entidad entidad2 = new Entidad("Entidad 2");
         Entidad entidad3 = new Entidad("Entidad 3");
@@ -68,13 +67,10 @@ public class RankingMayorCantidad {
         entidades.add(entidad2);
         entidades.add(entidad3);
 
-        // Create the Ranking instance
         RankingMayorTiempo ranking = new RankingMayorTiempo();
 
-        // Generate the Ranking
         List<Entidad> rankingList = ranking.generarRanking(entidades);
 
-        // Validate the Ranking order based on average time
         Assert.assertEquals(entidad1, rankingList.get(0));
         Assert.assertEquals(entidad2, rankingList.get(1));
         Assert.assertEquals(entidad3, rankingList.get(2));

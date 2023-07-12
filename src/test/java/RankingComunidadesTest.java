@@ -1,7 +1,8 @@
 import comunidades.Comunidad;
 import org.junit.Assert;
 import org.junit.Test;
-import rankings.v2.RankingImapcto;
+
+import rankings.RankingComunidades;
 import repositiorios.DataRepositorios;
 
 import java.util.List;
@@ -14,8 +15,8 @@ public class RankingComunidadesTest {
 
         // Crear el Ranking y generar el Ranking
         DataRepositorios dataRepositorios = new DataRepositorios();
-        RankingImapcto ranking = new RankingImapcto();
-        List<Comunidad> resultado = ranking.generarRanking();
+        RankingComunidades ranking = new RankingComunidades();
+        List<Comunidad> resultado = ranking.generarRanking(dataRepositorios.repoComunidades.getComunidades());
 
         // Verificar el orden de las comunidades en el Ranking
         Assert.assertEquals(dataRepositorios.repoComunidades.getComunidades().get(0), resultado.get(0));  // comunidad1 tiene mayor impacto (más miembros / menos incidentes)
