@@ -2,51 +2,49 @@
 
 
 
-abstract RankingEntidadesQueUsanIncidentes implements RankingEntidades{
+abstract CriterioEntidadQueUsanIncidentes implements CriterioEntidad{
     + nombre(): String
     + generarRanking(List<Entidad>): List<Entidad>
     - obtenerIncidenteDeEntidad(Entidad): List<Incidente>
-    - validarIncidente(Incidente): Boolean
 }
 
-class RankingMayorCantidad extends RankingEntidadesQueUsanIncidentes {
+class MayorCantidad extends CriterioEntidadQueUsanIncidentes {
     + nombre(): String
-    - validarIncidente(Incidente): Boolean 
+    + generarRanking(List<Entidad>): List<Entidad>
+    - cantidadDeIncidentesEnLaSemana(Entidad): int
+    - incidenteNoOcurrioHace24Hs(Incidente, List<Incidente>): boolean
+}
+
+
+
+
+class MayorTiempo extends CriterioEntidadQueUsanIncidentes {
+    + nombre(): String
+    - promedioTiempoDeCierre(Entidad): float
     + generarRanking(List<Entidad>): List<Entidad>
 }
 
-note left of RankingMayorCantidad::validarIncidente
-    Es es lo que cambia lo de solo uno en 24 horas
-end note
 
-
-
-class RankingMayorTiempo extends RankingEntidadesQueUsanIncidentes {
-    + nombre(): String
-    - calcularPromedio(Entidad): float
-    + generarRanking(List<Entidad>): List<Entidad>
-}
-
-class RankingImpacto implements RankingComunidades {
+class ImpactoComunidades implements CriterioComunidad {
     + nombre(): String
     + generarRanking(List<Comunidad>): List<Comunidad>
     - calcularImpacto(Comunidad): float
 }
 
-interface RankingEntidades {
+interface CriterioEntidad {
     + nombre(): String
     + generarRanking(List<Entidad>): List<Entidad>
 }
 
-interface RankingComunidades {
+interface CriterioComunidad {
     + nombre(): String 
     + generarRanking(List<Comunidad>): List<Comunidad>
 }
 
 class generadorDatosRanking {
 
-    - rankingsEntidades: List<RankingEntidad>
-    - rankingsComunidades: List<RankingComunidad>
+    - criteriosEntidades: List<CriteriosEntidad>
+    - criterioComunidad: List<CriterioComunidad>
 
     + generarDatos(List<Entidad>, List<Comunidad>): List<List<String>>
     
@@ -54,9 +52,9 @@ class generadorDatosRanking {
 
 note left of generadorDatosRanking::generarDatos
     formato: 
-    [[nombreRanking1, nombreRanking2, ...],
-    [valorRanking1, valorRanking2, ...],
-    [valorRanking1, valorRanking2, ...],]
+    [[nombreRanking1, valor1, valor2],
+    [nombreRanking2, valor1, valor2],
+    [nombreRanking3, valor1, valor2]]
 
 end note
 
@@ -72,17 +70,26 @@ class Exportador {
 }
 
 interface PuedeExportar {
-    + exportar(List<List<String>>): void
+    + exportarConEstrategia(List<List<String>>): void
 }
 
 class ExportarCSV implements PuedeExportar {
     + exportar(List<List<String>>): void
 }
 
+note left of ExportarCSV::exportar
+    formato: 
+    nombreRanking1, nombreRanking2, nombreRanking3
+    valor11, valor21, valor31
+    valor12, valor22, valor32
+    valor13, valor23, valor33
+end note
+
+
 Exportador --> PuedeExportar
 Exportador --> generadorDatosRanking
-generadorDatosRanking-->RankingEntidades
-generadorDatosRanking-->RankingComunidades
+generadorDatosRanking-->CriterioEntidad
+generadorDatosRanking-->CriterioComunidad
 
 
 @enduml
