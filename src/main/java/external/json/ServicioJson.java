@@ -1,8 +1,9 @@
-package rankings.informes;
+package external.json;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import configs.Config;
+import rankings.informes.AdapterJson;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -11,8 +12,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class exportarAJson {
-  public static void generarArchivoJson(List<List<String>> lista, String rutaArchivo) {
+public class ServicioJson implements AdapterJson {
+  public void exportarAJson(List<List<String>> lista, String rutaArchivo) {
     List<Map<String, Object>> jsonList = new ArrayList<>();
 
     // Encabezados del Json
@@ -43,9 +44,9 @@ public class exportarAJson {
 
     try (FileWriter fileWriter = new FileWriter(Config.PATH_INFORMES + rutaArchivo)) {
       fileWriter.write(json);
-      System.out.println("Archivo JSON generado exitosamente.");
     } catch (IOException e) {
-      System.err.println("Error al generar el archivo JSON: " + e.getMessage());
+      e.getStackTrace();
     }
   }
+
 }

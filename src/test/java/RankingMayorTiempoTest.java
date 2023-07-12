@@ -65,7 +65,7 @@ public class RankingMayorTiempoTest {
         entidades.add(entidad3);
 
         // Create the Ranking instance
-        MayorTiempo ranking = new MayorTiempo();
+        MayorTiempo ranking = new MayorTiempo("Mayor Tiempo");
 
         // Generate the Ranking
         List<Entidad> rankingList = ranking.generarRanking(entidades);

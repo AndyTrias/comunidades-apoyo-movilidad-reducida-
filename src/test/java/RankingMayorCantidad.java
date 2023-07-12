@@ -67,7 +67,7 @@ public class RankingMayorCantidad {
         entidades.add(entidad2);
         entidades.add(entidad3);
 
-        MayorTiempo ranking = new MayorTiempo();
+        MayorTiempo ranking = new MayorTiempo("Mayor tiempo");
 
         List<Entidad> rankingList = ranking.generarRanking(entidades);
 
