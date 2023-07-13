@@ -31,10 +31,7 @@ public class Comunidad {
         this.notificador = new CierreIncidente();
     }
     
-    public void agregarServicioDeInteres(PrestacionDeServicio servicio) {
-        serviciosDeInteres.add(servicio);
-    }
-    
+
     public void agregarRol(Rol rol) {
         roles.add(rol);
     }
@@ -79,6 +76,9 @@ public class Comunidad {
         roles.forEach(r -> usuarios.addAll(r.getUsuarios()));
         return usuarios;
     }
+    public void agregarServicioDeInteres(PrestacionDeServicio servicio) {
+        serviciosDeInteres.add(servicio);
+    }
 
     public void abrirIncidente(Incidente incidente) {
         // Se agrega si el incidente está abierto
@@ -116,10 +116,6 @@ public class Comunidad {
         return incidentes;
     }
 
-    public int getCantidadDeAfectados() {
-        return getUsuarios().stream().filter(u -> u.getMembresia(this).esAfectado()).mapToInt(u -> 1).sum();
-    }
-
     public boolean estaCerradoElIncidente(Incidente incidente)  {
         if (!getTodosLosIncidentes().contains(incidente)) {
             throw new RuntimeException("El incidente no pertenece a la comunidad");
@@ -127,5 +123,10 @@ public class Comunidad {
 
         return this.incidentesCerrados.contains(incidente);
     }
+
+    public int getCantidadDeAfectados() {
+        return getUsuarios().stream().filter(u -> u.getMembresia(this).esAfectado()).mapToInt(u -> 1).sum();
+    }
+
 }
 
