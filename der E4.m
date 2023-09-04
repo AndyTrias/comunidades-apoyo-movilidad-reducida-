@@ -50,9 +50,9 @@ entity "Comunidad" as eComunidad{
 
 entity "Rol" as eRol{
   id_rol : number <<generated>>
-  nombre : varchar(30)
   usuario : FK
   permiso : FK  
+  nombre : varchar(30)
 }
 
 entity "Permiso" as ePermiso{
@@ -61,21 +61,52 @@ entity "Permiso" as ePermiso{
 }
 
 entity "Incidente" as eIncidente{
-  id_incidente: number <<generated>>
-  observaciones:varchar(100)
+  id_incidente: number <<generated>> 
   abiertoPorUsuario:FK
+  prestacionDeServicio:FK
+  observaciones:varchar(100)
+}
+
+entity "Fecha_Incidente" as eFechaIncidente{
+  id_fecha_incidente: number <<generated>>
+  --
+  id_incidente: FK
+  fecha: DATETIME
+} 
+
+entity "Afectacion" as eAfectacion {
+  id_afectacion: number <<generated>>
+  afectado:boolean
   prestacionDeServicio:FK
 }
 
-entity "Fecha_Incidente" as eFecha_Incidente{
-  id_fecha_incidente: number <<generated>>
-  --
-  fecha: DATETIME
-  id_incidente: FK
+entity "PrestacionDeServicio" as ePrestacionDeCervicio {
+ id_prestacion_servicio: number <<generated>>
+ servicio:FK
+ incidentes:FK
+ nombre:varchar(30)
 } 
 
+entity "Establecimiento" as eEstablecimiento {
+  id_establecimiento: number <<generated>>
+  localizacion:FK
+  servicios:FK
+}
 
-eFechaInd_icente |o--|| eIncidente
+entity "Entidad" as eEntidad {
+  id_entidad: number <<generated>>
+  Establecimientos:FK
+  localizacion:FK
+  nombre:varchar(30)
+} 
+
+entity "EntidadPrestadora" as eEntidadPrestadora {
+  id_entidad_prestadora: number <<generated>>
+  personaDesignada:FK
+  serviciosPrestados:FK
+}
+ 
+eFechaIncidente |o--|| eIncidente
 eComunidad ||--o{ eIncidente
 eRol ||--o{ ePermiso
 eUsuario||--o|eInteres
@@ -85,4 +116,4 @@ eMemebresia ||--||eComunidad
 eComunidad ||--|{eRol
 eInteres||--o{ eInteres_servicio
 eInteres_servicio }o--|| eServico
-@enduml    
+@enduml     
