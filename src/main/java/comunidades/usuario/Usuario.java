@@ -11,12 +11,18 @@ import localizacion.Localizacion;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-
+@Entity
 public class Usuario {
+    @Id
+    @GeneratedValue
+    private Long Id;
     private String nombre;
     private String apellido;
     @Setter private String correoElectronico;
