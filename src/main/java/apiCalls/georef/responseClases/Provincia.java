@@ -1,6 +1,18 @@
 package apiCalls.georef.responseClases;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "provincia")
 public class Provincia {
-    public int id;
-    public String nombre;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    public  int id;
+
+    @Column(name = "nombre")
+    public  String nombre;
+
+    public Provincia() {
+    }
 }

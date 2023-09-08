@@ -14,6 +14,7 @@ import lombok.Setter;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -27,10 +28,18 @@ public class Usuario {
     private String apellido;
     @Setter private String correoElectronico;
     @Getter private String contrasenia;
+    @Transient
     @Getter private Intereses intereses;
+    @Transient
     @Getter private List<Membresia> membresias;
+    @Transient
     @Setter private Set<Localizacion> localizacion;
 
+
+
+    public Usuario() {
+
+    }
     public Usuario(String nombre, String apellido, String correoElectronico) {
         this.nombre = nombre;
         this.apellido = apellido;
