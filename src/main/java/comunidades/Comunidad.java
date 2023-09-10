@@ -2,24 +2,50 @@ package comunidades;
 
 import incidentes.Incidente;
 import servicios.PrestacionDeServicio;
-import comunidades.usuario.Usuario;
+import usuario.Usuario;
 import lombok.Getter;
 import lombok.Setter;
 import notificaciones.notificador.CierreIncidente;
 import notificaciones.notificador.Notificador;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
 
+@Entity
+@Table(name = "comunidad")
 public class Comunidad {
-    @Getter private List<Rol> roles;
-    @Getter @Setter private String nombre;
-    @Getter private Set<PrestacionDeServicio> serviciosDeInteres;
-    @Getter private List<Incidente> incidentesAbiertos;
-    @Getter private List<Incidente> incidentesCerrados;
-    @Setter private Notificador notificador;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Getter
+    @Setter
+    @Column(name = "nombre")
+    private String nombre;
+
+    @Getter
+    @OneToMany
+    @JoinColumn(name = "comunidad_id")
+    private List<Rol> roles;
+
+    @Getter
+    @Transient
+    private Set<PrestacionDeServicio> serviciosDeInteres;
+
+    @Getter
+    @Transient
+    private List<Incidente> incidentesAbiertos;
+
+    @Getter
+    @Transient
+    private List<Incidente> incidentesCerrados;
+
+    @Setter
+    @Transient
+    private Notificador notificador;
 
     public Comunidad(String nombre) {
         this.nombre = nombre;
@@ -30,7 +56,10 @@ public class Comunidad {
         this.roles.add(new Rol("Miembro", null));
         this.notificador = new CierreIncidente();
     }
-    
+
+    public Comunidad() {
+
+    }
 
     public void agregarRol(Rol rol) {
         roles.add(rol);
@@ -67,15 +96,16 @@ public class Comunidad {
         return true;
     }
 
-    public Integer getCantidadDeUsuarios(){
+    public Integer getCantidadDeUsuarios() {
         return roles.stream().mapToInt(r -> r.getUsuarios().size()).sum();
     }
 
-    public List<Usuario> getUsuarios(){
+    public List<Usuario> getUsuarios() {
         List<Usuario> usuarios = new ArrayList<>();
         roles.forEach(r -> usuarios.addAll(r.getUsuarios()));
         return usuarios;
     }
+
     public void agregarServicioDeInteres(PrestacionDeServicio servicio) {
         serviciosDeInteres.add(servicio);
     }
@@ -96,10 +126,9 @@ public class Comunidad {
         }
     }
 
-    public void cerrarIncidente(Incidente incidente, Usuario usuario)  {
+    public void cerrarIncidente(Incidente incidente, Usuario usuario) {
 
-        if (this.estaCerradoElIncidente(incidente))
-        {
+        if (this.estaCerradoElIncidente(incidente)) {
             throw new RuntimeException("El incidente ya esta cerrado");
         }
 
@@ -109,14 +138,14 @@ public class Comunidad {
         notificador.notificar(usuario, incidente);
     }
 
-    public List<Incidente> getTodosLosIncidentes(){
+    public List<Incidente> getTodosLosIncidentes() {
         List<Incidente> incidentes = new ArrayList<>();
         incidentes.addAll(incidentesAbiertos);
         incidentes.addAll(incidentesCerrados);
         return incidentes;
     }
 
-    public boolean estaCerradoElIncidente(Incidente incidente)  {
+    public boolean estaCerradoElIncidente(Incidente incidente) {
         if (!getTodosLosIncidentes().contains(incidente)) {
             throw new RuntimeException("El incidente no pertenece a la comunidad");
         }

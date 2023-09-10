@@ -1,7 +1,5 @@
 package external.mail;
 
-import comunidades.usuario.Email;
-
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -10,7 +8,7 @@ import java.util.Properties;
 public class ServicioMail {
     private static ServicioMail instancia = null;
 
-    public void enviarCorreo(Email destinatario, String asunto, String cuerpo) {
+    public void enviarCorreo(String destinatario, String asunto, String cuerpo) {
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587"); // TLS Port
@@ -26,7 +24,7 @@ public class ServicioMail {
 
         try {
             MimeMessage message = new MimeMessage(session);
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatario.getEmail(), true));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatario, true));
             message.setSubject(asunto);
             message.setText(cuerpo);
             System.out.println("Sending...");

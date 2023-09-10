@@ -2,15 +2,12 @@ import incidentes.Incidente;
 import localizacion.UbicacionExacta;
 import servicios.PrestacionDeServicio;
 import servicios.Servicio;
-import comunidades.usuario.Email;
-import comunidades.usuario.Usuario;
+import usuario.Usuario;
 import entidades.Entidad;
 import entidades.Establecimiento;
 import localizacion.Localizacion;
-import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
-import rankings.criterios.MayorTiempo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,13 +25,13 @@ public class RankingMayorCantidad {
         PrestacionDeServicio prestacion3 = new PrestacionDeServicio(new Servicio("Servicio 3"), "Prestacion 3", new UbicacionExacta(3, 3));
         PrestacionDeServicio prestacion4 = new PrestacionDeServicio(new Servicio("Servicio 4"), "Prestacion 4", new UbicacionExacta(4, 4));
 
-        Usuario usuario1 = new Usuario("Manu", "Torrente", new Email());
-        Usuario usuario2 = new Usuario("Franco", "Pesce", new Email());
-        Usuario usuario3 = new Usuario("Andy", "Trias", new Email());
-        Usuario usuario4 = new Usuario("Gian", "Perez", new Email());
-        Usuario usuario5 = new Usuario("Fede", "Gonzalez", new Email());
-        Usuario usuario6 = new Usuario("Juan", "Garcia", new Email());
-        Usuario usuario7 = new Usuario("Pedro", "Rodriguez", new Email());
+        Usuario usuario1 = new Usuario("Manu", "Torrente", "");
+        Usuario usuario2 = new Usuario("Franco", "Pesce", "");
+        Usuario usuario3 = new Usuario("Andy", "Trias", "");
+        Usuario usuario4 = new Usuario("Gian", "Perez", "");
+        Usuario usuario5 = new Usuario("Fede", "Gonzalez", "");
+        Usuario usuario6 = new Usuario("Juan", "Garcia", "");
+        Usuario usuario7 = new Usuario("Pedro", "Rodriguez", "");
 
         //2 incidentes para la entidad 3 porque son diferentes prestaciones
         Incidente incidente3 = new Incidente(usuario1, "Observaciones 3", prestacion3);

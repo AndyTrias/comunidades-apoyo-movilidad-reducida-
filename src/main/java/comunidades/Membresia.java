@@ -3,14 +3,29 @@ package comunidades;
 import servicios.PrestacionDeServicio;
 import lombok.Getter;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "membresia")
 public class Membresia {
-  @Getter private Comunidad comunidad;
-  @Getter private Rol rol;
-  @Getter private List<Afectacion> afectaciones;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
+  @Getter
+  @ManyToOne
+  private Comunidad comunidad;
+
+  @Getter
+  @ManyToOne
+  private Rol rol;
+
+  @Getter
+  @OneToMany
+  @JoinColumn(name = "membresia_id")
+  private List<Afectacion> afectaciones;
 
 
   public Membresia(Comunidad comunidad, Rol rol) {
@@ -19,6 +34,8 @@ public class Membresia {
     this.afectaciones = new ArrayList<>();
     this.afectacionesPorDefecto();
   }
+
+  public Membresia() {}
 
   private void afectacionesPorDefecto() {
     for (PrestacionDeServicio prestacion : this.comunidad.getServiciosDeInteres()) {
@@ -32,7 +49,7 @@ public class Membresia {
     this.afectaciones.add(afectacion);
   }
 
-  public void cambiarAfectacion(PrestacionDeServicio prestacion, boolean b){
+  public void cambiarAfectacion(PrestacionDeServicio prestacion, boolean b) {
     for (Afectacion afectacion : this.afectaciones) {
       if (afectacion.getPrestacionDeServicio().equals(prestacion)) {
         afectacion.setAfectado(b);
@@ -44,7 +61,7 @@ public class Membresia {
     return this.afectaciones.stream().filter(a -> a.getPrestacionDeServicio().equals(prestacion)).findFirst().get();
   }
 
-  public boolean esAfectado(){
+  public boolean esAfectado() {
     return this.afectaciones.stream().anyMatch(Afectacion::isAfectado);
   }
 

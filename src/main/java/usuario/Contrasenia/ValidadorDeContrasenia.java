@@ -1,4 +1,4 @@
-package comunidades.usuario.Contrasenia;
+package usuario.Contrasenia;
 import java.util.Collections;
 
 import java.util.ArrayList;

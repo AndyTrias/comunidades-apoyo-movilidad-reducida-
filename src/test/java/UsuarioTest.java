@@ -1,8 +1,7 @@
 import comunidades.Comunidad;
 import comunidades.Membresia;
 import comunidades.Rol;
-import comunidades.usuario.Email;
-import comunidades.usuario.Usuario;
+import usuario.Usuario;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,8 +15,7 @@ public class UsuarioTest {
 
     @Before
     public void setUp() {
-        Email email = new Email();
-        usuario = new Usuario("John", "Doe", email);
+        usuario = new Usuario("John", "Doe", "");
         comunidad = new Comunidad("Comunidad de Prueba");
     }
 

@@ -1,7 +1,7 @@
 package incidentes;
 
 import servicios.PrestacionDeServicio;
-import comunidades.usuario.Usuario;
+import usuario.Usuario;
 import lombok.Getter;
 import notificaciones.notificador.AperturaDeIncidente;
 import notificaciones.notificador.Notificador;

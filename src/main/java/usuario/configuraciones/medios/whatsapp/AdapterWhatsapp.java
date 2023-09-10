@@ -1,8 +1,8 @@
-package comunidades.usuario.configuraciones.medios.whatsapp;
+package usuario.configuraciones.medios.whatsapp;
 
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
-import comunidades.usuario.Usuario;
+import usuario.Usuario;
 import notificaciones.Notificacion;
 
 public class AdapterWhatsapp implements IAdapterWhatsapp{

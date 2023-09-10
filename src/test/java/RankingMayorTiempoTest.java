@@ -2,8 +2,7 @@ import incidentes.Incidente;
 import localizacion.UbicacionExacta;
 import servicios.PrestacionDeServicio;
 import servicios.Servicio;
-import comunidades.usuario.Email;
-import comunidades.usuario.Usuario;
+import usuario.Usuario;
 import entidades.Entidad;
 import entidades.Establecimiento;
 import localizacion.Localizacion;
@@ -14,8 +13,6 @@ import rankings.criterios.MayorTiempo;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.mockito.Mockito.when;
 
 public class RankingMayorTiempoTest {
 
@@ -29,9 +26,9 @@ public class RankingMayorTiempoTest {
         PrestacionDeServicio prestacion2 = new PrestacionDeServicio(new Servicio("Servicio 2"), "Prestacion 2", new UbicacionExacta(2, 2));
         PrestacionDeServicio prestacion3 = new PrestacionDeServicio(new Servicio("Servicio 3"), "Prestacion 3", new UbicacionExacta(3, 3));
 
-        Usuario usuario1 = new Usuario("Manu", "Torrente", new Email());
-        Usuario usuario2 = new Usuario("Andy", "Trias", new Email());
-        Usuario usuario3 = new Usuario("Franco", "Pesce", new Email());
+        Usuario usuario1 = new Usuario("Manu", "Torrente", "");
+        Usuario usuario2 = new Usuario("Andy", "Trias", "");
+        Usuario usuario3 = new Usuario("Franco", "Pesce", "");
 
         Incidente incidente1 = new Incidente(usuario1, "Observaciones 1", prestacion1);
         incidente1.cerrar();

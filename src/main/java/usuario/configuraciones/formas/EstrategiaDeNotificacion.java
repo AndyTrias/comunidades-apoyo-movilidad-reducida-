@@ -1,4 +1,4 @@
-package comunidades.usuario.configuraciones.formas;
+package usuario.configuraciones.formas;
 
 import notificaciones.Notificacion;
 

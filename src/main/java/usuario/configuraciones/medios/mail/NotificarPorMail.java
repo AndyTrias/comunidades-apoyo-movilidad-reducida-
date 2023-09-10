@@ -1,7 +1,6 @@
-package comunidades.usuario.configuraciones.medios.mail;
+package usuario.configuraciones.medios.mail;
 
-import comunidades.usuario.Usuario;
-import comunidades.usuario.configuraciones.medios.MedioPreferido;
+import usuario.configuraciones.medios.MedioPreferido;
 import lombok.Setter;
 import notificaciones.Notificacion;
 

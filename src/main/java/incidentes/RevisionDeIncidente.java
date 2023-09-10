@@ -1,7 +1,6 @@
 package incidentes;
 
-import comunidades.usuario.Usuario;
-import external.mail.ServicioMail;
+import usuario.Usuario;
 import lombok.Setter;
 import notificaciones.notificador.Notificador;
 import notificaciones.notificador.RevisionIncidente;

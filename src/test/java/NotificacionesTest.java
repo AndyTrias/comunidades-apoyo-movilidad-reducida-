@@ -1,38 +1,29 @@
 import comunidades.Comunidad;
-import comunidades.usuario.Interes;
-import comunidades.usuario.configuraciones.formas.CuandoSuceden;
-import comunidades.usuario.configuraciones.formas.EstrategiaDeNotificacion;
-import comunidades.usuario.configuraciones.formas.SinApuros;
-import comunidades.usuario.configuraciones.medios.MedioPreferido;
-import comunidades.usuario.configuraciones.medios.mail.AdapterMail;
-import comunidades.usuario.configuraciones.medios.mail.NotificarPorMail;
-import comunidades.usuario.configuraciones.medios.whatsapp.AdapterWhatsapp;
-import comunidades.usuario.configuraciones.medios.whatsapp.NotificarPorWhatsApp;
+import usuario.configuraciones.formas.CuandoSuceden;
+import usuario.configuraciones.formas.EstrategiaDeNotificacion;
+import usuario.configuraciones.formas.SinApuros;
+import usuario.configuraciones.medios.MedioPreferido;
+import usuario.configuraciones.medios.mail.AdapterMail;
+import usuario.configuraciones.medios.mail.NotificarPorMail;
+import usuario.configuraciones.medios.whatsapp.NotificarPorWhatsApp;
 import entidades.Entidad;
 import entidades.Establecimiento;
 import incidentes.Incidente;
 import incidentes.RevisionDeIncidente;
 import localizacion.UbicacionExacta;
-import org.mockito.Mock;
 import repositiorios.RepoEntidades;
 import repositiorios.RepoUsuarios;
 import servicios.PrestacionDeServicio;
 import servicios.Servicio;
-import comunidades.usuario.Email;
-import comunidades.usuario.Usuario;
-import comunidades.usuario.configuraciones.ConfiguracionDeNotificaciones;
+import usuario.Usuario;
+import usuario.configuraciones.ConfiguracionDeNotificaciones;
 import notificaciones.FactoryConfiguracionDeNotificaciones;
 import notificaciones.Notificacion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.sql.Time;
 import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import static org.apache.http.conn.params.ConnManagerParams.setTimeout;
 
 public class NotificacionesTest {
     private Comunidad comunidad1;
@@ -66,18 +57,9 @@ public class NotificacionesTest {
         comunidad3.agregarServicioDeInteres(banioMedrano);
         comunidad3.agregarServicioDeInteres(banioCastroBarros);
 
-        Email emailfranco = new Email();
-        Email emailfede = new Email();
-
-        emailfranco.nombreDeUsuario = "francopescee";
-        emailfranco.dominio = "gmail.com";
-
-        emailfede.nombreDeUsuario = "francopescee";
-        emailfede.dominio = "gmail.com";
-
         // Creamos los 2 usuarios
-        franco = new Usuario("franco", "pesce", emailfranco);
-        fede = new Usuario("fede", "perez", emailfede);
+        franco = new Usuario("franco", "pesce", "francopescee@gmail.com");
+        fede = new Usuario("fede", "perez", "tandres@frba.utn.edu.ar");
 
         Establecimiento establecimiento1 = new Establecimiento("establecimiento1", null);
         establecimiento1.agregarServicioPrestado(banioCastroBarros);
@@ -251,7 +233,7 @@ public class NotificacionesTest {
 
         Incidente incidente = new Incidente(fede, "baño sucio", banioCastroBarros);
 
-        Thread.sleep(180000);
+        //Thread.sleep(180000);
 
     }
 }

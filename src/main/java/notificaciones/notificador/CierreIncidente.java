@@ -2,7 +2,7 @@ package notificaciones.notificador;
 
 import entidades.Entidad;
 import incidentes.Incidente;
-import comunidades.usuario.Usuario;
+import usuario.Usuario;
 import notificaciones.FactoryNotificacion;
 import notificaciones.Notificacion;
 import repositiorios.RepoEntidades;

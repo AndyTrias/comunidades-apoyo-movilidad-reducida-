@@ -1,13 +1,13 @@
 package notificaciones;
 
-import comunidades.usuario.configuraciones.ConfiguracionDeNotificaciones;
-import comunidades.usuario.configuraciones.formas.CuandoSuceden;
-import comunidades.usuario.configuraciones.formas.EstrategiaDeNotificacion;
-import comunidades.usuario.configuraciones.formas.SinApuros;
-import comunidades.usuario.configuraciones.medios.mail.AdapterMail;
-import comunidades.usuario.configuraciones.medios.mail.NotificarPorMail;
-import comunidades.usuario.configuraciones.medios.whatsapp.AdapterWhatsapp;
-import comunidades.usuario.configuraciones.medios.whatsapp.NotificarPorWhatsApp;
+import usuario.configuraciones.ConfiguracionDeNotificaciones;
+import usuario.configuraciones.formas.CuandoSuceden;
+import usuario.configuraciones.formas.EstrategiaDeNotificacion;
+import usuario.configuraciones.formas.SinApuros;
+import usuario.configuraciones.medios.mail.AdapterMail;
+import usuario.configuraciones.medios.mail.NotificarPorMail;
+import usuario.configuraciones.medios.whatsapp.AdapterWhatsapp;
+import usuario.configuraciones.medios.whatsapp.NotificarPorWhatsApp;
 
 import java.util.Date;
 

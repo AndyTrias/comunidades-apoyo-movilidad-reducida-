@@ -2,8 +2,7 @@ import comunidades.Comunidad;
 import localizacion.UbicacionExacta;
 import servicios.PrestacionDeServicio;
 import servicios.Servicio;
-import comunidades.usuario.Email;
-import comunidades.usuario.Usuario;
+import usuario.Usuario;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,7 +25,7 @@ public class AfectadosTest {
     this.banioMedrano = new PrestacionDeServicio(banio, "medrano", new UbicacionExacta(1, 1));
     this.escaleraMedrano = new PrestacionDeServicio(escalera, "medrano", new UbicacionExacta(1, 1));
 
-    this.andy = new Usuario("andy", "perez", new Email());
+    this.andy = new Usuario("andy", "perez", "");
 
     this.comunidad1 = new Comunidad("comunidad1");
     this.comunidad1.agregarServicioDeInteres(banioMedrano);

@@ -1,13 +1,11 @@
 package repositiorios;
 
 import comunidades.Comunidad;
-import comunidades.usuario.Email;
-import comunidades.usuario.Usuario;
+import usuario.Usuario;
 import entidades.Entidad;
 import entidades.Establecimiento;
 import localizacion.Localizacion;
 import localizacion.UbicacionExacta;
-import lombok.Setter;
 import servicios.PrestacionDeServicio;
 import servicios.Servicio;
 
@@ -63,18 +61,9 @@ public class DataRepositorios {
     }
 
     private void AsignarUsuarios(){
-        Email emailfranco = new Email();
-        Email emailfede = new Email();
-
-        emailfranco.nombreDeUsuario = "francopescee";
-        emailfranco.dominio = "gmail.com";
-
-        emailfede.nombreDeUsuario = "tandres";
-        emailfede.dominio = "frba.utn.edu.ar";
-
         // Creamos los 2 usuarios
-        Usuario franco = new Usuario("franco", "pesce", emailfranco);
-        Usuario fede = new Usuario("fede", "perez", emailfede);
+        Usuario franco = new Usuario("franco", "pesce", "francopescee@gmail.com");
+        Usuario fede = new Usuario("fede", "perez", "tandres@frba.utn.edu.ar");
 
         Comunidad comunidad1 = repoComunidades.getComunidades().get(0);
         Comunidad comunidad2 = repoComunidades.getComunidades().get(1);

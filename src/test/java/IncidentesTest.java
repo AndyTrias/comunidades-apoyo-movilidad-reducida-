@@ -3,8 +3,7 @@ import incidentes.Incidente;
 import localizacion.UbicacionExacta;
 import servicios.PrestacionDeServicio;
 import servicios.Servicio;
-import comunidades.usuario.Email;
-import comunidades.usuario.Usuario;
+import usuario.Usuario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -41,18 +40,9 @@ public class IncidentesTest {
     comunidad3.agregarServicioDeInteres(banioMedrano);
     comunidad3.agregarServicioDeInteres(banioCastroBarros);
 
-    Email emailfranco = new Email();
-    Email emailfede = new Email();
-
-    emailfranco.nombreDeUsuario = "francopescee";
-    emailfranco.dominio = "gmail.com";
-
-    emailfede.nombreDeUsuario = "tandres";
-    emailfede.dominio = "frba.utn.edu.ar";
-
     // Creamos los 2 usuarios
-    andy = new Usuario("andy", "trias", emailfranco);
-    fede = new Usuario("fede", "perez", emailfede);
+    andy = new Usuario("andy", "trias", "francopescee@gmail.com");
+    fede = new Usuario("fede", "perez", "tandres@frba.utn.edu.ar");
 
     // agregamos los usuarios a las comunidades
     andy.unirseAComunidad(comunidad1, comunidad1.getRoles().get(0));

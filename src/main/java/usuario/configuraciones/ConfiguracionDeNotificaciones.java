@@ -1,7 +1,7 @@
-package comunidades.usuario.configuraciones;
+package usuario.configuraciones;
 
-import comunidades.usuario.configuraciones.formas.EstrategiaDeNotificacion;
-import comunidades.usuario.configuraciones.medios.MedioPreferido;
+import usuario.configuraciones.formas.EstrategiaDeNotificacion;
+import usuario.configuraciones.medios.MedioPreferido;
 import lombok.Getter;
 import lombok.Setter;
 import notificaciones.Notificacion;

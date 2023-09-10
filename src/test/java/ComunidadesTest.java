@@ -4,8 +4,7 @@ import comunidades.Rol;
 import localizacion.UbicacionExacta;
 import servicios.PrestacionDeServicio;
 import servicios.Servicio;
-import comunidades.usuario.Email;
-import comunidades.usuario.Usuario;
+import usuario.Usuario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -55,12 +54,9 @@ public class ComunidadesTest {
         Rol rol = new Rol("rol1", permisos);
         comunidad1.agregarRol(rol);
 
-        Email email = new Email();
-        email.nombreDeUsuario = "francopescee";
-        email.dominio = "gmail.com";
-        this.franco = new Usuario("franco", "pesce", email);
+        this.franco = new Usuario("franco", "pesce", "francopescee@gmail.com");
 
-        this.juan = new Usuario("juan", "perez", new Email());
+        this.juan = new Usuario("juan", "perez", "");
     }
 
     @Test

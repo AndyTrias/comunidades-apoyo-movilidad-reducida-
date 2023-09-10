@@ -1,4 +1,4 @@
-package comunidades.usuario.Contrasenia;
+package usuario.Contrasenia;
 
 public interface PuedeValidar {
 

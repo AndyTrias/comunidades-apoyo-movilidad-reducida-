@@ -1,9 +1,8 @@
-package comunidades.usuario.configuraciones.medios.whatsapp;
+package usuario.configuraciones.medios.whatsapp;
 
-import comunidades.usuario.Usuario;
 import lombok.Setter;
 import notificaciones.Notificacion;
-import comunidades.usuario.configuraciones.medios.MedioPreferido;
+import usuario.configuraciones.medios.MedioPreferido;
 
 public class NotificarPorWhatsApp implements MedioPreferido {
 

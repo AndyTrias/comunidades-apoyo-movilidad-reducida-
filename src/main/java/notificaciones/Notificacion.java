@@ -1,7 +1,7 @@
 package notificaciones;
 
-import comunidades.usuario.Usuario;
-import comunidades.usuario.configuraciones.formas.EstrategiaDeNotificacion;
+import usuario.Usuario;
+import usuario.configuraciones.formas.EstrategiaDeNotificacion;
 import lombok.Getter;
 import lombok.Setter;
 

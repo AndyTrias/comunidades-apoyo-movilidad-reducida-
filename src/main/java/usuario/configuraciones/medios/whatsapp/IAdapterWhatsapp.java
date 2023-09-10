@@ -1,6 +1,6 @@
-package comunidades.usuario.configuraciones.medios.whatsapp;
+package usuario.configuraciones.medios.whatsapp;
 
-import comunidades.usuario.Usuario;
+import usuario.Usuario;
 import notificaciones.Notificacion;
 
 public interface IAdapterWhatsapp {
