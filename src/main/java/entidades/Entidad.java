@@ -16,18 +16,29 @@ import java.util.Set;
 public class Entidad {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Getter @Setter private int id;
-    @OneToMany(mappedBy = "entidad", cascade = CascadeType.ALL)
-    @Getter private Set<Establecimiento> establecimientos;
+    private int id;
+
+    @Getter
+    @OneToMany
+    @JoinColumn(name = "entidad_id")
+    private Set<Establecimiento> establecimientos;
+
+    @Setter
     @OneToOne(cascade = CascadeType.ALL)
-    @Setter private Localizacion localizacion;
+    private Localizacion localizacion;
+
+    @Getter
     @Column(name = "nombre")
-    @Getter private String nombre;
+    private String nombre;
 
 
     public Entidad(String nombre) {
         this.nombre = nombre;
         this.establecimientos = new HashSet<>();
+    }
+
+    public Entidad() {
+
     }
 
     public List<PrestacionDeServicio> getPrestacionesDeServicios() {
