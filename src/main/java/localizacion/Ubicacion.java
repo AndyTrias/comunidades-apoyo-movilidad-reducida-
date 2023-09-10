@@ -1,8 +1,8 @@
 package localizacion;
 
-import apiCalls.georef.responseClases.Localidad;
-import apiCalls.georef.responseClases.Municipio;
-import apiCalls.georef.responseClases.Provincia;
+import external.georef.responseClases.Localidad;
+import external.georef.responseClases.Municipio;
+import external.georef.responseClases.Provincia;
 import lombok.Getter;
 import lombok.Setter;
 

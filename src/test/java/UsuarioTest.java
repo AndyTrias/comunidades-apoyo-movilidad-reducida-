@@ -1,16 +1,13 @@
 import comunidades.Comunidad;
-import comunidades.Intereses;
 import comunidades.Membresia;
 import comunidades.Rol;
-import comunidades.servicios.PrestacionDeServicio;
-import comunidades.usuario.Usuario;
+import usuario.Usuario;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class UsuarioTest {
     private Usuario usuario;
@@ -18,7 +15,7 @@ public class UsuarioTest {
 
     @Before
     public void setUp() {
-        usuario = new Usuario("John", "Doe", "john.doe@example.com");
+        usuario = new Usuario("John", "Doe", "");
         comunidad = new Comunidad("Comunidad de Prueba");
     }
 

@@ -1,7 +1,10 @@
 import comunidades.Comunidad;
 import comunidades.Permiso;
 import comunidades.Rol;
-import comunidades.usuario.Usuario;
+import localizacion.UbicacionExacta;
+import servicios.PrestacionDeServicio;
+import servicios.Servicio;
+import usuario.Usuario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,19 +15,48 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ComunidadesTest {
-    Comunidad comunidad1;
-    Usuario franco;
+    private Comunidad comunidad1;
+    private Usuario franco;
+    private Usuario juan;
+
+    private Servicio servicio;
+
+    private PrestacionDeServicio banioMedrano;
+
+    private PrestacionDeServicio banioCastroBarros;
+
+    private Comunidad comunidad2;
+
+    private Comunidad comunidad3;
+
 
     @BeforeEach
     public void setUp() throws Exception {
-        this.comunidad1 = new Comunidad("comunidad1");
+
+        // Creamos la prestacion de prestacion de servicio
+        servicio = new Servicio("baño hombres");
+        banioMedrano = new PrestacionDeServicio(servicio, "baño Medrano", new UbicacionExacta(1, 1));
+        banioCastroBarros= new PrestacionDeServicio(servicio, "baño Castro Barros", new UbicacionExacta(2, 2));
+
+        // Creamos las 3 comunidades
+        comunidad1 = new Comunidad("comunidad1");
+        comunidad1.agregarServicioDeInteres(banioMedrano);
+        comunidad2 = new Comunidad("comunidad2");
+        comunidad2.agregarServicioDeInteres(banioMedrano);
+        comunidad3 = new Comunidad("comunidad3");
+        comunidad3.agregarServicioDeInteres(banioMedrano);
+        comunidad3.agregarServicioDeInteres(banioCastroBarros);
+
+
         Set<Permiso> permisos = new HashSet<>();
         Permiso enviarMensajes = new Permiso();
         permisos.add(enviarMensajes);
         Rol rol = new Rol("rol1", permisos);
         comunidad1.agregarRol(rol);
 
-        this.franco = new Usuario("franco", "pesce", "francopesce@gmail.com");
+        this.franco = new Usuario("franco", "pesce", "francopescee@gmail.com");
+
+        this.juan = new Usuario("juan", "perez", "");
     }
 
     @Test
@@ -65,5 +97,13 @@ public class ComunidadesTest {
 
         assertEquals(comunidad1.getCantidadDeUsuarios(), 0);
         assertEquals(franco.getMembresias().size(), 0);
+    }
+
+    @Test
+    public void testCantidadDeAfectados(){
+        franco.unirseAComunidad(comunidad1, comunidad1.aceptarUsuario(franco));
+       franco.getMembresia(comunidad1).cambiarAfectacion(banioMedrano, true);
+       assertEquals(comunidad1.getCantidadDeAfectados(), 1);
+
     }
 }

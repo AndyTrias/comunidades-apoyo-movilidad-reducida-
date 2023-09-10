@@ -1,7 +1,7 @@
 package configs;
 
 import comunidades.Rol;
-import comunidades.usuario.Contrasenia.ValidadorDeContrasenia;
+import usuario.Contrasenia.ValidadorDeContrasenia;
 import lombok.Getter;
 import lombok.Setter;
 

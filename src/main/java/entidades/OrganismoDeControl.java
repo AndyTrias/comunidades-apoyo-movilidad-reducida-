@@ -1,6 +1,6 @@
 package entidades;
 
-import comunidades.usuario.Usuario;
+import usuario.Usuario;
 import entidades.enviadorDeInformacion.AdapterEnviadorDeInformacion;
 import lombok.Getter;
 

@@ -1,10 +1,10 @@
-import comunidades.usuario.Contrasenia.DiezMilPeoresContrasenias;
-import comunidades.usuario.Contrasenia.ValidadorDeContrasenia;
-import comunidades.usuario.Contrasenia.ValidarLongitud;
+import usuario.Contrasenia.DiezMilPeoresContrasenias;
+import usuario.Contrasenia.ValidadorDeContrasenia;
+import usuario.Contrasenia.ValidarLongitud;
 import configs.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import comunidades.usuario.Usuario;
+import usuario.Usuario;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,7 +19,7 @@ public class ContraseniaTest {
 
     @Test
     public void testSetContraseniaQueCumpleTodo() throws Exception {
-        Usuario usuario = new Usuario("ejemplo", "ejemplo", "ejemplo@ejemplo");
+        Usuario usuario = new Usuario("ejemplo", "ejemplo", "");
         String contrasenia = "contraseñasupersegura1234";
 
         usuario.setContrasenia(contrasenia);
@@ -29,7 +29,7 @@ public class ContraseniaTest {
 
     @Test
     public void testSeLeSeteaUnaContraseniaInseguraAlUsuario() throws Exception {
-        Usuario usuario = new Usuario("ejemplo", "ejemplo", "ejemplo@ejemplo.com");
+        Usuario usuario = new Usuario("ejemplo", "ejemplo", "");
         String contrasenia = "password";
 
         assertThrows(Exception.class, () -> usuario.setContrasenia(contrasenia));

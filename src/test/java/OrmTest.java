@@ -1,4 +1,3 @@
-
 import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
 import org.junit.jupiter.api.Test;
 
@@ -15,6 +14,6 @@ public class OrmTest implements SimplePersistenceTest {
     void contextUpWithTransaction() throws Exception {
         withTransaction(() -> {
         });
-    }
 
+    }
 }
