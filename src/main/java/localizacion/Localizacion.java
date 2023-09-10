@@ -6,9 +6,23 @@ import external.georef.responseClases.ListadoProvincias;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "localizacion")
 public class Localizacion {
-    @Setter AdapterLocalizacion adapter;
-    @Getter private Ubicacion ubicacion = new Ubicacion();
+    @Id
+    @GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
+    private int id;
+
+    @Setter
+    @Transient
+    private AdapterLocalizacion adapter;
+
+    @Getter
+    @ManyToOne
+    @JoinColumn(name = "ubicacion_id")
+    private Ubicacion ubicacion = new Ubicacion();
 
     public ListadoProvincias getListadoProvincias() throws Exception {
         return adapter.getListadoProvincias();

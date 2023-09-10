@@ -13,8 +13,7 @@ public class OrmTest implements SimplePersistenceTest {
     @Test
     void contextUpWithTransaction() throws Exception {
         withTransaction(() -> {
-
         });
-    }
 
+    }
 }
