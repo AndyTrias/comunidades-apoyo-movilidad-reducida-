@@ -1,5 +1,3 @@
-Claro, aquí tienes una documentación concisa en formato Markdown que puedes utilizar para tu repositorio GitHub:
-
 # API de Clasificación de Entidades
 
 Este es un servicio web simple que toma un conjunto de entidades y las clasifica en función de un criterio de ranking. El criterio de ranking se calcula utilizando la suma de los tiempos de resolución de incidentes, el número de incidentes no resueltos y la cantidad total de miembros afectados. Puedes utilizar este servicio para ordenar las entidades según su rendimiento en la gestión de incidentes.
