@@ -1,9 +1,9 @@
 package localizacion;
 
-import apiCalls.georef.ServicioGeoref;
-import apiCalls.georef.responseClases.ListadoLocalidades;
-import apiCalls.georef.responseClases.ListadoMunicipios;
-import apiCalls.georef.responseClases.ListadoProvincias;
+import external.georef.ServicioGeoref;
+import external.georef.responseClases.ListadoLocalidades;
+import external.georef.responseClases.ListadoMunicipios;
+import external.georef.responseClases.ListadoProvincias;
 
 import java.io.IOException;
 
@@ -14,7 +14,7 @@ public class AdapterLocalizacionGeorefApi implements AdapterLocalizacion {
         return adapterServicioGeoref.listadoProvincias();
     }
 
-    public ListadoProvincias getProvinciaId(int idProvincia) throws IOException {
+    public ListadoProvincias getProvinciaById(int idProvincia) throws IOException {
         return adapterServicioGeoref.listadoProvincias(idProvincia);
     }
 
@@ -22,7 +22,7 @@ public class AdapterLocalizacionGeorefApi implements AdapterLocalizacion {
         return adapterServicioGeoref.listadoMunicipios(idProvincia);
     }
 
-    public ListadoMunicipios getMunicipioId(int idMunicipio) throws IOException {
+    public ListadoMunicipios getMunicipioById(int idMunicipio) throws IOException {
         return adapterServicioGeoref.listadoMunicipios(idMunicipio);
     }
 
@@ -30,7 +30,7 @@ public class AdapterLocalizacionGeorefApi implements AdapterLocalizacion {
         return adapterServicioGeoref.listadoLocalidades(idProvincia, idMunicipio);
     }
 
-    public ListadoLocalidades getLocalidadId(long idLocalidad) throws IOException {
+    public ListadoLocalidades getLocalidadById(long idLocalidad) throws IOException {
         return adapterServicioGeoref.listadoLocalidades(idLocalidad);
     }
 }

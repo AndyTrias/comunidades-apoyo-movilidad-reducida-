@@ -1,15 +1,16 @@
 package comunidades.usuario;
 
 import comunidades.Comunidad;
-import comunidades.Intereses;
 import comunidades.Membresia;
 import comunidades.Rol;
-import comunidades.usuario.Contrasenia.ValidadorDeContrasenia;
-import configs.Config;
+import comunidades.usuario.configuraciones.ConfiguracionDeNotificaciones;
 import configs.ServiceLocator;
+import incidentes.RevisionDeIncidente;
 import localizacion.Localizacion;
+import localizacion.UbicacionExacta;
 import lombok.Getter;
 import lombok.Setter;
+import notificaciones.Notificacion;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,21 +18,23 @@ import java.util.Set;
 
 
 public class Usuario {
-    private String nombre;
+    @Getter private String nombre;
     private String apellido;
-    @Setter private String correoElectronico;
+    @Getter @Setter private Email correoElectronico;
     @Getter private String contrasenia;
-    @Getter private Intereses intereses;
+    @Getter @Setter private String telefono;
+    @Getter private Interes interes;
     @Getter private List<Membresia> membresias;
-    @Setter private Set<Localizacion> localizacion;
+    @Getter @Setter private Set<Localizacion> localizaciones;
+    @Getter @Setter ConfiguracionDeNotificaciones configuracionDeNotificaciones;
+    @Getter private UbicacionExacta ubicacionExacta;
 
-    public Usuario(String nombre, String apellido, String correoElectronico) {
+    public Usuario(String nombre, String apellido, Email correoElectronico) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.correoElectronico = correoElectronico;
-        this.contrasenia = contrasenia;
-        this.intereses = intereses;
         this.membresias = new ArrayList<>();
+        this.interes = new Interes();
     }
 
     public void setContrasenia(String contrasenia) throws Exception {
@@ -55,5 +58,24 @@ public class Usuario {
         else{
             membresias.remove(membresias.stream().filter(m -> m.getComunidad().equals(comunidad)).findFirst().get());
         }
+    }
+
+    public List<Comunidad> getComunidades(){
+        List<Comunidad> comunidades = new ArrayList<>();
+        membresias.forEach(m -> comunidades.add(m.getComunidad()));
+        return comunidades;
+    }
+
+    public Membresia getMembresia(Comunidad comunidad){
+        return membresias.stream().filter(m -> m.getComunidad().equals(comunidad)).findFirst().get();
+    }
+
+    public void notificar(Notificacion notificacion) {
+        configuracionDeNotificaciones.notificar(notificacion);
+    }
+
+    public void setUbicacionExacta(UbicacionExacta ubicacionExacta) {
+        this.ubicacionExacta = ubicacionExacta;
+        RevisionDeIncidente.getInstance().comprobarCercania(this);
     }
 }

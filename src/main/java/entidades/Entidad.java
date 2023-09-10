@@ -1,5 +1,6 @@
 package entidades;
 
+import servicios.PrestacionDeServicio;
 import localizacion.Localizacion;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,6 +20,14 @@ public class Entidad {
         this.establecimientos = new HashSet<>();
     }
 
+    public List<PrestacionDeServicio> getPrestacionesDeServicios() {
+        List<PrestacionDeServicio> prestaciones = new ArrayList<>();
+        for (Establecimiento establecimiento : this.establecimientos) {
+            prestaciones.addAll(establecimiento.getServicios());
+        }
+        return prestaciones;
+    }
+
     public void agregarEstablecimiento(Establecimiento establecimiento) {
         this.establecimientos.add(establecimiento);
     }
@@ -27,4 +36,6 @@ public class Entidad {
         Entidad entidad = new Entidad("Entidad");
         System.out.println(entidad.getNombre());
     }
+
+
 }

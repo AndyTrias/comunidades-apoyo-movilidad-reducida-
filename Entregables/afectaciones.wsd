@@ -1,0 +1,45 @@
+class Comunidad {
+    - nombre: String
+    - serviciosDeInteres: Set<PrestacionDeServicio>
+    - notificador: Notificador
+
+
+    + aceptarUsuario(usuario: Usuario): Rol
+    + eliminarUsuario(Usuario: Usuario): void
+    + getCantidadDeAfectados(): int
+
+}
+
+Class Membresia {
+    - comunidad: Comunidad
+    - afectaciones: List<Afectacion>
+
+    + agregarAfectacion(prestacionDeServicio: PrestacionDeServicio, afectado: Bool): void
+    + cambiarAfectacion(prestacionDeServicio: PrestacionDeServicio, afectado: Bool): void
+    + getAfectacion(prestacionDeServicio: PrestacionDeServicio): Afectacion
+    + isAfectado(prestacionDeServicio: PrestacionDeServicio): Bool
+    - afectacionesPorDefecto(): void
+}
+
+class Afectacion{
+    - prestacionDeServicio: PrestacionDeServicio
+    - afectado: Bool
+
+    + cambiarEstado(): void
+}
+
+Class PrestacionDeServicio {    
+    - servicio: Servicio
+    - incidentes: List<Incidente>
+    - nombre: String
+    - ubicacionExacta: UbicacionExacta
+
+    + abrirIncidente(): void
+}
+
+
+
+Membresia -> Comunidad
+Comunidad --> "*" PrestacionDeServicio
+Membresia --> "*" Afectacion
+Afectacion -> PrestacionDeServicio

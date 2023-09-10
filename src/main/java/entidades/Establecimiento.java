@@ -1,6 +1,6 @@
 package entidades;
 
-import comunidades.servicios.PrestacionDeServicio;
+import servicios.PrestacionDeServicio;
 import localizacion.Localizacion;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,6 +18,8 @@ public class Establecimiento {
         this.localizacion = localizacion;
         this.servicios = new HashSet<>();
     }
+
+
 
     public void agregarServicioPrestado(PrestacionDeServicio servicio) {
         this.servicios.add(servicio);

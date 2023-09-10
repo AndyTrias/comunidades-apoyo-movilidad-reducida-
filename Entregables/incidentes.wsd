@@ -1,0 +1,60 @@
+Class Incidente {
+    - fechaApertura: Date
+    - fechasDeCierre: List<Date>
+    - observaciones: String
+    - abiertoPor: Usuario
+    - prestacionDeServicio: PrestacionDeServicio
+    - notificador: Notificador
+
+    + notificarApertura(): void
+    + cerrar(): void
+}
+
+class Comunidad {
+    - roles: set<Rol>
+    - nombre: String
+    - serviciosDeInteres: Set<PrestacionDeServicio>
+    - incidentesAbiertos: List<Incidente>
+    - incidentesCerrados: List<Incidente>
+    - notificador: Notificador
+    
+    + abrirIncidente(incidente: Incidente): void
+    + cerrarIncidente(incidente: Incidente): void
+    + getCantidadDeAfectados(): int
+
+}
+
+
+Class PrestacionDeServicio {    
+    - servicio: Servicio
+    - incidentes: List<Incidente>
+    - nombre: String
+    - ubicacionExacta: UbicacionExacta
+
+    + abrirIncidente(): void
+}
+
+Interface Notificador #bbffcc{
+    + notificar(usuario: Usuario, incidente: Incidente)
+}
+
+class Usuario{
+    - nombre: String
+    - correoElectronico: Email
+    - telefono: String
+    - interes: Intereses
+    - membresias: List<Membresia>
+    - localizaciones: Set<Localizacion>
+    - ubicacionExacta: UbicacionExacta
+
+    + getComunidades(): List<Comunidad>
+    + getMembresia(comunidad: Comunidad): Membresia
+    + notificar(notificacion: Notificacion): void
+}
+
+PrestacionDeServicio --> "*" Incidente
+Incidente --> PrestacionDeServicio  
+Comunidad --> "*" Incidente
+Incidente --> Usuario
+Notificador <- Comunidad
+Notificador <-- Incidente
