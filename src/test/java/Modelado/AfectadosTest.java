@@ -1,3 +1,5 @@
+package Modelado;
+
 import comunidades.Comunidad;
 import localizacion.UbicacionExacta;
 import servicios.PrestacionDeServicio;

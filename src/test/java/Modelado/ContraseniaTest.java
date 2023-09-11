@@ -1,3 +1,5 @@
+package Modelado;
+
 import usuario.Contrasenia.DiezMilPeoresContrasenias;
 import usuario.Contrasenia.ValidadorDeContrasenia;
 import usuario.Contrasenia.ValidarLongitud;

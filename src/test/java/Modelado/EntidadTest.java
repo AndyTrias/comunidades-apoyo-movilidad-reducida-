@@ -1,3 +1,5 @@
+package Modelado;
+
 import entidades.Entidad;
 import entidades.Establecimiento;
 import localizacion.Localizacion;

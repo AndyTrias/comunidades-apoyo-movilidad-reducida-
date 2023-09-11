@@ -3,10 +3,8 @@ package notificaciones.notificador;
 import comunidades.Comunidad;
 import incidentes.Incidente;
 import usuario.Usuario;
-import entidades.Entidad;
 import notificaciones.FactoryNotificacion;
 import notificaciones.Notificacion;
-import repositiorios.RepoEntidades;
 
 import java.util.ArrayList;
 import java.util.List;

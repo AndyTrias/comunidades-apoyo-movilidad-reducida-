@@ -1,5 +1,6 @@
 package incidentes;
 
+import converters.NotificadorConverter;
 import servicios.PrestacionDeServicio;
 import usuario.Usuario;
 import lombok.Getter;
@@ -38,7 +39,8 @@ public class Incidente {
     @ManyToOne
     private PrestacionDeServicio prestacionDeServicio;
 
-    @Transient
+    @Convert(converter = NotificadorConverter.class)
+    @Column(name = "notificador")
     private Notificador notificador;
 
     public Incidente(Usuario usuario, String observaciones, PrestacionDeServicio prestacionDeServicio) {

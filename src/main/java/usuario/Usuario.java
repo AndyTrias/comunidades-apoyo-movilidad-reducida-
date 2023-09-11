@@ -48,12 +48,12 @@ public class Usuario {
     private String telefono;
 
     @Getter
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "usuario_id")
     private List<Interes> intereses;
 
     @Getter
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "usuario_id")
     private List<Membresia> membresias;
 

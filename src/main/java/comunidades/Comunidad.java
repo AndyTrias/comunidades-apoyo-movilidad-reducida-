@@ -1,5 +1,6 @@
 package comunidades;
 
+import converters.NotificadorConverter;
 import lombok.Getter;
 import lombok.Setter;
 import incidentes.Incidente;
@@ -27,24 +28,25 @@ public class Comunidad {
     private String nombre;
 
     @Getter
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "comunidad_id")
     private List<Rol> roles;
 
     @Getter
-    @Transient
+    @ManyToMany
     private Set<PrestacionDeServicio> serviciosDeInteres;
 
     @Getter
-    @Transient
+    @ManyToMany
     private List<Incidente> incidentesAbiertos;
 
     @Getter
-    @Transient
+    @ManyToMany
     private List<Incidente> incidentesCerrados;
 
     @Setter
-    @Transient
+    @Convert(converter = NotificadorConverter.class)
+    @Column(name = "notificador")
     private Notificador notificador;
 
     public Comunidad(String nombre) {

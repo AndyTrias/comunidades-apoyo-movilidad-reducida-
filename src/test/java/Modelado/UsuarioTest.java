@@ -1,3 +1,5 @@
+package Modelado;
+
 import comunidades.Comunidad;
 import comunidades.Membresia;
 import comunidades.Rol;

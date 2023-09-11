@@ -1,3 +1,5 @@
+package Modelado;
+
 import comunidades.Comunidad;
 import configs.Config;
 import entidades.Entidad;
@@ -10,8 +12,6 @@ import rankings.criterios.ImpactoComunidades;
 import rankings.criterios.MayorCantidad;
 import rankings.criterios.MayorTiempo;
 import rankings.informes.*;
-import repositiorios.RepoComunidades;
-import repositiorios.RepoEntidades;
 
 import java.util.List;
 

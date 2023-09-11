@@ -1,3 +1,5 @@
+package Modelado;
+
 import incidentes.Incidente;
 import localizacion.UbicacionExacta;
 import servicios.PrestacionDeServicio;

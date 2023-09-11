@@ -20,7 +20,7 @@ public class Localizacion {
     private AdapterLocalizacion adapter;
 
     @Getter
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ubicacion_id")
     private Ubicacion ubicacion = new Ubicacion();
 

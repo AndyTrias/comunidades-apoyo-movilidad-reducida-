@@ -1,3 +1,5 @@
+package Modelado;
+
 import comunidades.Comunidad;
 import incidentes.Incidente;
 import localizacion.UbicacionExacta;

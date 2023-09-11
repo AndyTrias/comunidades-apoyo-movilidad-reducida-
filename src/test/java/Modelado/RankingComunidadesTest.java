@@ -1,3 +1,5 @@
+package Modelado;
+
 import comunidades.Comunidad;
 import org.junit.Assert;
 import org.junit.Test;

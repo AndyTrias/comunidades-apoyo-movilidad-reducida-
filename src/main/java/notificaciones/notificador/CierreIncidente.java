@@ -1,11 +1,9 @@
 package notificaciones.notificador;
 
-import entidades.Entidad;
 import incidentes.Incidente;
 import usuario.Usuario;
 import notificaciones.FactoryNotificacion;
 import notificaciones.Notificacion;
-import repositiorios.RepoEntidades;
 
 import java.util.ArrayList;
 import java.util.List;

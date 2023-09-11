@@ -1,3 +1,5 @@
+package Modelado;
+
 import comunidades.Comunidad;
 import usuario.Interes;
 import usuario.configuraciones.formas.CuandoSuceden;
@@ -12,7 +14,6 @@ import entidades.Establecimiento;
 import incidentes.Incidente;
 import incidentes.RevisionDeIncidente;
 import localizacion.UbicacionExacta;
-import repositiorios.RepoEntidades;
 import servicios.PrestacionDeServicio;
 import servicios.Servicio;
 import usuario.Usuario;

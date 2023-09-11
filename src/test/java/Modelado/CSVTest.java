@@ -1,3 +1,5 @@
+package Modelado;
+
 import configs.Config;
 import org.junit.jupiter.api.Test;
 import readerCSV.LectorEntidadPrestadora;

@@ -4,13 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import servicios.PrestacionDeServicio;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Column;
-import javax.persistence.GenerationType;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "afectacion")
@@ -25,7 +19,7 @@ public class Afectacion {
   private boolean afectado;
 
   @Getter
-  @Transient
+  @ManyToOne
   private PrestacionDeServicio prestacionDeServicio;
 
   public Afectacion(PrestacionDeServicio prestacionDeServicio) {
