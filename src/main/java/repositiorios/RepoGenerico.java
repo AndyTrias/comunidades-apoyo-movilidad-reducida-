@@ -1,15 +1,21 @@
 package repositiorios;
 
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
+import lombok.Getter;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.transaction.Transactional;
 import java.util.List;
 
+@Transactional
 public abstract class RepoGenerico<T> implements WithSimplePersistenceUnit {
-    private final EntityTransaction transaction = entityManager().getTransaction();
+    protected final EntityTransaction transaction = entityManager().getTransaction();
 
-    protected abstract Class<T> getEntityClass();
+    private final Class<T> entityClass;
+
+    protected RepoGenerico(Class<T> entityClass) {
+        this.entityClass = entityClass;
+    }
 
     public void agregar(T entidad) {
         persist(entidad);
@@ -27,10 +33,12 @@ public abstract class RepoGenerico<T> implements WithSimplePersistenceUnit {
     }
 
     public T buscar(Long id) {
-        return find(getEntityClass(), id);
+        return find(entityClass, id);
     }
 
     public List<T> buscarTodos() {
-        return entityManager().createQuery("select e from " + getEntityClass().getSimpleName() + " e", getEntityClass()).getResultList();
+        return entityManager()
+                .createQuery("select e from " + entityClass.getSimpleName() + " e", entityClass)
+                .getResultList();
     }
 }

@@ -1,14 +1,19 @@
 package repositiorios;
 
-import lombok.Getter;
 import usuario.Usuario;
+import lombok.Getter;
+
+import java.util.List;
 
 public class RepoUsuario extends RepoGenerico<Usuario> {
-    @Getter
-    private static final RepoUsuario INSTANCE = new RepoUsuario();
+    public RepoUsuario() {
+        super(Usuario.class);
+    }
 
-    @Override
-    protected Class<Usuario> getEntityClass() {
-        return Usuario.class;
+    public List<Usuario> buscarPorNombre(String nombre) {
+        return entityManager().createQuery("select e from Usuario e where e.nombre = :nombre", Usuario.class)
+                .setParameter("nombre", nombre)
+                .getResultList();
     }
 }
+

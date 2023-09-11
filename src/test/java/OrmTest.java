@@ -16,7 +16,7 @@ public class OrmTest implements SimplePersistenceTest {
 
     @BeforeEach
     void setUp() {
-        repoUsuario = RepoUsuario.getINSTANCE();
+        repoUsuario = new RepoUsuario();
     }
 
     @Test
@@ -68,5 +68,11 @@ public class OrmTest implements SimplePersistenceTest {
         repoUsuario.eliminar(usuario);
 
         assertEquals(cantidadUsuarios - 1, repoUsuario.buscarTodos().size());
+    }
+
+    @Test
+    void obtenerUsuarioPorNombre() {
+        Usuario usuario = repoUsuario.buscarPorNombre("juan").get(0);
+        assertEquals("Juan", usuario.getNombre());
     }
 }

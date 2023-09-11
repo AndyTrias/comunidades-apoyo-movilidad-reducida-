@@ -30,8 +30,8 @@ public class informesTest {
 
   @BeforeEach
     public void setUp(){
-      comunidades = RepoComunidades.getInstance().getComunidades();
-      entidades = RepoEntidades.getInstance().getEntidades();
+      /*comunidades = RepoComunidades.getInstance().getComunidades();
+      entidades = RepoEntidades.getInstance().getEntidades();*/
 
       generadorDeInformes = new GeneradorDeInformes();
       generadorDeInformes.agregarCriterioDeComunidad(new ImpactoComunidades("Impacto de la comunidad"));

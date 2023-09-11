@@ -66,7 +66,7 @@ public class NotificacionesTest {
         this.entidad1 = new Entidad("entidad1");
         entidad1.agregarEstablecimiento(establecimiento1);
 
-        RepoEntidades.getInstance().agregarEntidad(entidad1);
+        /*RepoEntidades.getInstance().agregarEntidad(entidad1);*/
         /*RepoUsuarios.getInstance().agregarUsuario(fede);*/
 
         // Creamos la configuracion de notificaciones
