@@ -17,13 +17,21 @@ public class Ubicacion {
     @GeneratedValue (strategy = GenerationType.AUTO)
     @Getter @Setter private int id;
 
+    @Getter
+    @Setter
     @ManyToOne
     @JoinColumn(name = "provincia_id")
-    @Getter @Setter private Provincia provincia;
+    private Provincia provincia;
+
+    @Getter
+    @Setter
     @ManyToOne
     @JoinColumn(name = "municipio_id")
-    @Getter @Setter private Municipio municipio;
+    private Municipio municipio;
+
+    @Getter
+    @Setter
     @ManyToOne
     @JoinColumn(name = "localidad_id")
-    @Getter @Setter private Localidad localidad;
+    private Localidad localidad;
 }

@@ -10,7 +10,6 @@ import rankings.criterios.ImpactoComunidades;
 import rankings.criterios.MayorCantidad;
 import rankings.criterios.MayorTiempo;
 import rankings.informes.*;
-import repositiorios.DataRepositorios;
 import repositiorios.RepoComunidades;
 import repositiorios.RepoEntidades;
 
@@ -25,8 +24,8 @@ public class informesTest {
 
   @BeforeAll
   public static void generarDatos(){
-    DataRepositorios dataRepositorios = new DataRepositorios();
-    dataRepositorios.generarDatos();
+    /*DataRepositorios dataRepositorios = new DataRepositorios();
+    dataRepositorios.generarDatos();*/
   }
 
   @BeforeEach

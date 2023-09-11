@@ -18,5 +18,4 @@ public class Municipio {
     @JoinColumn(name = "provincia_id")
     public Provincia provincia;
 
-    // Getters y setters
 }

@@ -1,12 +1,12 @@
 package comunidades;
 
-import incidentes.Incidente;
-import servicios.PrestacionDeServicio;
-import usuario.Usuario;
 import lombok.Getter;
 import lombok.Setter;
+import incidentes.Incidente;
+import servicios.PrestacionDeServicio;
 import notificaciones.notificador.CierreIncidente;
 import notificaciones.notificador.Notificador;
+import usuario.Usuario;
 
 import javax.persistence.*;
 import java.util.ArrayList;

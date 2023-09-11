@@ -11,10 +11,10 @@ public class Localidad {
     @Column(name = "nombre")
     public String nombre;
 
-
     @ManyToOne
     @JoinColumn(name = "municipio_id")
     public Municipio municipio;
+
     @ManyToOne
     @JoinColumn(name = "provincia_id")
     public Provincia provincia;

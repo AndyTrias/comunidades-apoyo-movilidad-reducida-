@@ -11,6 +11,8 @@ public class NotificarPorMail implements MedioPreferido {
         this.adapter = adapter;
     }
 
+    public NotificarPorMail() {}
+
     public void notificar(Notificacion notificacion) {
         adapter.notificar(notificacion.getDestinatario().getCorreoElectronico(), notificacion.getAsunto(), notificacion.getCuerpo());
     }

@@ -7,7 +7,6 @@ import entidades.Entidad;
 import notificaciones.FactoryNotificacion;
 import notificaciones.Notificacion;
 import repositiorios.RepoEntidades;
-import repositiorios.RepoUsuarios;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +27,7 @@ public class AperturaDeIncidente implements Notificador{
             });
         }
 
-        // Notificar a interesados
+        /*// Notificar a interesados
         List<Entidad> entidadesConLaPrestacion = RepoEntidades.getInstance().getEntidadesConPrestacion(incidente.getPrestacionDeServicio());
         List<Usuario> usuariosConInteresEnElServicio = RepoUsuarios.getInstance().getUsuariosConInteresEnServicio(incidente.getPrestacionDeServicio().getServicio());
 
@@ -40,7 +39,7 @@ public class AperturaDeIncidente implements Notificador{
                 this.notificarAUsuario(usuario, notificacion);
                 usuariosNotificados.add(usuario);
             }
-        });
+    }*/
     }
 
     private void notificarAUsuario(Usuario usuario, Notificacion notificacion) {

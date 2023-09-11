@@ -1,5 +1,6 @@
 package usuario;
 
+import com.sun.istack.NotNull;
 import comunidades.Comunidad;
 import comunidades.Membresia;
 import comunidades.Rol;
@@ -25,6 +26,7 @@ public class Usuario {
     private Long id;
 
     @Getter
+    @Setter
     @Column(name = "nombre")
     private String nombre;
 
@@ -46,8 +48,9 @@ public class Usuario {
     private String telefono;
 
     @Getter
-    @OneToOne
-    private Interes interes;
+    @OneToMany(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "usuario_id")
+    private List<Interes> intereses;
 
     @Getter
     @OneToMany
@@ -56,16 +59,17 @@ public class Usuario {
 
     @Getter
     @Setter
-    @Transient
+    @OneToMany
+    @JoinColumn(name = "usuario_id")
     private Set<Localizacion> localizaciones;
 
     @Getter
     @Setter
-    @Transient
+    @OneToOne
     private ConfiguracionDeNotificaciones configuracionDeNotificaciones;
 
     @Getter
-    @Transient
+    @OneToOne
     private UbicacionExacta ubicacionExacta;
 
     public Usuario(String nombre, String apellido, String correoElectronico) {
@@ -73,7 +77,7 @@ public class Usuario {
         this.apellido = apellido;
         this.correoElectronico = correoElectronico;
         this.membresias = new ArrayList<>();
-        this.interes = new Interes();
+        this.intereses = new ArrayList<>();
     }
 
     public Usuario() {}
@@ -118,5 +122,9 @@ public class Usuario {
     public void setUbicacionExacta(UbicacionExacta ubicacionExacta) {
         this.ubicacionExacta = ubicacionExacta;
         RevisionDeIncidente.getInstance().comprobarCercania(this);
+    }
+
+    public void agregarInteres(Interes interes) {
+        this.intereses.add(interes);
     }
 }

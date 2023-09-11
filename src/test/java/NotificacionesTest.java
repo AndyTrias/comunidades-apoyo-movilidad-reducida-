@@ -1,4 +1,5 @@
 import comunidades.Comunidad;
+import usuario.Interes;
 import usuario.configuraciones.formas.CuandoSuceden;
 import usuario.configuraciones.formas.EstrategiaDeNotificacion;
 import usuario.configuraciones.formas.SinApuros;
@@ -12,7 +13,6 @@ import incidentes.Incidente;
 import incidentes.RevisionDeIncidente;
 import localizacion.UbicacionExacta;
 import repositiorios.RepoEntidades;
-import repositiorios.RepoUsuarios;
 import servicios.PrestacionDeServicio;
 import servicios.Servicio;
 import usuario.Usuario;
@@ -67,7 +67,7 @@ public class NotificacionesTest {
         entidad1.agregarEstablecimiento(establecimiento1);
 
         RepoEntidades.getInstance().agregarEntidad(entidad1);
-        RepoUsuarios.getInstance().agregarUsuario(fede);
+        /*RepoUsuarios.getInstance().agregarUsuario(fede);*/
 
         // Creamos la configuracion de notificaciones
         ConfiguracionDeNotificaciones config = FactoryConfiguracionDeNotificaciones.crearConfiguracionDeNotificaciones("M_C");
@@ -134,8 +134,10 @@ public class NotificacionesTest {
     public void testSeLeEnviaNotificacionAFedePorEstarInteresado(){
         franco.setConfiguracionDeNotificaciones(configMockFranco);
         fede.setConfiguracionDeNotificaciones(configMockFede);
-        fede.getInteres().agregarServicio(servicio);
-        fede.getInteres().agregarEntidad(entidad1);
+        Interes interes = new Interes();
+        interes.setEntidad(entidad1);
+        interes.setServicio(servicio);
+        fede.agregarInteres(interes);
 
         // Franco crea el incidente en el baño de castro barros
         Incidente incidente = new Incidente(franco, "baño sucio",banioCastroBarros);

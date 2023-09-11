@@ -6,7 +6,6 @@ import usuario.Usuario;
 import notificaciones.FactoryNotificacion;
 import notificaciones.Notificacion;
 import repositiorios.RepoEntidades;
-import repositiorios.RepoUsuarios;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +25,7 @@ public class CierreIncidente implements Notificador {
             }
         }));
 
-        List<Entidad> entidadesConLaPrestacion = RepoEntidades.getInstance().getEntidadesConPrestacion(incidente.getPrestacionDeServicio());
+        /*List<Entidad> entidadesConLaPrestacion = RepoEntidades.getInstance().getEntidadesConPrestacion(incidente.getPrestacionDeServicio());
         List<Usuario> usuariosConInteresEnElServicio = RepoUsuarios.getInstance().getUsuariosConInteresEnServicio(incidente.getPrestacionDeServicio().getServicio());
 
         // filtro a los usuarios que no tengan alguna de las entidades relacionadas en su interes
@@ -39,6 +38,6 @@ public class CierreIncidente implements Notificador {
                 usuario.notificar(notificacion);
                 usuariosNotificados.add(usuario);
             }
-        });
+        });*/
     }
 }

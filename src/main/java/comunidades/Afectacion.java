@@ -1,16 +1,22 @@
 package comunidades;
 
-import servicios.PrestacionDeServicio;
 import lombok.Getter;
 import lombok.Setter;
+import servicios.PrestacionDeServicio;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Column;
+import javax.persistence.GenerationType;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "afectacion")
 public class Afectacion {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @Getter
