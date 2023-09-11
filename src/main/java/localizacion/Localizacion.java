@@ -17,12 +17,13 @@ public class Localizacion {
 
     @Setter
     @Transient
-    private AdapterLocalizacion adapter;
+    private AdapterLocalizacion adapter = new AdapterLocalizacionGeorefApi();
 
     @Getter
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ubicacion_id")
     private Ubicacion ubicacion = new Ubicacion();
+
 
     public ListadoProvincias getListadoProvincias() throws Exception {
         return adapter.getListadoProvincias();

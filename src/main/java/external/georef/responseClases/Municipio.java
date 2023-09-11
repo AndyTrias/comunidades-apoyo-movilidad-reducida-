@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Table(name = "municipio")
 public class Municipio {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+   // @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     public int id;
 
