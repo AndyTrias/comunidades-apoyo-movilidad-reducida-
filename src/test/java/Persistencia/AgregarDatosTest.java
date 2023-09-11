@@ -25,6 +25,8 @@ public class AgregarDatosTest implements SimplePersistenceTest {
     private RepoEntidad repoEntidad;
     private RepoEstablecimiento repoEstablecimiento;
 
+    private RepoLocalizacion repoLocalizacion;
+
     private Servicio servicio;
     private Comunidad comunidad;
     private Entidad entidad;
@@ -38,17 +40,12 @@ public class AgregarDatosTest implements SimplePersistenceTest {
         repoPrestacion = new RepoPrestacion();
         repoEntidad = new RepoEntidad();
         repoEstablecimiento = new RepoEstablecimiento();
+        repoLocalizacion = new RepoLocalizacion();
 
         servicio = new Servicio("baño hombres");
         comunidad = new Comunidad("comunidad1");
         entidad = new Entidad("Santander Rio Argentina");
         establecimiento = new Establecimiento("Sucursal Almagro", new Localizacion());
-    }
-
-    @Test
-    void agregarUsuario() {
-        Usuario usuario = new Usuario("Juan", "Perez", "");
-        repoUsuario.agregar(usuario);
     }
 
     @Test
@@ -78,4 +75,12 @@ public class AgregarDatosTest implements SimplePersistenceTest {
         repoEstablecimiento.agregar(establecimiento);
     }
 
+    @Test
+    void agregarLocalizacion() throws Exception {
+        Localizacion localizacion = new Localizacion();
+        localizacion.setUbicacionAsLocalidad(6056010001L);
+        Usuario usuario = new Usuario("Juan", "Perez", "");
+        usuario.agregarLocalizacion(localizacion);
+        repoUsuario.agregar(usuario);
+    }
 }

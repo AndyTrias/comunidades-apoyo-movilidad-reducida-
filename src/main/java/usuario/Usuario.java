@@ -15,6 +15,7 @@ import notificaciones.Notificacion;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -22,7 +23,7 @@ import java.util.Set;
 @Table(name = "usuario")
 public class Usuario {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Getter
@@ -59,7 +60,7 @@ public class Usuario {
 
     @Getter
     @Setter
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "usuario_id")
     private Set<Localizacion> localizaciones;
 
@@ -78,6 +79,7 @@ public class Usuario {
         this.correoElectronico = correoElectronico;
         this.membresias = new ArrayList<>();
         this.intereses = new ArrayList<>();
+        this.localizaciones= new HashSet<>();
     }
 
     public Usuario() {}
@@ -126,5 +128,9 @@ public class Usuario {
 
     public void agregarInteres(Interes interes) {
         this.intereses.add(interes);
+    }
+
+    public void agregarLocalizacion(Localizacion localizacion) {
+        this.localizaciones.add(localizacion);
     }
 }

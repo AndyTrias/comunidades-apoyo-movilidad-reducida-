@@ -24,7 +24,6 @@ public abstract class RepoGenerico<T> implements WithSimplePersistenceUnit {
 
     public void modificar(T entidad) {
         merge(entidad);
-        transaction.commit();
     }
 
     public void eliminar(T entidad) {
