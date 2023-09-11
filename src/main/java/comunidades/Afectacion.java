@@ -19,7 +19,7 @@ public class Afectacion {
   private boolean afectado;
 
   @Getter
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.ALL)
   private PrestacionDeServicio prestacionDeServicio;
 
   public Afectacion(PrestacionDeServicio prestacionDeServicio) {

@@ -1,6 +1,9 @@
 package notificaciones.notificador;
 
+import entidades.Entidad;
 import incidentes.Incidente;
+import repositiorios.RepoEntidad;
+import repositiorios.RepoUsuario;
 import usuario.Usuario;
 import notificaciones.FactoryNotificacion;
 import notificaciones.Notificacion;
@@ -23,11 +26,13 @@ public class CierreIncidente implements Notificador {
             }
         }));
 
-        /*List<Entidad> entidadesConLaPrestacion = RepoEntidades.getInstance().getEntidadesConPrestacion(incidente.getPrestacionDeServicio());
-        List<Usuario> usuariosConInteresEnElServicio = RepoUsuarios.getInstance().getUsuariosConInteresEnServicio(incidente.getPrestacionDeServicio().getServicio());
+        /*RepoEntidad RepoEntidades = new RepoEntidad();
+        RepoUsuario RepoUsuarios = new RepoUsuario();
+        List<Entidad> entidadesConLaPrestacion = RepoEntidades.getEntidadesConPrestacion(incidente.getPrestacionDeServicio());
+        List<Usuario> usuariosConInteresEnElServicio = RepoUsuarios.getUsuariosConInteresEnServicio(incidente.getPrestacionDeServicio().getServicio());
 
         // filtro a los usuarios que no tengan alguna de las entidades relacionadas en su interes
-        List<Usuario> usuariosANotificarPorInteres = usuariosConInteresEnElServicio.stream().filter(usuario -> usuario.getInteres().getEntidades().stream().anyMatch(entidadesConLaPrestacion::contains)).toList();
+        List<Usuario> usuariosANotificarPorInteres = usuariosConInteresEnElServicio.stream().filter(usuario -> usuario.getIntereses().stream().anyMatch(interes -> entidadesConLaPrestacion.contains(interes.getEntidad()))).toList();
 
         usuariosANotificarPorInteres.forEach(usuario -> {
             if (!usuariosNotificados.contains(usuario)) {
