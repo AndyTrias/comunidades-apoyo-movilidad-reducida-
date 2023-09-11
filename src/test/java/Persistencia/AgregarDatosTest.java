@@ -53,19 +53,15 @@ public class AgregarDatosTest implements SimplePersistenceTest {
 
     @Test
     void agregarComunidad() {
+        Servicio servicio = repoServicio.buscar(1L);
+        PrestacionDeServicio banioMedrano = new PrestacionDeServicio(servicio, "baño Medrano", new UbicacionExacta(1, 1));
+        comunidad.agregarServicioDeInteres(banioMedrano);
         repoComunidad.agregar(comunidad);
     }
 
     @Test
     void agregarServicio() {
         repoServicio.agregar(servicio);
-    }
-
-    @Test
-    void agregarPrestacion(){
-        Servicio servicio = repoServicio.buscar(1L);
-        PrestacionDeServicio banioMedrano = new PrestacionDeServicio(servicio, "baño Medrano", new UbicacionExacta(1, 1));
-        repoPrestacion.agregar(banioMedrano);
     }
 
     @Test

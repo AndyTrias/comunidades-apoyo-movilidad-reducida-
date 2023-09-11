@@ -38,10 +38,12 @@ public class Comunidad {
 
     @Getter
     @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "incidentes_abiertos", joinColumns = @JoinColumn(name = "comunidad_id"), inverseJoinColumns = @JoinColumn(name = "incidente_id"))
     private List<Incidente> incidentesAbiertos;
 
     @Getter
     @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "incidentes_cerrados", joinColumns = @JoinColumn(name = "comunidad_id"), inverseJoinColumns = @JoinColumn(name = "incidente_id"))
     private List<Incidente> incidentesCerrados;
 
     @Setter
