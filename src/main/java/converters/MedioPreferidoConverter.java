@@ -14,9 +14,10 @@ import java.util.Objects;
 public class MedioPreferidoConverter implements AttributeConverter<MedioPreferido, String> {
     @Override
     public String convertToDatabaseColumn(MedioPreferido medioPreferido) {
+        System.out.println(medioPreferido.getClass().getName());
         return switch (medioPreferido.getClass().getName()) {
-            case "NotificarPorMail" -> "NotificarPorMail";
-            case "NotificarPorWhatsApp" -> "NotificarPorWhatsApp";
+            case "usuario.configuraciones.medios.mail.NotificarPorMail" -> "NotificarPorMail";
+            case "usuario.configuraciones.medios.mail.NotificarPorWhatsApp" -> "NotificarPorWhatsApp";
             default -> "";
         };
     }

@@ -19,7 +19,7 @@ public abstract class RepoGenerico<T> implements WithSimplePersistenceUnit {
 
     public void agregar(T entidad) {
         persist(entidad);
-        transaction.commit();
+        //transaction.commit();
     }
 
     public void modificar(T entidad) {

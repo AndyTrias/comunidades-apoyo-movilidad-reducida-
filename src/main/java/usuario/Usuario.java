@@ -12,6 +12,8 @@ import localizacion.UbicacionExacta;
 import lombok.Getter;
 import lombok.Setter;
 import notificaciones.Notificacion;
+import usuario.configuraciones.formas.CuandoSuceden;
+import usuario.configuraciones.medios.mail.NotificarPorMail;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -65,7 +67,7 @@ public class Usuario {
 
     @Getter
     @Setter
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private ConfiguracionDeNotificaciones configuracionDeNotificaciones;
 
     @Getter
@@ -78,6 +80,9 @@ public class Usuario {
         this.correoElectronico = correoElectronico;
         this.membresias = new ArrayList<>();
         this.intereses = new ArrayList<>();
+        this.configuracionDeNotificaciones = new ConfiguracionDeNotificaciones();
+        configuracionDeNotificaciones.setEstrategiaDeNotificacion(new CuandoSuceden());
+        configuracionDeNotificaciones.setMedioPreferido(new NotificarPorMail());
     }
 
     public Usuario() {}
