@@ -11,9 +11,10 @@ import java.util.Objects;
 public class EstrategiaDeNotificacionConverter implements AttributeConverter<EstrategiaDeNotificacion, String> {
   @Override
   public String convertToDatabaseColumn(EstrategiaDeNotificacion estrategiaDeNotificacion) {
+      System.out.println(estrategiaDeNotificacion.getClass().getName());
       return switch (estrategiaDeNotificacion.getClass().getName()) {
-          case "SinApuros" -> "SinApuros";
-          case "CuandoSuceden" -> "CuandoSuceden";
+          case "usuario.configuraciones.formas.SinApuros" -> "SinApuros";
+          case "usuario.configuraciones.formas.CuandoSuceden" -> "CuandoSuceden";
           default -> "";
       };
   }

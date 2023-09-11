@@ -5,7 +5,7 @@ import lombok.Setter;
 import notificaciones.Notificacion;
 
 public class NotificarPorMail implements MedioPreferido {
-    @Setter private IAdapterMail adapter;
+    @Setter private IAdapterMail adapter = new AdapterMail();
 
     public NotificarPorMail(IAdapterMail adapter) {
         this.adapter = adapter;

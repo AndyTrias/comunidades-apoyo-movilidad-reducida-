@@ -33,15 +33,15 @@ public class Comunidad {
     private List<Rol> roles;
 
     @Getter
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private Set<PrestacionDeServicio> serviciosDeInteres;
 
     @Getter
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Incidente> incidentesAbiertos;
 
     @Getter
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Incidente> incidentesCerrados;
 
     @Setter

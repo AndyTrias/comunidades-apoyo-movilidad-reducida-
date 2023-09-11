@@ -11,7 +11,6 @@ import javax.persistence.AttributeConverter;
 public class NotificadorConverter implements AttributeConverter<Notificador, String> {
     @Override
     public String convertToDatabaseColumn(Notificador notificador) {
-        System.out.println(notificador.getClass().getName());
         return switch (notificador.getClass().getName()) {
             case "notificaciones.notificador.AperturaDeIncidente" -> "AperturaDeIncidente";
             case "notificaciones.notificador.CierreIncidente" -> "CierreIncidente";
