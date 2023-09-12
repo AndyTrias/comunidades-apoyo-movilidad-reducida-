@@ -56,4 +56,19 @@ public class PersistenciaTest implements SimplePersistenceTest {
         repoComunidad.agregar(comunidad);
     }
 
+    @Test
+    void cerrarIncidenteTest(){
+        Usuario usuario = repoUsuario.buscar(1L);
+        Comunidad comunidad = repoComunidad.buscar(1L);
+        Incidente incidente = repoIncidentes.buscar(6L);
+        comunidad.cerrarIncidente(incidente, usuario);
+        repoComunidad.modificar(comunidad);
+    }
+
+    @Test
+    void localizacionUsuarioTest(){
+        Usuario usuario = repoUsuario.buscar(7L);
+        System.out.println(usuario.getLocalizaciones());
+    }
+
 }
