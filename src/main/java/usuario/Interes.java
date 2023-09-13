@@ -18,12 +18,12 @@ public class Interes {
 
     @Getter
     @Setter
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Servicio servicio;
 
     @Getter
     @Setter
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Entidad entidad;
 
 

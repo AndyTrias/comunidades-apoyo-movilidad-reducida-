@@ -3,6 +3,8 @@ package external.georef.responseClases;
 
 import javax.persistence.*;
 
+import lombok.Setter;
+
 @Entity
 @Table(name = "municipio")
 public class Municipio {
@@ -14,6 +16,7 @@ public class Municipio {
     @Column(name = "nombre")
     public String nombre;
 
+    @Setter
     @ManyToOne
     @JoinColumn(name = "provincia_id")
     public Provincia provincia;

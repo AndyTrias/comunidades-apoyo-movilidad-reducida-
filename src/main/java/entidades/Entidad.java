@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+
+import com.twilio.rest.api.v2010.account.availablephonenumbercountry.Local;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -19,7 +22,7 @@ public class Entidad {
     private int id;
 
     @Getter
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "entidad_id")
     private Set<Establecimiento> establecimientos;
 
@@ -32,9 +35,10 @@ public class Entidad {
     private String nombre;
 
 
-    public Entidad(String nombre) {
+    public Entidad(String nombre, Localizacion localizacion) {
         this.nombre = nombre;
         this.establecimientos = new HashSet<>();
+        this.localizacion = localizacion;
     }
 
     public Entidad() {
@@ -52,11 +56,5 @@ public class Entidad {
     public void agregarEstablecimiento(Establecimiento establecimiento) {
         this.establecimientos.add(establecimiento);
     }
-
-    public static void main(String[] args) {
-        Entidad entidad = new Entidad("Entidad");
-        System.out.println(entidad.getNombre());
-    }
-
 
 }

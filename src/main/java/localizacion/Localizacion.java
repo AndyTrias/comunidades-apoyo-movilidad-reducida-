@@ -44,6 +44,7 @@ public class Localizacion {
     public void setUbicacionAsMunicipio(int idMunicipio) throws Exception {
         ListadoMunicipios municipio = adapter.getMunicipioById(idMunicipio);
         this.ubicacion.setMunicipio(municipio.municipios.get(0));
+        this.ubicacion.getMunicipio().setProvincia(municipio.municipios.get(0).provincia);
         this.ubicacion.setProvincia(municipio.municipios.get(0).provincia);
     }
 
@@ -51,6 +52,7 @@ public class Localizacion {
         ListadoLocalidades localidad = adapter.getLocalidadById(idLocalidad);
         this.ubicacion.setLocalidad(localidad.localidades.get(0));
         this.ubicacion.setMunicipio(localidad.localidades.get(0).municipio);
+        this.ubicacion.getMunicipio().setProvincia(localidad.localidades.get(0).municipio.provincia);
         this.ubicacion.setProvincia(localidad.localidades.get(0).provincia);
     }
 }

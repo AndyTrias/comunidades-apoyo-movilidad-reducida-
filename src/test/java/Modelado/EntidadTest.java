@@ -15,7 +15,7 @@ public class EntidadTest {
 
   @Before
   public void setUp() {
-    entidad = new Entidad("Santander Rio Argentina");
+    entidad = new Entidad("Santander Rio Argentina", new Localizacion());
     establecimiento1 = new Establecimiento("Sucursal Almagro", new Localizacion());
     establecimiento2 = new Establecimiento("Sucursal Buenos Aires", new Localizacion());
   }

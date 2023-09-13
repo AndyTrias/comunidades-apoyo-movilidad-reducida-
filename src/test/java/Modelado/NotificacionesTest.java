@@ -13,6 +13,7 @@ import entidades.Entidad;
 import entidades.Establecimiento;
 import incidentes.Incidente;
 import incidentes.RevisionDeIncidente;
+import localizacion.Localizacion;
 import localizacion.UbicacionExacta;
 import servicios.PrestacionDeServicio;
 import servicios.Servicio;
@@ -64,7 +65,7 @@ public class NotificacionesTest {
 
         Establecimiento establecimiento1 = new Establecimiento("establecimiento1", null);
         establecimiento1.agregarServicioPrestado(banioCastroBarros);
-        this.entidad1 = new Entidad("entidad1");
+        this.entidad1 = new Entidad("entidad1", new Localizacion());
         entidad1.agregarEstablecimiento(establecimiento1);
 
         /*RepoEntidades.getInstance().agregarEntidad(entidad1);*/

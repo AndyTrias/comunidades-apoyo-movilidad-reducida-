@@ -56,6 +56,8 @@ public class Rol {
         this.usuarios.remove(usuario);
     }
 
-
+    public void agregarPermiso(Permiso permiso) {
+        this.permisos.add(permiso);
+    }
 }
 

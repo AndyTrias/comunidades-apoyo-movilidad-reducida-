@@ -1,6 +1,7 @@
 package comunidades;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -12,7 +13,10 @@ public class Permiso {
     private Long id;
 
     @Getter
+    @Setter
     @Column(name = "nombre")
     private String nombre;
 
+    public Permiso() {
+    }
 }

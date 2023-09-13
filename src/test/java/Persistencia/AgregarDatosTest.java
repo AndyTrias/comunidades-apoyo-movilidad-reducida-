@@ -1,6 +1,8 @@
 package Persistencia;
 
 import comunidades.Comunidad;
+import comunidades.Permiso;
+import comunidades.Rol;
 import entidades.Entidad;
 import entidades.Establecimiento;
 import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
@@ -8,9 +10,13 @@ import localizacion.Localizacion;
 import localizacion.UbicacionExacta;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import com.twilio.rest.api.v2010.account.incomingphonenumber.Local;
+
 import repositiorios.*;
 import servicios.PrestacionDeServicio;
 import servicios.Servicio;
+import usuario.Interes;
 import usuario.Usuario;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -44,7 +50,7 @@ public class AgregarDatosTest implements SimplePersistenceTest {
 
         servicio = new Servicio("baño hombres");
         comunidad = new Comunidad("comunidad1");
-        entidad = new Entidad("Santander Rio Argentina");
+        entidad = new Entidad("Santander Rio Argentina", new Localizacion());
         establecimiento = new Establecimiento("Sucursal Almagro", new Localizacion());
     }
 
@@ -63,11 +69,14 @@ public class AgregarDatosTest implements SimplePersistenceTest {
 
     @Test
     void agregarEntidad(){
+        entidad.agregarEstablecimiento(establecimiento);
         repoEntidad.agregar(entidad);
     }
 
     @Test
     void agregarEstablecimiento(){
+        PrestacionDeServicio prestacionDeServicio = new PrestacionDeServicio(servicio, "baño Medrano", new UbicacionExacta(1, 1));
+        establecimiento.agregarServicioPrestado(prestacionDeServicio);
         repoEstablecimiento.agregar(establecimiento);
     }
 
@@ -75,8 +84,38 @@ public class AgregarDatosTest implements SimplePersistenceTest {
     void agregarLocalizacion() throws Exception {
         Localizacion localizacion = new Localizacion();
         localizacion.setUbicacionAsLocalidad(6056010001L);
-        Usuario usuario = new Usuario("Juan", "Perez", "");
+
+        Usuario usuario = repoUsuario.buscar(1L);
         usuario.agregarLocalizacion(localizacion);
+        repoUsuario.modificar(usuario);
+    }
+
+    @Test
+    void agregarInteresAUsuario(){
+        Usuario usuario = repoUsuario.buscar(1L);
+        Interes interes = new Interes();
+        interes.setEntidad(entidad);
+        interes.setServicio(servicio);
+        usuario.agregarInteres(interes);
+        repoUsuario.modificar(usuario);
+    }
+
+    @Test
+    void agregarPermisoARol(){
+        Comunidad comunidad = repoComunidad.buscar(1L);
+        Rol rolBase = comunidad.getRoles().get(0);
+        Permiso leer = new Permiso();
+        leer.setNombre("leer");
+        rolBase.agregarPermiso(leer);
+        repoComunidad.modificar(comunidad);
+    }
+
+    @Test
+    void agregarUsuarioCompleto() throws Exception {
+        Usuario usuario = new Usuario("franco", "pesce", "francopescee@gmail.com");
+        usuario.setContrasenia("@ashffkrh3nksdnf214123cssdf");
+        usuario.setTelefono("+5491131231231");
+        usuario.setUbicacionExacta(new UbicacionExacta(1,1));
         repoUsuario.agregar(usuario);
     }
 }

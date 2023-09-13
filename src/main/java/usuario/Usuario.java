@@ -72,7 +72,7 @@ public class Usuario {
     private ConfiguracionDeNotificaciones configuracionDeNotificaciones;
 
     @Getter
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private UbicacionExacta ubicacionExacta;
 
     public Usuario(String nombre, String apellido, String correoElectronico) {

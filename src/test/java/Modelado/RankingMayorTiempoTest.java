@@ -20,9 +20,9 @@ public class RankingMayorTiempoTest {
 
     @Test
     public void generarRankingdeMayorTiempo() {
-        Entidad entidad1 = new Entidad("Entidad 1");
-        Entidad entidad2 = new Entidad("Entidad 2");
-        Entidad entidad3 = new Entidad("Entidad 3");
+        Entidad entidad1 = new Entidad("Entidad 1", new Localizacion());
+        Entidad entidad2 = new Entidad("Entidad 2", new Localizacion());
+        Entidad entidad3 = new Entidad("Entidad 3", new Localizacion());
 
         PrestacionDeServicio prestacion1 = new PrestacionDeServicio(new Servicio("Servicio 1"), "Prestacion 1", new UbicacionExacta(1, 1));
         PrestacionDeServicio prestacion2 = new PrestacionDeServicio(new Servicio("Servicio 2"), "Prestacion 2", new UbicacionExacta(2, 2));

@@ -22,7 +22,7 @@ public class Establecimiento {
     @OneToOne(cascade = CascadeType.ALL)
     @Getter @Setter private Localizacion localizacion;
 
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "establecimiento_id")
     @Getter private Set<PrestacionDeServicio> servicios;
 

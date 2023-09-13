@@ -20,7 +20,7 @@ public class PrestacionDeServicio {
     private String nombre;
 
     @Getter
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Servicio servicio;
 
     @Getter
