@@ -67,10 +67,6 @@ public class PersistenciaTest implements SimplePersistenceTest {
         repoComunidad.modificar(comunidad);
     }
 
-    @Test
-    void localizacionUsuarioTest(){
-        Usuario usuario = repoUsuario.buscar(7L);
-        System.out.println(usuario.getLocalizaciones());
-    }
+    
 
 }

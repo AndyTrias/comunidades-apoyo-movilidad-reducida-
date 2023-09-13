@@ -2,6 +2,8 @@ package Modelado;
 
 import incidentes.Incidente;
 import localizacion.UbicacionExacta;
+import org.junit.Assert;
+import rankings.criterios.MayorTiempo;
 import servicios.PrestacionDeServicio;
 import servicios.Servicio;
 import usuario.Usuario;
@@ -66,15 +68,12 @@ public class RankingMayorCantidad {
         entidades.add(entidad2);
         entidades.add(entidad3);
 
-        /*MayorTiempo ranking = new MayorTiempo();
-=======
         MayorTiempo ranking = new MayorTiempo("Mayor tiempo");
->>>>>>> 0d4bb060517914c4286cb02512fd1adf35a0e642
 
         List<Entidad> rankingList = ranking.generarRanking(entidades);
 
         Assert.assertEquals(entidad1, rankingList.get(0));
         Assert.assertEquals(entidad2, rankingList.get(1));
-        Assert.assertEquals(entidad3, rankingList.get(2));*/
+        Assert.assertEquals(entidad3, rankingList.get(2));
     }
 }
