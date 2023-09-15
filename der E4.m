@@ -17,12 +17,8 @@ entity "Interes" as eInteres{
   id_interes: number <<generated>>
   id_Servicio:FK
   id_Entidad:FK
+  id_usuario:FK
 }
-
-entity "interes_servicio" as eInteres_servicio {
-    id_Servicio: PK, FK
-    id_Interes: PK, FK
-} 
 
 entity "Servicio" as eServicio 
 {
@@ -30,8 +26,6 @@ entity "Servicio" as eServicio
   --
   informacion:varchar(100)  
 }
-
-
 
 entity "Memebresia" as eMemebresia{
  id_comunidad : FK
@@ -48,6 +42,16 @@ entity "Comunidad" as eComunidad{
   notificador:? 
 }
 
+entity "incidentens_abiertos" as eComunidad{
+comunidad_id:FK
+incidente_id:FK
+}
+
+entity "incidentens_cerrados" as eComunidad{
+comunidad_id:FK
+incidente_id:FK
+}
+
 entity "Rol" as eRol{
   id_rol : number <<generated>>
   usuario : FK
@@ -58,7 +62,7 @@ entity "Rol" as eRol{
 entity "Permiso" as ePermiso{
   id_permiso : number <<generated>>
   nombre : varchar(30)
-}
+}f
 
 entity "Incidente" as eIncidente{
   id_incidente: number <<generated>> 
@@ -124,12 +128,15 @@ entity "Provincia" as eProvincia {
 entity "Municipio" as eMunicipio {
   id_municipio: number <<generated>>
   --
+  provincia_id:FK
   nombre:varchar(30)
 }
 
 entity "Localidad" as eLocalidad {
   id_localidad: number <<generated>>
   --
+  municipio_id:FK
+  provincia_id:FK
   nombre:varchar(30)
 }
 
@@ -186,8 +193,6 @@ eMemebresia ||--||eRol
 eRol ||--o{eUsuario
 eMemebresia ||--||eComunidad
 eComunidad ||--|{eRol
-eInteres||--o{ eInteres_servicio
-eInteres_servicio }o--|| eServicio 
 eMemebresia ||---o{ eAfectacion
 eEntidadPrestadora ||--|| eUsuario
 eEntidadPrestadora ||--|{ eEntidad
