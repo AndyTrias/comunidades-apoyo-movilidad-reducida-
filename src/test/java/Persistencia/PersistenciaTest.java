@@ -96,4 +96,9 @@ public class PersistenciaTest implements SimplePersistenceTest {
         repoComunidad.modificar(comunidad);
     }
 
+    @Test
+    void borrarLocalizacion() { //cascada con ubicacion
+        Localizacion localizacion = repoLocalizacion.buscar(1L);
+        repoLocalizacion.eliminar(localizacion);
+    }
 }

@@ -57,7 +57,7 @@ public class Usuario {
 
     @Getter
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "usuario_id")
+    @JoinColumn(name = "usuario_id", nullable = true)
     private List<Membresia> membresias;
 
     @Getter
