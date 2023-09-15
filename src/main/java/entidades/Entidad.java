@@ -19,7 +19,7 @@ import java.util.Set;
 public class Entidad {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
 
     @Getter
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
