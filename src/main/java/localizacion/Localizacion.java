@@ -12,8 +12,8 @@ import javax.persistence.*;
 @Table(name = "localizacion")
 public class Localizacion {
     @Id
-    @GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
     @Setter
     @Transient

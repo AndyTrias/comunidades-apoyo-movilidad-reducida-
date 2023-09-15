@@ -68,13 +68,13 @@ public class AgregarDatosTest implements SimplePersistenceTest {
     }
 
     @Test
-    void agregarEntidad(){
+    void agregarEntidad(){//agrega 2 ubicaciones sin datos y 2 localizacion relacionada
         entidad.agregarEstablecimiento(establecimiento);
         repoEntidad.agregar(entidad);
     }
 
     @Test
-    void agregarEstablecimiento(){
+    void agregarEstablecimiento(){//agrega una ubicacion sin datos y una localizacion relacionada
         PrestacionDeServicio prestacionDeServicio = new PrestacionDeServicio(servicio, "baño Medrano", new UbicacionExacta(1, 1));
         establecimiento.agregarServicioPrestado(prestacionDeServicio);
         repoEstablecimiento.agregar(establecimiento);
@@ -84,14 +84,11 @@ public class AgregarDatosTest implements SimplePersistenceTest {
     void agregarLocalizacion() throws Exception {
         Localizacion localizacion = new Localizacion();
         localizacion.setUbicacionAsLocalidad(6056010001L);
-
-        Usuario usuario = repoUsuario.buscar(1L);
-        usuario.agregarLocalizacion(localizacion);
-        repoUsuario.modificar(usuario);
+        repoLocalizacion.agregar(localizacion);
     }
 
     @Test
-    void agregarInteresAUsuario(){
+    void agregarInteresAUsuario(){//agrega una ubicacion sin datos y una localizacion relacionada
         Usuario usuario = repoUsuario.buscar(1L);
         Interes interes = new Interes();
         interes.setEntidad(entidad);
@@ -117,5 +114,19 @@ public class AgregarDatosTest implements SimplePersistenceTest {
         usuario.setTelefono("+5491131231231");
         usuario.setUbicacionExacta(new UbicacionExacta(1,1));
         repoUsuario.agregar(usuario);
+    }
+
+    @Test
+    void agregarLocalizacionUsuario() throws Exception {
+        Usuario usuario = repoUsuario.buscar(1L);
+       Localizacion localizacion = repoLocalizacion.buscar(1L);
+        usuario.agregarLocalizacion(localizacion);
+        repoUsuario.modificar(usuario);
+    }
+
+    @Test
+    void borrarUsuario() throws Exception {
+        Usuario usuario = repoUsuario.buscar(1L);
+        repoUsuario.eliminar(usuario);
     }
 }
