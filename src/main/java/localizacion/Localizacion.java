@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Table(name = "localizacion")
 public class Localizacion {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Setter
@@ -20,8 +20,7 @@ public class Localizacion {
     private AdapterLocalizacion adapter = new AdapterLocalizacionGeorefApi();
 
     @Getter
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "ubicacion_id")
+    @Embedded
     private Ubicacion ubicacion = new Ubicacion();
 
 

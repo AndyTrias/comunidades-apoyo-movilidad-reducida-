@@ -18,7 +18,7 @@ import java.util.Set;
 @Table(name = "entidad")
 public class Entidad {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Getter

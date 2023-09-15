@@ -9,14 +9,8 @@ import lombok.Setter;
 import javax.persistence.*;
 
 
-@Entity
-@Table(name = "ubicacion")
-
+@Embeddable
 public class Ubicacion {
-    @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Getter @Setter private int id;
-
     @Getter
     @Setter
     @ManyToOne(cascade = CascadeType.ALL)

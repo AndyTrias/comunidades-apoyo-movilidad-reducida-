@@ -4,7 +4,9 @@ import comunidades.Comunidad;
 import comunidades.Permiso;
 import comunidades.Rol;
 import entidades.Entidad;
+import entidades.EntidadPrestadora;
 import entidades.Establecimiento;
+import entidades.OrganismoDeControl;
 import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
 import localizacion.Localizacion;
 import localizacion.UbicacionExacta;
@@ -29,13 +31,16 @@ public class AgregarDatosTest implements SimplePersistenceTest {
     private RepoServicio repoServicio;
     private RepoEntidad repoEntidad;
     private RepoEstablecimiento repoEstablecimiento;
-
+    private RepoEntidadPrestadora repoEntidadPrestadora;
     private RepoLocalizacion repoLocalizacion;
+    private RepoOrganismoDeControl repoOrganismoDeControl;
 
     private Servicio servicio;
     private Comunidad comunidad;
     private Entidad entidad;
     private Establecimiento establecimiento;
+    private EntidadPrestadora santander;
+
 
     @BeforeEach
     void setUp() {
@@ -45,6 +50,8 @@ public class AgregarDatosTest implements SimplePersistenceTest {
         repoEntidad = new RepoEntidad();
         repoEstablecimiento = new RepoEstablecimiento();
         repoLocalizacion = new RepoLocalizacion();
+        repoEntidadPrestadora = new RepoEntidadPrestadora();
+        repoOrganismoDeControl = new RepoOrganismoDeControl();
 
         servicio = new Servicio("baño hombres");
         comunidad = new Comunidad("comunidad1");
@@ -66,9 +73,24 @@ public class AgregarDatosTest implements SimplePersistenceTest {
     }
 
     @Test
+    void agregarEntidadPrestadora(){
+      EntidadPrestadora santander = new EntidadPrestadora("Santander Rio Argentina");
+      santander.setPersonaDesignada(new Usuario());
+      repoEntidadPrestadora.agregar(santander);
+    }
+
+    @Test
+    void agregarOrganismoDeControl(){
+        OrganismoDeControl bancos = new OrganismoDeControl("Bancos");
+        bancos.setPersonaDesignada(new Usuario());
+        repoOrganismoDeControl.agregar(bancos);
+    }
+
+    @Test
     void agregarEntidad(){//agrega 2 ubicaciones sin datos y 2 localizacion relacionada
         entidad.agregarEstablecimiento(establecimiento);
-        repoEntidad.agregar(entidad);
+        santander.agregarEntidad(entidad);
+        repoEntidadPrestadora.agregar(santander);
     }
 
     @Test
