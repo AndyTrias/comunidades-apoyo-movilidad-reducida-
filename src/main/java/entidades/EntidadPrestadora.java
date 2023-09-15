@@ -5,6 +5,7 @@ import entidades.enviadorDeInformacion.AdapterEnviadorDeInformacion;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -44,9 +45,18 @@ public class EntidadPrestadora {
 
     public EntidadPrestadora(String nombre){
         this.nombre = nombre;
+        this.serviciosPrestados = new ArrayList<>();
+    }
+
+    public EntidadPrestadora() {
+
     }
 
     public void enviarInformacion(){
         enviadorDeInformacion.enviarInformacion();
+    }
+
+    public void agregarEntidad(Entidad entidad){
+        serviciosPrestados.add(entidad);
     }
 }

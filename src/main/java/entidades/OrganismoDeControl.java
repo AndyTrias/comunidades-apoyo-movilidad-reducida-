@@ -1,5 +1,6 @@
 package entidades;
 
+import lombok.Setter;
 import usuario.Usuario;
 import entidades.enviadorDeInformacion.AdapterEnviadorDeInformacion;
 import lombok.Getter;
@@ -29,6 +30,7 @@ public class OrganismoDeControl {
     @Column(name = "nombre") 
     private String nombre;
 
+    @Setter
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Usuario personaDesignada;
 
@@ -43,7 +45,13 @@ public class OrganismoDeControl {
         this.nombre = nombre;
     }
 
+    public OrganismoDeControl() {}
+
     public void enviarInformacion(){
         enviadorDeInformacion.enviarInformacion();
+    }
+
+    public void agregarEntidad(EntidadPrestadora entidad){
+        entidadesQuePosee.add(entidad);
     }
 }

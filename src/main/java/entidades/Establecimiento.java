@@ -13,8 +13,10 @@ import java.util.Set;
 @Table(name = "establecimiento")
 public class Establecimiento {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Getter @Setter private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
+    @Setter
+    private long id;
 
     @Column(name = "nombre")
     @Getter private String nombre;

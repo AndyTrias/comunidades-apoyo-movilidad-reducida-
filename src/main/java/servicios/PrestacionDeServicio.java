@@ -25,7 +25,7 @@ public class PrestacionDeServicio {
 
     @Getter
     @OneToMany
-    @JoinColumn(name = "prestacion_de_servicio_id")
+    @JoinColumn(name = "prestacionDeServicio_id")
     private List<Incidente> incidentes;
 
     @Getter
