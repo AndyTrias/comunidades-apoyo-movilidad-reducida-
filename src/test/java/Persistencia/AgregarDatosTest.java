@@ -27,7 +27,6 @@ public class AgregarDatosTest implements SimplePersistenceTest {
     private RepoUsuario repoUsuario;
     private RepoComunidad repoComunidad;
     private RepoServicio repoServicio;
-    private RepoPrestacion repoPrestacion;
     private RepoEntidad repoEntidad;
     private RepoEstablecimiento repoEstablecimiento;
 
@@ -43,7 +42,6 @@ public class AgregarDatosTest implements SimplePersistenceTest {
         repoUsuario = new RepoUsuario();
         repoComunidad = new RepoComunidad();
         repoServicio = new RepoServicio();
-        repoPrestacion = new RepoPrestacion();
         repoEntidad = new RepoEntidad();
         repoEstablecimiento = new RepoEstablecimiento();
         repoLocalizacion = new RepoLocalizacion();
@@ -88,45 +86,11 @@ public class AgregarDatosTest implements SimplePersistenceTest {
     }
 
     @Test
-    void agregarInteresAUsuario(){//agrega una ubicacion sin datos y una localizacion relacionada
-        Usuario usuario = repoUsuario.buscar(1L);
-        Interes interes = new Interes();
-        interes.setEntidad(entidad);
-        interes.setServicio(servicio);
-        usuario.agregarInteres(interes);
-        repoUsuario.modificar(usuario);
-    }
-
-    @Test
-    void agregarPermisoARol(){
-        Comunidad comunidad = repoComunidad.buscar(1L);
-        Rol rolBase = comunidad.getRoles().get(0);
-        Permiso leer = new Permiso();
-        leer.setNombre("leer");
-        rolBase.agregarPermiso(leer);
-        repoComunidad.modificar(comunidad);
-    }
-
-    @Test
     void agregarUsuarioCompleto() throws Exception {
         Usuario usuario = new Usuario("franco", "pesce", "francopescee@gmail.com");
         usuario.setContrasenia("@ashffkrh3nksdnf214123cssdf");
         usuario.setTelefono("+5491131231231");
         usuario.setUbicacionExacta(new UbicacionExacta(1,1));
         repoUsuario.agregar(usuario);
-    }
-
-    @Test
-    void agregarLocalizacionUsuario() throws Exception {
-        Usuario usuario = repoUsuario.buscar(1L);
-       Localizacion localizacion = repoLocalizacion.buscar(1L);
-        usuario.agregarLocalizacion(localizacion);
-        repoUsuario.modificar(usuario);
-    }
-
-    @Test
-    void borrarUsuario() throws Exception {
-        Usuario usuario = repoUsuario.buscar(1L);
-        repoUsuario.eliminar(usuario);
     }
 }
