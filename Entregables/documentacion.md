@@ -11,7 +11,7 @@ Este es un servicio web simple que toma un conjunto de entidades y las clasifica
 ### Parámetros de entrada
 
 - El servicio espera recibir un objeto JSON con una lista de entidades y sus incidentes asociados.
-- Cada entidad debe tener una fecha de apertura, una fecha de cierre (opcional) y una cantidad de miembros afectados
+- Cada entidad tiene una lista de incidentes que debe tener una fecha de apertura, una fecha de cierre (opcional) y una cantidad de miembros afectados
 - El formato de las fechas debe ser %Y-%m-%d
 
 Ejemplo de entrada:
@@ -82,7 +82,7 @@ Si la estructura de la solicitud JSON es incorrecta, el servicio devolverá un e
 
   ```json
   {
-      "error": "Invalid JSON data"
+      "error": "formato de JSON invalido"
   }
 ```
 
