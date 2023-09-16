@@ -33,11 +33,11 @@ public class Comunidad {
     private List<Rol> roles;
 
     @Getter
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Set<PrestacionDeServicio> serviciosDeInteres;
 
     @Getter
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(name = "incidentes_abiertos", joinColumns = @JoinColumn(name = "comunidad_id"), inverseJoinColumns = @JoinColumn(name = "incidente_id"))
     private List<Incidente> incidentesAbiertos;
 

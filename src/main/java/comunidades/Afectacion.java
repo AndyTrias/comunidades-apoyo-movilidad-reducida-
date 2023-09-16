@@ -19,7 +19,7 @@ public class Afectacion {
   private boolean afectado;
 
   @Getter
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
   private PrestacionDeServicio prestacionDeServicio;
 
   public Afectacion(PrestacionDeServicio prestacionDeServicio) {

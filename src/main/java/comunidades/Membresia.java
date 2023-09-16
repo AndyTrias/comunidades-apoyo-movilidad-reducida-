@@ -15,15 +15,15 @@ public class Membresia {
   private Long id;
 
   @Getter
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
   private Comunidad comunidad;
 
   @Getter
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
   private Rol rol;
 
   @Getter
-  @OneToMany(cascade = CascadeType.ALL)
+  @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
   @JoinColumn(name = "membresia_id")
   private List<Afectacion> afectaciones;
 

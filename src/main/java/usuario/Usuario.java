@@ -62,7 +62,7 @@ public class Usuario {
 
     @Getter
     @Setter
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "usuario_id")
     private Set<Localizacion> localizaciones;
 

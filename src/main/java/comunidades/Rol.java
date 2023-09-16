@@ -26,7 +26,7 @@ public class Rol {
     private List<Usuario> usuarios;
 
     @Getter
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(
             name = "rol_permiso",
             joinColumns = @JoinColumn(name = "rol_id"),
