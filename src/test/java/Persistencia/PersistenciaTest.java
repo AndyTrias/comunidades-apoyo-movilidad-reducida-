@@ -2,6 +2,8 @@ package Persistencia;
 
 import comunidades.Permiso;
 import entidades.Entidad;
+import entidades.EntidadPrestadora;
+import entidades.Establecimiento;
 import localizacion.Localizacion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
@@ -24,9 +26,11 @@ public class PersistenciaTest implements SimplePersistenceTest {
     private RepoPrestacion repoPrestacion;
     private RepoIncidentes repoIncidentes;
     private RepoLocalizacion repoLocalizacion;
+    private RepoEntidadPrestadora repoEntidadPrestadora;
 
     private Servicio servicio;
     private Entidad entidad;
+    private Establecimiento establecimiento;
 
     @BeforeEach
     void setUp() {
@@ -35,9 +39,11 @@ public class PersistenciaTest implements SimplePersistenceTest {
         repoPrestacion = new RepoPrestacion();
         repoIncidentes = new RepoIncidentes();
         repoLocalizacion = new RepoLocalizacion();
+        repoEntidadPrestadora = new RepoEntidadPrestadora();
 
         servicio = new Servicio("baño hombres");
         entidad = new Entidad("Santander Rio Argentina", new Localizacion());
+        establecimiento = new Establecimiento("Sucursal Almagro", new Localizacion());
     }
 
     @Test
@@ -100,5 +106,13 @@ public class PersistenciaTest implements SimplePersistenceTest {
     void borrarLocalizacion() { //cascada con ubicacion
         Localizacion localizacion = repoLocalizacion.buscar(1L);
         repoLocalizacion.eliminar(localizacion);
+    }
+
+    @Test
+    void agregarEntidad(){//agrega 2 ubicaciones sin datos y 2 localizacion relacionada
+        entidad.agregarEstablecimiento(establecimiento);
+        EntidadPrestadora santander = repoEntidadPrestadora.buscar(1L);
+        santander.agregarEntidad(entidad);
+        repoEntidadPrestadora.agregar(santander);
     }
 }

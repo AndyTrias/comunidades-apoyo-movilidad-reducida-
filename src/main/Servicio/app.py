@@ -1,8 +1,6 @@
 from datetime import datetime
 from flask import Flask, request, jsonify
 
-import traceback
-
 # Coeficiente de no resueltos
 CNF = 4.5
 

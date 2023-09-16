@@ -87,13 +87,6 @@ public class AgregarDatosTest implements SimplePersistenceTest {
     }
 
     @Test
-    void agregarEntidad(){//agrega 2 ubicaciones sin datos y 2 localizacion relacionada
-        entidad.agregarEstablecimiento(establecimiento);
-        santander.agregarEntidad(entidad);
-        repoEntidadPrestadora.agregar(santander);
-    }
-
-    @Test
     void agregarEstablecimiento(){//agrega una ubicacion sin datos y una localizacion relacionada
         PrestacionDeServicio prestacionDeServicio = new PrestacionDeServicio(servicio, "baño Medrano", new UbicacionExacta(1, 1));
         establecimiento.agregarServicioPrestado(prestacionDeServicio);
