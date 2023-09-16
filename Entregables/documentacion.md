@@ -82,7 +82,7 @@ Si la estructura de la solicitud JSON es incorrecta, el servicio devolverá un e
 
   ```json
   {
-      "error": "Invalid JSON data"
+      "error": "formato de JSON invalido"
   }
 ```
 
