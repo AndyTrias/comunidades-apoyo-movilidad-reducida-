@@ -40,11 +40,12 @@ def sort_json():
 
     try:
         data = request.get_json()
-
-        if not data or not isinstance(data.get('entidades'), list):
+        entidades = data.get('entidades')
+        
+        if not isintance(entidades, list) or not isinstance(entidades.get('incidentes'), list):
             return jsonify({'error': 'formato de JSON invalido'}), 400
 
-        entidades = data['entidades']
+        
 
         sorted_data = sorted(entidades, key=criterioRanking)
 
