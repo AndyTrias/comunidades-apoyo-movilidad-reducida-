@@ -3,32 +3,26 @@
 entity "Usuario" as eUsuario{
   id_usuario: number <<generated>>  
   --
-  intereses: FK
-  localizaciones:FK
-  ubicacionExacta:FK
   nombre : varchar(20)
   apellido : varchar(30)
   correo : varchar(50)
   contraseña : varchar(20)
-  telefono: varchar(20)
+  membresias : 
+  interes : 
+  localizaciones : 
   
 }
-
-entity "configuracion_de_notificaciones" as eConfigNoti{
-id_configuracionNoti: number <<generated>>  
---
-estrategiaDeNotificacion: varchar(255)
-medioPreferido: varchar(255)
-
-} 
-
 
 entity "Interes" as eInteres{
   id_interes: number <<generated>>
   id_Servicio:FK
   id_Entidad:FK
-  id_usuario:FK
 }
+
+entity "interes_servicio" as eInteres_servicio {
+    id_Servicio: PK, FK
+    id_Interes: PK, FK
+} 
 
 entity "Servicio" as eServicio 
 {
@@ -36,6 +30,8 @@ entity "Servicio" as eServicio
   --
   informacion:varchar(100)  
 }
+
+
 
 entity "Memebresia" as eMemebresia{
  id_comunidad : FK
@@ -52,16 +48,6 @@ entity "Comunidad" as eComunidad{
   notificador:? 
 }
 
-entity "incidente_abierto" as eIncidenteAbierto{
-comunidad_id:FK
-incidente_id:FK
-}
-
-entity "incidentes_cerrado" as eIncidenteCerrado{
-comunidad_id:FK
-incidente_id:FK
-}
-
 entity "Rol" as eRol{
   id_rol : number <<generated>>
   usuario : FK
@@ -75,8 +61,7 @@ entity "Permiso" as ePermiso{
 }
 
 entity "Incidente" as eIncidente{
-  id_incidente: number <<generated>>
-  -- 
+  id_incidente: number <<generated>> 
   abiertoPorUsuario:FK
   prestacionDeServicio:FK
   observaciones:varchar(100)
@@ -122,7 +107,13 @@ entity "EntidadPrestadora" as eEntidadPrestadora {
 }
 
 
-
+entity "Ubicacion" as eUbicacion {
+  id_ubicacion: number <<generated>>
+  --
+  id_provincia:FK
+  id_municipio:FK
+  id_localidad:FK
+}
 
 entity "Provincia" as eProvincia {
   id_provincia: number <<generated>>
@@ -133,25 +124,19 @@ entity "Provincia" as eProvincia {
 entity "Municipio" as eMunicipio {
   id_municipio: number <<generated>>
   --
-  provincia_id:FK
   nombre:varchar(30)
 }
 
 entity "Localidad" as eLocalidad {
   id_localidad: number <<generated>>
   --
-  municipio_id:FK
-  provincia_id:FK
   nombre:varchar(30)
 }
 
 entity "Localizacion" as eLocalizacion {
   id_localizacion: number <<generated>>
   --
-  id_provincia:FK
-  id_municipio:FK
-  id_localidad:FK
-  id_usuario:FK
+  id_ubicacion:FK
 
 }
 
@@ -189,17 +174,20 @@ eUsuario ||--o|eUbicacionExacta
 eLocalizacion ||--|| eEntidad
 eLocalizacion ||--|| eEstablecimiento
 eUsuario ||--o{ eLocalizacion
-eProvincia ||--|{ eLocalizacion 
-eMunicipio ||--|{ eLocalizacion 
-eLocalidad ||--|{ eLocalizacion 
+eLocalizacion ||--|{ eUbicacion
+eProvincia ||--|{ eUbicacion
+eMunicipio ||--|{ eUbicacion
+eLocalidad ||--|{ eUbicacion
 eFechaIncidente |o--|| eIncidente
 eComunidad ||--o{ eIncidente
 eRol ||--o{ ePermiso
-eUsuario||--o{eInteres
+eUsuario||--o|eInteres
 eMemebresia ||--||eRol
 eRol ||--o{eUsuario
 eMemebresia ||--||eComunidad
 eComunidad ||--|{eRol
+eInteres||--o{ eInteres_servicio
+eInteres_servicio }o--|| eServicio 
 eMemebresia ||---o{ eAfectacion
 eEntidadPrestadora ||--|| eUsuario
 eEntidadPrestadora ||--|{ eEntidad
@@ -214,14 +202,6 @@ eIncidente ||---|{ ePrestacion_Incidente
 eOrganismo ||-|| eUsuario
 eOrganismo ||--|{ eOrganismo_Prestadora
 eEntidadPrestadora ||----|{ eOrganismo_Prestadora
-eIncidenteAbierto }|---|| eComunidad
-eIncidenteAbierto }|---|| eIncidente
-eIncidenteCerrado }|---|| eComunidad
-eIncidenteCerrado }|---|| eIncidente
-eProvincia ||----|{ eMunicipio
-eLocalidad }|---|| eMunicipio
-eLocalidad }|---|| eProvincia
-eInteres }|---|| eServicio
-eInteres }|---|| eEntidad
-eUsuario ||----|| eConfigNoti
-@enduml  
+
+
+@enduml    
