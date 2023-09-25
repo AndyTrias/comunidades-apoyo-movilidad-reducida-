@@ -18,7 +18,8 @@ public class LectorEntidadPrestadora extends FileStream {
 
     protected void levantarObjetos(List<String[]> csvComoLista) {
         for (int i = 1; i < csvComoLista.size(); i++) {
-            EntidadPrestadora entidadPrestadora = new EntidadPrestadora(csvComoLista.get(i)[0], Integer.parseInt(csvComoLista.get(i)[1]));
+            EntidadPrestadora entidadPrestadora = new EntidadPrestadora(csvComoLista.get(i)[0]);
+            entidadPrestadora.setId(Long.parseLong(csvComoLista.get(i)[1]));
             entidadesLeidas.add(entidadPrestadora);
         }
     }

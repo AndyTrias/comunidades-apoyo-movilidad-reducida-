@@ -1,13 +1,28 @@
 package localizacion;
 
-import apiCalls.georef.responseClases.*;
-import com.google.gson.Gson;
+import external.georef.responseClases.ListadoLocalidades;
+import external.georef.responseClases.ListadoMunicipios;
+import external.georef.responseClases.ListadoProvincias;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "localizacion")
 public class Localizacion {
-    @Setter AdapterLocalizacion adapter;
-    @Getter private Ubicacion ubicacion = new Ubicacion();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Setter
+    @Transient
+    private AdapterLocalizacion adapter = new AdapterLocalizacionGeorefApi();
+
+    @Getter
+    @Embedded
+    private Ubicacion ubicacion = new Ubicacion();
+
 
     public ListadoProvincias getListadoProvincias() throws Exception {
         return adapter.getListadoProvincias();
@@ -21,20 +36,22 @@ public class Localizacion {
         return adapter.getLocalidadesDeMunicipio(idProvincia, idMunicipio);
     }
 
-    public void setProvincia(int idProvincia) throws Exception {
-        this.ubicacion.setProvincia(adapter.getProvinciaId(idProvincia).provincias.get(0));
+    public void setUbicacionAsProvincia(int idProvincia) throws Exception {
+        this.ubicacion.setProvincia(adapter.getProvinciaById(idProvincia).provincias.get(0));
     }
 
-    public void setMunicipio(int idMunicipio) throws Exception {
-        ListadoMunicipios municipio = adapter.getMunicipioId(idMunicipio);
+    public void setUbicacionAsMunicipio(int idMunicipio) throws Exception {
+        ListadoMunicipios municipio = adapter.getMunicipioById(idMunicipio);
         this.ubicacion.setMunicipio(municipio.municipios.get(0));
+        this.ubicacion.getMunicipio().setProvincia(municipio.municipios.get(0).provincia);
         this.ubicacion.setProvincia(municipio.municipios.get(0).provincia);
     }
 
-    public void setLocalidad(long idLocalidad) throws Exception {
-        ListadoLocalidades localidad = adapter.getLocalidadId(idLocalidad);
+    public void setUbicacionAsLocalidad(long idLocalidad) throws Exception {
+        ListadoLocalidades localidad = adapter.getLocalidadById(idLocalidad);
         this.ubicacion.setLocalidad(localidad.localidades.get(0));
         this.ubicacion.setMunicipio(localidad.localidades.get(0).municipio);
+        this.ubicacion.getMunicipio().setProvincia(localidad.localidades.get(0).municipio.provincia);
         this.ubicacion.setProvincia(localidad.localidades.get(0).provincia);
     }
 }

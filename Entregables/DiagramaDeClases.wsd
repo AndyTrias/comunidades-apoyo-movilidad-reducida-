@@ -1,0 +1,511 @@
+@startuml
+
+Class PrestacionDeServicio {    
+    - servicio: Servicio
+    - incidentes: List<Incidente>
+    - nombre: String
+    - ubicacionExacta: UbicacionExacta
+
+    + funciona() : String
+    + abrirIncidente(): void
+
+}
+
+Class UbicacionExacta {
+    - latitud: Double
+    - longitud: Double
+}
+
+
+Class Servicio {
+    + informacion(): String
+}
+
+
+class Rol{
+    -usuario: List<Usuario>
+    -permisos: Set<Permiso>
+
+    +tenesPermiso(): void
+}
+
+
+
+
+class Permiso{
+ - String: Nombre
+
+}
+
+
+class Comunidad {
+    - roles: set<Rol>
+    - nombre: String
+    - serviciosDeInteres: Set<PrestacionDeServicio>
+    - incidentesAbiertos: List<Incidente>
+    - incidentesCerrados: List<Incidente>
+    - notificador: Notificador
+
+
+    + aceptarUsuario(usuario: Usuario): Rol
+    + cambiarRol(usuario: Usuario, rol: Rol): void
+    + eliminarUsuario(Usuario: Usuario): void
+    + getCantidadDeUsuarios(): int
+    + abrirIncidente(incidente: Incidente): void
+    + cerrarIncidente(incidente: Incidente): void
+    + getTodosLosIncidentes(): List<Incidente>
+    + getCantidadDeAfectados(): int
+
+}
+
+
+
+class Usuario{
+    - nombre: String
+    - apellido: String
+    - correoElectronico: Email
+    - contrasenia: String
+    - telefono: String
+    - interes: Intereses
+    - membresias: List<Membresia>
+    - localizaciones: Set<Localizacion>
+    - configuracionDeNotificaciones: ConfiguracionDeNotificaciones
+    - ubicacionExacta: UbicacionExacta
+
+
+    + setContrasenia(contrasena: String): void
+    + unirseAComunidad(comunidad: Comunidad, rol: Rol): void
+    + abandonarComunidad(comunidad: Comunidad): void
+    + getComunidades(): List<Comunidad>
+    + getMembresia(comunidad: Comunidad): Membresia
+    + notificar(notificacion: Notificacion): void
+}
+
+
+
+
+Class Entidad {
+    - establecimientos : Set<Establecimiento>
+    - localizacion : Localizacion
+    - nombre : String
+
+    + getPrestacionesDeServicio() : Set<PrestacionDeServicio>
+}
+
+
+
+
+Class Establecimiento {
+    - nombre : String
+    - localizacion : Localizacion
+    - servicios: Set<PrestacionDeServicio>
+}
+
+
+
+
+Class Membresia {
+    - comunidad: Comunidad
+    - roles: Rol
+    - afectaciones: List<Afectacion>
+
+    + agregarAfectacion(prestacionDeServicio: PrestacionDeServicio, afectado: Bool): void
+    + cambiarAfectacion(prestacionDeServicio: PrestacionDeServicio, afectado: Bool): void
+}
+
+class Afectacion{
+    - prestacionDeServicio: PrestacionDeServicio
+    - afectado: Bool
+
+    + cambiarEstado(): void
+}
+
+
+Class Localizacion {
+    - adapter: AdapterLocalizacion
+    - ubicacion: Ubicacion
+
+    + getListadoProvincias() : ListadoProvincias
+    + getMunicipiosDeProvincia(String idProvincia) : ListadoMunicipios
+    + getLocalidadesDeMunicipio(String idProvincia, String idMunicipio) : ListadoLocalidades
+    + setUbicacionAsProvincia(int idProvincia) : void
+    + setUbicacionAsMunicipio(int idMunicipio) : void
+    + setUbicacionAsLocalidad(int idLocalidad) : void
+}
+
+
+
+
+Interface AdapterLocalizacion {
+    + getListadoProvincias() : ListadoProvincias
+    + getMunicipiosDeProvincia(String idProvincia) : ListadoMunicipios
+    + getLocalidadesDeMunicipio(String idProvincia, String idMunicipio) : ListadoLocalidades
+    + getProvinciaById(int idProvincia) : ListadoProvincias
+    + getMunicipioById(int idMunicipio) : ListadoMunicipios
+    + getLocalidadById(long idLocalidad) : ListadoLocalidades
+}
+
+
+
+
+Class AdapterLocalizacionGeorefApi {
+    - adapterServicioGeoref: ServicioGeoref
+
+    + getListadoProvincias() : ListadoProvincias
+    + getMunicipiosDeProvincia(String idProvincia) : ListadoMunicipios
+    + getLocalidadesDeMunicipio(String idProvincia, String idMunicipio) : ListadoLocalidades
+    + getProvinciaById(int idProvincia) : ListadoProvincias
+    + getMunicipioById(int idMunicipio) : ListadoMunicipios
+    + getLocalidadById(long idLocalidad) : ListadoLocalidades
+}
+
+
+Class ServicioGeoref {
+    - instancia: ServicioGeoref
+    - urlAPI: String
+    - retrofit: Retrofit
+
+    + getInstancia() : ServicioGeoref
+    + listadoProvincias() : ListadoProvincias
+    + listadoProvincias(int id) : ListadoProvincias
+    + listadoMunicipios(String id) : ListadoMunicipios
+    + listadoMunicipios(int idProvincia) : ListadoMunicipios
+    + listadoLocalidades(String idProvincia, String idMunicipio) : ListadoLocalidades
+    + listadoLocalidades(long id) : ListadoLocalidades
+}
+
+
+Class Interes {
+    - Set<Servicio>
+    - Set<Entidad>
+
+    + estaInteresado(Servicio, Entidad)
+    + agregarServicio(Servicio)
+    + agregarEntidad(Entidad)
+}
+
+
+Class EntidadPrestadora {
+    - nombre : String    
+    - personaDesignada: Usuario
+    - serviciosPrestados: Set<Entidad>
+}
+
+
+Class OrganismoDeControl {
+    - nombre : String    
+    - personaDesignada: Usuario
+    - entidadesQuePosee: Set<EntidadPrestadora>
+}
+
+class Ubicacion {
+    - provincia: Provincia
+    - municipio: Municipio
+    - localidad: Localidad
+}
+
+Localizacion <-- Usuario 
+Localizacion <- Entidad
+Localizacion <- Establecimiento
+Localizacion -> Ubicacion
+
+EntidadPrestadora --> "*" Entidad
+OrganismoDeControl --> "*" EntidadPrestadora
+
+
+Servicio <-- PrestacionDeServicio
+Comunidad --> "*" PrestacionDeServicio
+Entidad --> "*" Establecimiento
+Interes --> "*" Entidad
+Interes --> "*" Servicio 
+Establecimiento --> "*" PrestacionDeServicio
+
+
+
+
+Usuario <-- EntidadPrestadora
+OrganismoDeControl -> Usuario
+Rol --> "*" Usuario
+Rol -> "*" Permiso
+Rol "*" <- Comunidad
+Membresia -> "*" Afectacion
+Afectacion -> PrestacionDeServicio
+Usuario -> "*" Membresia
+Membresia -> Comunidad
+Rol <-- Membresia
+Usuario --> Interes
+
+
+
+
+AdapterLocalizacion <-- Localizacion
+AdapterLocalizacionGeorefApi --|> AdapterLocalizacion
+ServicioGeoref <-- AdapterLocalizacionGeorefApi
+
+
+/' Entrega 3 '/
+
+/' INCIDENTES '/
+Class Incidente #bbffcc{
+    - fechaApertura: Date
+    - fechasDeCierre: List<Date>
+    - observaciones: String
+    - abiertoPor: Usuario
+    - prestacionDeServicio: PrestacionDeServicio
+    - notificador: Notificador
+
+    + notificarApertura(): void
+    + cerrar(): void
+    + calcularPromedioFechasCierre(): Date
+    + tiempoActivo(): long
+    + estaAbierto(): boolean
+}
+
+Incidente "*" <-- PrestacionDeServicio 
+Comunidad --> "*" Incidente
+Incidente --> Usuario
+Incidente -> Notificador
+Comunidad --> Notificador
+
+/' CONFIGURACION DE NOTIFICACIONES '/
+
+Class ConfiguracionDeNotificaciones #bbffcc{
+    - estrategiaDeNotificacion: EstrategiaDeNotificacion
+    - medioPreferido: MedioPreferido
+
+    + notificar()
+}
+
+Interface MedioPreferido #bbffcc{
+    + notificar(notificacion: Notificacion): void
+}
+
+Class NotificarPorWhatsApp #bbffcc{
+    - adapter: IAdapterWhatsapp
+
+    + notificar(notificacion: Notificacion): void
+}
+
+Class NotificarPorMail #bbffcc{
+    - adapter: IAdapterMail
+
+    + notificar(notificacion: Notificacion): void
+}
+
+/' ADAPTERS MEDIO DE NOTIFICACION '/
+
+Interface IAdapterWhatsapp #bbffcc{
+    + notificar(usuario: Usuario, notificacion: Notificacion): void
+}
+
+Interface IAdapterMail #bbffcc{
+    + notificar(email: Email, asunto: String, cuerpo: String): void
+}
+
+Class AdapterWhatsApp #bbffcc{
+    + ACCOUNT_SID: String
+    + AUTH_TOKEN: String
+
+    + notificar(usuario: Usuario, notificacion: Notificacion): void
+    - enviarWhatsapp(destinatario: String, mensaje: String): void
+}
+
+Class AdapterMail #bbffcc{
+    - servicioMail: ServicioMail
+
+    + notificar(email: Email, asunto: String, cuerpo: String): void
+}
+
+Interface EstrategiaDeNotificacion #bbffcc{
+    + notificar(notificacion: Notificacion): void
+}
+
+Class CuandoSuceden #bbffcc{
+    + notificar(notificacion: Notificacion): void
+}
+
+Class SinApuros #bbffcc{
+    - horarios: Set<Date>
+    - aNotificar: List<Notificaciones>
+
+    + agregarHorario(horario: Date): void
+    + notificar(notificacion: Notificacion): void
+    + enviarNotificacionCuandoCorresponda(): void
+}
+
+
+/' NOTIFICACIONES '/
+
+Interface Notificador #bbffcc{
+    + notificar(usuario: Usuario, incidente: Incidente)
+}
+
+Class AperturaDeIncidente #bbffcc{
+    + notificar(usuario: Usuario, incidente: Incidente)
+    - notificarAUsuario(usuario: Usuario, notificacion: Notificacion)
+}
+
+Class CierreDeIncidente #bbffcc{
+    + notificar(usuario: Usuario, incidente: Incidente)
+    - notificarAUsuario(usuario: Usuario, notificacion: Notificacion)
+} 
+
+Class RevisionManualDeIncidente #bbffcc{
+    + notificar(usuario: Usuario, incidente: Incidente)
+} 
+
+Class FactoryNotificacion #bbffcc{
+    + crearNotificacion(tipoDeNotificacion: String): Notificacion
+}
+
+Class Notificacion #bbffcc{
+    - asunto: String
+    - cuerpo: String
+    - destinatario: Usuario
+    - estrategiaDeNotificacion: EstrategiaDeNotificacion
+}
+
+FactoryNotificacion ..> Notificacion
+Notificador <|.. AperturaDeIncidente
+Notificador <|.. CierreDeIncidente
+Notificador <|.. RevisionManualDeIncidente
+AperturaDeIncidente ..> FactoryNotificacion
+CierreDeIncidente ..> FactoryNotificacion
+RevisionManualDeIncidente ..> FactoryNotificacion
+
+
+ConfiguracionDeNotificaciones <-- Usuario
+
+EstrategiaDeNotificacion <-- ConfiguracionDeNotificaciones
+MedioPreferido <-- ConfiguracionDeNotificaciones
+
+CuandoSuceden ..|> EstrategiaDeNotificacion
+SinApuros ..|> EstrategiaDeNotificacion
+
+
+/' Whatsapp '/
+AdapterWhatsApp ..|> IAdapterWhatsapp
+IAdapterWhatsapp <-- NotificarPorWhatsApp
+NotificarPorWhatsApp ..|> MedioPreferido
+
+/' Mail '/
+AdapterMail ..|> IAdapterMail
+IAdapterMail <-- NotificarPorMail
+NotificarPorMail ..|> MedioPreferido
+
+/' SUGERENCIA REVISION DE INCIDENTE '/
+
+Class RevisionDeIncidente #bbffcc{
+    - notificador: Notificador
+    - incidentes: List<Incidente>
+    - LATITUD_MAXIMA: double
+    - LONGITUD_MAXIMA: double
+
+    + estaCerca(usuario: Usuario, incidente: Incidente): Boolean
+    + notificar(usuario: Usuario, incidente: Incidente): void
+    + agregarIncidente(incidente: Incidente): void
+}
+
+RevisionDeIncidente --> Notificador
+Usuario --> UbicacionExacta
+UbicacionExacta ----> PrestacionDeServicio
+
+/' AFECTADO U OBSERVADOR '/
+Class Afectacion #bbffcc{
+    - afectado: boolean
+    - prestacionDeServicio: PrestacionDeServicio
+}
+
+/' RANKINGS '/
+
+
+abstract CriterioEntidadQueUsanIncidentes implements CriterioEntidad{
+    + nombre(): String
+    + generarRanking(List<Entidad>): List<Entidad>
+    - obtenerIncidenteDeEntidad(Entidad): List<Incidente>
+}
+
+class MayorCantidad extends CriterioEntidadQueUsanIncidentes {
+    + nombre(): String
+    + generarRanking(List<Entidad>): List<Entidad>
+    - cantidadDeIncidentesEnLaSemana(Entidad): int
+    - incidenteNoOcurrioHace24Hs(Incidente, List<Incidente>): boolean
+}
+
+
+
+
+class MayorTiempo extends CriterioEntidadQueUsanIncidentes {
+    + nombre(): String
+    - promedioTiempoDeCierre(Entidad): float
+    + generarRanking(List<Entidad>): List<Entidad>
+}
+
+
+class ImpactoComunidades implements CriterioComunidad {
+    + nombre(): String
+    + generarRanking(List<Comunidad>): List<Comunidad>
+    - calcularImpacto(Comunidad): float
+}
+
+interface CriterioEntidad {
+    + nombre(): String
+    + generarRanking(List<Entidad>): List<Entidad>
+}
+
+interface CriterioComunidad {
+    + nombre(): String
+    + generarRanking(List<Comunidad>): List<Comunidad>
+}
+
+class generadorDeInformes {
+
+    - criteriosEntidades: List<CriteriosEntidad>
+    - criterioComunidad: List<CriterioComunidad>
+
+    + generarDatos(List<Entidad>, List<Comunidad>): List<List<String>>
+
+}
+
+note left of generadorDeInformes::generarDatos
+    formato:
+    [[nombreRanking1, valor1, valor2],
+    [nombreRanking2, valor1, valor2],
+    [nombreRanking3, valor1, valor2]]
+
+end note
+
+
+
+class Exportador {
+
+    - datos: generadorDeInformes
+    - estrategiaDeExportacion: estrategiaDeExportacion
+
+    + exportar(List<Entidad>, List<Comunidad>): void
+
+}
+
+interface estrategiaDeExportacion {
+    + exportarConEstrategia(List<List<String>>): void
+}
+
+class ExportarCSV implements estrategiaDeExportacion {
+    + exportar(List<List<String>>): void
+}
+
+note left of ExportarCSV::exportar
+    formato:
+    nombreRanking1, nombreRanking2, nombreRanking3
+    valor11, valor21, valor31
+    valor12, valor22, valor32
+    valor13, valor23, valor33
+end note
+
+
+Exportador --> estrategiaDeExportacion
+Exportador --> generadorDeInformes
+generadorDeInformes-->CriterioEntidad
+generadorDeInformes-->CriterioComunidad
+
+@enduml

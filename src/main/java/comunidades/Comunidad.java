@@ -1,35 +1,70 @@
 package comunidades;
 
-import comunidades.servicios.PrestacionDeServicio;
-import comunidades.usuario.Usuario;
-import configs.Config;
-import configs.ServiceLocator;
+import converters.NotificadorConverter;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.flogger.Flogger;
+import incidentes.Incidente;
+import servicios.PrestacionDeServicio;
+import notificaciones.notificador.CierreIncidente;
+import notificaciones.notificador.Notificador;
+import usuario.Usuario;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
-import java.util.concurrent.ExecutionException;
 
+@Entity
+@Table(name = "comunidad")
 public class Comunidad {
-    @Getter private List<Rol> roles;
-    @Getter @Setter private String nombre;
-    @Getter private Set<PrestacionDeServicio> serviciosDeInteres;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Getter
+    @Setter
+    @Column(name = "nombre")
+    private String nombre;
+
+    @Getter
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "comunidad_id")
+    private List<Rol> roles;
+
+    @Getter
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private Set<PrestacionDeServicio> serviciosDeInteres;
+
+    @Getter
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinTable(name = "incidentes_abiertos", joinColumns = @JoinColumn(name = "comunidad_id"), inverseJoinColumns = @JoinColumn(name = "incidente_id"))
+    private List<Incidente> incidentesAbiertos;
+
+    @Getter
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "incidentes_cerrados", joinColumns = @JoinColumn(name = "comunidad_id"), inverseJoinColumns = @JoinColumn(name = "incidente_id"))
+    private List<Incidente> incidentesCerrados;
+
+    @Setter
+    @Convert(converter = NotificadorConverter.class)
+    @Column(name = "notificador")
+    private Notificador notificador;
 
     public Comunidad(String nombre) {
         this.nombre = nombre;
         this.serviciosDeInteres = new HashSet<>();
         this.roles = new ArrayList<>();
-        roles.add(ServiceLocator.ROL_BASE);
+        this.incidentesAbiertos = new ArrayList<>();
+        this.incidentesCerrados = new ArrayList<>();
+        this.roles.add(new Rol("Miembro", null));
+        this.notificador = new CierreIncidente();
     }
-    
-    public void agregarServicioDeInteres(PrestacionDeServicio servicio) {
-        serviciosDeInteres.add(servicio);
+
+    public Comunidad() {
+
     }
-    
+
     public void agregarRol(Rol rol) {
         roles.add(rol);
     }
@@ -65,8 +100,66 @@ public class Comunidad {
         return true;
     }
 
-    public Integer getCantidadDeUsuarios(){
+    public Integer getCantidadDeUsuarios() {
         return roles.stream().mapToInt(r -> r.getUsuarios().size()).sum();
     }
 
+    public List<Usuario> getUsuarios() {
+        List<Usuario> usuarios = new ArrayList<>();
+        roles.forEach(r -> usuarios.addAll(r.getUsuarios()));
+        return usuarios;
+    }
+
+    public void agregarServicioDeInteres(PrestacionDeServicio servicio) {
+        serviciosDeInteres.add(servicio);
+    }
+
+    public void abrirIncidente(Incidente incidente) {
+        // Se agrega si el incidente está abierto
+        // Habria que ver si ese incidente ya esta abierto
+
+        for (Incidente i : incidentesAbiertos) {
+            if (i.getPrestacionDeServicio().equals(incidente.getPrestacionDeServicio())) {
+                return;
+            }
+        }
+
+        // Unicamente se agrega si lo tiene como interes
+        if (serviciosDeInteres.contains(incidente.getPrestacionDeServicio())) {
+            incidentesAbiertos.add(incidente);
+        }
+    }
+
+    public void cerrarIncidente(Incidente incidente, Usuario usuario) {
+
+        if (this.estaCerradoElIncidente(incidente)) {
+            throw new RuntimeException("El incidente ya esta cerrado");
+        }
+
+        incidente.cerrar();
+        incidentesAbiertos.remove(incidente);
+        incidentesCerrados.add(incidente);
+        notificador.notificar(usuario, incidente);
+    }
+
+    public List<Incidente> getTodosLosIncidentes() {
+        List<Incidente> incidentes = new ArrayList<>();
+        incidentes.addAll(incidentesAbiertos);
+        incidentes.addAll(incidentesCerrados);
+        return incidentes;
+    }
+
+    public boolean estaCerradoElIncidente(Incidente incidente) {
+        if (!getTodosLosIncidentes().contains(incidente)) {
+            throw new RuntimeException("El incidente no pertenece a la comunidad");
+        }
+
+        return this.incidentesCerrados.contains(incidente);
+    }
+
+    public int getCantidadDeAfectados() {
+        return getUsuarios().stream().filter(u -> u.getMembresia(this).esAfectado()).mapToInt(u -> 1).sum();
+    }
+
 }
+

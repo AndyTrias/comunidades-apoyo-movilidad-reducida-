@@ -1,0 +1,26 @@
+@startuml Caso De Uso
+
+left to right direction
+actor "Persona" as Persona
+actor "MiembroComunidad" as MiembroComunidad
+actor "DesignadoEmpresa" as DesignadoEmpresa
+actor "Tiempo (t)" as Tiempo
+
+rectangle "Sistema de Monitoreo de Estado de Servicios" {
+Persona -- (Configurar Medio de Comunicacion Preferido)
+Persona -- (Configurar Forma de Recibir Notificaciones)
+
+MiembroComunidad -- (Abrir Incidente)
+MiembroComunidad -- (Cerrar Incidente)
+MiembroComunidad -- (Obtener Listado de Incidentes Reportados)
+MiembroComunidad -- (Indicar Afectado u Observador)
+
+DesignadoEmpresa -- (Obtener Rankings)
+DesignadoEmpresa -- (Abrir Incidente)
+
+
+Tiempo  -- (Enviar Notificaciones)
+Tiempo -- (Generar Rankings)
+
+}
+@enduml
