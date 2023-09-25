@@ -1,5 +1,6 @@
 package usuario;
 
+import lombok.Setter;
 import servicios.Servicio;
 import entidades.Entidad;
 import lombok.Getter;
@@ -16,29 +17,17 @@ public class Interes {
     private Long id;
 
     @Getter
-    @ManyToMany
-    private Set<Servicio> servicios;
+    @Setter
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Servicio servicio;
 
     @Getter
-    @Transient
-    private Set<Entidad> entidades;
+    @Setter
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Entidad entidad;
+
 
     public Interes(){
-        this.servicios = new HashSet<>();
-        this.entidades = new HashSet<>();
     }
-
-    public boolean estaInteresado(Servicio servicio, Entidad entidad) {
-        return servicios.contains(servicio) && entidades.contains(entidad);
-    }
-
-    public void agregarServicio(Servicio servicio) {
-        servicios.add(servicio);
-    }
-
-    public void agregarEntidad(Entidad entidad) {
-        entidades.add(entidad);
-    }
-
 
 }

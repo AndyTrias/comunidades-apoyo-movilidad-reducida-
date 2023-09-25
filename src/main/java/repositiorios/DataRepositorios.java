@@ -1,3 +1,4 @@
+/*
 package repositiorios;
 
 import comunidades.Comunidad;
@@ -21,7 +22,9 @@ public class DataRepositorios {
     }
 
     public void generarDatos(){
-        /* borrar datos anteriores */
+        */
+/* borrar datos anteriores *//*
+
         this.repoComunidades.borrarComunidades();
         this.repoEntidades.borrarEntidades();
         this.repoUsuarios.borrarUsuarios();
@@ -76,3 +79,4 @@ public class DataRepositorios {
         fede.unirseAComunidad(comunidad3, comunidad3.aceptarUsuario(fede));
     }
 }
+*/

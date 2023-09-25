@@ -1,13 +1,13 @@
 package notificaciones.notificador;
 
 import comunidades.Comunidad;
-import incidentes.Incidente;
-import usuario.Usuario;
 import entidades.Entidad;
+import incidentes.Incidente;
+import repositiorios.RepoEntidad;
+import repositiorios.RepoUsuario;
+import usuario.Usuario;
 import notificaciones.FactoryNotificacion;
 import notificaciones.Notificacion;
-import repositiorios.RepoEntidades;
-import repositiorios.RepoUsuarios;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,19 +28,21 @@ public class AperturaDeIncidente implements Notificador{
             });
         }
 
-        // Notificar a interesados
-        List<Entidad> entidadesConLaPrestacion = RepoEntidades.getInstance().getEntidadesConPrestacion(incidente.getPrestacionDeServicio());
-        List<Usuario> usuariosConInteresEnElServicio = RepoUsuarios.getInstance().getUsuariosConInteresEnServicio(incidente.getPrestacionDeServicio().getServicio());
+        /*// Notificar a interesados
+        RepoEntidad RepoEntidades = new RepoEntidad();
+        RepoUsuario RepoUsuarios = new RepoUsuario();
+        List<Entidad> entidadesConLaPrestacion = RepoEntidades.getEntidadesConPrestacion(incidente.getPrestacionDeServicio());
+        List<Usuario> usuariosConInteresEnElServicio = RepoUsuarios.getUsuariosConInteresEnServicio(incidente.getPrestacionDeServicio().getServicio());
 
         // filtro a los usuarios que no tengan alguna de las entidades relacionadas en su interes
-        List<Usuario> usuariosANotificarPorInteres = usuariosConInteresEnElServicio.stream().filter(usuario -> usuario.getInteres().getEntidades().stream().anyMatch(entidadesConLaPrestacion::contains)).toList();
+        List<Usuario> usuariosANotificarPorInteres = usuariosConInteresEnElServicio.stream().filter(usuario -> usuario.getIntereses().stream().anyMatch(interes -> entidadesConLaPrestacion.contains(interes.getEntidad()))).toList();
 
         usuariosANotificarPorInteres.forEach(usuario -> {
             if (!usuariosNotificados.contains(usuario)) {
                 this.notificarAUsuario(usuario, notificacion);
                 usuariosNotificados.add(usuario);
             }
-        });
+        });*/
     }
 
     private void notificarAUsuario(Usuario usuario, Notificacion notificacion) {

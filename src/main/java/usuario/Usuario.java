@@ -1,5 +1,6 @@
 package usuario;
 
+import com.sun.istack.NotNull;
 import comunidades.Comunidad;
 import comunidades.Membresia;
 import comunidades.Rol;
@@ -11,9 +12,12 @@ import localizacion.UbicacionExacta;
 import lombok.Getter;
 import lombok.Setter;
 import notificaciones.Notificacion;
+import usuario.configuraciones.formas.CuandoSuceden;
+import usuario.configuraciones.medios.mail.NotificarPorMail;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -25,6 +29,7 @@ public class Usuario {
     private Long id;
 
     @Getter
+    @Setter
     @Column(name = "nombre")
     private String nombre;
 
@@ -46,26 +51,28 @@ public class Usuario {
     private String telefono;
 
     @Getter
-    @OneToOne
-    private Interes interes;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "usuario_id")
+    private List<Interes> intereses;
 
     @Getter
-    @OneToMany
-    @JoinColumn(name = "usuario_id")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "usuario_id", nullable = true)
     private List<Membresia> membresias;
 
     @Getter
     @Setter
-    @Transient
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name = "usuario_id")
     private Set<Localizacion> localizaciones;
 
     @Getter
     @Setter
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
     private ConfiguracionDeNotificaciones configuracionDeNotificaciones;
 
     @Getter
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
     private UbicacionExacta ubicacionExacta;
 
     public Usuario(String nombre, String apellido, String correoElectronico) {
@@ -73,7 +80,14 @@ public class Usuario {
         this.apellido = apellido;
         this.correoElectronico = correoElectronico;
         this.membresias = new ArrayList<>();
-        this.interes = new Interes();
+        this.intereses = new ArrayList<>();
+
+        this.localizaciones= new HashSet<>();
+
+        this.configuracionDeNotificaciones = new ConfiguracionDeNotificaciones();
+        configuracionDeNotificaciones.setEstrategiaDeNotificacion(new CuandoSuceden());
+        configuracionDeNotificaciones.setMedioPreferido(new NotificarPorMail());
+
     }
 
     public Usuario() {}
@@ -118,5 +132,13 @@ public class Usuario {
     public void setUbicacionExacta(UbicacionExacta ubicacionExacta) {
         this.ubicacionExacta = ubicacionExacta;
         RevisionDeIncidente.getInstance().comprobarCercania(this);
+    }
+
+    public void agregarInteres(Interes interes) {
+        this.intereses.add(interes);
+    }
+
+    public void agregarLocalizacion(Localizacion localizacion) {
+        this.localizaciones.add(localizacion);
     }
 }

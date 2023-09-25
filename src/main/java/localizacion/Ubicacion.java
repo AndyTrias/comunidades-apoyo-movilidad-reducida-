@@ -9,21 +9,23 @@ import lombok.Setter;
 import javax.persistence.*;
 
 
-@Entity
-@Table(name = "ubicacion")
-
+@Embeddable
 public class Ubicacion {
-    @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
-    @Getter @Setter private int id;
-
-    @ManyToOne
+    @Getter
+    @Setter
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "provincia_id")
-    @Getter @Setter private Provincia provincia;
-    @ManyToOne
+    private Provincia provincia;
+
+    @Getter
+    @Setter
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "municipio_id")
-    @Getter @Setter private Municipio municipio;
-    @ManyToOne
+    private Municipio municipio;
+
+    @Getter
+    @Setter
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "localidad_id")
-    @Getter @Setter private Localidad localidad;
+    private Localidad localidad;
 }

@@ -1,12 +1,13 @@
 package comunidades;
 
-import incidentes.Incidente;
-import servicios.PrestacionDeServicio;
-import usuario.Usuario;
+import converters.NotificadorConverter;
 import lombok.Getter;
 import lombok.Setter;
+import incidentes.Incidente;
+import servicios.PrestacionDeServicio;
 import notificaciones.notificador.CierreIncidente;
 import notificaciones.notificador.Notificador;
+import usuario.Usuario;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -27,24 +28,27 @@ public class Comunidad {
     private String nombre;
 
     @Getter
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "comunidad_id")
     private List<Rol> roles;
 
     @Getter
-    @Transient
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Set<PrestacionDeServicio> serviciosDeInteres;
 
     @Getter
-    @Transient
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinTable(name = "incidentes_abiertos", joinColumns = @JoinColumn(name = "comunidad_id"), inverseJoinColumns = @JoinColumn(name = "incidente_id"))
     private List<Incidente> incidentesAbiertos;
 
     @Getter
-    @Transient
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "incidentes_cerrados", joinColumns = @JoinColumn(name = "comunidad_id"), inverseJoinColumns = @JoinColumn(name = "incidente_id"))
     private List<Incidente> incidentesCerrados;
 
     @Setter
-    @Transient
+    @Convert(converter = NotificadorConverter.class)
+    @Column(name = "notificador")
     private Notificador notificador;
 
     public Comunidad(String nombre) {

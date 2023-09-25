@@ -1,21 +1,46 @@
 package incidentes;
 
+import converters.NotificadorConverter;
 import servicios.PrestacionDeServicio;
 import usuario.Usuario;
 import lombok.Getter;
 import notificaciones.notificador.AperturaDeIncidente;
 import notificaciones.notificador.Notificador;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Entity
+@Table(name = "incidente")
 public class Incidente {
-    @Getter private Date fechaDeApertura;
-    @Getter private List<Date> fechasDeCierre;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Getter
+    @Column(name = "fecha_de_apertura")
+    private Date fechaDeApertura;
+
+    @Getter
+    @ElementCollection
+    @CollectionTable(name = "fechas_de_cierre", joinColumns = @JoinColumn(name = "incidente_id"))
+    private List<Date> fechasDeCierre;
+
+    @Column(name = "observaciones", columnDefinition = "longtext")
     private String observaciones;
-    @Getter private Usuario abiertoPor;
-    @Getter private PrestacionDeServicio prestacionDeServicio;
+
+    @Getter
+    @ManyToOne
+    private Usuario abiertoPor;
+
+    @Getter
+    @ManyToOne
+    private PrestacionDeServicio prestacionDeServicio;
+
+    @Convert(converter = NotificadorConverter.class)
+    @Column(name = "notificador")
     private Notificador notificador;
 
     public Incidente(Usuario usuario, String observaciones, PrestacionDeServicio prestacionDeServicio) {
@@ -32,6 +57,10 @@ public class Incidente {
         // usuario.getComunidades().stream().filter(c -> c.getServiciosDeInteres().contains(prestacionDeServicio)).forEach(c -> c.abrirIncidente(this));
         this.notificarApertura();
         RevisionDeIncidente.getInstance().agregarIncidente(this);
+    }
+
+    public Incidente() {
+
     }
 
     public void cerrar() {

@@ -26,7 +26,7 @@ public class Rol {
     private List<Usuario> usuarios;
 
     @Getter
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(
             name = "rol_permiso",
             joinColumns = @JoinColumn(name = "rol_id"),
@@ -35,6 +35,7 @@ public class Rol {
     private Set<Permiso> permisos;
 
     public Rol(String nombre, Set<Permiso> permisos) {
+        this.nombre = nombre;
         this.permisos = permisos;
         this.usuarios = new ArrayList<>();
     }
@@ -55,6 +56,8 @@ public class Rol {
         this.usuarios.remove(usuario);
     }
 
-
+    public void agregarPermiso(Permiso permiso) {
+        this.permisos.add(permiso);
+    }
 }
 

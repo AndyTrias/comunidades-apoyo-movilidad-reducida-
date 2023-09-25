@@ -14,6 +14,8 @@ public class SinApuros implements EstrategiaDeNotificacion {
         this.horarios.add(horarioInicial);
     }
 
+    public SinApuros() {}
+
     public void agregarHorario(Date horario) {
         horarios.add(horario);
     }

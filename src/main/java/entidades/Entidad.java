@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+
+import com.twilio.rest.api.v2010.account.availablephonenumbercountry.Local;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -15,19 +18,31 @@ import java.util.Set;
 @Table(name = "entidad")
 public class Entidad {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Getter @Setter private int id;
-    @OneToMany(mappedBy = "entidad", cascade = CascadeType.ALL)
-    @Getter private Set<Establecimiento> establecimientos;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Getter
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "entidad_id")
+    private Set<Establecimiento> establecimientos;
+
+    @Setter
     @OneToOne(cascade = CascadeType.ALL)
-    @Setter private Localizacion localizacion;
+    private Localizacion localizacion;
+
+    @Getter
     @Column(name = "nombre")
-    @Getter private String nombre;
+    private String nombre;
 
 
-    public Entidad(String nombre) {
+    public Entidad(String nombre, Localizacion localizacion) {
         this.nombre = nombre;
         this.establecimientos = new HashSet<>();
+        this.localizacion = localizacion;
+    }
+
+    public Entidad() {
+
     }
 
     public List<PrestacionDeServicio> getPrestacionesDeServicios() {
@@ -41,11 +56,5 @@ public class Entidad {
     public void agregarEstablecimiento(Establecimiento establecimiento) {
         this.establecimientos.add(establecimiento);
     }
-
-    public static void main(String[] args) {
-        Entidad entidad = new Entidad("Entidad");
-        System.out.println(entidad.getNombre());
-    }
-
 
 }

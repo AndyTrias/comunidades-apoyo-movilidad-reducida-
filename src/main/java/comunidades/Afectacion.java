@@ -1,8 +1,8 @@
 package comunidades;
 
-import servicios.PrestacionDeServicio;
 import lombok.Getter;
 import lombok.Setter;
+import servicios.PrestacionDeServicio;
 
 import javax.persistence.*;
 
@@ -19,7 +19,7 @@ public class Afectacion {
   private boolean afectado;
 
   @Getter
-  @Transient
+  @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
   private PrestacionDeServicio prestacionDeServicio;
 
   public Afectacion(PrestacionDeServicio prestacionDeServicio) {

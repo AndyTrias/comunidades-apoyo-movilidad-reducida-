@@ -13,8 +13,10 @@ import java.util.Set;
 @Table(name = "establecimiento")
 public class Establecimiento {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Getter @Setter private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
+    @Setter
+    private long id;
 
     @Column(name = "nombre")
     @Getter private String nombre;
@@ -22,7 +24,8 @@ public class Establecimiento {
     @OneToOne(cascade = CascadeType.ALL)
     @Getter @Setter private Localizacion localizacion;
 
-    @OneToMany(mappedBy = "establecimiento", cascade = CascadeType.ALL)
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "establecimiento_id")
     @Getter private Set<PrestacionDeServicio> servicios;
 
     public Establecimiento(String nombre, Localizacion localizacion) {
@@ -31,6 +34,9 @@ public class Establecimiento {
         this.servicios = new HashSet<>();
     }
 
+    public Establecimiento() {
+
+    }
 
 
     public void agregarServicioPrestado(PrestacionDeServicio servicio) {
