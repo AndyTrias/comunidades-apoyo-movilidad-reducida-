@@ -5,13 +5,16 @@ import lombok.Setter;
 import notificaciones.Notificacion;
 
 public class NotificarPorMail implements MedioPreferido {
-    @Setter private IAdapterMail adapter = new AdapterMail();
+    @Setter
+    private IAdapterMail adapter;
 
     public NotificarPorMail(IAdapterMail adapter) {
         this.adapter = adapter;
     }
 
-    public NotificarPorMail() {}
+    public NotificarPorMail() {
+        adapter = new AdapterMail();
+    }
 
     public void notificar(Notificacion notificacion) {
         adapter.notificar(notificacion.getDestinatario().getCorreoElectronico(), notificacion.getAsunto(), notificacion.getCuerpo());

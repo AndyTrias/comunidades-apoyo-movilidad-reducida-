@@ -6,13 +6,16 @@ import usuario.configuraciones.medios.MedioPreferido;
 
 public class NotificarPorWhatsApp implements MedioPreferido {
 
-  @Setter private IAdapterWhatsapp adapter;
+    @Setter
+    private IAdapterWhatsapp adapter;
 
-  public NotificarPorWhatsApp(IAdapterWhatsapp adapter) {
-    this.adapter = adapter;
-  }
+    public NotificarPorWhatsApp(IAdapterWhatsapp adapter) {
+      this.adapter = adapter;
+    }
 
-    public NotificarPorWhatsApp() {}
+    public NotificarPorWhatsApp() {
+        adapter = new AdapterWhatsapp();
+    }
 
   public void notificar(Notificacion notificacion) {
     adapter.notificar(notificacion.getDestinatario(), notificacion);
