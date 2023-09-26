@@ -1,25 +1,21 @@
 package Persistencia;
 
-import comunidades.Comunidad;
-import comunidades.Permiso;
-import comunidades.Rol;
-import entidades.Entidad;
-import entidades.EntidadPrestadora;
-import entidades.Establecimiento;
-import entidades.OrganismoDeControl;
+import noServer.comunidades.Comunidad;
+import noServer.entidades.Entidad;
+import noServer.entidades.EntidadPrestadora;
+import noServer.entidades.Establecimiento;
+import noServer.entidades.OrganismoDeControl;
 import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
-import localizacion.Localizacion;
-import localizacion.UbicacionExacta;
+import noServer.localizacion.Localizacion;
+import noServer.localizacion.UbicacionExacta;
+import noServer.repositiorios.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.twilio.rest.api.v2010.account.incomingphonenumber.Local;
-
 import repositiorios.*;
-import servicios.PrestacionDeServicio;
-import servicios.Servicio;
-import usuario.Interes;
-import usuario.Usuario;
+import noServer.servicios.PrestacionDeServicio;
+import noServer.servicios.Servicio;
+import noServer.usuario.Usuario;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
