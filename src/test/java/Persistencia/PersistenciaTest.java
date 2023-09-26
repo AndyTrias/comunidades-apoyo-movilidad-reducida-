@@ -1,23 +1,23 @@
 package Persistencia;
 
-import comunidades.Permiso;
-import entidades.Entidad;
-import entidades.EntidadPrestadora;
-import entidades.Establecimiento;
-import localizacion.Localizacion;
+import noServer.comunidades.Permiso;
+import noServer.entidades.Entidad;
+import noServer.entidades.EntidadPrestadora;
+import noServer.entidades.Establecimiento;
+import noServer.localizacion.Localizacion;
+import noServer.repositiorios.*;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
-import comunidades.Comunidad;
-import comunidades.Rol;
-import incidentes.Incidente;
+import noServer.comunidades.Comunidad;
+import noServer.comunidades.Rol;
+import noServer.incidentes.Incidente;
 import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
 import repositiorios.*;
-import servicios.PrestacionDeServicio;
-import servicios.Servicio;
-import usuario.Interes;
-import usuario.Usuario;
+import noServer.servicios.PrestacionDeServicio;
+import noServer.servicios.Servicio;
+import noServer.usuario.Interes;
+import noServer.usuario.Usuario;
 
 public class PersistenciaTest implements SimplePersistenceTest {
 

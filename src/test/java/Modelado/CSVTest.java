@@ -1,9 +1,9 @@
 package Modelado;
 
-import configs.Config;
+import noServer.configs.Config;
 import org.junit.jupiter.api.Test;
-import readerCSV.LectorEntidadPrestadora;
-import readerCSV.LectorOrganismoDeControl;
+import noServer.readerCSV.LectorEntidadPrestadora;
+import noServer.readerCSV.LectorOrganismoDeControl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
