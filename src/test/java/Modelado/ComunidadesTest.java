@@ -1,12 +1,12 @@
 package Modelado;
 
-import noServer.comunidades.Comunidad;
-import noServer.comunidades.Permiso;
-import noServer.comunidades.Rol;
-import noServer.localizacion.UbicacionExacta;
-import noServer.servicios.PrestacionDeServicio;
-import noServer.servicios.Servicio;
-import noServer.usuario.Usuario;
+import models.comunidades.Comunidad;
+import models.comunidades.Permiso;
+import models.comunidades.Rol;
+import models.localizacion.UbicacionExacta;
+import models.servicios.PrestacionDeServicio;
+import models.servicios.Servicio;
+import models.usuario.Usuario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

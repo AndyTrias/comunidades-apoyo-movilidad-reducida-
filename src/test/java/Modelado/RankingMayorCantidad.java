@@ -1,15 +1,15 @@
 package Modelado;
 
-import noServer.incidentes.Incidente;
-import noServer.localizacion.UbicacionExacta;
+import models.incidentes.Incidente;
+import models.localizacion.UbicacionExacta;
 import org.junit.Assert;
-import noServer.rankings.criterios.MayorTiempo;
-import noServer.servicios.PrestacionDeServicio;
-import noServer.servicios.Servicio;
-import noServer.usuario.Usuario;
-import noServer.entidades.Entidad;
-import noServer.entidades.Establecimiento;
-import noServer.localizacion.Localizacion;
+import models.rankings.criterios.MayorTiempo;
+import models.servicios.PrestacionDeServicio;
+import models.servicios.Servicio;
+import models.usuario.Usuario;
+import models.entidades.Entidad;
+import models.entidades.Establecimiento;
+import models.localizacion.Localizacion;
 import org.junit.Test;
 import org.mockito.Mockito;
 

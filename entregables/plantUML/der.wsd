@@ -1,16 +1,16 @@
 @startuml
 
 entity "Usuario" as eUsuario{
-  id_usuario: number <<generated>>  
+  id_usuario: number <<generated>>
   --
   nombre : varchar(20)
   apellido : varchar(30)
   correo : varchar(50)
   contraseña : varchar(20)
-  membresias : 
-  interes : 
-  localizaciones : 
-  
+  membresias :
+  interes :
+  localizaciones :
+
 }
 
 entity "Interes" as eInteres{
@@ -22,13 +22,13 @@ entity "Interes" as eInteres{
 entity "interes_servicio" as eInteres_servicio {
     id_Servicio: PK, FK
     id_Interes: PK, FK
-} 
+}
 
-entity "Servicio" as eServicio 
+entity "Servicio" as eServicio
 {
   id_servicio:number <<generated>>
   --
-  informacion:varchar(100)  
+  informacion:varchar(100)
 }
 
 
@@ -45,13 +45,13 @@ entity "Comunidad" as eComunidad{
   servicioDeInteres : FK
   incidentesAbiertos : FK
   incidentesCerrados : FK
-  notificador:? 
+  notificador:?
 }
 
 entity "Rol" as eRol{
   id_rol : number <<generated>>
   usuario : FK
-  permiso : FK  
+  permiso : FK
   nombre : varchar(30)
 }
 
@@ -61,7 +61,7 @@ entity "Permiso" as ePermiso{
 }
 
 entity "Incidente" as eIncidente{
-  id_incidente: number <<generated>> 
+  id_incidente: number <<generated>>
   abiertoPorUsuario:FK
   prestacionDeServicio:FK
   observaciones:varchar(100)
@@ -72,7 +72,7 @@ entity "Fecha_Incidente" as eFechaIncidente{
   --
   id_incidente: FK
   fecha: DATETIME
-} 
+}
 
 entity "Afectacion" as eAfectacion {
   id_afectacion: number <<generated>>
@@ -85,7 +85,7 @@ entity "PrestacionDeServicio" as ePrestacionDeServicio {
  servicio:FK
  incidentes:FK
  nombre:varchar(30)
-} 
+}
 
 entity "Establecimiento" as eEstablecimiento {
   id_establecimiento: number <<generated>>
@@ -98,7 +98,7 @@ entity "Entidad" as eEntidad {
   Establecimientos:FK
   localizacion:FK
   nombre:varchar(30)
-} 
+}
 
 entity "EntidadPrestadora" as eEntidadPrestadora {
   id_entidad_prestadora: number <<generated>>
@@ -187,12 +187,12 @@ eRol ||--o{eUsuario
 eMemebresia ||--||eComunidad
 eComunidad ||--|{eRol
 eInteres||--o{ eInteres_servicio
-eInteres_servicio }o--|| eServicio 
+eInteres_servicio }o--|| eServicio
 eMemebresia ||---o{ eAfectacion
 eEntidadPrestadora ||--|| eUsuario
 eEntidadPrestadora ||--|{ eEntidad
 eEntidad ||--|{ eEstablecimiento
-ePrestacionDeServicio ||--|| eServicio 
+ePrestacionDeServicio ||--|| eServicio
 eAfectacion }|--|| ePrestacionDeServicio
 eEstablecimiento ||--|{ ePrestacionDeServicio
 ePrestacionDeServicio ||--|{ ePrestacion_Comunidad
@@ -204,4 +204,4 @@ eOrganismo ||--|{ eOrganismo_Prestadora
 eEntidadPrestadora ||----|{ eOrganismo_Prestadora
 
 
-@enduml    
+@enduml

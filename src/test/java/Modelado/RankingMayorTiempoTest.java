@@ -1,17 +1,17 @@
 package Modelado;
 
-import noServer.incidentes.Incidente;
-import noServer.localizacion.UbicacionExacta;
-import noServer.servicios.PrestacionDeServicio;
-import noServer.servicios.Servicio;
-import noServer.usuario.Usuario;
-import noServer.entidades.Entidad;
-import noServer.entidades.Establecimiento;
-import noServer.localizacion.Localizacion;
+import models.incidentes.Incidente;
+import models.localizacion.UbicacionExacta;
+import models.servicios.PrestacionDeServicio;
+import models.servicios.Servicio;
+import models.usuario.Usuario;
+import models.entidades.Entidad;
+import models.entidades.Establecimiento;
+import models.localizacion.Localizacion;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
-import noServer.rankings.criterios.MayorTiempo;
+import models.rankings.criterios.MayorTiempo;
 
 import java.util.ArrayList;
 import java.util.List;

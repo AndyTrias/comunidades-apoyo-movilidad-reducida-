@@ -1,9 +1,9 @@
 package Modelado;
 
-import noServer.external.georef.responseClases.ListadoMunicipios;
-import noServer.external.georef.responseClases.ListadoProvincias;
-import noServer.localizacion.AdapterLocalizacionGeorefApi;
-import noServer.localizacion.Localizacion;
+import models.external.georef.responseClases.ListadoMunicipios;
+import models.external.georef.responseClases.ListadoProvincias;
+import models.localizacion.AdapterLocalizacionGeorefApi;
+import models.localizacion.Localizacion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
