@@ -1,12 +1,12 @@
 package Modelado;
 
-import usuario.Contrasenia.DiezMilPeoresContrasenias;
-import usuario.Contrasenia.ValidadorDeContrasenia;
-import usuario.Contrasenia.ValidarLongitud;
-import configs.ServiceLocator;
+import noServer.usuario.Contrasenia.DiezMilPeoresContrasenias;
+import noServer.usuario.Contrasenia.ValidadorDeContrasenia;
+import noServer.usuario.Contrasenia.ValidarLongitud;
+import noServer.configs.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import usuario.Usuario;
+import noServer.usuario.Usuario;
 
 import static org.junit.jupiter.api.Assertions.*;
 
