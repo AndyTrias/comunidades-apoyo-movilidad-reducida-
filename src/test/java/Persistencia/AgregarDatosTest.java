@@ -1,21 +1,21 @@
 package Persistencia;
 
-import noServer.comunidades.Comunidad;
-import noServer.entidades.Entidad;
-import noServer.entidades.EntidadPrestadora;
-import noServer.entidades.Establecimiento;
-import noServer.entidades.OrganismoDeControl;
+import models.comunidades.Comunidad;
+import models.entidades.Entidad;
+import models.entidades.EntidadPrestadora;
+import models.entidades.Establecimiento;
+import models.entidades.OrganismoDeControl;
 import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
-import noServer.localizacion.Localizacion;
-import noServer.localizacion.UbicacionExacta;
-import noServer.repositiorios.*;
+import models.localizacion.Localizacion;
+import models.localizacion.UbicacionExacta;
+import models.repositiorios.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import repositiorios.*;
-import noServer.servicios.PrestacionDeServicio;
-import noServer.servicios.Servicio;
-import noServer.usuario.Usuario;
+//import repositiorios.*;
+import models.servicios.PrestacionDeServicio;
+import models.servicios.Servicio;
+import models.usuario.Usuario;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

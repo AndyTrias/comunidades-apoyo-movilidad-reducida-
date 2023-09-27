@@ -1,8 +1,8 @@
 package Modelado;
 
-import noServer.entidades.Entidad;
-import noServer.entidades.Establecimiento;
-import noServer.localizacion.Localizacion;
+import models.entidades.Entidad;
+import models.entidades.Establecimiento;
+import models.localizacion.Localizacion;
 import org.junit.Before;
 import org.junit.Test;
 import java.util.Set;

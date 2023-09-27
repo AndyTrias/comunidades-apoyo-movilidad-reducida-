@@ -1,13 +1,13 @@
 package Modelado;
 
-import noServer.comunidades.Comunidad;
-import noServer.localizacion.UbicacionExacta;
+import models.comunidades.Comunidad;
+import models.localizacion.UbicacionExacta;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
-import noServer.rankings.criterios.ImpactoComunidades;
-import noServer.servicios.PrestacionDeServicio;
-import noServer.servicios.Servicio;
+import models.rankings.criterios.ImpactoComunidades;
+import models.servicios.PrestacionDeServicio;
+import models.servicios.Servicio;
 
 import java.util.ArrayList;
 import java.util.List;

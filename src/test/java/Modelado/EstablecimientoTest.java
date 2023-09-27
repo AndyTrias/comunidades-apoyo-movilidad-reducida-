@@ -1,10 +1,10 @@
 package Modelado;
 
-import noServer.localizacion.UbicacionExacta;
-import noServer.servicios.PrestacionDeServicio;
-import noServer.servicios.Servicio;
-import noServer.entidades.Establecimiento;
-import noServer.localizacion.Localizacion;
+import models.localizacion.UbicacionExacta;
+import models.servicios.PrestacionDeServicio;
+import models.servicios.Servicio;
+import models.entidades.Establecimiento;
+import models.localizacion.Localizacion;
 import org.junit.Before;
 import org.junit.Test;
 

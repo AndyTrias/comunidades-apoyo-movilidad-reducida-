@@ -1,8 +1,8 @@
-import noServer.entidades.EntidadPrestadora;
-import noServer.entidades.OrganismoDeControl;
+import models.entidades.EntidadPrestadora;
+import models.entidades.OrganismoDeControl;
 import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
-import noServer.repositiorios.RepoEntidadPrestadora;
-import noServer.repositiorios.RepoOrganismoDeControl;
+import models.repositiorios.RepoEntidadPrestadora;
+import models.repositiorios.RepoOrganismoDeControl;
 
 import javax.persistence.EntityTransaction;
 

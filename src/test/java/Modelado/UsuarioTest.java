@@ -1,9 +1,9 @@
 package Modelado;
 
-import noServer.comunidades.Comunidad;
-import noServer.comunidades.Membresia;
-import noServer.comunidades.Rol;
-import noServer.usuario.Usuario;
+import models.comunidades.Comunidad;
+import models.comunidades.Membresia;
+import models.comunidades.Rol;
+import models.usuario.Usuario;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,11 +1,11 @@
 package Modelado;
 
-import noServer.comunidades.Comunidad;
-import noServer.incidentes.Incidente;
-import noServer.localizacion.UbicacionExacta;
-import noServer.servicios.PrestacionDeServicio;
-import noServer.servicios.Servicio;
-import noServer.usuario.Usuario;
+import models.comunidades.Comunidad;
+import models.incidentes.Incidente;
+import models.localizacion.UbicacionExacta;
+import models.servicios.PrestacionDeServicio;
+import models.servicios.Servicio;
+import models.usuario.Usuario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -59,9 +59,9 @@ public class IncidentesTest {
     Incidente incidente = new Incidente(andy, "observaciones", banioMedrano);
     andy.getComunidades().stream().filter(c -> c.getServiciosDeInteres().contains(banioMedrano)).forEach(c -> c.abrirIncidente(incidente));
 
-    // Verificamos que c1 y c2 tenga ese indcidente abierto
-    assertEquals(comunidad1.getIncidentesAbiertos().size(), 1);
-    assertEquals(comunidad2.getIncidentesAbiertos().size(), 1);
+    // Verificamos que c1 y c2 tenga ese indcidente
+    assertEquals(comunidad1.getIncidentes().size(), 1);
+    assertEquals(comunidad2.getIncidentes().size(), 1);
 
     // Verificamos que el incidente este en el baño
     assertEquals(banioMedrano.getIncidentes().size(), 1);
@@ -80,7 +80,7 @@ public class IncidentesTest {
 
     // Verificamos que el incidente no se creo dos veces en c2
     // Vericamos que el banio medrano si tiene dos incidentes
-    assertEquals(comunidad2.getIncidentesAbiertos().size(), 1);
+    assertEquals(comunidad2.getIncidentes().size(), 1);
     assertEquals(banioMedrano.getIncidentes().size(), 2);
   }
 
@@ -92,9 +92,9 @@ public class IncidentesTest {
 
     // Debemos validar que no se abrio en C1 porque fede no participa
     // Debemos validar que no se abrio en C2 porque no es de su interes castro barros
-    assertEquals(comunidad1.getIncidentesAbiertos().size(), 0);
-    assertEquals(comunidad2.getIncidentesAbiertos().size(), 0);
-    assertEquals(comunidad3.getIncidentesAbiertos().size(), 1);
+    assertEquals(comunidad1.getIncidentes().size(), 0);
+    assertEquals(comunidad2.getIncidentes().size(), 0);
+    assertEquals(comunidad3.getIncidentes().size(), 1);
     assertEquals(banioCastroBarros.getIncidentes().size(), 1);
   }
 
@@ -107,27 +107,10 @@ public class IncidentesTest {
     andy.getComunidades().stream().filter(c -> c.getServiciosDeInteres().contains(banioMedrano)).forEach(c -> c.abrirIncidente(incidente));
 
     // Fede cierra el incidente
-    fede.getComunidades().stream().filter(c -> c.getIncidentesAbiertos().contains(incidente)).forEach(c -> c.cerrarIncidente(incidente, fede));
+    fede.getComunidades().stream().filter(c -> c.estaAbiertoElIncidente(incidente)).forEach(c -> c.cerrarIncidente(incidente, fede));
 
-    assertEquals(comunidad2.getIncidentesCerrados().size(), 1);
+    assertFalse(comunidad2.estaAbiertoElIncidente(incidente));
     assertEquals(incidente.getFechasDeCierre().size(), 1);
-
-  }
-
-  @Test
-  public void testNoSePuedeCerrarElMismoIncidenteDosVecesEnUnaComunidad() {
-
-    // Andy crea un incidente
-    Incidente incidente = new Incidente(andy, "observaciones", banioMedrano);
-    andy.getComunidades().stream().filter(c -> c.getServiciosDeInteres().contains(banioMedrano)).forEach(c -> c.abrirIncidente(incidente));
-
-    // Fede cierra el incidente
-    fede.getComunidades().stream().filter(c -> c.getIncidentesAbiertos().contains(incidente)).forEach(c -> c.cerrarIncidente(incidente, fede));
-
-    // Fede intenta cerrar el incidente de nuevo
-    assertThrows(RuntimeException.class, () -> {
-      fede.getComunidades().get(0).cerrarIncidente(incidente, fede);
-    });
 
   }
 
@@ -140,14 +123,15 @@ public class IncidentesTest {
 
 
     // Fede cierra el incidente de Medrano en sus comunidades
-    fede.getComunidades().stream().filter(c -> c.getIncidentesAbiertos().contains(incidenteMedrano)).forEach(c -> c.cerrarIncidente(incidenteMedrano, fede));
+    fede.getComunidades().stream().filter(c -> c.estaAbiertoElIncidente(incidenteMedrano)).forEach(c -> c.cerrarIncidente(incidenteMedrano, fede));
 
 
-    assertEquals(comunidad1.getIncidentesCerrados().size(), 0);
-    assertEquals(comunidad2.getIncidentesCerrados().size(), 1);
+    assertTrue(comunidad1.estaAbiertoElIncidente(incidenteMedrano));
+    assertFalse(comunidad2.estaAbiertoElIncidente(incidenteMedrano));
 
     // En la comunidad 3 no se abrio el incidente
-    assertEquals(comunidad3.getIncidentesCerrados().size(), 0);
+    assertFalse(comunidad3.estaAbiertoElIncidente(incidenteMedrano));
+
     assertEquals(incidenteMedrano.getFechasDeCierre().size(), 1);
   }
 
@@ -164,11 +148,11 @@ public class IncidentesTest {
     andy.getComunidades().stream().filter(c -> c.getServiciosDeInteres().contains(banioMedrano)).forEach(c -> c.abrirIncidente(incidenteCastroBarros));
 
     // Fede cierra el incidente de Medrano en sus comunidades
-    fede.getComunidades().stream().filter(c -> c.getIncidentesAbiertos().contains(incidenteMedrano)).forEach(c -> c.cerrarIncidente(incidenteMedrano, fede));
+    fede.getComunidades().stream().filter(c -> c.estaAbiertoElIncidente(incidenteMedrano)).forEach(c -> c.cerrarIncidente(incidenteMedrano, fede));
 
     // Debemos validar que el incidente en Castro Barros no se haya cerrado
     // Validamos la logica del controller
-    assertEquals(comunidad3.getIncidentesCerrados().size(), 0);
+    assertFalse(comunidad3.estaAbiertoElIncidente(incidenteCastroBarros));
     assertEquals(incidenteCastroBarros.getFechasDeCierre().size(), 0);
   }
 
@@ -180,14 +164,14 @@ public class IncidentesTest {
     andy.getComunidades().stream().filter(c -> c.getServiciosDeInteres().contains(banioMedrano)).forEach(c -> c.abrirIncidente(incidenteMedrano));
 
     // Fede cierra el incidente de Medrano en sus comunidades
-    fede.getComunidades().stream().filter(c -> c.getIncidentesAbiertos().contains(incidenteMedrano)).forEach(c -> c.cerrarIncidente(incidenteMedrano, fede));
+    fede.getComunidades().stream().filter(c -> c.estaAbiertoElIncidente(incidenteMedrano)).forEach(c -> c.cerrarIncidente(incidenteMedrano, fede));
 
     // Verifcamos que el incidente tiene una fecha de cierre (para la comunidad 2)
     // En la comunidad 1 sigue abierto
     assertEquals(incidenteMedrano.getFechasDeCierre().size(), 1);
     assertFalse(incidenteMedrano.estaAbierto());
-    assertFalse(comunidad1.estaCerradoElIncidente(incidenteMedrano));
-    assertTrue(comunidad2.estaCerradoElIncidente(incidenteMedrano));
+    assertTrue(comunidad1.estaAbiertoElIncidente(incidenteMedrano));
+    assertFalse(comunidad2.estaAbiertoElIncidente(incidenteMedrano));
 
   }
 

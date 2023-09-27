@@ -1,16 +1,16 @@
 package Modelado;
 
-import noServer.configs.Config;
-import noServer.external.json.ServicioJson;
-import noServer.rankings.informes.*;
+import models.configs.Config;
+import models.external.json.ServicioJson;
+import models.rankings.informes.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import noServer.rankings.criterios.ImpactoComunidades;
-import noServer.rankings.criterios.MayorCantidad;
-import noServer.rankings.criterios.MayorTiempo;
-import noServer.repositiorios.RepoComunidad;
-import noServer.repositiorios.RepoEntidad;
+import models.rankings.criterios.ImpactoComunidades;
+import models.rankings.criterios.MayorCantidad;
+import models.rankings.criterios.MayorTiempo;
+import models.repositiorios.RepoComunidad;
+import models.repositiorios.RepoEntidad;
 
 import java.util.List;
 
