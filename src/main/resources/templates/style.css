@@ -12,6 +12,10 @@
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
+a:hover{
+    cursor: pointer;
+}
+
 @media (max-width: 767px) {
     .background {
         /* background color indigo-400 from tailwind */
