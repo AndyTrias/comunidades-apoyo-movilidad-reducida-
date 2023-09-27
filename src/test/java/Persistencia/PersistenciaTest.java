@@ -13,7 +13,7 @@ import models.comunidades.Comunidad;
 import models.comunidades.Rol;
 import models.incidentes.Incidente;
 import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
-import repositiorios.*;
+import models.repositiorios.*;
 import models.servicios.PrestacionDeServicio;
 import models.servicios.Servicio;
 import models.usuario.Interes;

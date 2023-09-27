@@ -117,41 +117,27 @@ public class Comunidad {
     }
 
 
-
     public void abrirIncidente(Incidente incidente) {
-        if (!estaCerradoElIncidente(incidente)) {
+        if (!estaAbiertoElIncidente(incidente)) {
             agregarIncidente(incidente);
         }
     }
 
-
     public void cerrarIncidente(Incidente incidente, Usuario usuario) {
-        if (this.estaCerradoElIncidente(incidente)) {
-            throw new RuntimeException("El incidente ya está cerrado");
-        }
-
-        Optional<IncidenteDeComunidad> incidenteDeComunidadOptional = incidentes.stream()
-            .filter(i -> i.getIncidente().getPrestacionDeServicio().equals(incidente.getPrestacionDeServicio()))
-            .findFirst();
-
-        if (incidenteDeComunidadOptional.isPresent()) {
-            IncidenteDeComunidad incidenteDeComunidad = incidenteDeComunidadOptional.get();
-            incidenteDeComunidad.setAbierto(false);
-            notificador.notificar(usuario, incidente);
-        } else {
-            throw new RuntimeException("No se encontró el incidente correspondiente");
+        if (this.estaAbiertoElIncidente(incidente)) {
+            incidente.cerrar();
+            incidentes.stream()
+                .filter(i -> i.getIncidente().equals(incidente))
+                .forEach(
+                    i -> i.setAbierto(false));
         }
     }
 
-
-    public boolean estaCerradoElIncidente(Incidente incidente) {
+    public boolean estaAbiertoElIncidente(Incidente incidente) {
         return incidentes.stream()
-            .filter(i -> i.getIncidente().getPrestacionDeServicio().equals(incidente.getPrestacionDeServicio()))
-            .noneMatch(IncidenteDeComunidad::isAbierto);
-    }
-
-    public int getCantidadDeAfectados() {
-        return getUsuarios().stream().filter(u -> u.getMembresia(this).esAfectado()).mapToInt(u -> 1).sum();
+            .filter(i -> i.getIncidente().getPrestacionDeServicio()
+                .equals(incidente.getPrestacionDeServicio()))
+            .anyMatch(IncidenteDeComunidad::isAbierto);
     }
 
 
@@ -161,5 +147,10 @@ public class Comunidad {
         incidenteNuevo.setAbierto(true);
         incidentes.add(incidenteNuevo);
     }
+
+    public int getCantidadDeAfectados() {
+        return getUsuarios().stream().filter(u -> u.getMembresia(this).esAfectado()).mapToInt(u -> 1).sum();
+    }
+
 }
 

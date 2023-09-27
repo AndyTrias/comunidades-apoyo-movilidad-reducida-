@@ -3,6 +3,7 @@ package models.rankings.criterios;
 import models.comunidades.Comunidad;
 import models.incidentes.Incidente;
 import lombok.Getter;
+import models.incidentes.IncidenteDeComunidad;
 
 import java.util.Comparator;
 import java.util.List;
@@ -16,7 +17,7 @@ public class ImpactoComunidades implements CriteriosDeComunidades {
     }
 
     private float calcularImpacto(Comunidad comunidad){
-        List<Incidente> incidentes = comunidad.getTodosLosIncidentes();
+        List<IncidenteDeComunidad> incidentes = comunidad.getIncidentes();
         return (float) comunidad.getCantidadDeUsuarios() / incidentes.size();
     }
 
