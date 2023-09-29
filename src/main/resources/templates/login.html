@@ -1,74 +1,100 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
-    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
 </head>
 
-<body>
-    <style>
-        .login_img_section {
-            background: linear-gradient(rgba(2, 2, 2, .7), rgba(0, 0, 0, .7)), url(https://images.unsplash.com/photo-1650825556125-060e52d40bd0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80) center center;
-        }
-    </style>
-    <div class="h-screen flex">
-        <div class="hidden lg:flex w-full lg:w-1/2 login_img_section justify-around items-center">
-            <div class="w-full mx-auto px-20 flex-col items-center space-y-6">
-                <h1 class="text-white font-bold text-4xl font-sans">Simple App</h1>
-                <p class="text-white mt-1">The simplest app to use</p>
-                <div class="flex justify-center lg:justify-start mt-6">
-                    <a href="#"
-                        class="hover:bg-indigo-700 hover:text-white hover:-translate-y-1 transition-all duration-500 bg-white text-indigo-800 mt-4 px-4 py-2 rounded-2xl font-bold mb-2">
-                        Get Started</a>
+<body class="flex flex-col h-screen background md:bg-gradient-to-l from-indigo-400 via-purple-500 to-cyan-500">
+
+
+    <header class="text-gray-600 body-font">
+        <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+            <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                </svg>
+                <span class="ml-3 text-xl">
+                    Monitoreo de Estado de Servicios
+                </span>
+            </a>
+            <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
+                <a class="mr-5 text-white hover:text-gray-900" href="./comunidades.html">Comunidades</a>
+                <a class="mr-5 text-white hover:text-gray-900">Incidentes</a>
+                <a class="mr-5 text-white hover:text-gray-900">Perfil</a>
+            </nav>
+            <button class="items-center bg-red-400 border-0 py-1 px-3 focus:outline-none hover:bg-red-600 rounded text-base mt-4 md:mt-0 w-20 h-8">
+                <i class="fas fa-sign-out-alt text-white"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="mb-auto p-10">
+        
+           
+            
+                <div class="w-full px-8 md:px-22 lg:px-22">
+                    <form class="bg-white rounded-md shadow-2xl p-5">
+                        <h1 class="text-gray-800 font-bold text-2xl mb-1">Registrate</h1>
+                        <p class="text-sm font-normal text-gray-600 mb-8">Bienvenido</p>
+                        <div class="flex items-center border-2 mb-8 py-2 px-3 rounded-2xl">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                                    d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
+                            </svg>
+                            <input id="email" class=" pl-2 w-full outline-none border-none" type="email" name="email"
+                                placeholder="Correo Electronico" />
+                        </div>
+                        <div class="flex items-center border-2 mb-12 py-2 px-3 rounded-2xl ">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path fillRule="evenodd"
+                                    d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+                                    clipRule="evenodd" />
+                            </svg>
+                            <input class="pl-2 w-full outline-none border-none" type="password" name="password"
+                                id="password" placeholder="Contraseña" />
+
+                        </div>
+                        <button type="submit"
+                            class="block w-full bg-indigo-600 mt-5 py-2 rounded-2xl hover:bg-indigo-700 hover:-translate-y-1 transition-all duration-500 text-white font-semibold mb-2">Registrar</button>
+                        <div class="flex justify-between mt-4">
+                            <span
+                                class="text-sm ml-2 hover:text-blue-500 cursor-pointer hover:-translate-y-1 duration-500 transition-all">Olvidaste
+                                tu Contraseña ?</span>
+
+                            <a href="#"
+                                class="text-sm ml-2 hover:text-blue-500 cursor-pointer hover:-translate-y-1 duration-500 transition-all">
+                                Ya tienes una cuenta?</a>
+                        </div>
+
+                    </form>
                 </div>
-            </div>
         </div>
-        <div class="flex w-full lg:w-1/2 justify-center items-center bg-white space-y-8">
-            <div class="w-full px-8 md:px-32 lg:px-24">
-                <form class="bg-white rounded-md shadow-2xl p-5">
-                    <h1 class="text-gray-800 font-bold text-2xl mb-1">Hello Again!</h1>
-                    <p class="text-sm font-normal text-gray-600 mb-8">Welcome Back</p>
-                    <div class="flex items-center border-2 mb-8 py-2 px-3 rounded-2xl">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                                d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
-                        </svg>
-                        <input id="email" class=" pl-2 w-full outline-none border-none" type="email" name="email"
-                            placeholder="Email Address" />
-                    </div>
-                    <div class="flex items-center border-2 mb-12 py-2 px-3 rounded-2xl ">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20"
-                            fill="currentColor">
-                            <path fillRule="evenodd"
-                                d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-                                clipRule="evenodd" />
-                        </svg>
-                        <input class="pl-2 w-full outline-none border-none" type="password" name="password"
-                            id="password" placeholder="Password" />
+    </main>
 
-                    </div>
-                    <button type="submit"
-                        class="block w-full bg-indigo-600 mt-5 py-2 rounded-2xl hover:bg-indigo-700 hover:-translate-y-1 transition-all duration-500 text-white font-semibold mb-2">Login</button>
-                    <div class="flex justify-between mt-4">
-                        <span
-                            class="text-sm ml-2 hover:text-blue-500 cursor-pointer hover:-translate-y-1 duration-500 transition-all">Forgot
-                            Password ?</span>
-
-                        <a href="#"
-                            class="text-sm ml-2 hover:text-blue-500 cursor-pointer hover:-translate-y-1 duration-500 transition-all">Don't
-                            have an account yet?</a>
-                    </div>
-
-                </form>
-            </div>
-
+    <footer class="text-gray-600 body-font">
+        <div class="container p-5 mx-auto flex items-center sm:flex-row flex-col">
+            <a class="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                </svg>
+                <span class="ml-3 text-xl">
+                    Monitoreo de Estado de Servicios
+                </span>
+            </a>
+            <p class="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">© 2023 Diseño de Sistemas UTN —
+                <a href="https://github.com/dds-utn/2023-tpa-mama-grupo-06" class="text-gray-600 ml-1" rel="noopener noreferrer" target="_blank">Github</a>
+            </p>
         </div>
-    </div>
+    </footer>
 </body>
 
 </html>
