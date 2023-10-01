@@ -13,6 +13,7 @@ import java.util.Date;
 public class IncidenteDeComunidad {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Getter
   private Long id;
 
   @Getter
@@ -27,11 +28,12 @@ public class IncidenteDeComunidad {
 
   @Getter
   @Setter
-  @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+  @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
   private Usuario CerradoPor;
 
   @Getter
   @Setter
   @Column(name = "fecha_de_cierre")
   private Date fechaDeCierre;
+
 }

@@ -1,21 +1,37 @@
 package server;
 
+import controllers.IncidenteController;
+import io.javalin.Javalin;
+import models.repositorios.RepoComunidad;
+import models.repositorios.RepoIncidentes;
+import models.repositorios.RepoPrestacion;
+
+
 public class Router {
 
   public static void init() {
-    Server.app().get("/", ctx -> {
+    Javalin app = Server.app(); // Assuming Server.app() returns your Javalin instance
+
+    app.get("/", ctx -> {
       ctx.sessionAttribute("item1", "Cosa 1");
       ctx.result("Hola mundo");
     });
-    Server.app().get("/saluda", ctx -> {
-      ctx.result("Hola "
-          + ctx.queryParam("nombre")
-          + ", " + ctx.sessionAttribute("item1")
-      );
+
+    app.get("/saluda", ctx -> {
+      ctx.result("Hola " + ctx.queryParam("nombre") + ", " + ctx.sessionAttribute("item1"));
     });
-    Server.app().get("/saludo-para/{nombre}", ctx -> ctx.result("Hola "
-        + ctx.pathParam("nombre")
-    ));
+
+    app.get("/saludo-para/{nombre}", ctx -> ctx.result("Hola " + ctx.pathParam("nombre")));
+
+    app.routes(() -> {
+      app.get("comunidades/{id}/incidentes", new IncidenteController(new RepoComunidad())::index);
+      app.get("comunidades/{id}/incidentes/{id_incidente}", new IncidenteController(new RepoComunidad())::show);
+      app.post("comunidades/{id}/incidentes", new IncidenteController(new RepoComunidad(), new RepoPrestacion(), new RepoIncidentes())::save);
+    });
+  }
+}
+
+
 
 //    Server.app().routes(() -> {
 //      get("servicios", ((ServiciosController) FactoryController.controller("Servicios"))::index);
@@ -31,5 +47,11 @@ public class Router {
 //        //TODO
 //      });
 //    });
-  }
-}
+
+
+//comunidades/id/incidentes -> Listado de incidentes (GET) INDEX
+//comunidades/id/incidentes/estado/%estado% GET
+//comunidades/id/incidentes/create -> CREATE
+//comunidades/id/incidentes/id -> Detalle de incidente(Te dice si esta abierto o no) (GET) SHOW
+//comunidades/id/incidentes/id -> Cerrar incidente (POST) EDIT
+//comunidades/id/incidentes -> Crea un incidente (POST) CREATE

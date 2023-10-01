@@ -8,7 +8,7 @@ import models.entidades.OrganismoDeControl;
 import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
 import models.localizacion.Localizacion;
 import models.localizacion.UbicacionExacta;
-import models.repositiorios.*;
+import models.repositorios.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

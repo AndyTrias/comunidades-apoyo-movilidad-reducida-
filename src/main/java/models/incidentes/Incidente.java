@@ -1,5 +1,6 @@
 package models.incidentes;
 
+import lombok.Setter;
 import models.converters.NotificadorConverter;
 import models.servicios.PrestacionDeServicio;
 import models.usuario.Usuario;
@@ -24,22 +25,24 @@ public class Incidente {
     private Date fechaDeApertura;
 
     @Getter
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "fechas_de_cierre", joinColumns = @JoinColumn(name = "incidente_id"))
     private List<Date> fechasDeCierre;
 
+    @Setter
     @Column(name = "observaciones", columnDefinition = "longtext")
     private String observaciones;
 
     @Getter
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Usuario abiertoPor;
 
     @Getter
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     private PrestacionDeServicio prestacionDeServicio;
 
     @Convert(converter = NotificadorConverter.class)
+    @Basic(fetch = FetchType.LAZY)
     @Column(name = "notificador")
     private Notificador notificador;
 
@@ -52,11 +55,8 @@ public class Incidente {
         this.notificador = new AperturaDeIncidente();
 
         this.prestacionDeServicio.agregarIncidente(this);
-        // Creamos que esta logica va del lado del controller
-        // La pusimos en los tests
-        // usuario.getComunidades().stream().filter(c -> c.getServiciosDeInteres().contains(prestacionDeServicio)).forEach(c -> c.abrirIncidente(this));
-        this.notificarApertura();
-        RevisionDeIncidente.getInstance().agregarIncidente(this);
+//        this.notificarApertura();
+//        RevisionDeIncidente.getInstance().agregarIncidente(this);
     }
 
     public Incidente() {

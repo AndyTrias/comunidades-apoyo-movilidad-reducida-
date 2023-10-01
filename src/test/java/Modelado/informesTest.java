@@ -9,8 +9,8 @@ import org.mockito.Mockito;
 import models.rankings.criterios.ImpactoComunidades;
 import models.rankings.criterios.MayorCantidad;
 import models.rankings.criterios.MayorTiempo;
-import models.repositiorios.RepoComunidad;
-import models.repositiorios.RepoEntidad;
+import models.repositorios.RepoComunidad;
+import models.repositorios.RepoEntidad;
 
 import java.util.List;
 

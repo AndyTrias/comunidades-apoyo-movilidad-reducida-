@@ -24,8 +24,8 @@ public class PrestacionDeServicio {
     private Servicio servicio;
 
     @Getter
-    @OneToMany
-    @JoinColumn(name = "prestacionDeServicio_id")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "prestacion_de_servicio_id")
     private List<Incidente> incidentes;
 
     @Getter

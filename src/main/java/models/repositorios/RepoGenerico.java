@@ -1,4 +1,4 @@
-package models.repositiorios;
+package models.repositorios;
 
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 

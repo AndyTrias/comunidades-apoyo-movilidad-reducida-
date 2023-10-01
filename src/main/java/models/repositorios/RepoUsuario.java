@@ -1,4 +1,4 @@
-package models.repositiorios;
+package models.repositorios;
 
 import models.servicios.Servicio;
 import models.usuario.Usuario;

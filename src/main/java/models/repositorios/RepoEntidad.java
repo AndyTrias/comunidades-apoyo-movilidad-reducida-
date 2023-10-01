@@ -1,4 +1,4 @@
-package models.repositiorios;
+package models.repositorios;
 
 import models.entidades.Entidad;
 import models.servicios.PrestacionDeServicio;

@@ -50,28 +50,28 @@ public class Usuario {
     private String telefono;
 
     @Getter
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id")
     private List<Interes> intereses;
 
     @Getter
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id", nullable = true)
     private List<Membresia> membresias;
 
     @Getter
     @Setter
-    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id")
     private Set<Localizacion> localizaciones;
 
     @Getter
     @Setter
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private ConfiguracionDeNotificaciones configuracionDeNotificaciones;
 
     @Getter
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private UbicacionExacta ubicacionExacta;
 
     public Usuario(String nombre, String apellido, String correoElectronico) {

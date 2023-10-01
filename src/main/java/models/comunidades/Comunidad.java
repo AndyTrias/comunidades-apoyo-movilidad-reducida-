@@ -18,6 +18,7 @@ import java.util.*;
 public class Comunidad {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
     private Long id;
 
     @Getter
@@ -34,24 +35,16 @@ public class Comunidad {
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Set<PrestacionDeServicio> serviciosDeInteres;
 
-//    @Getter
-//    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-//    @JoinTable(name = "incidentes_abiertos", joinColumns = @JoinColumn(name = "comunidad_id"), inverseJoinColumns = @JoinColumn(name = "incidente_id"))
-//    private List<Incidente> incidentesAbiertos;
-//
-//    @Getter
-//    @ManyToMany(cascade = CascadeType.ALL)
-//    @JoinTable(name = "incidentes_cerrados", joinColumns = @JoinColumn(name = "comunidad_id"), inverseJoinColumns = @JoinColumn(name = "incidente_id"))
-//    private List<Incidente> incidentesCerrados;
 
     @Getter
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "incidente_de_comunidad_id")
+    @JoinColumn(name = "comunidad_id")
     private List<IncidenteDeComunidad> incidentes;
 
     @Setter
     @Convert(converter = NotificadorConverter.class)
     @Column(name = "notificador")
+    @Basic(fetch = FetchType.LAZY)
     private Notificador notificador;
 
     public Comunidad(String nombre) {
@@ -151,6 +144,13 @@ public class Comunidad {
 
     public int getCantidadDeAfectados() {
         return getUsuarios().stream().filter(u -> u.getMembresia(this).esAfectado()).mapToInt(u -> 1).sum();
+    }
+
+    public IncidenteDeComunidad getIncidenteById(Long incidenteId) {
+        return incidentes.stream()
+            .filter(incidente -> incidente.getId().equals(incidenteId))
+            .findFirst()
+            .orElse(null);
     }
 
 }
