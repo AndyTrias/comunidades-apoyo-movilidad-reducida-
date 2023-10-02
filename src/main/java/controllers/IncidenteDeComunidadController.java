@@ -1,5 +1,6 @@
 package controllers;
 
+import com.sun.xml.bind.v2.TODO;
 import io.javalin.http.Context;
 import models.comunidades.Comunidad;
 import models.incidentes.Incidente;
@@ -76,18 +77,69 @@ public class IncidenteDeComunidadController{
     Incidente incidente = createIncidente(prestacion, ctx.formParam("observaciones"));
 
     comunidad.abrirIncidente(incidente);
+    //TODO: Abrir incidente en todas las comunidades del usuario
     repoComunidad.modificar(comunidad);
 
     ctx.status(200);
     ctx.result("Incidente creado");
   }
 
-  public void create() {}
-
   private Incidente createIncidente(PrestacionDeServicio prestacion, String observaciones) {
-    RepoUsuario repoUsuario = new RepoUsuario();
-    Usuario usuario = repoUsuario.buscar(3L);
+    Usuario usuario = new Usuario();
     return new Incidente(usuario, observaciones, prestacion);
+  }
+
+  public void delete(Context ctx) {
+    Comunidad comunidad = obtenerComunidad(ctx);
+    if (comunidad == null) {
+      return;
+    }
+
+    Long incidenteId = Long.parseLong(ctx.pathParam("id_incidente"));
+    IncidenteDeComunidad incidente = repoComunidad.buscarIncidenteDeComunidad(comunidad.getId(), incidenteId);
+
+    if (incidente == null) {
+      ctx.status(404);
+      ctx.result("Incidente no encontrado");
+      return;
+    }
+
+    comunidad.cerrarIncidente(incidente.getIncidente(), new Usuario());
+    incidente.getIncidente().cerrar();
+    //      andy.getComunidades().stream().filter(c -> c.getServiciosDeInteres().contains(banioMedrano)).forEach(c -> c.abrirIncidente(incidente));
+    //TODO: Cerrar incidente en todas las comunidades del usuario
+    repoComunidad.modificar(comunidad);
+    ctx.status(200);
+    ctx.redirect("/comunidades/" + comunidad.getId() + "/incidentes" + incidente.getId());
+  }
+
+
+
+  public void create(Context ctx) {
+    Comunidad comunidad = obtenerComunidad(ctx);
+    if (comunidad == null) {
+      return;
+    }
+
+    Map<String, Object> model = new HashMap<>();
+    model.put("comunidad", comunidad);
+
+    //    ctx.render("incidentes/incidente.hbs", model);
+  }
+
+  private Long parsePrestacionId(String prestacionParam) {
+    try {
+      return Long.valueOf(prestacionParam);
+    } catch (NumberFormatException e) {
+      return null;
+    }
+  }
+
+  private PrestacionDeServicio findPrestacionById(Long prestacionId) {
+    if (prestacionId == null) {
+      return null; // Handle null or invalid prestacionId gracefully
+    }
+    return repoPrestacion.buscar(prestacionId);
   }
 
   private Comunidad obtenerComunidad(Context ctx) {
