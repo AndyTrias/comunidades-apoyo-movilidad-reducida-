@@ -25,6 +25,7 @@ public class Server {
       app = Javalin.create(config()).start(port);
       initTemplateEngine();
       Router.init();
+      System.out.println("Server started on port: " + port);
     }
   }
 

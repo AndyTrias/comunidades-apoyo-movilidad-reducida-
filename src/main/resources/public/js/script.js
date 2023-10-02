@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function handleClick(e) {
     e.preventDefault();
+    const href = e.currentTarget.href;
     const bars = document.querySelectorAll(".bar");
     bars.forEach((bar) => {
         bar.style.animationPlayState = "running";
@@ -24,7 +25,7 @@ function handleClick(e) {
     const lastBar = bars[bars.length - 1];
     lastBar.addEventListener("animationend", () => {
         setTimeout(() => {
-            window.location = e.target.href;
+            window.location = href;
         }, 500);
     });
 }

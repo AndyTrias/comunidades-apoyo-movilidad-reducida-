@@ -11,8 +11,8 @@ public class EstrategiaDeNotificacionConverter implements AttributeConverter<Est
   @Override
   public String convertToDatabaseColumn(EstrategiaDeNotificacion estrategiaDeNotificacion) {
       return switch (estrategiaDeNotificacion.getClass().getName()) {
-          case "usuario.configuraciones.formas.SinApuros" -> "SinApuros";
-          case "usuario.configuraciones.formas.CuandoSuceden" -> "CuandoSuceden";
+          case "models.usuario.configuraciones.formas.SinApuros" -> "SinApuros";
+          case "models.usuario.configuraciones.formas.CuandoSuceden" -> "CuandoSuceden";
           default -> "";
       };
   }

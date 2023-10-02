@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comunidades</title>
+    <title>Monitoreo estados y servicios</title>
     <link
       href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
       rel="stylesheet"
@@ -12,8 +12,8 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../public/css/style.css">
-    <script src="../public/js/script.js"></script>
+    <link rel="stylesheet" href="\css\style.css">
+    <script src="\js\script.js"></script>
 </head>
 <body class="flex flex-col h-screen background md:bg-gradient-to-l from-indigo-400 via-purple-500 to-cyan-500">
      
@@ -29,7 +29,7 @@
         </span>
     </a>
     <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
-        <a class="mr-5 text-white hover:text-gray-900" href="./comunidades.html">Comunidades</a>
+        <a class="mr-5 text-white hover:text-gray-900">Comunidades</a>
         <a class="mr-5 text-white hover:text-gray-900">Incidentes</a>
         <a class="mr-5 text-white hover:text-gray-900">Perfil</a>
     </nav>
@@ -40,7 +40,8 @@
   </header>
       
     <main class="mb-auto p-10">
-      
+        {{#block "contenido"}}
+        {{/block}}
     </main>
 
     <footer class="text-gray-600 body-font">

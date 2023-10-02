@@ -30,15 +30,16 @@ public class Incidente {
     private List<Date> fechasDeCierre;
 
     @Setter
+    @Getter
     @Column(name = "observaciones", columnDefinition = "longtext")
     private String observaciones;
 
     @Getter
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Usuario abiertoPor;
 
     @Getter
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.MERGE)
     private PrestacionDeServicio prestacionDeServicio;
 
     @Convert(converter = NotificadorConverter.class)
@@ -55,8 +56,8 @@ public class Incidente {
         this.notificador = new AperturaDeIncidente();
 
         this.prestacionDeServicio.agregarIncidente(this);
-//        this.notificarApertura();
-//        RevisionDeIncidente.getInstance().agregarIncidente(this);
+        this.notificarApertura();
+        RevisionDeIncidente.getInstance().agregarIncidente(this);
     }
 
     public Incidente() {

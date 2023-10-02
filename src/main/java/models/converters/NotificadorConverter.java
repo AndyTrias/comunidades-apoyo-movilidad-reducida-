@@ -11,9 +11,9 @@ public class NotificadorConverter implements AttributeConverter<Notificador, Str
     @Override
     public String convertToDatabaseColumn(Notificador notificador) {
         return switch (notificador.getClass().getName()) {
-            case "notificaciones.notificador.AperturaDeIncidente" -> "AperturaDeIncidente";
-            case "notificaciones.notificador.CierreIncidente" -> "CierreIncidente";
-            case "notificaciones.notificador.RevisionIncidente" -> "RevisionIncidente";
+            case "models.notificaciones.notificador.AperturaDeIncidente" -> "AperturaDeIncidente";
+            case "models.notificaciones.notificador.CierreIncidente" -> "CierreIncidente";
+            case "models.notificaciones.notificador.RevisionIncidente" -> "RevisionIncidente";
             default -> "";
         };
     }

@@ -56,7 +56,7 @@ public class PersistenciaTest implements SimplePersistenceTest {
 
     @Test
     void persisteIncidenteTest(){
-        Usuario usuario = repoUsuario.buscar(1L);
+        Usuario usuario = repoUsuario.buscar(3L);
         PrestacionDeServicio prestacionDeServicio = repoPrestacion.buscar(1L);
         Comunidad comunidad = repoComunidad.buscar(1L);
         Incidente incidente = new Incidente(usuario, "baño sucio", prestacionDeServicio);

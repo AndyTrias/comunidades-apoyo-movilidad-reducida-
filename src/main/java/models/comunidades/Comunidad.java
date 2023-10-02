@@ -44,7 +44,6 @@ public class Comunidad {
     @Setter
     @Convert(converter = NotificadorConverter.class)
     @Column(name = "notificador")
-    @Basic(fetch = FetchType.LAZY)
     private Notificador notificador;
 
     public Comunidad(String nombre) {
@@ -56,9 +55,7 @@ public class Comunidad {
         this.notificador = new CierreIncidente();
     }
 
-    public Comunidad() {
-
-    }
+    public Comunidad() {}
 
     public void agregarRol(Rol rol) {
         roles.add(rol);
@@ -109,7 +106,6 @@ public class Comunidad {
         serviciosDeInteres.add(servicio);
     }
 
-
     public void abrirIncidente(Incidente incidente) {
         if (!estaAbiertoElIncidente(incidente)) {
             agregarIncidente(incidente);
@@ -146,11 +142,13 @@ public class Comunidad {
         return getUsuarios().stream().filter(u -> u.getMembresia(this).esAfectado()).mapToInt(u -> 1).sum();
     }
 
-    public IncidenteDeComunidad getIncidenteById(Long incidenteId) {
-        return incidentes.stream()
-            .filter(incidente -> incidente.getId().equals(incidenteId))
-            .findFirst()
-            .orElse(null);
+    public Map<String, Object> getEstadisticas() {
+        Map<String, Object> estadisticas = new HashMap<>();
+        estadisticas.put("miembros", getCantidadDeUsuarios());
+        estadisticas.put("abiertos", incidentes.stream().filter(IncidenteDeComunidad::isAbierto).count());
+        estadisticas.put("cerrados", incidentes.stream().filter(i -> !i.isAbierto()).count());
+        estadisticas.put("prestaciones", serviciosDeInteres.size());
+        return estadisticas;
     }
 
 }
