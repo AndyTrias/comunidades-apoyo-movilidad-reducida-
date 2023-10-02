@@ -8,11 +8,11 @@
                     {{#if comunidad.imagen}}
                         src={{comunidad.imagen}}
                     {{else}}
-                        src="https://dummyimage.com/70x70"
+                        src="https://source.unsplash.com/random/200x200?sig=1"
                     {{/if}}
                     alt="Image"
                 />
-                <h1 class="text-2xl font-semibold text-white">{{comunidad.nombre}}</h1>
+                <h1 class="text-2xl font-semibold text-white capitalize">{{comunidad.nombre}}</h1>
                 <p class="text-sm"></p>
 
                 <section class="text-gray-600 body-font">
@@ -43,32 +43,37 @@
             <div class="w-full md:w-1/2">
                 <div class="flex items-center space-x-4 mb-2">
                     <label for="filter" class="text-white">Filtro:</label>
-                    <select id="filter" class="border rounded-md py-1 px-2">
-                        <option value="all">Todos</option>
-                        <option value="open">Abierto</option>
-                        <option value="closed">Cerrado</option>
+                    <select id="filter" class="border rounded-md py-1 px-2" onchange="searchFilter()">
+                        <option value="todos">Todos</option>
+                        <option value="abierto">Abierto</option>
+                        <option value="cerrado">Cerrado</option>
                     </select>
                 </div>
 
-                <div class="space-y-4 max-h-96 overflow-y-auto">
+                <div class="space-y-4 incidentesContainer w-full overflow-y-auto">
                     {{#each incidentes}}
                     <a
-                        class="cristal w-full shadow-md p-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-80 focus:outline-none hover:bg-indigo-400 hover:border-0"
+                        class="cristal incidente"
                         href="./{{this.id}}"
+                        data-abierto={{this.abierto}}
                     >
-                        <h2 class="text-lg font-semibold flex text-white">{{this.incidente.prestacionDeServicio.nombre}}</h2>
-                        <p class="text-sm text-gray-500 flex">{{this.incidente.observaciones}}</p>
-                        <div class="mt-2 flex flex-col sm:flex-row items-end">
-                            <span class="text-green-500 text-lg">
-                                {{#if this.abierto}}
-                                    Abierto
-                                {{else}}
-                                    Cerrado
-                                {{/if}}
-                            </span>
-                            <span class="ml-2 text-gray-200">Abierto por {{this.incidente.abiertoPor.nombre}} </span>
-                            <span class="ml-auto text-gray-200">{{this.incidente.fechaDeApertura}}</span>
+                        <div class="leftContainer">
+                            <h2 class="text-lg font-semibold flex">{{this.incidente.prestacionDeServicio.nombre}}</h2>
+                            <p class="text-sm text-gray-500 flex">{{this.incidente.observaciones}}</p>
+                            <div class="mt-4 flex flex-col sm:flex-row">
+                                <span class="mr-2 text-gray-400">por <strong>{{this.incidente.abiertoPor.nombre}}</strong> </span>
+                                <span class="text-gray-400">{{this.incidente.fechaDeApertura}}</span>
+                            </div>
                         </div>
+                        {{#if this.abierto}}
+                            <div class="icono bg-green-400">
+                                <i class="fas fa-lock-open fa-lg"></i>
+                            </div>
+                        {{else}}
+                            <div class="icono bg-red-400">
+                                <i class="fas fa-lock fa-lg"></i>
+                            </div>
+                        {{/if}}
                     </a>
                     {{/each}}
                 </div>

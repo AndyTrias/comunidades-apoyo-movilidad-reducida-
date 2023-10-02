@@ -15,3 +15,26 @@ document.querySelectorAll(".incidente").forEach((incidente) => {
         iframe.src = "https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d13136.639585903875!2d" + coordenadasIniciales[0] + "!3d" + coordenadasIniciales[1] +"!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2sar!4v1695827727275!5m2!1ses-419!2sar"
     });
 });
+
+var searchFilter = () => {
+    let selectedStatus = document.getElementById("filter").value;
+    let incidentes = document.querySelectorAll(".incidente");
+    incidentes.forEach((incidente) => {
+        /* data-abierto */
+        if (selectedStatus == "abierto") {
+            if (incidente.dataset.abierto == "true") {
+                incidente.style.display = "flex";
+            } else {
+                incidente.style.display = "none";
+            }
+        } else if (selectedStatus == "cerrado") {
+            if (incidente.dataset.abierto == "false") {
+                incidente.style.display = "flex";
+            } else {
+                incidente.style.display = "none";
+            }
+        } else {
+            incidente.style.display = "flex";
+        }
+    });
+}

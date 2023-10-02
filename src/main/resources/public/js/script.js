@@ -1,12 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
     const bartender = document.createElement("div");
     bartender.classList.add("bartender");
-    for (let i = 0; i < 5; i++) {
-        const bar = document.createElement("div");
-        bar.classList.add("bar");
-        bartender.appendChild(bar);
-    }
+    const bar = document.createElement("div");
+    bar.classList.add("bar");
+    bartender.appendChild(bar);
     document.querySelector("main").appendChild(bartender);
+
 
     const a = document.querySelectorAll("a");
     a.forEach((link) => {
@@ -18,14 +17,9 @@ document.addEventListener("DOMContentLoaded", () => {
 function handleClick(e) {
     e.preventDefault();
     const href = e.currentTarget.href;
-    const bars = document.querySelectorAll(".bar");
-    bars.forEach((bar) => {
-        bar.style.animationPlayState = "running";
-    });
-    const lastBar = bars[bars.length - 1];
-    lastBar.addEventListener("animationend", () => {
-        setTimeout(() => {
-            window.location = href;
-        }, 500);
+    const bar = document.querySelector(".bar");
+    bar.style.animationPlayState = "running";
+    bar.addEventListener("animationend", () => {
+        window.location = href;
     });
 }

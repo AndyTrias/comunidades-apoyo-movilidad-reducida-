@@ -85,7 +85,8 @@ public class IncidenteDeComunidadController{
   }
 
   private Incidente createIncidente(PrestacionDeServicio prestacion, String observaciones) {
-    Usuario usuario = new Usuario();
+    RepoUsuario repoUsuario = new RepoUsuario();
+    Usuario usuario = repoUsuario.buscar(3L);
     return new Incidente(usuario, observaciones, prestacion);
   }
 
