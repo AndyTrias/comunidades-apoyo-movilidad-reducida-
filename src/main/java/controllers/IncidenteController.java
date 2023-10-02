@@ -1,5 +1,6 @@
 package controllers;
 
+import com.sun.xml.bind.v2.TODO;
 import io.javalin.http.Context;
 import models.comunidades.Comunidad;
 import models.incidentes.Incidente;
@@ -27,7 +28,7 @@ public class IncidenteController {
     this.repoComunidad = repoComunidad;
   }
 
-  public IncidenteController(RepoComunidad repoComunidad, RepoPrestacion repoPrestacion, RepoIncidentes repoIncidentes){
+  public IncidenteController(RepoComunidad repoComunidad, RepoPrestacion repoPrestacion, RepoIncidentes repoIncidentes) {
     this.repoComunidad = repoComunidad;
     this.repoPrestacion = repoPrestacion;
     this.repoIncidentes = repoIncidentes;
@@ -60,9 +61,6 @@ public class IncidenteController {
     }
   }
 
-
-
-
   public void save(Context ctx) {
     Comunidad comunidad = obtenerComunidad(ctx);
     if (comunidad == null) {
@@ -82,10 +80,49 @@ public class IncidenteController {
     repoIncidentes.agregar(incidente);
 
     comunidad.abrirIncidente(incidente);
+    //TODO: Abrir incidente en todas las comunidades del usuario
     repoComunidad.modificar(comunidad);
 
     ctx.status(200);
     ctx.json(incidente);
+  }
+
+  public void delete(Context ctx) {
+    Comunidad comunidad = obtenerComunidad(ctx);
+    if (comunidad == null) {
+      return;
+    }
+
+    Long incidenteId = Long.parseLong(ctx.pathParam("id_incidente"));
+    IncidenteDeComunidad incidente = repoComunidad.buscarIncidenteDeComunidad(comunidad.getId(), incidenteId);
+
+    if (incidente == null) {
+      ctx.status(404);
+      ctx.result("Incidente no encontrado");
+      return;
+    }
+
+    comunidad.cerrarIncidente(incidente.getIncidente(), new Usuario());
+    incidente.getIncidente().cerrar();
+    //      andy.getComunidades().stream().filter(c -> c.getServiciosDeInteres().contains(banioMedrano)).forEach(c -> c.abrirIncidente(incidente));
+    //TODO: Cerrar incidente en todas las comunidades del usuario
+    repoComunidad.modificar(comunidad);
+    ctx.status(200);
+    ctx.redirect("/comunidades/" + comunidad.getId() + "/incidentes" + incidente.getId());
+  }
+
+
+
+  public void create(Context ctx) {
+    Comunidad comunidad = obtenerComunidad(ctx);
+    if (comunidad == null) {
+      return;
+    }
+
+    Map<String, Object> model = new HashMap<>();
+    model.put("comunidad", comunidad);
+
+    //    ctx.render("incidentes/incidente.hbs", model);
   }
 
   private Long parsePrestacionId(String prestacionParam) {
@@ -104,12 +141,9 @@ public class IncidenteController {
   }
 
   private Incidente createIncidente(PrestacionDeServicio prestacion, String observaciones) {
-    Usuario usuario = new Usuario(); // You might want to create a specific user
+    Usuario usuario = new Usuario();
     return new Incidente(usuario, observaciones, prestacion);
   }
-
-
-
 
 
   private Comunidad obtenerComunidad(Context ctx) {
