@@ -2,14 +2,15 @@ package server;
 
 
 //import controllers.IncidenteController;
-import controllers.comunidadController;
-import com.twilio.rest.verify.v2.service.entity.Factor;
+import controllers.AuthController;
+import controllers.ComunidadController;
 import controllers.IncidenteDeComunidadController;
 import controllers.factories.FactoryController;
 import io.javalin.Javalin;
+import models.comunidades.TipoRol;
 import models.repositorios.RepoComunidad;
-import models.repositorios.RepoIncidentes;
-import models.repositorios.RepoPrestacion;
+
+import static io.javalin.apibuilder.ApiBuilder.path;
 
 
 public class Router {
@@ -17,30 +18,24 @@ public class Router {
   public static void init() {
     Javalin app = Server.app();
 
-    app.get("/", ctx -> {
-      ctx.sessionAttribute("item1", "Cosa 1");
-      ctx.result("Hola mundo");
+    app.error(404, ctx -> {
+      ctx.render("error.hbs");
     });
-
-    app.get("/saluda", ctx -> {
-      ctx.result("Hola " + ctx.queryParam("nombre") + ", " + ctx.sessionAttribute("item1"));
-    });
-
-    app.get("/saludo-para/{nombre}", ctx -> ctx.result("Hola " + ctx.pathParam("nombre")));
 
     app.routes(() -> {
-      app.get("comunidades/{id}/incidentes", ((IncidenteDeComunidadController) FactoryController.controller("Incidente de comunidad"))::index);
-      app.get("comunidades/{id}/incidentes/{id_incidente}", ((IncidenteDeComunidadController) FactoryController.controller("Incidente de comunidad"))::show);
-      app.post("comunidades/{id}/incidentes", ((IncidenteDeComunidadController) FactoryController.controller("Incidente de comunidad"))::save);
-      //app.get("comunidades/{id}/incidentes/create", ((IncidenteDeComunidadController) FactoryController.controller("Incidente de comunidad"))::create)
+      app.get("comunidades", ((ComunidadController) FactoryController.controller("Comunidad"))::index, TipoRol.MIEMBRO);
+
+      path("comunidades/{id}/incidentes", () -> {
+        app.get("comunidades/{id}/incidentes", ((IncidenteDeComunidadController) FactoryController.controller("Incidente de comunidad"))::index, TipoRol.MIEMBRO);
+        app.get("comunidades/{id}/incidentes/{id_incidente}", ((IncidenteDeComunidadController) FactoryController.controller("Incidente de comunidad"))::show, TipoRol.MIEMBRO);
+        app.post("comunidades/{id}/incidentes", ((IncidenteDeComunidadController) FactoryController.controller("Incidente de comunidad"))::save, TipoRol.MIEMBRO);
+        //app.get("comunidades/{id}/incidentes/create", ((IncidenteDeComunidadController) FactoryController.controller("Incidente de comunidad"))::create)
+      });
     });
 
-    app.routes(()-> {
-      // lista de comidades
-      app.get("comunidades", new comunidadController(new RepoComunidad())::index);
-      // obtener una comunidad definida
-      app.get("comunidades/{id}", new comunidadController(new RepoComunidad())::show);
-
+    app.routes(() -> {
+      app.get("login", ((AuthController) FactoryController.controller("Auth"))::showLogin);
+      app.post("login", ((AuthController) FactoryController.controller("Auth"))::login);
     });
   }
 }

@@ -34,6 +34,10 @@ public class Rol {
     )
     private Set<Permiso> permisos;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo")
+    private TipoRol tipoRol;
+
     public Rol(String nombre, Set<Permiso> permisos) {
         this.nombre = nombre;
         this.permisos = permisos;

@@ -1,0 +1,32 @@
+{{#partial "contenido"}}
+    <h1 class="text-3xl font-semibold text-gray-900">
+        Listado de Comunidades
+    </h1>
+    <section class="text-gray-600 body-font container p-10 mx-auto flex justify-center flex-wrap gap-5">
+      {{#each comunidades}}
+            <a class="flex flex-col lg:w-1/5 md:w-2/3 p-4 w-3/4 hover:bg-indigo-300 rounded transition duration-500 text-left shadow-md"
+                href="comunidades/{{this.id}}/incidentes"
+            >
+                <div class="block relative h-48 rounded overflow-hidden">
+                  <img alt="ecommerce" class="object-cover object-center w-full h-full block"
+                      {{#if this.imagen}}
+                       src={{this.imagen}}
+                      {{else}}
+                       src="https://source.unsplash.com/random/200x200?sig=1"
+                      {{/if}}>
+                </div>
+                <div class="mt-4">
+                  <h2 class="text-gray-900 title-font text-lg font-medium capitalize">{{this.nombre}}</h2>
+                  <p class="mt-1 content-center">
+                      {{#each this.serviciosDeInteres}}
+                        | {{this.servicio.nombre}}
+                      {{/each}}
+                  </p>
+                </div>
+            </a>
+        {{/each}}
+    </section>
+
+
+{{/partial}}
+{{> templates/template }}

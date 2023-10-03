@@ -6,6 +6,7 @@ import io.javalin.Javalin;
 import io.javalin.config.JavalinConfig;
 import io.javalin.http.HttpStatus;
 import io.javalin.rendering.JavalinRenderer;
+import server.middleware.AuthMiddleware;
 
 import java.io.IOException;
 import java.util.function.Consumer;
@@ -35,6 +36,7 @@ public class Server {
         staticFiles.hostedPath = "/";
         staticFiles.directory = "/public";
       });
+      AuthMiddleware.apply(config);
     };
   }
 

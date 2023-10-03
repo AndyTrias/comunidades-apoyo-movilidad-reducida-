@@ -8,6 +8,7 @@ import models.incidentes.IncidenteDeComunidad;
 import models.servicios.PrestacionDeServicio;
 import models.notificaciones.notificador.CierreIncidente;
 import models.notificaciones.notificador.Notificador;
+import models.servicios.Servicio;
 import models.usuario.Usuario;
 
 import javax.persistence.*;

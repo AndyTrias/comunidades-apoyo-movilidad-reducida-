@@ -19,20 +19,22 @@
     <script src="\js\incidentes.js"></script>
 </head>
 <body class="flex flex-col h-screen bg-gradient-to-l from-indigo-400 via-purple-500 to-cyan-500">
-     
-     
-  <header class="text-gray-600 body-font">
+
+    {{#block "auth"}}
+    <header class="text-gray-600 body-font">
     <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
     <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
         <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
         </svg>
-        <span class="ml-3 text-xl">
+        <a class="ml-3 text-xl" href="/">
             Monitoreo de Estado de Servicios
-        </span>
+        </a>
     </a>
     <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
-        <a class="mr-5 text-white hover:text-gray-900">Comunidades</a>
+        <a class="mr-5 text-white hover:text-gray-900" href="/comunidades">
+            Comunidades
+        </a>
         <a class="mr-5 text-white hover:text-gray-900">Incidentes</a>
         <a class="mr-5 text-white hover:text-gray-900">Perfil</a>
     </nav>
@@ -41,7 +43,7 @@
     </button>
     </div>
   </header>
-      
+
     <main class="mb-auto p-10">
         {{#block "contenido"}}
         {{/block}}
@@ -62,5 +64,6 @@
       </p>
       </div>
   </footer>
+    {{/block}}
 </body>
 </html>

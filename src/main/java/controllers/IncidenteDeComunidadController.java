@@ -84,12 +84,6 @@ public class IncidenteDeComunidadController{
     ctx.result("Incidente creado");
   }
 
-  private Incidente createIncidente(PrestacionDeServicio prestacion, String observaciones) {
-    RepoUsuario repoUsuario = new RepoUsuario();
-    Usuario usuario = repoUsuario.buscar(3L);
-    return new Incidente(usuario, observaciones, prestacion);
-  }
-
   public void delete(Context ctx) {
     Comunidad comunidad = obtenerComunidad(ctx);
     if (comunidad == null) {
@@ -114,8 +108,6 @@ public class IncidenteDeComunidadController{
     ctx.redirect("/comunidades/" + comunidad.getId() + "/incidentes" + incidente.getId());
   }
 
-
-
   public void create(Context ctx) {
     Comunidad comunidad = obtenerComunidad(ctx);
     if (comunidad == null) {
@@ -128,19 +120,10 @@ public class IncidenteDeComunidadController{
     //    ctx.render("incidentes/incidente.hbs", model);
   }
 
-  private Long parsePrestacionId(String prestacionParam) {
-    try {
-      return Long.valueOf(prestacionParam);
-    } catch (NumberFormatException e) {
-      return null;
-    }
-  }
-
-  private PrestacionDeServicio findPrestacionById(Long prestacionId) {
-    if (prestacionId == null) {
-      return null; // Handle null or invalid prestacionId gracefully
-    }
-    return repoPrestacion.buscar(prestacionId);
+  private Incidente createIncidente(PrestacionDeServicio prestacion, String observaciones) {
+    RepoUsuario repoUsuario = new RepoUsuario();
+    Usuario usuario = repoUsuario.buscar(3L);
+    return new Incidente(usuario, observaciones, prestacion);
   }
 
   private Comunidad obtenerComunidad(Context ctx) {

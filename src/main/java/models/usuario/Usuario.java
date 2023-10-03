@@ -3,6 +3,7 @@ package models.usuario;
 import models.comunidades.Comunidad;
 import models.comunidades.Membresia;
 import models.comunidades.Rol;
+import models.comunidades.TipoRol;
 import models.usuario.configuraciones.ConfiguracionDeNotificaciones;
 import models.configs.ServiceLocator;
 import models.incidentes.RevisionDeIncidente;
@@ -25,6 +26,7 @@ import java.util.Set;
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
     private Long id;
 
     @Getter
@@ -73,6 +75,11 @@ public class Usuario {
     @Getter
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private UbicacionExacta ubicacionExacta;
+
+    @Getter
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo")
+    private TipoRol tipoRol;
 
     public Usuario(String nombre, String apellido, String correoElectronico) {
         this.nombre = nombre;

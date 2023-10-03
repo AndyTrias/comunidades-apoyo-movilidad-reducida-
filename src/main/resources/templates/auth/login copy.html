@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoreo estados y servicios</title>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../public/css/style.css">
+    <link rel="stylesheet" href="\css\background.css">
+    <link rel="stylesheet" href="\css\incidentes.css">
+    <script src="\js\script.js"></script>
+    <script src="\js\incidentes.js"></script>
+</head>
+
+<body class="flex flex-col h-screen bg-gradient-to-l from-indigo-400 via-purple-500 to-cyan-500">
+
+    <main class="mb-auto h-full">
+        <div class="flex justify-center items-center h-full w-full">
+            <div class="md:flex flex-col justify-center items-center w-1/2 h-full p-10 hidden">
+                <h1 class="text-6xl font-bold text-gray-800 mb-1">Monitoreo de estados y servicios</h1>
+                <img src="\img\logo.png" alt="logo" class="w-1/2">
+            </div>
+            <form class="glass md:w-1/2 h-full p-10 justify-center flex flex-col w-full" 
+                action="http://localhost:8080/login" method="POST"
+            >
+                <h1 class="text-3xl font-bold text-gray-800 mb-2">
+                    Iniciar Sesion
+                </h1>
+                <p class="text-gray-800 mb-8">
+                    Inicia sesion para poder acceder a la plataforma
+                </p>
+                <div class="flex items-center border-2 mb-8 py-2 px-3 rounded-2xl w-full">
+                    <i class="fas fa-user text-white"></i>
+                    <label for="email"></label>
+                    <input id="email" class="pl-2 w-full outline-none border-none bg-transparent text-white" type="email"
+                        name="email" placeholder="Correo Electronico" />
+                </div>
+                <div class="flex items-center border-2 mb-2 py-2 px-3 rounded-2xl">
+                    <i class="fas fa-lock text-white"></i>
+                    <label for="password"></label><input class="pl-2 w-full outline-none border-none bg-transparent text-white"
+                        type="password" name="password" id="password" placeholder="Contraseña" />
+
+                </div>
+                <a href="#"
+                        class="place-self-end text-sm ml-2 hover:text-blue-500 cursor-pointer hover:-translate-y-1 duration-500 transition-all">
+                        Olvidaste tu Contraseña?
+                </a>
+                <button type="submit"
+                    class="block w-full bg-indigo-600 mt-2 py-2 rounded-2xl hover:bg-indigo-700 hover:-translate-y-1 transition-all duration-500 text-white font-semibold mb-2">
+                    Iniciar Sesion
+                </button>
+                
+                <a href="#"
+                    class=" text-sm ml-2 hover:text-blue-500 cursor-pointer hover:-translate-y-1 duration-500 transition-all">
+                    Ya tienes una cuenta? Inicia Sesion
+                </a>
+                
+
+            </form>
+        </div>
+    </main>
+
+
+</body>
+
+</html>

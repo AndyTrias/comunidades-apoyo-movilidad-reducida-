@@ -21,5 +21,11 @@ public class RepoUsuario extends RepoGenerico<Usuario> {
                 .setParameter("servicio", servicio)
                 .getResultList();
     }
+
+    public Usuario buscarPorEmail(String email) {
+        return entityManager().createQuery("select e from Usuario e where e.correoElectronico = :email", Usuario.class)
+                .setParameter("email", email)
+                .getSingleResult();
+    }
 }
 
