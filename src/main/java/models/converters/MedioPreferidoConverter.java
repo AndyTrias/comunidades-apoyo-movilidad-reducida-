@@ -11,8 +11,8 @@ public class MedioPreferidoConverter implements AttributeConverter<MedioPreferid
     @Override
     public String convertToDatabaseColumn(MedioPreferido medioPreferido) {
         return switch (medioPreferido.getClass().getName()) {
-            case "usuario.configuraciones.medios.mail.NotificarPorMail" -> "NotificarPorMail";
-            case "usuario.configuraciones.medios.mail.NotificarPorWhatsApp" -> "NotificarPorWhatsApp";
+            case "models.usuario.configuraciones.medios.mail.NotificarPorMail" -> "NotificarPorMail";
+            case "models.usuario.configuraciones.medios.mail.NotificarPorWhatsApp" -> "NotificarPorWhatsApp";
             default -> "";
         };
     }

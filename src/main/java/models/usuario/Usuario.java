@@ -67,7 +67,7 @@ public class Usuario {
 
     @Getter
     @Setter
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL)
     private ConfiguracionDeNotificaciones configuracionDeNotificaciones;
 
     @Getter

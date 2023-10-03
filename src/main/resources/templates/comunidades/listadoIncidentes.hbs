@@ -1,0 +1,83 @@
+{{#partial "contenido"}}
+        <div class="mx-auto p-5 flex flex-col items-center md:flex-row">
+            <!-- comunidad -->
+            <div class="flex flex-col justify-center items-center w-full md:w-1/2 mb-4 md:mb-0 rounded m-5">
+                <div class="bg-gradient-to-br from-green-400 to-cyan-500"></div>
+                <img
+                    class="rounded-full w-48 h-48 my-5"
+                    {{#if comunidad.imagen}}
+                        src={{comunidad.imagen}}
+                    {{else}}
+                        src="https://source.unsplash.com/random/200x200?sig=1"
+                    {{/if}}
+                    alt="Image"
+                />
+                <h1 class="text-2xl font-semibold text-white capitalize">{{comunidad.nombre}}</h1>
+                <p class="text-sm"></p>
+
+                <section class="text-gray-600 body-font">
+                    <div class="container px-5 py-5 mx-auto">
+                        <div class="flex flex-wrap -m-4 text-center">
+                            <div class="p-4 sm:w-1/4 w-1/2">
+                                <h2 class="title-font font-medium sm:text-4xl text-3xl text-gray-900">{{estadisticas.miembros}}</h2>
+                                <p class="leading-relaxed text-white">Miembros</p>
+                            </div>
+                            <div class="p-4 sm:w-1/4 w-1/2">
+                                <h2 class="title-font font-medium sm:text-4xl text-3xl text-gray-900">{{estadisticas.abiertos}}</h2>
+                                <p class="leading-relaxed text-white">Incidentes Abiertos</p>
+                            </div>
+                            <div class="p-4 sm:w-1/4 w-1/2">
+                                <h2 class="title-font font-medium sm:text-4xl text-3xl text-gray-900">{{estadisticas.cerrados}}</h2>
+                                <p class="leading-relaxed text-white">Incidentes Cerrados</p>
+                            </div>
+                            <div class="p-4 sm:w-1/4 w-1/2">
+                                <h2 class="title-font font-medium sm:text-4xl text-3xl text-gray-900">{{estadisticas.prestaciones}}</h2>
+                                <p class="leading-relaxed text-white">Servicios de Interés</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- listado incidentes -->
+            <div class="w-full md:w-1/2">
+                <div class="flex items-center space-x-4 mb-2">
+                    <label for="filter" class="text-white">Filtro:</label>
+                    <select id="filter" class="border rounded-md py-1 px-2" onchange="searchFilter()">
+                        <option value="todos">Todos</option>
+                        <option value="abierto">Abierto</option>
+                        <option value="cerrado">Cerrado</option>
+                    </select>
+                </div>
+
+                <div class="space-y-4 incidentesContainer w-full overflow-y-auto">
+                    {{#each incidentes}}
+                    <a
+                        class="cristal incidente"
+                        href="./{{this.id}}"
+                        data-abierto={{this.abierto}}
+                    >
+                        <div class="leftContainer">
+                            <h2 class="text-lg font-semibold flex">{{this.incidente.prestacionDeServicio.nombre}}</h2>
+                            <p class="text-sm text-gray-500 flex">{{this.incidente.observaciones}}</p>
+                            <div class="mt-4 flex flex-col sm:flex-row">
+                                <span class="mr-2 text-gray-400">por <strong>{{this.incidente.abiertoPor.nombre}}</strong> </span>
+                                <span class="text-gray-400">{{this.incidente.fechaDeApertura}}</span>
+                            </div>
+                        </div>
+                        {{#if this.abierto}}
+                            <div class="icono bg-green-400">
+                                <i class="fas fa-lock-open fa-lg"></i>
+                            </div>
+                        {{else}}
+                            <div class="icono bg-red-400">
+                                <i class="fas fa-lock fa-lg"></i>
+                            </div>
+                        {{/if}}
+                    </a>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+{{/partial}}
+{{> templates/template }}

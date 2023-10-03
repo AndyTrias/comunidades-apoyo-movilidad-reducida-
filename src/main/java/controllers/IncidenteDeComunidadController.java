@@ -6,9 +6,9 @@ import models.comunidades.Comunidad;
 import models.incidentes.Incidente;
 import models.incidentes.IncidenteDeComunidad;
 import models.repositorios.RepoComunidad;
-import models.repositorios.RepoIncidenteDeComunidad;
 import models.repositorios.RepoIncidentes;
 import models.repositorios.RepoPrestacion;
+import models.repositorios.RepoUsuario;
 import models.usuario.Usuario;
 import models.servicios.PrestacionDeServicio;
 
@@ -18,36 +18,34 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class IncidenteController {
-  private RepoIncidentes repoIncidentes;
+public class IncidenteDeComunidadController{
   private RepoComunidad repoComunidad;
   private RepoPrestacion repoPrestacion;
 
-
-  public IncidenteController(RepoComunidad repoComunidad) {
-    this.repoComunidad = repoComunidad;
-  }
-
-  public IncidenteController(RepoComunidad repoComunidad, RepoPrestacion repoPrestacion, RepoIncidentes repoIncidentes) {
+  public IncidenteDeComunidadController(RepoComunidad repoComunidad, RepoPrestacion repoPrestacion){
     this.repoComunidad = repoComunidad;
     this.repoPrestacion = repoPrestacion;
-    this.repoIncidentes = repoIncidentes;
   }
 
   public void index(Context ctx) {
     Comunidad comunidad = obtenerComunidad(ctx);
     if (comunidad == null) {
-      return; // The obtenerComunidad method has already set the response status and result
+      throw new RuntimeException("Comunidad no encontrada");
     }
 
     List<IncidenteDeComunidad> incidentes = comunidad.getIncidentes();
-    ctx.json(incidentes); // Serialize and set the list of incidents as JSON response
+    Map<String, Object> estadisticasComunidad = comunidad.getEstadisticas();
+    Map<String, Object> model = new HashMap<>();
+    model.put("incidentes", incidentes);
+    model.put("comunidad", comunidad);
+    model.put("estadisticas", estadisticasComunidad);
+    ctx.render("comunidades/listadoIncidentes.hbs", model);
   }
 
   public void show(Context ctx) {
     Comunidad comunidad = obtenerComunidad(ctx);
     if (comunidad == null) {
-      return;
+      throw new RuntimeException("Comunidad no encontrada");
     }
 
     Long incidenteId = Long.parseLong(ctx.pathParam("id_incidente"));
@@ -67,8 +65,8 @@ public class IncidenteController {
       return;
     }
 
-    Long prestacionId = parsePrestacionId(ctx.formParam("prestacion"));
-    PrestacionDeServicio prestacion = findPrestacionById(prestacionId);
+    Long prestacionId = Long.valueOf(Objects.requireNonNull(ctx.formParam("prestacion_id")));
+    PrestacionDeServicio prestacion = repoPrestacion.buscar(prestacionId);
 
     if (prestacion == null) {
       ctx.status(400);
@@ -77,14 +75,19 @@ public class IncidenteController {
     }
 
     Incidente incidente = createIncidente(prestacion, ctx.formParam("observaciones"));
-    repoIncidentes.agregar(incidente);
 
     comunidad.abrirIncidente(incidente);
     //TODO: Abrir incidente en todas las comunidades del usuario
     repoComunidad.modificar(comunidad);
 
     ctx.status(200);
-    ctx.json(incidente);
+    ctx.result("Incidente creado");
+  }
+
+  private Incidente createIncidente(PrestacionDeServicio prestacion, String observaciones) {
+    RepoUsuario repoUsuario = new RepoUsuario();
+    Usuario usuario = repoUsuario.buscar(3L);
+    return new Incidente(usuario, observaciones, prestacion);
   }
 
   public void delete(Context ctx) {
@@ -140,12 +143,6 @@ public class IncidenteController {
     return repoPrestacion.buscar(prestacionId);
   }
 
-  private Incidente createIncidente(PrestacionDeServicio prestacion, String observaciones) {
-    Usuario usuario = new Usuario();
-    return new Incidente(usuario, observaciones, prestacion);
-  }
-
-
   private Comunidad obtenerComunidad(Context ctx) {
     Long comunidad_id = Long.parseLong(ctx.pathParam("id"));
     Comunidad comunidad = repoComunidad.buscar(comunidad_id);
@@ -153,11 +150,11 @@ public class IncidenteController {
     if (comunidad == null) {
       ctx.status(404);
       ctx.result("Comunidad no encontrada");
-      return null;
     }
 
     return comunidad;
   }
+
 }
 
 

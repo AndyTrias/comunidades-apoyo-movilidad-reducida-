@@ -1,7 +1,11 @@
 package server;
 
-import controllers.IncidenteController;
+
+//import controllers.IncidenteController;
 import controllers.comunidadController;
+import com.twilio.rest.verify.v2.service.entity.Factor;
+import controllers.IncidenteDeComunidadController;
+import controllers.factories.FactoryController;
 import io.javalin.Javalin;
 import models.repositorios.RepoComunidad;
 import models.repositorios.RepoIncidentes;
@@ -11,7 +15,7 @@ import models.repositorios.RepoPrestacion;
 public class Router {
 
   public static void init() {
-    Javalin app = Server.app(); // Assuming Server.app() returns your Javalin instance
+    Javalin app = Server.app();
 
     app.get("/", ctx -> {
       ctx.sessionAttribute("item1", "Cosa 1");
@@ -25,17 +29,17 @@ public class Router {
     app.get("/saludo-para/{nombre}", ctx -> ctx.result("Hola " + ctx.pathParam("nombre")));
 
     app.routes(() -> {
-      app.get("comunidades/{id}/incidentes", new IncidenteController(new RepoComunidad())::index);
-      app.get("comunidades/{id}/incidentes/{id_incidente}", new IncidenteController(new RepoComunidad())::show);
-      app.post("comunidades/{id}/incidentes", new IncidenteController(new RepoComunidad(), new RepoPrestacion(), new RepoIncidentes())::save);
-
+      app.get("comunidades/{id}/incidentes", ((IncidenteDeComunidadController) FactoryController.controller("Incidente de comunidad"))::index);
+      app.get("comunidades/{id}/incidentes/{id_incidente}", ((IncidenteDeComunidadController) FactoryController.controller("Incidente de comunidad"))::show);
+      app.post("comunidades/{id}/incidentes", ((IncidenteDeComunidadController) FactoryController.controller("Incidente de comunidad"))::save);
+      //app.get("comunidades/{id}/incidentes/create", ((IncidenteDeComunidadController) FactoryController.controller("Incidente de comunidad"))::create)
     });
 
     app.routes(()-> {
       // lista de comidades
       app.get("comunidades", new comunidadController(new RepoComunidad())::index);
       // obtener una comunidad definida
-      app.get("comunidades/{id}", new IncidenteController(new RepoComunidad())::show);
+      app.get("comunidades/{id}", new comunidadController(new RepoComunidad())::show);
 
     });
   }
