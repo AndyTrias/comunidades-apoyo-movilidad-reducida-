@@ -14,6 +14,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class RankingMayorCantidad {
@@ -38,20 +39,20 @@ public class RankingMayorCantidad {
         Usuario usuario7 = new Usuario("Pedro", "Rodriguez", "");
 
         //2 incidentes para la entidad 3 porque son diferentes prestaciones
-        Incidente incidente3 = new Incidente(usuario1, "Observaciones 3", prestacion3);
-        Incidente incidente4 = new Incidente(usuario2, "Observaciones 4", prestacion4);
+        Incidente incidente3 = new Incidente(usuario1, "Observaciones 3", prestacion3, new Date());
+        Incidente incidente4 = new Incidente(usuario2, "Observaciones 4", prestacion4, new Date());
         incidente4.cerrar();
 
         //1 incidente para la entidad 1 por las 24 horas
-        Incidente incidente1 = new Incidente(usuario3, "Observaciones 1", prestacion1);
-        Incidente incidente6 = new Incidente(usuario4, "Observaciones 6", prestacion1);
+        Incidente incidente1 = new Incidente(usuario3, "Observaciones 1", prestacion1, new Date());
+        Incidente incidente6 = new Incidente(usuario4, "Observaciones 6", prestacion1, new Date());
 
         //3 incidentes para la entidad 2 porque se cierran antes
-        Incidente incidente2 = new Incidente(usuario2, "Observaciones 2", prestacion2);
+        Incidente incidente2 = new Incidente(usuario2, "Observaciones 2", prestacion2, new Date());
         incidente2.cerrar();
-        Incidente incidente5 = new Incidente(usuario5, "Observaciones 5", prestacion2);
+        Incidente incidente5 = new Incidente(usuario5, "Observaciones 5", prestacion2, new Date());
         incidente5.cerrar();
-        Incidente incidente7 = new Incidente(usuario7, "Observaciones 7", prestacion2);
+        Incidente incidente7 = new Incidente(usuario7, "Observaciones 7", prestacion2, new Date());
 
         Localizacion localizacion1 = Mockito.mock(Localizacion.class);
 

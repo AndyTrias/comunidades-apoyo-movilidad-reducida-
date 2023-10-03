@@ -4,6 +4,7 @@ import models.comunidades.Comunidad;
 import models.comunidades.Membresia;
 import models.comunidades.Rol;
 import models.comunidades.TipoRol;
+import models.servicios.PrestacionDeServicio;
 import models.usuario.configuraciones.ConfiguracionDeNotificaciones;
 import models.configs.ServiceLocator;
 import models.incidentes.RevisionDeIncidente;
@@ -52,12 +53,12 @@ public class Usuario {
     private String telefono;
 
     @Getter
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "usuario_id")
     private List<Interes> intereses;
 
     @Getter
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "usuario_id", nullable = true)
     private List<Membresia> membresias;
 

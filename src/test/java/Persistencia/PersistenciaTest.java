@@ -18,6 +18,8 @@ import models.servicios.Servicio;
 import models.usuario.Interes;
 import models.usuario.Usuario;
 
+import java.util.Date;
+
 public class PersistenciaTest implements SimplePersistenceTest {
 
     private RepoUsuario repoUsuario;
@@ -47,7 +49,7 @@ public class PersistenciaTest implements SimplePersistenceTest {
 
     @Test
     void unirseAComunidad(){
-        Usuario usuario = repoUsuario.buscar(1L);
+        Usuario usuario = repoUsuario.buscar(3L);
         Comunidad comunidad = repoComunidad.buscar(1L);
         Rol rol = comunidad.aceptarUsuario(usuario);
         usuario.unirseAComunidad(comunidad, rol);
@@ -59,7 +61,7 @@ public class PersistenciaTest implements SimplePersistenceTest {
         Usuario usuario = repoUsuario.buscar(3L);
         PrestacionDeServicio prestacionDeServicio = repoPrestacion.buscar(1L);
         Comunidad comunidad = repoComunidad.buscar(1L);
-        Incidente incidente = new Incidente(usuario, "baño sucio", prestacionDeServicio);
+        Incidente incidente = new Incidente(usuario, "baño sucio", prestacionDeServicio, new Date());
         comunidad.abrirIncidente(incidente);
         repoComunidad.agregar(comunidad);
     }

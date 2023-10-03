@@ -14,6 +14,7 @@ import org.mockito.Mockito;
 import models.rankings.criterios.MayorTiempo;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class RankingMayorTiempoTest {
@@ -32,12 +33,12 @@ public class RankingMayorTiempoTest {
         Usuario usuario2 = new Usuario("Andy", "Trias", "");
         Usuario usuario3 = new Usuario("Franco", "Pesce", "");
 
-        Incidente incidente1 = new Incidente(usuario1, "Observaciones 1", prestacion1);
+        Incidente incidente1 = new Incidente(usuario1, "Observaciones 1", prestacion1, new Date());
         incidente1.cerrar();
-        Incidente incidente2 = new Incidente(usuario2, "Observaciones 2", prestacion2);
+        Incidente incidente2 = new Incidente(usuario2, "Observaciones 2", prestacion2, new Date());
         incidente2.cerrar();
-        Incidente incidente3 = new Incidente(usuario3, "Observaciones 3", prestacion3);
-        Incidente incidente4 = new Incidente(usuario1, "Observaciones 4", prestacion2);
+        Incidente incidente3 = new Incidente(usuario3, "Observaciones 3", prestacion3, new Date());
+        Incidente incidente4 = new Incidente(usuario1, "Observaciones 4", prestacion2, new Date());
 
         // Afectan a la entidad 1
         /*when(incidente1.tiempoActivo()).thenReturn(15L);

@@ -13,6 +13,7 @@ import java.util.List;
 public class PrestacionDeServicio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
     private Long id;
 
     @Getter

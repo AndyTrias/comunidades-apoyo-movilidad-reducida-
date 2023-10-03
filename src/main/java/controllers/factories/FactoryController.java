@@ -12,7 +12,8 @@ public class FactoryController {
         return switch (nombre) {
             case "Incidente de comunidad" -> new IncidenteDeComunidadController(
                     new RepoComunidad(),
-                    new RepoPrestacion()
+                    new RepoPrestacion(),
+                    new RepoUsuario()
             );
             case "Comunidad" -> new ComunidadController(new RepoComunidad());
             case "Auth" -> new AuthController(new RepoUsuario());

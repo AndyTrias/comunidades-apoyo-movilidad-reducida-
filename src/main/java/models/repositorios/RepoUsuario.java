@@ -1,5 +1,7 @@
 package models.repositorios;
 
+import models.comunidades.Comunidad;
+import models.servicios.PrestacionDeServicio;
 import models.servicios.Servicio;
 import models.usuario.Usuario;
 
@@ -26,6 +28,13 @@ public class RepoUsuario extends RepoGenerico<Usuario> {
         return entityManager().createQuery("select e from Usuario e where e.correoElectronico = :email", Usuario.class)
                 .setParameter("email", email)
                 .getSingleResult();
+    }
+
+    public List<Comunidad> buscarComunidadesConPrestacion(PrestacionDeServicio prestacionDeServicio, Long usuarioId){
+        return entityManager().createQuery("select c from Comunidad c join c.serviciosDeInteres s where s = :prestacionDeServicio and c.id != :usuarioId", Comunidad.class)
+                .setParameter("prestacionDeServicio", prestacionDeServicio)
+                .setParameter("usuarioId", usuarioId)
+                .getResultList();
     }
 }
 

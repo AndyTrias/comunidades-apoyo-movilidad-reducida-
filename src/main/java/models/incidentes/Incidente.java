@@ -47,8 +47,8 @@ public class Incidente {
     @Column(name = "notificador")
     private Notificador notificador;
 
-    public Incidente(Usuario usuario, String observaciones, PrestacionDeServicio prestacionDeServicio) {
-        this.fechaDeApertura = new Date();
+    public Incidente(Usuario usuario, String observaciones, PrestacionDeServicio prestacionDeServicio, Date date) {
+        this.fechaDeApertura = date;
         this.fechasDeCierre = new ArrayList<>();
         this.observaciones = observaciones;
         this.abiertoPor = usuario;

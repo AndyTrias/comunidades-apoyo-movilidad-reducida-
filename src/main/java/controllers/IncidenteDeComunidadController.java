@@ -1,30 +1,31 @@
 package controllers;
 
-import com.sun.xml.bind.v2.TODO;
 import io.javalin.http.Context;
 import models.comunidades.Comunidad;
+import models.dto.IncidenteDeComunidadDTO;
 import models.incidentes.Incidente;
 import models.incidentes.IncidenteDeComunidad;
 import models.repositorios.RepoComunidad;
-import models.repositorios.RepoIncidentes;
 import models.repositorios.RepoPrestacion;
 import models.repositorios.RepoUsuario;
 import models.usuario.Usuario;
 import models.servicios.PrestacionDeServicio;
 
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 public class IncidenteDeComunidadController{
   private RepoComunidad repoComunidad;
   private RepoPrestacion repoPrestacion;
+  private RepoUsuario repoUsuario;
 
-  public IncidenteDeComunidadController(RepoComunidad repoComunidad, RepoPrestacion repoPrestacion){
+  public IncidenteDeComunidadController(RepoComunidad repoComunidad, RepoPrestacion repoPrestacion, RepoUsuario repoUsuario){
     this.repoComunidad = repoComunidad;
     this.repoPrestacion = repoPrestacion;
+    this.repoUsuario = repoUsuario;
   }
 
   public void index(Context ctx) {
@@ -64,24 +65,31 @@ public class IncidenteDeComunidadController{
     if (comunidad == null) {
       return;
     }
+    IncidenteDeComunidadDTO incidenteDTO = new IncidenteDeComunidadDTO();
+    incidenteDTO.setPrestacionId(Long.parseLong(Objects.requireNonNull(ctx.formParam("prestacionId"))));
+    incidenteDTO.setObservaciones(ctx.formParam("observaciones"));
+    incidenteDTO.setFechaDeApertura(formatearFecha(ctx.formParam("fechaDeApertura")));
 
-    Long prestacionId = Long.valueOf(Objects.requireNonNull(ctx.formParam("prestacion_id")));
-    PrestacionDeServicio prestacion = repoPrestacion.buscar(prestacionId);
+    PrestacionDeServicio prestacion = repoPrestacion.buscar(incidenteDTO.getPrestacionId());
+    Long usuarioId = Long.parseLong(Objects.requireNonNull(ctx.cookie("usuario_id")));
+    Usuario usuario = repoUsuario.buscar(usuarioId);
 
     if (prestacion == null) {
       ctx.status(400);
       ctx.result("Prestacion no encontrada");
       return;
+    } else if (usuario == null) {
+      ctx.status(400);
+      ctx.result("Usuario no encontrado");
+      return;
     }
 
-    Incidente incidente = createIncidente(prestacion, ctx.formParam("observaciones"));
-
-    comunidad.abrirIncidente(incidente);
-    //TODO: Abrir incidente en todas las comunidades del usuario
-    repoComunidad.modificar(comunidad);
+    Incidente incidente = new Incidente(usuario, incidenteDTO.getObservaciones(), prestacion, incidenteDTO.getFechaDeApertura());
+    repoUsuario.buscarComunidadesConPrestacion(prestacion, usuarioId).forEach(c -> c.abrirIncidente(incidente));
+    repoUsuario.modificar(usuario);
 
     ctx.status(200);
-    ctx.result("Incidente creado");
+    ctx.redirect("/comunidades/" + comunidad.getId() + "/incidentes");
   }
 
   public void delete(Context ctx) {
@@ -117,13 +125,7 @@ public class IncidenteDeComunidadController{
     Map<String, Object> model = new HashMap<>();
     model.put("comunidad", comunidad);
 
-    //    ctx.render("incidentes/incidente.hbs", model);
-  }
-
-  private Incidente createIncidente(PrestacionDeServicio prestacion, String observaciones) {
-    RepoUsuario repoUsuario = new RepoUsuario();
-    Usuario usuario = repoUsuario.buscar(3L);
-    return new Incidente(usuario, observaciones, prestacion);
+    ctx.render("comunidades/aperturaIncidente.hbs", model);
   }
 
   private Comunidad obtenerComunidad(Context ctx) {
@@ -138,6 +140,12 @@ public class IncidenteDeComunidadController{
     return comunidad;
   }
 
+  private Date formatearFecha(String fecha) {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+    LocalDateTime fechaDeApertura = LocalDateTime.parse(fecha, formatter);
+    Timestamp timestamp = Timestamp.valueOf(fechaDeApertura);
+    return new Date(timestamp.getTime());
+  }
 }
 
 

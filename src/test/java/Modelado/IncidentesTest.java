@@ -56,7 +56,7 @@ public class IncidentesTest {
   @Test
   public void testAperturaDeIncidente() {
     // Andy crea el incidente en Medrano
-    Incidente incidente = new Incidente(andy, "observaciones", banioMedrano);
+    Incidente incidente = new Incidente(andy, "observaciones", banioMedrano, new Date());
     andy.getComunidades().stream().filter(c -> c.getServiciosDeInteres().contains(banioMedrano)).forEach(c -> c.abrirIncidente(incidente));
 
     // Verificamos que c1 y c2 tenga ese indcidente
@@ -71,11 +71,11 @@ public class IncidentesTest {
   public void testDeAperturadeIndicentesRepetidos() {
 
     // Andy crea el incidente en c1 y c2
-    Incidente incidente = new Incidente(andy, "observaciones", banioMedrano);
+    Incidente incidente = new Incidente(andy, "observaciones", banioMedrano, new Date());
     andy.getComunidades().stream().filter(c -> c.getServiciosDeInteres().contains(banioMedrano)).forEach(c -> c.abrirIncidente(incidente));
 
     // Fede crea el incidente en c3.
-    Incidente incidente2 = new Incidente(fede, "observaciones", banioMedrano);
+    Incidente incidente2 = new Incidente(fede, "observaciones", banioMedrano, new Date());
     andy.getComunidades().stream().filter(c -> c.getServiciosDeInteres().contains(banioMedrano)).forEach(c -> c.abrirIncidente(incidente));
 
     // Verificamos que el incidente no se creo dos veces en c2
@@ -87,7 +87,7 @@ public class IncidentesTest {
   @Test
   public void testSeAbreElIncidenteEnComunidadesPertinente() {
     // Fede abre el incidente
-    Incidente incidenteCastroBarros = new Incidente(fede, "observaciones", banioCastroBarros);
+    Incidente incidenteCastroBarros = new Incidente(fede, "observaciones", banioCastroBarros, new Date());
     fede.getComunidades().stream().filter(c -> c.getServiciosDeInteres().contains(banioCastroBarros)).forEach(c -> c.abrirIncidente(incidenteCastroBarros));
 
     // Debemos validar que no se abrio en C1 porque fede no participa
@@ -103,7 +103,7 @@ public class IncidentesTest {
   public void testCerrarIncidente() {
 
     // Andy crea un incidente
-    Incidente incidente = new Incidente(andy, "observaciones", banioMedrano);
+    Incidente incidente = new Incidente(andy, "observaciones", banioMedrano, new Date());
     andy.getComunidades().stream().filter(c -> c.getServiciosDeInteres().contains(banioMedrano)).forEach(c -> c.abrirIncidente(incidente));
 
     // Fede cierra el incidente
@@ -118,7 +118,7 @@ public class IncidentesTest {
   public void testDeCierreDeIncidentesRepetidos() {
 
     // Andy crea un incidente en Medrano
-    Incidente incidenteMedrano = new Incidente(andy, "observaciones", banioMedrano);
+    Incidente incidenteMedrano = new Incidente(andy, "observaciones", banioMedrano, new Date());
     andy.getComunidades().stream().filter(c -> c.getServiciosDeInteres().contains(banioMedrano)).forEach(c -> c.abrirIncidente(incidenteMedrano));
 
 
@@ -140,11 +140,11 @@ public class IncidentesTest {
   public void testdeCierreIncidentesAdecuados() {
 
     // Andy crea un incidente en Medrano
-    Incidente incidenteMedrano = new Incidente(andy, "observaciones", banioMedrano);
+    Incidente incidenteMedrano = new Incidente(andy, "observaciones", banioMedrano, new Date());
     andy.getComunidades().stream().filter(c -> c.getServiciosDeInteres().contains(banioMedrano)).forEach(c -> c.abrirIncidente(incidenteMedrano));
 
     // Fede crea un incidente en Castro Barros
-    Incidente incidenteCastroBarros = new Incidente(fede, "observaciones", banioCastroBarros);
+    Incidente incidenteCastroBarros = new Incidente(fede, "observaciones", banioCastroBarros, new Date());
     andy.getComunidades().stream().filter(c -> c.getServiciosDeInteres().contains(banioMedrano)).forEach(c -> c.abrirIncidente(incidenteCastroBarros));
 
     // Fede cierra el incidente de Medrano en sus comunidades
@@ -160,7 +160,7 @@ public class IncidentesTest {
   public void ConsultaDeIncidentePorEstado() {
 
     // Andy crea un incidente en Medrano
-    Incidente incidenteMedrano = new Incidente(andy, "observaciones", banioMedrano);
+    Incidente incidenteMedrano = new Incidente(andy, "observaciones", banioMedrano, new Date());
     andy.getComunidades().stream().filter(c -> c.getServiciosDeInteres().contains(banioMedrano)).forEach(c -> c.abrirIncidente(incidenteMedrano));
 
     // Fede cierra el incidente de Medrano en sus comunidades
@@ -178,7 +178,7 @@ public class IncidentesTest {
 
   @Test
   public void fechasDeCierre() {
-    Incidente incidente = new Incidente(andy, "observaciones", banioMedrano);
+    Incidente incidente = new Incidente(andy, "observaciones", banioMedrano, new Date());
 
     for (int i = 0; i < 3; i++) {
       Calendar calendar = Calendar.getInstance();
