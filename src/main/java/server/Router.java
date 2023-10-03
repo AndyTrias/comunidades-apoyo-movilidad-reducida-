@@ -1,6 +1,7 @@
 package server;
 
 import controllers.IncidenteController;
+import controllers.comunidadController;
 import io.javalin.Javalin;
 import models.repositorios.RepoComunidad;
 import models.repositorios.RepoIncidentes;
@@ -27,6 +28,14 @@ public class Router {
       app.get("comunidades/{id}/incidentes", new IncidenteController(new RepoComunidad())::index);
       app.get("comunidades/{id}/incidentes/{id_incidente}", new IncidenteController(new RepoComunidad())::show);
       app.post("comunidades/{id}/incidentes", new IncidenteController(new RepoComunidad(), new RepoPrestacion(), new RepoIncidentes())::save);
+
+    });
+
+    app.routes(()-> {
+      // lista de comidades
+      app.get("comunidades", new comunidadController(new RepoComunidad())::index);
+      // obtener una comunidad definida
+      app.get("comunidades/{id}", new IncidenteController(new RepoComunidad())::show);
 
     });
   }
