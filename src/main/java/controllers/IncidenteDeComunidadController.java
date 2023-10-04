@@ -44,6 +44,8 @@ public class IncidenteDeComunidadController{
   }
 
   public void show(Context ctx) {
+    Map<String, Object> model = new HashMap<>();
+
     Comunidad comunidad = obtenerComunidad(ctx);
     if (comunidad == null) {
       throw new RuntimeException("Comunidad no encontrada");
@@ -56,7 +58,9 @@ public class IncidenteDeComunidadController{
       ctx.status(404);
       ctx.result("Incidente no encontrado");
     } else {
-      ctx.json(incidente);
+      model.put("incidente", incidente);
+      ctx.render("comunidades/cierreIncidente.hbs", model);
+
     }
   }
 
@@ -108,12 +112,13 @@ public class IncidenteDeComunidadController{
     }
 
     comunidad.cerrarIncidente(incidente.getIncidente(), new Usuario());
-    incidente.getIncidente().cerrar();
+
     //      andy.getComunidades().stream().filter(c -> c.getServiciosDeInteres().contains(banioMedrano)).forEach(c -> c.abrirIncidente(incidente));
     //TODO: Cerrar incidente en todas las comunidades del usuario
     repoComunidad.modificar(comunidad);
     ctx.status(200);
-    ctx.redirect("/comunidades/" + comunidad.getId() + "/incidentes" + incidente.getId());
+    ctx.redirect("/comunidades/" + comunidad.getId() + "/incidentes");
+
   }
 
   public void create(Context ctx) {

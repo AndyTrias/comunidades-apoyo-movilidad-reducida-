@@ -55,9 +55,8 @@
 
                 <div class="space-y-4 incidentesContainer w-full overflow-y-auto">
                     {{#each incidentes}}
-                    <a
+                    <a href="/comunidades/{{comunidad.id}}/incidentes/{{this.id}}"
                         class="cristal incidente"
-                        href="./{{this.id}}"
                         data-abierto={{this.abierto}}
                     >
                         <div class="leftContainer">

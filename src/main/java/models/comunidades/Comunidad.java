@@ -120,7 +120,7 @@ public class Comunidad {
                 .filter(i -> i.getIncidente().equals(incidente))
                 .forEach(
                     i -> i.setAbierto(false));
-            notificador.notificar(usuario, incidente);
+           // notificador.notificar(usuario, incidente);
         }
     }
 
