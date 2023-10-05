@@ -17,9 +17,9 @@
                 </div>
                 <div class="mt-4">
                   <h2 class="text-gray-900 title-font text-lg font-medium capitalize">{{this.nombre}}</h2>
-                  <p class="mt-1 content-center">
+                  <p class="mt-1 content-center max-w-xs text-ellipsis overflow-hidden whitespace-nowrap">
                       {{#each this.serviciosDeInteres}}
-                        | {{this.servicio.nombre}}
+                        {{this.servicio.nombre}} |
                       {{/each}}
                   </p>
                 </div>

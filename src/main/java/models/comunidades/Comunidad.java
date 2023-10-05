@@ -118,9 +118,8 @@ public class Comunidad {
             incidente.cerrar();
             incidentes.stream()
                 .filter(i -> i.getIncidente().equals(incidente))
-                .forEach(
-                    i -> i.setAbierto(false));
-           // notificador.notificar(usuario, incidente);
+                .forEach(i -> i.cerrarIncidente(usuario));
+           notificador.notificar(usuario, incidente);
         }
     }
 

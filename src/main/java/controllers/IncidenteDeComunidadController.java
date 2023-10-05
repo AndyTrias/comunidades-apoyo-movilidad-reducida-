@@ -111,11 +111,11 @@ public class IncidenteDeComunidadController{
       return;
     }
 
-    comunidad.cerrarIncidente(incidente.getIncidente(), new Usuario());
-
-    //      andy.getComunidades().stream().filter(c -> c.getServiciosDeInteres().contains(banioMedrano)).forEach(c -> c.abrirIncidente(incidente));
-    //TODO: Cerrar incidente en todas las comunidades del usuario
-    repoComunidad.modificar(comunidad);
+    Long usuarioId = Long.parseLong(Objects.requireNonNull(ctx.cookie("usuario_id")));
+    Usuario usuario = repoUsuario.buscar(usuarioId);
+    PrestacionDeServicio prestacion = incidente.getIncidente().getPrestacionDeServicio();
+    repoUsuario.buscarComunidadesConPrestacion(prestacion, usuarioId).forEach(c -> c.cerrarIncidente(incidente.getIncidente(), usuario));
+    repoUsuario.modificar(usuario);
     ctx.status(200);
     ctx.redirect("/comunidades/" + comunidad.getId() + "/incidentes");
 

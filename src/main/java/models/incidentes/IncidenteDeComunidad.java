@@ -36,4 +36,10 @@ public class IncidenteDeComunidad {
   @Column(name = "fecha_de_cierre")
   private Date fechaDeCierre;
 
+  public void cerrarIncidente(Usuario usuario) {
+    this.abierto = false;
+    this.CerradoPor = usuario;
+    this.fechaDeCierre = new Date();
+  }
+
 }
