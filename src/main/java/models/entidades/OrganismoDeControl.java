@@ -23,7 +23,6 @@ import javax.persistence.Transient;
 @Table(name = "organismo_de_control")
 public class OrganismoDeControl {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Getter

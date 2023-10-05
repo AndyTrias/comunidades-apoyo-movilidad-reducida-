@@ -24,7 +24,6 @@ import javax.persistence.Transient;
 @Table(name = "entidad_prestadora")
 public class EntidadPrestadora {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter
     private Long id;
 

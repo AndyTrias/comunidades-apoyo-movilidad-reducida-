@@ -9,7 +9,8 @@ import java.util.Set;
 
 public class LectorEntidadPrestadora extends FileStream {
 
-    @Getter Set<EntidadPrestadora> entidadesLeidas;
+    @Getter
+    private Set<EntidadPrestadora> entidadesLeidas;
 
     public LectorEntidadPrestadora() {
         this.entidadesLeidas = new HashSet<>();
@@ -17,8 +18,8 @@ public class LectorEntidadPrestadora extends FileStream {
 
     protected void levantarObjetos(List<String[]> csvComoLista) {
         for (int i = 1; i < csvComoLista.size(); i++) {
-            EntidadPrestadora entidadPrestadora = new EntidadPrestadora(csvComoLista.get(i)[0]);
-            entidadPrestadora.setId(Long.parseLong(csvComoLista.get(i)[1]));
+            EntidadPrestadora entidadPrestadora = new EntidadPrestadora(csvComoLista.get(i)[1]);
+            entidadPrestadora.setId(Long.parseLong(csvComoLista.get(i)[0]));
             entidadesLeidas.add(entidadPrestadora);
         }
     }

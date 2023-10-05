@@ -9,7 +9,9 @@ import java.util.Set;
 
 public class LectorOrganismoDeControl extends FileStream {
 
-    @Getter Set<OrganismoDeControl> organismosLeidos;
+    @Getter
+    private Set<OrganismoDeControl> organismosLeidos;
+
     public LectorOrganismoDeControl() {
         this.organismosLeidos = new HashSet<>();
     }

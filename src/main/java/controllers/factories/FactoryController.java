@@ -1,11 +1,10 @@
 package controllers.factories;
 
 import controllers.AuthController;
+import controllers.CargaMasivaController;
 import controllers.ComunidadController;
 import controllers.IncidenteDeComunidadController;
-import models.repositorios.RepoComunidad;
-import models.repositorios.RepoPrestacion;
-import models.repositorios.RepoUsuario;
+import models.repositorios.*;
 
 public class FactoryController {
     public static Object controller(String nombre) {
@@ -17,6 +16,10 @@ public class FactoryController {
             );
             case "Comunidad" -> new ComunidadController(new RepoComunidad());
             case "Auth" -> new AuthController(new RepoUsuario());
+            case "Carga masiva" -> new CargaMasivaController(
+                    new RepoEntidadPrestadora(),
+                    new RepoOrganismoDeControl()
+            );
             default -> null;
         };
     }

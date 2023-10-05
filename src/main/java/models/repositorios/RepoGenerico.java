@@ -17,7 +17,9 @@ public abstract class RepoGenerico<T> implements WithSimplePersistenceUnit {
     }
 
     public void agregar(T entidad) {
-        persist(entidad);
+        EntityTransaction transaction = entityManager().getTransaction();
+        transaction.begin();
+        entityManager().persist(entidad);
         transaction.commit();
     }
 
@@ -29,7 +31,9 @@ public abstract class RepoGenerico<T> implements WithSimplePersistenceUnit {
     }
 
     public void eliminar(T entidad) {
-        remove(entidad);
+        EntityTransaction transaction = entityManager().getTransaction();
+        transaction.begin();
+        entityManager().remove(entidad);
         transaction.commit();
     }
 

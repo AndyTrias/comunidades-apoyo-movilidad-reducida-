@@ -3,6 +3,7 @@ package server;
 
 //import controllers.IncidenteController;
 import controllers.AuthController;
+import controllers.CargaMasivaController;
 import controllers.ComunidadController;
 import controllers.IncidenteDeComunidadController;
 import controllers.factories.FactoryController;
@@ -22,6 +23,7 @@ public class Router {
       ctx.render("error.hbs");
     });
 
+
     app.routes(() -> {
       app.get("comunidades", ((ComunidadController) FactoryController.controller("Comunidad"))::index, TipoRol.MIEMBRO);
 
@@ -37,6 +39,10 @@ public class Router {
     app.routes(() -> {
       app.get("login", ((AuthController) FactoryController.controller("Auth"))::showLogin);
       app.post("login", ((AuthController) FactoryController.controller("Auth"))::login);
+    });
+    app.routes(() -> {
+      app.get("cargaMasiva", ((CargaMasivaController) FactoryController.controller("Carga masiva"))::show);
+      app.post("cargaMasiva", ((CargaMasivaController) FactoryController.controller("Carga masiva"))::cargaMasiva);
     });
   }
 }
