@@ -1,6 +1,8 @@
 package Modelado;
 
 import models.comunidades.Comunidad;
+import models.comunidades.Membresia;
+import models.comunidades.Rol;
 import models.usuario.Interes;
 import models.usuario.configuraciones.formas.CuandoSuceden;
 import models.usuario.configuraciones.formas.EstrategiaDeNotificacion;
@@ -77,15 +79,21 @@ public class NotificacionesTest {
         fede.setConfiguracionDeNotificaciones(config);
 
         // Agregamos los usuarios a las comunidades y les asignamos un rol
-        comunidad1.aceptarUsuario(franco);
-        comunidad2.aceptarUsuario(franco);
-        comunidad2.aceptarUsuario(fede);
-        comunidad3.aceptarUsuario(fede);
+        Membresia francoCom1 = new Membresia(comunidad1, franco, new Rol());
+        franco.unirseAComunidad(francoCom1);
+        comunidad1.agregarMembresia(francoCom1);
 
-        franco.unirseAComunidad(comunidad1, comunidad1.getRoles().get(0));
-        franco.unirseAComunidad(comunidad2, comunidad2.getRoles().get(0));
-        fede.unirseAComunidad(comunidad2, comunidad2.getRoles().get(0));
-        fede.unirseAComunidad(comunidad3, comunidad3.getRoles().get(0));
+        Membresia francoCom2 = new Membresia(comunidad2, franco, new Rol());
+        franco.unirseAComunidad(francoCom2);
+        comunidad2.agregarMembresia(francoCom2);
+
+        Membresia fedeCom2 = new Membresia(comunidad2, fede, new Rol());
+        fede.unirseAComunidad(fedeCom2);
+        comunidad2.agregarMembresia(fedeCom2);
+
+        Membresia fedeCom3 = new Membresia(comunidad3, fede, new Rol());
+        fede.unirseAComunidad(fedeCom3);
+        comunidad3.agregarMembresia(fedeCom3);
 
         this.configMockFranco = Mockito.mock(ConfiguracionDeNotificaciones.class);
         this.configMockFede = Mockito.mock(ConfiguracionDeNotificaciones.class);
@@ -119,7 +127,7 @@ public class NotificacionesTest {
     @Test
     public void testNoSeLeEnviaNotificacionAFedeCuandoFrancoCreaUnIncidenteEnOtraComunidad() throws Exception {
         // Franco se va de la comunidad 2 entonces no comparten comunidad
-        comunidad2.eliminarUsuario(franco);
+        comunidad2.eliminarMemebresia(franco.getMembresia(comunidad2));
         franco.abandonarComunidad(comunidad2);
 
         // Seteamos la configuracion de notificaciones de franco y fede como mocks

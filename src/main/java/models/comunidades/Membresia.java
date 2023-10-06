@@ -2,6 +2,7 @@ package models.comunidades;
 
 import models.servicios.PrestacionDeServicio;
 import lombok.Getter;
+import models.usuario.Usuario;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,6 +14,11 @@ public class Membresia {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+
+  @Id
+  @ManyToOne
+  @Getter
+  private Usuario usuario;
 
   @Getter
   @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
@@ -27,9 +33,10 @@ public class Membresia {
   @JoinColumn(name = "membresia_id")
   private List<Afectacion> afectaciones;
 
-  public Membresia(Comunidad comunidad, Rol rol) {
+  public Membresia(Comunidad comunidad, Usuario usuario, Rol rol) {
     this.comunidad = comunidad;
     this.rol = rol;
+    this.usuario = usuario;
     this.afectaciones = new ArrayList<>();
     this.afectacionesPorDefecto();
   }

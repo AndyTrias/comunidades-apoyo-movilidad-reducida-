@@ -1,6 +1,8 @@
 package Modelado;
 
 import models.comunidades.Comunidad;
+import models.comunidades.Membresia;
+import models.comunidades.Rol;
 import models.localizacion.UbicacionExacta;
 import models.servicios.PrestacionDeServicio;
 import models.servicios.Servicio;
@@ -36,7 +38,8 @@ public class AfectadosTest {
   @Test
   public void TestMesientoAfectado()
   {
-    andy.unirseAComunidad(comunidad1, comunidad1.getRoles().get(0));
+    Membresia membresiaNueva = new Membresia(comunidad1, andy, new Rol());
+    andy.unirseAComunidad(membresiaNueva);
     andy.getMembresia(comunidad1).cambiarAfectacion(banioMedrano, true);
 
     Assertions.assertTrue(andy.getMembresia(comunidad1).getAfectacion(banioMedrano).isAfectado());

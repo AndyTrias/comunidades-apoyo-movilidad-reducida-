@@ -1,6 +1,8 @@
 package Modelado;
 
 import models.comunidades.Comunidad;
+import models.comunidades.Membresia;
+import models.comunidades.Rol;
 import models.incidentes.Incidente;
 import models.localizacion.UbicacionExacta;
 import models.servicios.PrestacionDeServicio;
@@ -47,10 +49,22 @@ public class IncidentesTest {
     fede = new Usuario("fede", "perez", "tandres@frba.utn.edu.ar");
 
     // agregamos los usuarios a las comunidades
-    andy.unirseAComunidad(comunidad1, comunidad1.getRoles().get(0));
-    andy.unirseAComunidad(comunidad2, comunidad2.getRoles().get(0));
-    fede.unirseAComunidad(comunidad2, comunidad2.getRoles().get(0));
-    fede.unirseAComunidad(comunidad3, comunidad3.getRoles().get(0));
+    Membresia andyCom1 = new Membresia(comunidad1, andy, new Rol());
+    andy.unirseAComunidad(andyCom1);
+    comunidad1.agregarMembresia(andyCom1);
+
+    Membresia andyCom2 = new Membresia(comunidad2, andy, new Rol());
+    andy.unirseAComunidad(andyCom2);
+    comunidad2.agregarMembresia(andyCom2);
+
+    Membresia fedeCom2 = new Membresia(comunidad2, fede, new Rol());
+    fede.unirseAComunidad(fedeCom2);
+    comunidad2.agregarMembresia(fedeCom2);
+
+    Membresia fedeCom3 = new Membresia(comunidad3, fede, new Rol());
+    fede.unirseAComunidad(fedeCom3);
+    comunidad3.agregarMembresia(fedeCom3);
+
   }
 
   @Test

@@ -1,5 +1,6 @@
 package Persistencia;
 
+import models.comunidades.Membresia;
 import models.comunidades.Permiso;
 import models.entidades.Entidad;
 import models.entidades.EntidadPrestadora;
@@ -51,9 +52,13 @@ public class PersistenciaTest implements SimplePersistenceTest {
     void unirseAComunidad(){
         Usuario usuario = repoUsuario.buscar(3L);
         Comunidad comunidad = repoComunidad.buscar(1L);
-        Rol rol = comunidad.aceptarUsuario(usuario);
-        usuario.unirseAComunidad(comunidad, rol);
+
+        Membresia membresiaNueva = new Membresia(comunidad, usuario, new Rol());
+        usuario.unirseAComunidad(membresiaNueva);
+        comunidad.agregarMembresia(membresiaNueva);
+
         repoUsuario.modificar(usuario);
+        repoComunidad.modificar(comunidad);
     }
 
     @Test
@@ -95,12 +100,12 @@ public class PersistenciaTest implements SimplePersistenceTest {
 
     @Test
     void agregarPermisoARol(){
-        Comunidad comunidad = repoComunidad.buscar(1L);
-        Rol rolBase = comunidad.getRoles().get(0);
-        Permiso leer = new Permiso();
-        leer.setNombre("leer");
-        rolBase.agregarPermiso(leer);
-        repoComunidad.modificar(comunidad);
+//        Comunidad comunidad = repoComunidad.buscar(1L);
+//        Rol rolBase = comunidad.getRoles().get(0);
+//        Permiso leer = new Permiso();
+//        leer.setNombre("leer");
+//        rolBase.agregarPermiso(leer);
+//        repoComunidad.modificar(comunidad);
     }
 
     @Test

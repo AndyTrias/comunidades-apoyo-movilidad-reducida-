@@ -58,8 +58,7 @@ public class Usuario {
     private List<Interes> intereses;
 
     @Getter
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "usuario_id", nullable = true)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private List<Membresia> membresias;
 
     @Getter
@@ -68,6 +67,7 @@ public class Usuario {
     @JoinColumn(name = "usuario_id")
     private Set<Localizacion> localizaciones;
 
+    // TODO: Podria ir a la membresia. Si es mucho quilombo lo sacamos
     @Getter
     @Setter
     @OneToOne(cascade = CascadeType.ALL)
@@ -77,10 +77,11 @@ public class Usuario {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private UbicacionExacta ubicacionExacta;
 
+    // TODO: El usuario tiene un rol generico. Despues por cada comunidad tiene otro para esa comunidad
     @Getter
-    @Enumerated(EnumType.STRING)
-    @Column(name = "tipo")
-    private TipoRol tipoRol;
+    @ManyToOne
+    @Setter
+    private Rol rol;
 
     public Usuario(String nombre, String apellido, String correoElectronico) {
         this.nombre = nombre;
@@ -88,7 +89,6 @@ public class Usuario {
         this.correoElectronico = correoElectronico;
         this.membresias = new ArrayList<>();
         this.intereses = new ArrayList<>();
-
         this.localizaciones= new HashSet<>();
 
         this.configuracionDeNotificaciones = new ConfiguracionDeNotificaciones();
@@ -108,8 +108,7 @@ public class Usuario {
         }
     }
 
-    public void unirseAComunidad(Comunidad comunidad, Rol rol) {
-        Membresia membresia = new Membresia(comunidad, rol);
+    public void unirseAComunidad(Membresia membresia) {
         this.membresias.add(membresia);
     }
 
@@ -123,9 +122,7 @@ public class Usuario {
     }
 
     public List<Comunidad> getComunidades(){
-        List<Comunidad> comunidades = new ArrayList<>();
-        membresias.forEach(m -> comunidades.add(m.getComunidad()));
-        return comunidades;
+        return membresias.stream().map(Membresia::getComunidad).toList();
     }
 
     public Membresia getMembresia(Comunidad comunidad){

@@ -25,14 +25,15 @@ public class Router {
 
 
     app.routes(() -> {
-      app.get("comunidades", ((ComunidadController) FactoryController.controller("Comunidad"))::index, TipoRol.MIEMBRO);
+      app.get("comunidades", ((ComunidadController) FactoryController.controller("Comunidad"))::index);
 
       path("comunidades/{id}/incidentes", () -> {
-        app.get("comunidades/{id}/incidentes", ((IncidenteDeComunidadController) FactoryController.controller("Incidente de comunidad"))::index, TipoRol.MIEMBRO);
-        app.get("comunidades/{id}/incidentes/create", ((IncidenteDeComunidadController) FactoryController.controller("Incidente de comunidad"))::create, TipoRol.MIEMBRO);
-        app.get("comunidades/{id}/incidentes/{id_incidente}", ((IncidenteDeComunidadController) FactoryController.controller("Incidente de comunidad"))::show, TipoRol.MIEMBRO);
-        app.post("comunidades/{id}/incidentes", ((IncidenteDeComunidadController) FactoryController.controller("Incidente de comunidad"))::save, TipoRol.MIEMBRO);
-        app.post("comunidades/{id}/incidentes/{id_incidente}", ((IncidenteDeComunidadController) FactoryController.controller("Incidente de comunidad"))::delete, TipoRol.MIEMBRO);
+        app.get("comunidades/{id}/incidentes", ((IncidenteDeComunidadController) FactoryController.controller("Incidente de comunidad"))::index);
+        app.get("comunidades/{id}/incidentes/create", ((IncidenteDeComunidadController) FactoryController.controller("Incidente de comunidad"))::create);
+        app.get("comunidades/{id}/incidentes/{id_incidente}", ((IncidenteDeComunidadController) FactoryController.controller("Incidente de comunidad"))::show);
+        app.post("comunidades/{id}/incidentes", ((IncidenteDeComunidadController) FactoryController.controller("Incidente de comunidad"))::save);
+        app.post("comunidades/{id}/incidentes/{id_incidente}", ((IncidenteDeComunidadController) FactoryController.controller("Incidente de comunidad"))::delete);
+
       });
     });
 
