@@ -2,10 +2,7 @@ package server;
 
 
 //import controllers.IncidenteController;
-import controllers.AuthController;
-import controllers.CargaMasivaController;
-import controllers.ComunidadController;
-import controllers.IncidenteDeComunidadController;
+import controllers.*;
 import controllers.factories.FactoryController;
 import io.javalin.Javalin;
 import models.comunidades.TipoRol;
@@ -40,10 +37,17 @@ public class Router {
       app.get("login", ((AuthController) FactoryController.controller("Auth"))::showLogin);
       app.post("login", ((AuthController) FactoryController.controller("Auth"))::login);
     });
+
     app.routes(() -> {
       app.get("cargaMasiva", ((CargaMasivaController) FactoryController.controller("Carga masiva"))::show);
       app.post("cargaMasiva", ((CargaMasivaController) FactoryController.controller("Carga masiva"))::cargaMasiva);
     });
+
+    app.routes(() -> {
+      app.get("revisionDeIncidentes", ((RevisionDeIncidenteController) FactoryController.controller("Revision de incidentes"))::show);
+    });
+
+
   }
 }
 

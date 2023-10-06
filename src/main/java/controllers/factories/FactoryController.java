@@ -1,9 +1,6 @@
 package controllers.factories;
 
-import controllers.AuthController;
-import controllers.CargaMasivaController;
-import controllers.ComunidadController;
-import controllers.IncidenteDeComunidadController;
+import controllers.*;
 import models.repositorios.*;
 
 public class FactoryController {
@@ -19,6 +16,9 @@ public class FactoryController {
             case "Carga masiva" -> new CargaMasivaController(
                     new RepoEntidadPrestadora(),
                     new RepoOrganismoDeControl()
+            );
+            case "Revision de incidentes" -> new RevisionDeIncidenteController(
+
             );
             default -> null;
         };

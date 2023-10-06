@@ -4,6 +4,7 @@ import models.comunidades.Comunidad;
 import models.comunidades.Membresia;
 import models.comunidades.Rol;
 import models.comunidades.TipoRol;
+import models.incidentes.Incidente;
 import models.servicios.PrestacionDeServicio;
 import models.usuario.configuraciones.ConfiguracionDeNotificaciones;
 import models.configs.ServiceLocator;
@@ -74,6 +75,7 @@ public class Usuario {
     private ConfiguracionDeNotificaciones configuracionDeNotificaciones;
 
     @Getter
+    @Setter
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private UbicacionExacta ubicacionExacta;
 
@@ -82,14 +84,18 @@ public class Usuario {
     @Column(name = "tipo")
     private TipoRol tipoRol;
 
+    @Getter
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private List<Incidente> revisionDeIncidentes;
+
     public Usuario(String nombre, String apellido, String correoElectronico) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.correoElectronico = correoElectronico;
         this.membresias = new ArrayList<>();
         this.intereses = new ArrayList<>();
-
         this.localizaciones= new HashSet<>();
+        this.revisionDeIncidentes = new ArrayList<>();
 
         this.configuracionDeNotificaciones = new ConfiguracionDeNotificaciones();
         configuracionDeNotificaciones.setEstrategiaDeNotificacion(new CuandoSuceden());
@@ -136,16 +142,15 @@ public class Usuario {
         configuracionDeNotificaciones.notificar(notificacion);
     }
 
-    public void setUbicacionExacta(UbicacionExacta ubicacionExacta) {
-        this.ubicacionExacta = ubicacionExacta;
-        RevisionDeIncidente.getInstance().comprobarCercania(this);
-    }
-
     public void agregarInteres(Interes interes) {
         this.intereses.add(interes);
     }
 
     public void agregarLocalizacion(Localizacion localizacion) {
         this.localizaciones.add(localizacion);
+    }
+
+    public void agregarRevisionDeIncidente(Incidente incidente) {
+        this.revisionDeIncidentes.add(incidente);
     }
 }
