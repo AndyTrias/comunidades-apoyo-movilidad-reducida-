@@ -18,7 +18,7 @@ public class ImpactoComunidades implements CriteriosDeComunidades {
 
     private float calcularImpacto(Comunidad comunidad){
         List<IncidenteDeComunidad> incidentes = comunidad.getIncidentes();
-        return (float) comunidad.getCantidadDeUsuarios() / incidentes.size();
+        return (float) comunidad.getMembresias().size() / incidentes.size();
     }
 
 

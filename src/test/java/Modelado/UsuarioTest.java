@@ -24,17 +24,14 @@ public class UsuarioTest {
 
     @Test
     public void testUnirseAComunidad() {
-        Rol rol = new Rol("Rol de Prueba", new HashSet<>());
-        comunidad.agregarRol(rol);
-
-        usuario.unirseAComunidad(comunidad, rol);
+        Membresia membresiaNueva = new Membresia(comunidad, usuario, new Rol());
+        usuario.unirseAComunidad(membresiaNueva);
 
         List<Membresia> membresias = usuario.getMembresias();
         Assert.assertEquals(1, membresias.size());
 
         Membresia membresia = membresias.get(0);
         Assert.assertEquals(comunidad, membresia.getComunidad());
-        Assert.assertEquals(rol, membresia.getRol());
     }
 
     @Test(expected = Exception.class)
@@ -45,35 +42,12 @@ public class UsuarioTest {
 
     @Test
     public void testAbandonarComunidad() throws Exception {
-        Rol rol = new Rol("Rol de Prueba", new HashSet<>());
-        comunidad.agregarRol(rol);
-        usuario.unirseAComunidad(comunidad, rol);
-
+        Membresia membresiaNueva = new Membresia(comunidad, usuario, new Rol());
+        usuario.unirseAComunidad(membresiaNueva);
         usuario.abandonarComunidad(comunidad);
 
         List<Membresia> membresias = usuario.getMembresias();
         Assert.assertEquals(0, membresias.size());
     }
 
-
-    @Test
-    public void testAgregarRol() {
-        Rol rol = new Rol(" Rolde Prueba", new HashSet<>());
-        comunidad.agregarRol(rol);
-
-        List<Rol> roles = comunidad.getRoles();
-        Assert.assertEquals(2, roles.size()); // El rol base más el nuevo rol
-        Assert.assertTrue(roles.contains(rol));
-    }
-
-    @Test
-    public void testEliminarRol() {
-        Rol rol = new Rol("Rol de Prueba", new HashSet<>());
-        comunidad.agregarRol(rol);
-
-        comunidad.eliminarRol(rol);
-
-        List<Rol> roles = comunidad.getRoles();
-        Assert.assertEquals(1, roles.size()); // Solo el rol base
-        }
 }

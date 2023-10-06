@@ -28,9 +28,8 @@ public class Comunidad {
     private String nombre;
 
     @Getter
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "comunidad_id")
-    private List<Rol> roles;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "comunidad")
+    private List<Membresia> membresias;
 
     @Getter
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
@@ -50,58 +49,26 @@ public class Comunidad {
     public Comunidad(String nombre) {
         this.nombre = nombre;
         this.serviciosDeInteres = new HashSet<>();
-        this.roles = new ArrayList<>();
+        this.membresias = new ArrayList<>();
         this.incidentes = new ArrayList<>();
-        this.roles.add(new Rol("Miembro", null));
         this.notificador = new CierreIncidente();
     }
 
     public Comunidad() {}
 
-    public void agregarRol(Rol rol) {
-        roles.add(rol);
+    public void agregarMembresia(Membresia membresia) {
+        membresias.add(membresia);
     }
 
-    public void eliminarRol(Rol rol) {
-        roles.remove(rol);
+    public void eliminarMemebresia(Membresia membresia) {
+        membresias.remove(membresia);
     }
 
-    public Rol aceptarUsuario(Usuario usuario) {
-        Rol rol = roles.get(0);
-        rol.setUsuario(usuario);
-        return rol;
-    }
 
-    public void cambiarRol(Usuario usuario, Rol rol) throws Exception {
-        exiteRol(rol);
-        eliminarUsuarioDeSuRol(usuario);
-        rol.setUsuario(usuario);
-    }
-
-    public void eliminarUsuario(Usuario usuario) {
-        eliminarUsuarioDeSuRol(usuario);
-    }
-
-    private void eliminarUsuarioDeSuRol(Usuario usuario) {
-        roles.stream().filter(r -> r.getUsuarios().contains(usuario)).forEach(r -> r.eliminarUsuario(usuario));
-    }
-
-    private boolean exiteRol(Rol rol) throws Exception {
-        if (!roles.contains(rol)) {
-            throw new Exception("El rol no existe en la comunidad");
-        }
-        return true;
-    }
-
-    public Integer getCantidadDeUsuarios() {
-        return roles.stream().mapToInt(r -> r.getUsuarios().size()).sum();
-    }
-
-    public List<Usuario> getUsuarios() {
-        List<Usuario> usuarios = new ArrayList<>();
-        roles.forEach(r -> usuarios.addAll(r.getUsuarios()));
-        return usuarios;
-    }
+    //TODO:  Ver que hacemos
+    //    public void eliminarUsuario(Usuario usuario) {
+    //        eliminarUsuarioDeSuRol(usuario);
+    //    }
 
     public void agregarServicioDeInteres(PrestacionDeServicio servicio) {
         serviciosDeInteres.add(servicio);
@@ -138,13 +105,15 @@ public class Comunidad {
         incidentes.add(incidenteNuevo);
     }
 
-    public int getCantidadDeAfectados() {
-        return getUsuarios().stream().filter(u -> u.getMembresia(this).esAfectado()).mapToInt(u -> 1).sum();
+    public int getCantidadDeAfectados(PrestacionDeServicio prestacionDeServicio) {
+        return (int) membresias.stream()
+            .filter(m -> m.getAfectacion(prestacionDeServicio).isAfectado())
+            .count();
     }
 
     public Map<String, Object> getEstadisticas() {
         Map<String, Object> estadisticas = new HashMap<>();
-        estadisticas.put("miembros", getCantidadDeUsuarios());
+        estadisticas.put("miembros", membresias.size());
         estadisticas.put("abiertos", incidentes.stream().filter(IncidenteDeComunidad::isAbierto).count());
         estadisticas.put("cerrados", incidentes.stream().filter(i -> !i.isAbierto()).count());
         estadisticas.put("prestaciones", serviciosDeInteres.size());

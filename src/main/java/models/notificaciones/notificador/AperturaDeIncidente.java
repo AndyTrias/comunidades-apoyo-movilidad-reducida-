@@ -1,6 +1,7 @@
 package models.notificaciones.notificador;
 
 import models.comunidades.Comunidad;
+import models.comunidades.Membresia;
 import models.incidentes.Incidente;
 import models.usuario.Usuario;
 import models.notificaciones.FactoryNotificacion;
@@ -16,30 +17,14 @@ public class AperturaDeIncidente implements Notificador{
         Notificacion notificacion = FactoryNotificacion.crearNotificacion("Apertura de incidente");
 
         for (Comunidad comunidad : usuarioAbridor.getComunidades().stream().filter(c -> c.getServiciosDeInteres().contains(incidente.getPrestacionDeServicio())).toList()) {
-            List<Usuario> usuariosANotificar = comunidad.getUsuarios();
-            usuariosANotificar.forEach(usuario -> {
-                if (!usuariosNotificados.contains(usuario)) {
-                    this.notificarAUsuario(usuario, notificacion);
-                    usuariosNotificados.add(usuario);
+            List<Membresia> membresias= comunidad.getMembresias();
+            membresias.forEach(m -> {
+                if (!usuariosNotificados.contains(m.getUsuario())) {
+                    this.notificarAUsuario(m.getUsuario(), notificacion);
+                    usuariosNotificados.add(m.getUsuario());
                 }
             });
         }
-
-        /*// Notificar a interesados
-        RepoEntidad RepoEntidades = new RepoEntidad();
-        RepoUsuario RepoUsuarios = new RepoUsuario();
-        List<Entidad> entidadesConLaPrestacion = RepoEntidades.getEntidadesConPrestacion(incidente.getPrestacionDeServicio());
-        List<Usuario> usuariosConInteresEnElServicio = RepoUsuarios.getUsuariosConInteresEnServicio(incidente.getPrestacionDeServicio().getServicio());
-
-        // filtro a los usuarios que no tengan alguna de las entidades relacionadas en su interes
-        List<Usuario> usuariosANotificarPorInteres = usuariosConInteresEnElServicio.stream().filter(usuario -> usuario.getIntereses().stream().anyMatch(interes -> entidadesConLaPrestacion.contains(interes.getEntidad()))).toList();
-
-        usuariosANotificarPorInteres.forEach(usuario -> {
-            if (!usuariosNotificados.contains(usuario)) {
-                this.notificarAUsuario(usuario, notificacion);
-                usuariosNotificados.add(usuario);
-            }
-        });*/
     }
 
     private void notificarAUsuario(Usuario usuario, Notificacion notificacion) {
