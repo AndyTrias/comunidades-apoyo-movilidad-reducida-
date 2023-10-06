@@ -35,7 +35,6 @@ public class Comunidad {
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Set<PrestacionDeServicio> serviciosDeInteres;
 
-
     @Getter
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "comunidad_id")

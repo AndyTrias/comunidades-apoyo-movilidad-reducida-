@@ -98,7 +98,6 @@ public class NotificacionesTest {
         this.configMockFranco = Mockito.mock(ConfiguracionDeNotificaciones.class);
         this.configMockFede = Mockito.mock(ConfiguracionDeNotificaciones.class);
 
-        RevisionDeIncidente.getInstance().eliminarTodosLosIncidentes();
     }
 
     @Test

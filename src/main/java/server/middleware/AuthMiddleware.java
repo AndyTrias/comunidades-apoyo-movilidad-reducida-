@@ -11,7 +11,13 @@ public class AuthMiddleware {
         config.accessManager((handler, ctx, permittedRoles) -> {
             TipoRol userRole = getUserRoleType(ctx);
 
-            if(permittedRoles.isEmpty() || permittedRoles.contains(userRole) || ctx.sessionAttribute("usuario_id") != null) {
+
+            if (ctx.cookie("usuario_id") == null) {
+                ctx.redirect("/login");
+                return;
+            }
+
+            if((permittedRoles.isEmpty() || permittedRoles.contains(userRole)) && ctx.cookie("usuario_id") != null) {
                 handler.handle(ctx);
             }
             else {

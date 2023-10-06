@@ -15,7 +15,6 @@ public class Membresia {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Id
   @ManyToOne
   @Getter
   private Usuario usuario;

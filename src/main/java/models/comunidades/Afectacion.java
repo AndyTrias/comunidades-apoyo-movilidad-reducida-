@@ -1,6 +1,7 @@
 package models.comunidades;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import models.servicios.PrestacionDeServicio;
 
@@ -8,6 +9,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "afectacion")
+@NoArgsConstructor
 public class Afectacion {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,10 +27,5 @@ public class Afectacion {
   public Afectacion(PrestacionDeServicio prestacionDeServicio) {
     this.prestacionDeServicio = prestacionDeServicio;
     this.afectado = true;
-  }
-
-
-  public Afectacion() {
-
   }
 }

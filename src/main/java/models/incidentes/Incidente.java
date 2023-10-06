@@ -58,7 +58,6 @@ public class Incidente {
 
         this.prestacionDeServicio.agregarIncidente(this);
         this.notificarApertura();
-        RevisionDeIncidente.getInstance().agregarIncidente(this);
     }
 
     public Incidente() {
@@ -67,7 +66,6 @@ public class Incidente {
 
     public void cerrar() {
         fechasDeCierre.add(new Date());
-        RevisionDeIncidente.getInstance().eliminarIncidente(this);
     }
 
 
