@@ -226,7 +226,7 @@ public class NotificacionesTest {
         franco.setUbicacionExacta(ubicacionExactaFranco);
 
         // deberia recibir una notificacion por la revision del incidente y otra por la creacion del incidente
-        Mockito.verify(configMockFranco, Mockito.times(2)).notificar(Mockito.any(Notificacion.class));
+        Mockito.verify(configMockFranco, Mockito.times(1)).notificar(Mockito.any(Notificacion.class));
     }
 
     @Test

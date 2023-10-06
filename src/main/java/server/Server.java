@@ -6,6 +6,7 @@ import io.javalin.Javalin;
 import io.javalin.config.JavalinConfig;
 import io.javalin.http.HttpStatus;
 import io.javalin.rendering.JavalinRenderer;
+import server.init.Initializer;
 import server.middleware.AuthMiddleware;
 
 import java.io.IOException;
@@ -21,11 +22,15 @@ public class Server {
   }
 
   public static void init() {
+    boolean cargarRoles = false;
     if(app == null) {
       Integer port = Integer.parseInt(System.getProperty("port", "8080"));
       app = Javalin.create(config()).start(port);
       initTemplateEngine();
       Router.init();
+      if(cargarRoles) {
+        Initializer.init();
+      }
       System.out.println("Server started on port: " + port);
     }
   }

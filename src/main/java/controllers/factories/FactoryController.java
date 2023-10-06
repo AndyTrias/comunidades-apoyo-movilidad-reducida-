@@ -11,8 +11,13 @@ public class FactoryController {
           new RepoPrestacion(),
           new RepoUsuario()
       );
-      case "Comunidad" -> new ComunidadController(new RepoComunidad());
-      case "Auth" -> new AuthController(new RepoUsuario());
+      case "Comunidad" -> new ComunidadController(
+              new RepoComunidad(),
+              new RepoUsuario()
+      );
+      case "Auth" -> new AuthController(
+              new RepoUsuario()
+      );
       case "Carga masiva" -> new CargaMasivaController(
           new RepoEntidadPrestadora(),
           new RepoOrganismoDeControl()

@@ -89,8 +89,14 @@ public class IncidenteDeComunidadController{
     }
 
     Incidente incidente = new Incidente(usuario, incidenteDTO.getObservaciones(), prestacion, incidenteDTO.getFechaDeApertura());
-    repoUsuario.buscarComunidadesConPrestacion(prestacion, usuarioId).forEach(c -> c.abrirIncidente(incidente));
-    repoUsuario.modificar(usuario);
+    usuario.getComunidades().stream()
+            .filter(c -> {
+              return c.getServiciosDeInteres().contains(prestacion);
+            })
+            .forEach(c -> {
+              c.abrirIncidente(incidente);
+              repoComunidad.modificar(c);
+            });
 
     ctx.status(200);
     ctx.redirect("/comunidades/" + comunidad.getId() + "/incidentes");
@@ -114,8 +120,12 @@ public class IncidenteDeComunidadController{
     Long usuarioId = Long.parseLong(Objects.requireNonNull(ctx.cookie("usuario_id")));
     Usuario usuario = repoUsuario.buscar(usuarioId);
     PrestacionDeServicio prestacion = incidente.getIncidente().getPrestacionDeServicio();
-    repoUsuario.buscarComunidadesConPrestacion(prestacion, usuarioId).forEach(c -> c.cerrarIncidente(incidente.getIncidente(), usuario));
-    repoUsuario.modificar(usuario);
+    usuario.getComunidades().stream()
+            .filter(c -> c.getServiciosDeInteres().contains(prestacion))
+            .forEach(c -> {
+              c.cerrarIncidente(incidente.getIncidente(), usuario);
+              repoComunidad.modificar(c);
+            });
     ctx.status(200);
     ctx.redirect("/comunidades/" + comunidad.getId() + "/incidentes");
 

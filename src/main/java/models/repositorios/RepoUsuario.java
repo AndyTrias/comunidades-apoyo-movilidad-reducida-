@@ -29,12 +29,5 @@ public class RepoUsuario extends RepoGenerico<Usuario> {
                 .setParameter("email", email)
                 .getSingleResult();
     }
-
-    public List<Comunidad> buscarComunidadesConPrestacion(PrestacionDeServicio prestacionDeServicio, Long usuarioId){
-        return entityManager().createQuery("select c from Comunidad c join c.serviciosDeInteres s where s = :prestacionDeServicio and c.id != :usuarioId", Comunidad.class)
-                .setParameter("prestacionDeServicio", prestacionDeServicio)
-                .setParameter("usuarioId", usuarioId)
-                .getResultList();
-    }
 }
 

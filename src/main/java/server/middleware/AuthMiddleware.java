@@ -11,9 +11,8 @@ public class AuthMiddleware {
         config.accessManager((handler, ctx, permittedRoles) -> {
             TipoRol userRole = getUserRoleType(ctx);
 
-
-            if (ctx.cookie("usuario_id") == null) {
-                ctx.redirect("/login");
+            if (authPath(ctx.path())) {
+                handler.handle(ctx);
                 return;
             }
 
@@ -29,5 +28,9 @@ public class AuthMiddleware {
     private static TipoRol getUserRoleType(Context context) {
         return context.cookie("tipo_rol") != null?
                 TipoRol.valueOf(context.cookie("tipo_rol")) : null;
+    }
+
+    private static boolean authPath(String path) {
+        return path.contains("/login") || path.contains("/registrarse");
     }
 }

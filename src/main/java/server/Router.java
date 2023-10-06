@@ -37,6 +37,7 @@ public class Router {
     app.routes(() -> {
       app.get("login", ((AuthController) FactoryController.controller("Auth"))::showLogin);
       app.post("login", ((AuthController) FactoryController.controller("Auth"))::login);
+      app.get("logout", ((AuthController) FactoryController.controller("Auth"))::logout);
     });
 
     app.routes(() -> {

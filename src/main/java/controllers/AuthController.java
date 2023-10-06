@@ -32,4 +32,10 @@ public class AuthController {
         ctx.cookie("usuario_id", usuario.getId().toString());
         ctx.redirect("/comunidades");
     }
+
+    public void logout(Context ctx) {
+        ctx.removeCookie("usuario_id");
+        ctx.removeCookie("tipo_rol");
+        ctx.redirect("/login");
+    }
 }

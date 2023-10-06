@@ -6,6 +6,7 @@ import models.usuario.Usuario;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class RevisionDeIncidenteController {
     private RepoUsuario repoUsuario;
@@ -15,7 +16,7 @@ public class RevisionDeIncidenteController {
     }
 
     public void show(Context ctx){
-        Long usuarioId = ctx.sessionAttribute("usuario_id");
+        Long usuarioId = Long.valueOf(Objects.requireNonNull(ctx.cookie("usuario_id")));
         Usuario usuario = repoUsuario.buscar(usuarioId);
 
         Map<String, Object> model = new HashMap<>();

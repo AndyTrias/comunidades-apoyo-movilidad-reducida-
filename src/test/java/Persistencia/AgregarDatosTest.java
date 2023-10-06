@@ -20,7 +20,7 @@ import models.usuario.Usuario;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class AgregarDatosTest implements SimplePersistenceTest {
+public class AgregarDatosTest {
 
     private RepoUsuario repoUsuario;
     private RepoComunidad repoComunidad;

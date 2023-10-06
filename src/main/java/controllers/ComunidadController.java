@@ -2,23 +2,29 @@ package controllers;
 import io.javalin.http.Context;
 import models.comunidades.Comunidad;
 import models.repositorios.RepoComunidad;
+import models.repositorios.RepoUsuario;
 import models.servicios.Servicio;
+import models.usuario.Usuario;
 
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class ComunidadController {
     private RepoComunidad repoComunidad;
+    private RepoUsuario repoUsuario;
 
-    public ComunidadController(RepoComunidad repoComunidad) {
+    public ComunidadController(RepoComunidad repoComunidad, RepoUsuario repoUsuario) {
         this.repoComunidad = repoComunidad;
+        this.repoUsuario = repoUsuario;
     }
 
     public void index(Context ctx) {
-
-        List<Comunidad> comunidades = repoComunidad.buscarTodos();
+        Long usuarioId = Long.valueOf(Objects.requireNonNull(ctx.cookie("usuario_id")));
+        Usuario usuario = repoUsuario.buscar(usuarioId);
+        List<Comunidad> comunidades = usuario.getComunidades();
         Map<String, Object> model = new HashMap<>();
         model.put("comunidades", comunidades);
         ctx.render("comunidades/comunidades.hbs", model);
@@ -64,8 +70,6 @@ public class ComunidadController {
 
         return comunidad;
     }
-
-
 
 
 }

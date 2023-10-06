@@ -81,8 +81,8 @@ public class Usuario {
 
     // TODO: El usuario tiene un rol generico. Despues por cada comunidad tiene otro para esa comunidad
     @Getter
-    @ManyToOne
     @Setter
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Rol rol;
 
     @Getter

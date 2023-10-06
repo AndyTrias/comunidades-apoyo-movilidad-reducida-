@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -22,46 +23,38 @@ public class Rol {
     private String nombre;
 
     @Getter
-    @OneToMany
-    private List<Usuario> usuarios;
-
-    @Getter
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(
             name = "rol_permiso",
             joinColumns = @JoinColumn(name = "rol_id"),
             inverseJoinColumns = @JoinColumn(name = "permiso_id")
     )
-    private Set<Permiso> permisos;
+    private List<Permiso> permisos;
 
+    @Setter
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo")
     private TipoRol tipoRol;
 
-    public Rol(String nombre, Set<Permiso> permisos) {
+    public Rol(String nombre, List<Permiso> permisos) {
         this.nombre = nombre;
         this.permisos = permisos;
-        this.usuarios = new ArrayList<>();
     }
 
     public Rol() {
-
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuarios.add(usuario);
+        this.permisos = new ArrayList<>();
     }
 
     public boolean tenesPermiso(Permiso permiso) {
         return this.permisos.contains(permiso);
     }
 
-    public void eliminarUsuario(Usuario usuario) {
-        this.usuarios.remove(usuario);
-    }
-
     public void agregarPermiso(Permiso permiso) {
         this.permisos.add(permiso);
+    }
+
+    public void agregarPermisos(Permiso ... permisos) {
+        Collections.addAll(this.permisos, permisos);
     }
 }
 
