@@ -15,8 +15,8 @@ public class Membresia {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @ManyToOne
   @Getter
+  @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
   private Usuario usuario;
 
   @Getter

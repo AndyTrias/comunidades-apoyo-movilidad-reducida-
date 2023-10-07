@@ -8,8 +8,6 @@ import java.util.List;
 
 @Transactional
 public abstract class RepoGenerico<T> implements WithSimplePersistenceUnit {
-    protected final EntityTransaction transaction = entityManager().getTransaction();
-
     private final Class<T> entityClass;
 
     protected RepoGenerico(Class<T> entityClass) {

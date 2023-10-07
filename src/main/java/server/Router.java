@@ -1,7 +1,5 @@
 package server;
 
-
-//import controllers.IncidenteController;
 import controllers.*;
 import controllers.factories.FactoryController;
 import io.javalin.Javalin;
@@ -9,7 +7,6 @@ import models.comunidades.TipoRol;
 import models.repositorios.RepoComunidad;
 
 import static io.javalin.apibuilder.ApiBuilder.path;
-
 
 public class Router {
 
@@ -19,7 +16,6 @@ public class Router {
     app.error(404, ctx -> {
       ctx.render("error.hbs");
     });
-
 
     app.routes(() -> {
       app.get("comunidades", ((ComunidadController) FactoryController.controller("Comunidad"))::index);
@@ -49,7 +45,9 @@ public class Router {
       app.get("revisionDeIncidentes", ((RevisionDeIncidenteController) FactoryController.controller("Revision de incidentes"))::show);
     });
 
-
+    app.routes(() -> {
+      app.post("sugerenciaDeFusion", ((ApiServicioController) FactoryController.controller("Sugerencia de fusion"))::fusionDeComunidades);
+    });
   }
 }
 

@@ -25,6 +25,13 @@ public class FactoryController {
       case "Revision de incidentes" -> new RevisionDeIncidenteController(
           new RepoUsuario()
       );
+      case "Sugerencia de fusion" -> new ApiServicioController(
+          new RepoComunidad(),
+          new RepoFusion(),
+          new RepoMembresia(),
+          new RepoEstablecimiento(),
+          new RepoPrestacion()
+      );
       default -> null;
     };
   }

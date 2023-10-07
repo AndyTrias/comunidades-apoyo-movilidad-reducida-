@@ -3,6 +3,8 @@ package models.comunidades;
 import models.converters.NotificadorConverter;
 import lombok.Getter;
 import lombok.Setter;
+import models.entidades.Establecimiento;
+import models.external.apiServicio.responseClases.ComunidadDTO;
 import models.incidentes.Incidente;
 import models.incidentes.IncidenteDeComunidad;
 import models.servicios.PrestacionDeServicio;
@@ -20,6 +22,7 @@ public class Comunidad {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
+    @Setter
     private Long id;
 
     @Getter
@@ -56,7 +59,9 @@ public class Comunidad {
     public Comunidad() {}
 
     public void agregarMembresia(Membresia membresia) {
-        membresias.add(membresia);
+        if (!membresias.contains(membresia)) {
+            membresias.add(membresia);
+        }
     }
 
     public void eliminarMemebresia(Membresia membresia) {
@@ -70,7 +75,9 @@ public class Comunidad {
     //    }
 
     public void agregarServicioDeInteres(PrestacionDeServicio servicio) {
-        serviciosDeInteres.add(servicio);
+        if (!serviciosDeInteres.contains(servicio)) {
+            serviciosDeInteres.add(servicio);
+        }
     }
 
     public void abrirIncidente(Incidente incidente) {
@@ -117,6 +124,32 @@ public class Comunidad {
         estadisticas.put("cerrados", incidentes.stream().filter(i -> !i.isAbierto()).count());
         estadisticas.put("prestaciones", serviciosDeInteres.size());
         return estadisticas;
+    }
+
+    public Integer getGradoDeConfianza(){
+        return 1;
+    }
+
+    public List<Integer> getIdEstablecimientoObservados(List<Establecimiento> establecimientos){
+        List<Integer> ids = new ArrayList<>();
+        establecimientos.stream().filter(e -> e.getServicios().stream().anyMatch(s -> serviciosDeInteres.contains(s))).forEach(e -> ids.add(Integer.valueOf(String.valueOf(e.getId()))));
+        return ids;
+    }
+
+    public List<Integer> getIdServiciosObservados(){
+        List<Integer> ids = new ArrayList<>();
+        serviciosDeInteres.forEach(s -> ids.add(Integer.valueOf(String.valueOf(s.getId()))));
+        return ids;
+    }
+
+    public List<Integer> getIdMiembros(){
+        List<Integer> ids = new ArrayList<>();
+        membresias.forEach(m -> ids.add(Integer.valueOf(String.valueOf(m.getUsuario().getId()))));
+        return ids;
+    }
+
+    public ComunidadDTO.EstadoComunidad getEstado(){
+        return ComunidadDTO.EstadoComunidad.ACTIVADA;
     }
 
 }
