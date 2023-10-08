@@ -24,6 +24,7 @@ import javax.persistence.Transient;
 @Table(name = "entidad_prestadora")
 public class EntidadPrestadora {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)//lo agregue porq rompia un test
     @Setter
     private Long id;
 

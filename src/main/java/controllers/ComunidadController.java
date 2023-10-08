@@ -55,8 +55,15 @@ public class ComunidadController {
         Map<String, Object> model = new HashMap<>();
         model.put("comunidad", comunidad);
 
-        //    ctx.render("incidentes/incidente.hbs", model);
+        ctx.render("incidentes/incidente.hbs", model);
     }
+
+    /*public void save(Context ctx){
+        Comunidad comunidad = new Comunidad();
+        comunidad.setNombre(ctx.formParam("nombre"));
+        comunidad.agregarServicioDeInteres( Servicio(ctx.formParam("servicio")));
+
+    }*/
 
     private Comunidad obtenerComunidad(Context ctx) {
         Long comunidad_id = Long.parseLong(ctx.pathParam("id"));

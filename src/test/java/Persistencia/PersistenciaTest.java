@@ -50,7 +50,7 @@ public class PersistenciaTest {
 
     @Test
     void unirseAComunidad(){
-        Usuario usuario = repoUsuario.buscar(1L);
+        Usuario usuario = repoUsuario.buscar(3L);
         Comunidad comunidad = repoComunidad.buscar(1L);
 
         Membresia membresiaNueva = new Membresia(comunidad, usuario, new Rol());

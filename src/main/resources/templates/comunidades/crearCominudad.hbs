@@ -1,0 +1,33 @@
+{{#partial "contenido"}}
+
+    <div class="container mx-auto">
+        <!-- Formulario para crear comunidad -->
+        <form action="/comunidades/create" method="POST" class="bg-white p-8 rounded-lg shadow-lg">
+            <h2 class="text-2xl font-semibold mb-4">Crear Comunidad</h2>
+            <!-- Campo para ingresar el nombre de la comunidad -->
+            <div class="mb-4">
+                <label for="nombre" class="block text-gray-700 text-sm font-bold mb-2">Nombre de la Comunidad:</label>
+                <input type="text" id="nombre" name="nombre" class="border rounded-md py-2 px-3 w-full focus:outline-none focus:border-indigo-400" required>
+            </div>
+            <!-- Selección de prestaciones de servicios -->
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Prestaciones de Servicios:</label>
+                <div class="flex flex-wrap">
+                    {{#each servicios}} //necesito que me lleguen los servicios por el model
+                        <label class="mr-4 mb-2 cursor-pointer">
+                            <input type="checkbox" name="prestaciones[]" value="{{this}}" class="mr-2"> {{this}}
+                        </label>
+                    {{/each}}
+                </div>
+            </div>
+            <!-- Botón para crear la comunidad -->
+            <div class="text-center">
+                <button type="submit" class="bg-indigo-400 text-white font-bold py-2 px-4 rounded hover:bg-indigo-500">
+                    Crear Comunidad
+                </button>
+            </div>
+        </form>
+    </div>
+
+{{/partial}}
+{{> templates/template }}
