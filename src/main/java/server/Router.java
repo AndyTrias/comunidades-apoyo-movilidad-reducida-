@@ -4,6 +4,7 @@ import controllers.*;
 import controllers.factories.FactoryController;
 import io.javalin.Javalin;
 import models.comunidades.TipoRol;
+import models.entidades.Establecimiento;
 import models.repositorios.RepoComunidad;
 
 import static io.javalin.apibuilder.ApiBuilder.path;
@@ -48,6 +49,14 @@ public class Router {
 
     app.routes(() -> {
       app.post("sugerenciaDeFusion", ((ApiServicioController) FactoryController.controller("Sugerencia de fusion"))::fusionDeComunidades);
+    });
+
+    app.routes(() -> {
+      app.get("admin", ((AdminController) FactoryController.controller("Administrador de plataforma"))::show);
+      app.post("admin/entidad", ((AdminController) FactoryController.controller("Administrador de plataforma"))::guardarEntidad);
+      app.post("admin/servicio", ((AdminController) FactoryController.controller("Administrador de plataforma"))::guardarServicio);
+      app.post("admin/establecimientos", ((EstablecimientoController) FactoryController.controller("Establecimiento"))::save);
+      app.get("admin/establecimientos", ((EstablecimientoController) FactoryController.controller("Establecimiento"))::show);
     });
   }
 }

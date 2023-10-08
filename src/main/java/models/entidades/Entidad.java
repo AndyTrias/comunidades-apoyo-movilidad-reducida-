@@ -19,13 +19,14 @@ import java.util.Set;
 @NoArgsConstructor
 public class Entidad {
     @Id
+    @Getter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
     private long id;
 
     @Getter
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "entidad_id")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "entidad_id", nullable = false)
     private Set<Establecimiento> establecimientos;
 
     @Setter

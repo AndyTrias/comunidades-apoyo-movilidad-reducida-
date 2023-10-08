@@ -67,18 +67,13 @@ public class Comunidad {
         membresias.remove(membresia);
     }
 
-
-    //TODO:  Ver que hacemos
-    //    public void eliminarUsuario(Usuario usuario) {
-    //        eliminarUsuarioDeSuRol(usuario);
-    //    }
-
     public void agregarServicioDeInteres(PrestacionDeServicio servicio) {
-        if (!serviciosDeInteres.contains(servicio)) {
-            serviciosDeInteres.add(servicio);
-        }
+        serviciosDeInteres.add(servicio);
     }
 
+    public void agregarServiciosDeInteres(PrestacionDeServicio ... prestaciones) {
+        Collections.addAll(serviciosDeInteres, prestaciones);
+    }
     public void abrirIncidente(Incidente incidente) {
         if (!estaAbiertoElIncidente(incidente)) {
             agregarIncidente(incidente);
