@@ -35,14 +35,10 @@ public class FactoryController {
 
       case "Administrador de plataforma" -> new AdminController(
           new RepoServicio(),
-          new RepoEntidad()
+          new RepoEntidad(),
+          new RepoEstablecimiento()
       );
 
-      case "Establecimiento" -> new EstablecimientoController(
-          new RepoEstablecimiento(),
-          new RepoEntidad(),
-          new RepoServicio()
-      );
       default -> null;
     };
   }

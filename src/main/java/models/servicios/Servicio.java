@@ -10,6 +10,7 @@ import javax.persistence.*;
 public class Servicio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
     private Long id;
 
     @Getter

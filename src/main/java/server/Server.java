@@ -22,7 +22,7 @@ public class Server {
   }
 
   public static void init() {
-    boolean cargarRoles = false;
+    boolean cargarRoles = true;
     if(app == null) {
       Integer port = Integer.parseInt(System.getProperty("port", "8080"));
       app = Javalin.create(config()).start(port);
