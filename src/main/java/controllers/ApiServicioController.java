@@ -4,19 +4,20 @@ import io.javalin.http.Context;
 import lombok.AllArgsConstructor;
 import models.comunidades.Comunidad;
 import models.comunidades.Fusion;
-import models.comunidades.Membresia;
+import models.entidades.Entidad;
 import models.entidades.Establecimiento;
-import models.external.apiServicio.ApiServicio;
-import models.external.apiServicio.responseClases.ComunidadDTO;
-import models.external.apiServicio.responseClases.FusionDTO;
-import models.external.apiServicio.responseClases.PayloadDTO;
+import models.external.retrofit.apiServicio1.ApiServicio1;
+import models.external.retrofit.apiServicio1.responseClases.ComunidadDTO;
+import models.external.retrofit.apiServicio1.responseClases.FusionDTO;
+import models.external.retrofit.apiServicio1.responseClases.PayloadDTO;
+import models.external.retrofit.apiServicio3.ApiServicio3;
+import models.external.retrofit.apiServicio3.responseClases.EntidadDTO;
+import models.external.retrofit.apiServicio3.responseClases.PayloadServicio3DTO;
 import models.repositorios.*;
-import models.servicios.PrestacionDeServicio;
 import server.utils.Mapper;
-import server.utils.PrettyProperties;
 
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 
 @AllArgsConstructor
 public class ApiServicioController {
@@ -25,8 +26,9 @@ public class ApiServicioController {
     private RepoMembresia repoMembresia;
     private RepoEstablecimiento repoEstablecimiento;
     private RepoPrestacion repoPrestacion;
+    private RepoEntidad repoEntidad;
 
-    public void fusionDeComunidades(Context ctx){
+    public void fusionDeComunidades(Context ctx) {
         List<Comunidad> comunidades = repoComunidad.buscarTodos();
         List<Fusion> fusiones = repoFusion.buscarTodos();
         List<Establecimiento> establecimientos = repoEstablecimiento.buscarTodos();
@@ -36,9 +38,23 @@ public class ApiServicioController {
         PayloadDTO payloadDTO = new PayloadDTO(comunidadDTOS, fusionesDTO);
 
         try {
-            PayloadDTO response = ApiServicio.getInstancia().comunidadesYFusiones(payloadDTO);
+            PayloadDTO response = ApiServicio1.getInstancia().comunidadesYFusiones(payloadDTO);
             asignarComunidades(response.getComunidades());
             asignarFusiones(response.getFusiones());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void rankingEntidades(Context ctx) {
+        List<Entidad> entidades = repoEntidad.buscarTodos();
+
+        List<EntidadDTO> entidadesDTO = Mapper.mapEntidadesToEntidadesDTO(entidades);
+        PayloadServicio3DTO payloadServicio3DTO = new PayloadServicio3DTO(entidadesDTO);
+
+        try {
+            PayloadServicio3DTO response = ApiServicio3.getInstancia().rankingEntidades(payloadServicio3DTO);
+            // TODO: ver que hacer con el ranking
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -59,7 +75,15 @@ public class ApiServicioController {
     private void asignarFusiones(List<FusionDTO> fusiones){
         fusiones.forEach(f -> {
             Fusion fusion = Mapper.mapFusionDTOToFusion(f, repoMembresia, repoPrestacion, repoComunidad);
-            repoFusion.agregar(fusion);
+            Fusion fusionBuscada = repoFusion.buscarPorComunidades(fusion).orElse(null);
+            if (fusionBuscada == null) {
+                repoFusion.agregar(fusion);
+                return;
+            }
+            fusionBuscada.setEstado(fusion.getEstado());
+            fusionBuscada.setFechaCreada(fusion.getFechaCreada());
+            repoFusion.modificar(fusionBuscada);
+
         });
     }
 }

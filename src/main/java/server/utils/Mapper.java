@@ -2,9 +2,13 @@ package server.utils;
 
 import models.comunidades.Comunidad;
 import models.comunidades.Fusion;
+import models.entidades.Entidad;
 import models.entidades.Establecimiento;
-import models.external.apiServicio.responseClases.ComunidadDTO;
-import models.external.apiServicio.responseClases.FusionDTO;
+import models.external.retrofit.apiServicio1.responseClases.ComunidadDTO;
+import models.external.retrofit.apiServicio1.responseClases.FusionDTO;
+import models.external.retrofit.apiServicio3.responseClases.EntidadDTO;
+import models.external.retrofit.apiServicio3.responseClases.IncidenteDTO;
+import models.incidentes.Incidente;
 import models.repositorios.RepoComunidad;
 import models.repositorios.RepoMembresia;
 import models.repositorios.RepoPrestacion;
@@ -19,7 +23,7 @@ public class Mapper {
         List<ComunidadDTO> comunidadesDTO = new ArrayList<>();
         for (Comunidad c : comunidad) {
             comunidadesDTO.add(mapComunidadToComunidadDTO(c, establecimientos));
-         }
+        }
         return comunidadesDTO;
     }
 
@@ -45,7 +49,7 @@ public class Mapper {
         List<FusionDTO> fusionesDTO = new ArrayList<>();
         for (Fusion f : fusiones) {
             fusionesDTO.add(mapFusionToFusionDTO(f, establecimientos));
-         }
+        }
         return fusionesDTO;
     }
 
@@ -54,7 +58,7 @@ public class Mapper {
         fusionDTO.setEstado(f.getEstado());
         fusionDTO.setComunidad1(mapComunidadToComunidadDTO(f.getComunidad1(), establecimientos));
         fusionDTO.setComunidad2(mapComunidadToComunidadDTO(f.getComunidad2(), establecimientos));
-        fusionDTO.setFechaCreada(f.getFechaCreada().toString());
+        fusionDTO.setFechaCreada(DateTimeConversion.dateToLocalDateTime(f.getFechaCreada()).toString());
         return fusionDTO;
     }
 
@@ -63,7 +67,37 @@ public class Mapper {
         fusion.setEstado(f.getEstado());
         fusion.setComunidad1(mapComunidadDTOToComunidad(f.getComunidad1(), repoMembresia, repoPrestacion, repoComunidad));
         fusion.setComunidad2(mapComunidadDTOToComunidad(f.getComunidad2(), repoMembresia, repoPrestacion, repoComunidad));
-        fusion.setFechaCreada(Date.from(LocalDateTime.parse(f.getFechaCreada()).toInstant(java.time.ZoneOffset.UTC)));
+        fusion.setFechaCreada(DateTimeConversion.localDateTimeToDate(LocalDateTime.parse(f.getFechaCreada())));
         return fusion;
+    }
+
+    public static List<EntidadDTO> mapEntidadesToEntidadesDTO(List<Entidad> entidades) {
+        List<EntidadDTO> entidadesDTO = new ArrayList<>();
+        for (Entidad e : entidades) {
+            entidadesDTO.add(mapEntidadToEntidadDTO(e));
+        }
+        return entidadesDTO;
+    }
+
+    public static EntidadDTO mapEntidadToEntidadDTO(Entidad e) {
+        EntidadDTO entidadDTO = new EntidadDTO();
+        entidadDTO.setId(Integer.parseInt(String.valueOf(e.getId())));
+        entidadDTO.setIncidentes(mapIncidentesToIncidentesDTO(e.getIncidentes()));
+        return entidadDTO;
+    }
+
+    public static IncidenteDTO mapIncidenteToIncidenteDTO(Incidente i) {
+        IncidenteDTO incidenteDTO = new IncidenteDTO();
+        incidenteDTO.setFechaApertura(DateTimeConversion.dateToLocalDateTime(i.getFechaDeApertura()).toString());
+        incidenteDTO.setFechaCierre(DateTimeConversion.dateToLocalDateTime(i.calcularPromedioFechasCierre()).toString());
+        return incidenteDTO;
+    }
+
+    public static List<IncidenteDTO> mapIncidentesToIncidentesDTO(List<Incidente> incidentes) {
+        List<IncidenteDTO> incidentesDTO = new ArrayList<>();
+        for (Incidente i : incidentes) {
+            incidentesDTO.add(mapIncidenteToIncidenteDTO(i));
+        }
+        return incidentesDTO;
     }
 }

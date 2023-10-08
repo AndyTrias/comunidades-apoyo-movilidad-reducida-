@@ -1,5 +1,7 @@
 package models.entidades;
 
+import lombok.NoArgsConstructor;
+import models.incidentes.Incidente;
 import models.localizacion.Localizacion;
 import models.servicios.PrestacionDeServicio;
 import lombok.Getter;
@@ -14,10 +16,11 @@ import java.util.Set;
 
 @Entity
 @Table(name = "entidad")
+@NoArgsConstructor
 public class Entidad {
     @Id
-    @Getter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
     private long id;
 
     @Getter
@@ -40,10 +43,6 @@ public class Entidad {
         this.localizacion = localizacion;
     }
 
-    public Entidad() {
-
-    }
-
     public List<PrestacionDeServicio> getPrestacionesDeServicios() {
         List<PrestacionDeServicio> prestaciones = new ArrayList<>();
         for (Establecimiento establecimiento : this.establecimientos) {
@@ -56,4 +55,11 @@ public class Entidad {
         this.establecimientos.add(establecimiento);
     }
 
+    public List<Incidente> getIncidentes() {
+        List<Incidente> incidentes = new ArrayList<>();
+        for (Establecimiento establecimiento : this.establecimientos) {
+            establecimiento.getServicios().forEach(servicio -> incidentes.addAll(servicio.getIncidentes()));
+        }
+        return incidentes;
+    }
 }

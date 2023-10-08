@@ -1,14 +1,14 @@
 package models.localizacion;
 
-import models.external.georef.ServicioGeoref;
-import models.external.georef.responseClases.ListadoLocalidades;
-import models.external.georef.responseClases.ListadoMunicipios;
-import models.external.georef.responseClases.ListadoProvincias;
+import models.external.retrofit.georef.Georef;
+import models.external.retrofit.georef.responseClases.ListadoLocalidades;
+import models.external.retrofit.georef.responseClases.ListadoMunicipios;
+import models.external.retrofit.georef.responseClases.ListadoProvincias;
 
 import java.io.IOException;
 
 public class AdapterLocalizacionGeorefApi implements AdapterLocalizacion {
-    private ServicioGeoref adapterServicioGeoref = ServicioGeoref.getInstancia();
+    private final Georef adapterServicioGeoref = Georef.getInstancia();
 
     public ListadoProvincias getListadoProvincias() throws IOException {
         return adapterServicioGeoref.listadoProvincias();
