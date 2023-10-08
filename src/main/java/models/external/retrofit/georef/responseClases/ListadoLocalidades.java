@@ -1,4 +1,4 @@
-package models.external.georef.responseClases;
+package models.external.retrofit.georef.responseClases;
 
 import java.util.List;
 

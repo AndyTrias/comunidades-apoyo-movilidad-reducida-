@@ -2,7 +2,7 @@ package models.comunidades;
 
 import lombok.Getter;
 import lombok.Setter;
-import models.external.apiServicio.responseClases.EstadoFusion;
+import models.external.retrofit.apiServicio1.responseClases.EstadoFusion;
 
 import javax.persistence.*;
 import java.util.Date;

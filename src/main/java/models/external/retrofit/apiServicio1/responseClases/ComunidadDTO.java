@@ -1,9 +1,7 @@
-package models.external.apiServicio.responseClases;
+package models.external.retrofit.apiServicio1.responseClases;
 
-import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 import lombok.Setter;
-import models.comunidades.Fusion;
 
 import java.util.List;
 

@@ -1,5 +1,7 @@
 package models.external.retrofit.georef;
 
+import models.configs.Config;
+import models.external.retrofit.ApiCaller;
 import models.external.retrofit.georef.responseClases.ListadoLocalidades;
 import models.external.retrofit.georef.responseClases.ListadoMunicipios;
 import models.external.retrofit.georef.responseClases.ListadoProvincias;
@@ -9,11 +11,18 @@ import retrofit2.Retrofit;
 
 import java.io.IOException;
 
-public class Endpoints {
-    private Retrofit retrofit;
+public class Georef extends ApiCaller {
+    private static Georef instancia = null;
 
-    public Endpoints(Retrofit retrofit) {
-        this.retrofit = retrofit;
+    public static Georef getInstancia() {
+        if (instancia == null) {
+            instancia = new Georef();
+        }
+        return instancia;
+    }
+
+    private Georef() {
+        super(Config.API_GEOREF);
     }
 
     public ListadoProvincias listadoProvincias() throws IOException {

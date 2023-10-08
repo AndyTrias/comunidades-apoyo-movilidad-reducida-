@@ -30,7 +30,8 @@ public class FactoryController {
           new RepoFusion(),
           new RepoMembresia(),
           new RepoEstablecimiento(),
-          new RepoPrestacion()
+          new RepoPrestacion(),
+          new RepoEntidad()
       );
       default -> null;
     };

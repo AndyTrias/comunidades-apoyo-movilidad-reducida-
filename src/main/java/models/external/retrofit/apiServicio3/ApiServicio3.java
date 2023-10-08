@@ -1,42 +1,31 @@
-package models.external.retrofit.apiServicio1;
+package models.external.retrofit.apiServicio3;
 
 import models.external.retrofit.ApiCaller;
-import models.external.retrofit.apiServicio1.responseClases.PayloadDTO;
+import models.external.retrofit.apiServicio3.responseClases.PayloadServicio3DTO;
 import retrofit2.Call;
 import retrofit2.Response;
 import server.utils.PrettyProperties;
 
 import java.io.IOException;
 
-public class ApiServicio1 extends ApiCaller {
-    private static ApiServicio1 instancia = null;
+public class ApiServicio3 extends ApiCaller {
+    private static ApiServicio3 instancia = null;
 
-    public static ApiServicio1 getInstancia() {
+    public static ApiServicio3 getInstancia() {
         if (instancia == null) {
-            instancia = new ApiServicio1();
+            instancia = new ApiServicio3();
         }
         return instancia;
     }
 
-    private ApiServicio1() {
+    private ApiServicio3() {
         super(PrettyProperties.getInstance().propertyFromName("API_SERVICIO"));
     }
 
-    public PayloadDTO comunidadesYFusiones(PayloadDTO payloadDTO) throws IOException {
-        IApiServicio1 iApiServicio1 = this.retrofit.create(IApiServicio1.class);
-        Call<PayloadDTO> requestComunidadesYFusiones = iApiServicio1.comunidadesYFusiones(payloadDTO);
-
-        // Log de la solicitud
-        System.out.println("Solicitud: " + requestComunidadesYFusiones.request());
-
-        Response<PayloadDTO> responseComunidadesYFusiones = requestComunidadesYFusiones.execute();
-
-        // Log de la respuesta
-        System.out.println("Respuesta: " + responseComunidadesYFusiones);
-
-        if (!responseComunidadesYFusiones.isSuccessful()) {
-            throw new IOException(responseComunidadesYFusiones.errorBody().string());
-        }
+    public PayloadServicio3DTO rankingEntidades(PayloadServicio3DTO payloadServicio3DTO) throws IOException {
+        IApiServicio3 iApiServicio3 = this.retrofit.create(IApiServicio3.class);
+        Call<PayloadServicio3DTO> requestComunidadesYFusiones = iApiServicio3.rankingEntidades(payloadServicio3DTO);
+        Response<PayloadServicio3DTO> responseComunidadesYFusiones = requestComunidadesYFusiones.execute();
         return responseComunidadesYFusiones.body();
     }
 }

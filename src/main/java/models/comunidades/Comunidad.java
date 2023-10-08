@@ -4,13 +4,12 @@ import models.converters.NotificadorConverter;
 import lombok.Getter;
 import lombok.Setter;
 import models.entidades.Establecimiento;
-import models.external.apiServicio.responseClases.ComunidadDTO;
+import models.external.retrofit.apiServicio1.responseClases.ComunidadDTO;
 import models.incidentes.Incidente;
 import models.incidentes.IncidenteDeComunidad;
 import models.servicios.PrestacionDeServicio;
 import models.notificaciones.notificador.CierreIncidente;
 import models.notificaciones.notificador.Notificador;
-import models.servicios.Servicio;
 import models.usuario.Usuario;
 
 import javax.persistence.*;

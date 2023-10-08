@@ -1,8 +1,8 @@
 package models.localizacion;
 
-import models.external.georef.responseClases.Localidad;
-import models.external.georef.responseClases.Municipio;
-import models.external.georef.responseClases.Provincia;
+import models.external.retrofit.georef.responseClases.Localidad;
+import models.external.retrofit.georef.responseClases.Municipio;
+import models.external.retrofit.georef.responseClases.Provincia;
 import lombok.Getter;
 import lombok.Setter;
 

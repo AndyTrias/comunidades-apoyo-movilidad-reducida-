@@ -1,6 +1,8 @@
-package models.external.apiServicio.responseClases;
+package models.external.retrofit.apiServicio1.responseClases;
 
 import lombok.Data;
+
+import java.time.LocalDateTime;
 
 @Data
 public class FusionDTO {

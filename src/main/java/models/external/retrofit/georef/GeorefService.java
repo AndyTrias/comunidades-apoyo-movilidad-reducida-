@@ -1,8 +1,8 @@
-package models.external.georef;
+package models.external.retrofit.georef;
 
-import models.external.georef.responseClases.ListadoLocalidades;
-import models.external.georef.responseClases.ListadoMunicipios;
-import models.external.georef.responseClases.ListadoProvincias;
+import models.external.retrofit.georef.responseClases.ListadoLocalidades;
+import models.external.retrofit.georef.responseClases.ListadoMunicipios;
+import models.external.retrofit.georef.responseClases.ListadoProvincias;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;

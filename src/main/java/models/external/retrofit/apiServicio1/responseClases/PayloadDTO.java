@@ -1,8 +1,6 @@
-package models.external.apiServicio.responseClases;
+package models.external.retrofit.apiServicio1.responseClases;
 
 import lombok.Getter;
-import models.comunidades.Comunidad;
-import models.comunidades.Fusion;
 
 import java.util.List;
 
