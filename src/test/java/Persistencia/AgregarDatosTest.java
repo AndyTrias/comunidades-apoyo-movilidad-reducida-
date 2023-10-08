@@ -9,17 +9,19 @@ import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
 import models.localizacion.Localizacion;
 import models.localizacion.UbicacionExacta;
 import models.repositorios.*;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 //import repositiorios.*;
 import models.servicios.PrestacionDeServicio;
 import models.servicios.Servicio;
 import models.usuario.Usuario;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class AgregarDatosTest {
 
     private RepoUsuario repoUsuario;
@@ -30,12 +32,18 @@ public class AgregarDatosTest {
     private RepoEntidadPrestadora repoEntidadPrestadora;
     private RepoLocalizacion repoLocalizacion;
     private RepoOrganismoDeControl repoOrganismoDeControl;
+    private RepoPrestacion repoPrestacion;
 
-    private Servicio servicio;
+    private Servicio banio;
+    private Entidad lineaB;
+    private Establecimiento estacionMedrano;
+    private Establecimiento estacionAlem;
+
     private Comunidad comunidad;
-    private Entidad entidad;
-    private Establecimiento establecimiento;
-    private EntidadPrestadora santander;
+
+    private PrestacionDeServicio banioMedrano1;
+    private PrestacionDeServicio banioMedrano2;
+    private PrestacionDeServicio banioAlem;
 
 
     @BeforeEach
@@ -48,56 +56,88 @@ public class AgregarDatosTest {
         repoLocalizacion = new RepoLocalizacion();
         repoEntidadPrestadora = new RepoEntidadPrestadora();
         repoOrganismoDeControl = new RepoOrganismoDeControl();
+        repoPrestacion = new RepoPrestacion();
 
-        servicio = new Servicio("baño hombres");
-        comunidad = new Comunidad("comunidad1");
-        entidad = new Entidad("Santander Rio Argentina", new Localizacion());
-        establecimiento = new Establecimiento("Sucursal Almagro", new Localizacion());
+        banio = new Servicio("baño");
+        comunidad = new Comunidad("comunidad de baños del B");
+        lineaB = new Entidad("Linea B", new Localizacion());
+        estacionMedrano = new Establecimiento("Estacion Medrano", new Localizacion());
+        estacionAlem = new Establecimiento("Estacion Alem", new Localizacion());
+
+        
+
     }
 
+    @Order(1)
+    @Test
+    void agregarServicio() {
+        repoServicio.agregar(banio);
+    }
+
+    @Order(2)
+    @Test
+    void agregarEntidad() {
+        lineaB.agregarEstablecimiento(estacionMedrano);
+        lineaB.agregarEstablecimiento(estacionAlem);
+        repoEntidad.agregar(lineaB);
+    }
+
+    @Order(3)
+    @Test
+    void agregarPrestacionAEstablecimiento() {
+        Servicio banio = repoServicio.buscar(1L);
+        
+        banioMedrano1 = new PrestacionDeServicio(banio, "baño Medrano inferior", new UbicacionExacta(3, 3));
+        banioMedrano2 = new PrestacionDeServicio(banio, "baño Medrano superior", new UbicacionExacta(2, 2));
+        banioAlem = new PrestacionDeServicio(banio, "Baño Alem", new UbicacionExacta(1, 1));
+        
+        Entidad lineaB = repoEntidad.buscar(1L);
+        estacionMedrano = lineaB.getEstablecimientos().stream().filter(establecimiento -> establecimiento.getNombre().equals("Estacion Medrano")).findFirst().get();
+
+        
+        estacionMedrano.agregarServicioPrestado(banioMedrano1);
+        estacionMedrano.agregarServicioPrestado(banioMedrano2);
+
+        estacionAlem = lineaB.getEstablecimientos().stream().filter(establecimiento -> establecimiento.getNombre().equals("Estacion Alem")).findFirst().get();
+        estacionAlem.agregarServicioPrestado(banioAlem);
+
+        repoEstablecimiento.modificar(estacionMedrano);
+        repoEstablecimiento.modificar(estacionAlem);
+    }
+
+    @Order(4)
     @Test
     void agregarComunidad() {
-        Servicio servicio = repoServicio.buscar(1L);
-        PrestacionDeServicio banioMedrano = new PrestacionDeServicio(servicio, "baño Medrano", new UbicacionExacta(1, 1));
-        comunidad.agregarServicioDeInteres(banioMedrano);
         repoComunidad.agregar(comunidad);
     }
 
+    @Order(5)
     @Test
-    void agregarPrestacionAComunidad(){
+    void agregarPrestacionAComunidad() {
         comunidad = repoComunidad.buscar(1L);
-        Servicio servicio = repoServicio.buscar(1L);
-        PrestacionDeServicio banioPalermo = new PrestacionDeServicio(servicio, "baño palermo", new UbicacionExacta(1, 1));
-        comunidad.agregarServicioDeInteres(banioPalermo);
+        List<PrestacionDeServicio> prestaciones = repoPrestacion.buscarTodos();
+
+        // Use the agregarServiciosDeInteres method to add multiple prestations
+        comunidad.agregarServiciosDeInteres(prestaciones.toArray(new PrestacionDeServicio[0]));
+
         repoComunidad.modificar(comunidad);
     }
 
-    @Test
-    void agregarServicio() {
-        repoServicio.agregar(servicio);
-    }
+//    @Test
+//    void agregarEntidadPrestadora(){
+//      EntidadPrestadora santander = new EntidadPrestadora("Santander Rio Argentina");
+//      santander.setPersonaDesignada(new Usuario());
+//      repoEntidadPrestadora.agregar(santander);
+//    }
+//
+//    @Test
+//    void agregarOrganismoDeControl(){
+//        OrganismoDeControl bancos = new OrganismoDeControl("Bancos");
+//        bancos.setPersonaDesignada(new Usuario());
+//        repoOrganismoDeControl.agregar(bancos);
+//    }
 
-    @Test
-    void agregarEntidadPrestadora(){
-      EntidadPrestadora santander = new EntidadPrestadora("Santander Rio Argentina");
-      santander.setPersonaDesignada(new Usuario());
-      repoEntidadPrestadora.agregar(santander);
-    }
-
-    @Test
-    void agregarOrganismoDeControl(){
-        OrganismoDeControl bancos = new OrganismoDeControl("Bancos");
-        bancos.setPersonaDesignada(new Usuario());
-        repoOrganismoDeControl.agregar(bancos);
-    }
-
-    @Test
-    void agregarEstablecimiento(){//agrega una ubicacion sin datos y una localizacion relacionada
-        PrestacionDeServicio prestacionDeServicio = new PrestacionDeServicio(servicio, "baño Medrano", new UbicacionExacta(1, 1));
-        establecimiento.agregarServicioPrestado(prestacionDeServicio);
-        repoEstablecimiento.agregar(establecimiento);
-    }
-
+    @Order(6)
     @Test
     void agregarLocalizacion() throws Exception {
         Localizacion localizacion = new Localizacion();
@@ -105,6 +145,7 @@ public class AgregarDatosTest {
         repoLocalizacion.agregar(localizacion);
     }
 
+    @Order(7)
     @Test
     void agregarUsuarioCompleto() throws Exception {
         Usuario usuario = new Usuario("franco", "pesce", "francopescee@gmail.com");

@@ -1,0 +1,64 @@
+{{#partial "contenido"}}
+    <!-- Form for creating a new Entidad instance -->
+    <form action="/admin/entidad" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <h2 class="text-lg font-semibold mb-4">Entidad</h2>
+        <div class="mb-4">
+            <label for="entidad-nombre" class="block text-gray-700 text-sm font-bold mb-2">Nombre:</label>
+            <input type="text" id="entidad-nombre" name="nombre"
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+        </div>
+        <div class="flex items-center justify-between">
+            <button type="submit"
+                    class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                Crear Entidad
+            </button>
+        </div>
+    </form>
+
+    <!-- Form for creating a new Establecimiento instance -->
+    <form action="/admin/establecimiento" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <h2 class="text-lg font-semibold mb-4">Establecimiento</h2>
+        <div class="mb-4">
+            <label for="establecimiento-nombre" class="block text-gray-700 text-sm font-bold mb-2">Nombre:</label>
+            <input type="text" id="establecimiento-nombre" name="establecimiento-nombre"
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+        </div>
+        <div class="mb-4">
+            <label for="entidad" class="block text-gray-700 text-sm font-bold mb-2">Entidad:</label>
+            <select id="entidad" name="entidad"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                <option selected disabled hidden>Seleccionar Entidad</option>
+                {{#each entidades}}
+                    <option value="{{this.id}}">{{this.nombre}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div class="flex items-center justify-between">
+            <button type="submit"
+                    class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                Crear Establecimiento
+            </button>
+        </div>
+    </form>
+
+    <!-- Form for creating a new Servicio instance -->
+    <form action="/admin/servicio" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <h2 class="text-lg font-semibold mb-4">Servicio</h2>
+        <div class="mb-4">
+            <label for="entidad-servicio" class="block text-gray-700 text-sm font-bold mb-2">Nombre:</label>
+            <input type="text" id="entidad-servicio" name="nombre"
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+        </div>
+        <div class="flex items-center justify-between">
+            <button type="submit"
+                    class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                Crear Servicio
+            </button>
+        </div>
+    </form>
+{{/partial}}
+
+{{> templates/template }}
+
+
+

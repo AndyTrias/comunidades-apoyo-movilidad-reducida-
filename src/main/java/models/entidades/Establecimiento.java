@@ -24,8 +24,8 @@ public class Establecimiento {
     @OneToOne(cascade = CascadeType.ALL)
     @Getter @Setter private Localizacion localizacion;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "establecimiento_id")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "establecimiento_id", nullable = false)
     @Getter private Set<PrestacionDeServicio> servicios;
 
     public Establecimiento(String nombre, Localizacion localizacion) {

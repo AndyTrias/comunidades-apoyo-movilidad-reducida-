@@ -32,6 +32,17 @@ public class FactoryController {
           new RepoEstablecimiento(),
           new RepoPrestacion()
       );
+
+      case "Administrador de plataforma" -> new AdminController(
+          new RepoServicio(),
+          new RepoEntidad()
+      );
+
+      case "Establecimiento" -> new EstablecimientoController(
+          new RepoEstablecimiento(),
+          new RepoEntidad(),
+          new RepoServicio()
+      );
       default -> null;
     };
   }

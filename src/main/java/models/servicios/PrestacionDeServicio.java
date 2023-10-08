@@ -21,7 +21,8 @@ public class PrestacionDeServicio {
     private String nombre;
 
     @Getter
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne()
+    @JoinColumn(name = "servicio_id", nullable = false)
     private Servicio servicio;
 
     @Getter

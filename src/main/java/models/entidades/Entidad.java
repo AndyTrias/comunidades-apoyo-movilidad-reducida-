@@ -16,12 +16,13 @@ import java.util.Set;
 @Table(name = "entidad")
 public class Entidad {
     @Id
+    @Getter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Getter
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "entidad_id")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "entidad_id", nullable = false)
     private Set<Establecimiento> establecimientos;
 
     @Setter
