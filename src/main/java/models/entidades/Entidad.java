@@ -19,7 +19,6 @@ import java.util.Set;
 @NoArgsConstructor
 public class Entidad {
     @Id
-    @Getter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
     private long id;
