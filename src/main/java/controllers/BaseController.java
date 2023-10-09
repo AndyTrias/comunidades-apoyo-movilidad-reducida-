@@ -7,10 +7,10 @@ import models.usuario.Usuario;
 public abstract class BaseController implements WithSimplePersistenceUnit {
 
   protected Usuario usuarioLogueado(Context ctx) {
-    if (ctx.sessionAttribute("usuario_id") == null)
+    if (ctx.cookie("usuario_id") == null)
       return null;
     return entityManager()
-        .find(Usuario.class, Long.parseLong(ctx.sessionAttribute("usuario_id")));
+        .find(Usuario.class, Long.parseLong(ctx.cookie("usuario_id")));
   }
 }
 

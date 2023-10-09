@@ -13,7 +13,8 @@ public class FactoryController {
       );
       case "Comunidad" -> new ComunidadController(
               new RepoComunidad(),
-              new RepoUsuario()
+              new RepoUsuario(),
+              new RepoPrestacion()
       );
       case "Auth" -> new AuthController(
               new RepoUsuario()

@@ -21,7 +21,8 @@ public class Router {
     app.routes(() -> {
       app.get("comunidades", ((ComunidadController) FactoryController.controller("Comunidad"))::index);
       app.get("comunidades/create", ((ComunidadController) FactoryController.controller("Comunidad"))::create);
-      //app.post("comunidades", ((ComunidadController) FactoryController.controller("Comunidad"))::save);
+      app.post("comunidades", ((ComunidadController) FactoryController.controller("Comunidad"))::save);
+      app.post("comunidades/unirse", ((ComunidadController) FactoryController.controller("Comunidad"))::unirse);
       path("comunidades/{id}/incidentes", () -> {
         app.get("comunidades/{id}/incidentes", ((IncidenteDeComunidadController) FactoryController.controller("Incidente de comunidad"))::index);
         app.get("comunidades/{id}/incidentes/create", ((IncidenteDeComunidadController) FactoryController.controller("Incidente de comunidad"))::create);

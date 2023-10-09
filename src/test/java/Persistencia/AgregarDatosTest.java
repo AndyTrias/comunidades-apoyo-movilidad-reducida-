@@ -2,6 +2,7 @@ package Persistencia;
 
 import models.comunidades.Comunidad;
 import models.comunidades.Membresia;
+import models.comunidades.Rol;
 import models.entidades.Entidad;
 import models.entidades.EntidadPrestadora;
 import models.entidades.Establecimiento;
@@ -162,7 +163,7 @@ public class AgregarDatosTest {
     @Order(8)
     @Test
     void agregarMembresia() throws Exception {
-        Usuario usuario = repoUsuario.buscar(1L);
+        Usuario usuario = repoUsuario.buscar(3L);
         Comunidad comunidad = repoComunidad.buscar(1L);
 
         Membresia membresia = new Membresia(comunidad, usuario, repoRol.buscarPorNombre("Administrador de Comunidad"));

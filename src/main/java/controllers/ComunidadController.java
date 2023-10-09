@@ -1,8 +1,10 @@
 package controllers;
 import io.javalin.http.Context;
 import models.comunidades.Comunidad;
+import models.comunidades.Membresia;
 import models.repositorios.RepoComunidad;
 import models.repositorios.RepoPrestacion;
+import models.repositorios.RepoRol;
 import models.repositorios.RepoUsuario;
 import models.servicios.PrestacionDeServicio;
 import models.servicios.Servicio;
@@ -12,13 +14,16 @@ import models.usuario.Usuario;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class ComunidadController {
+public class ComunidadController extends BaseController {
     private RepoComunidad repoComunidad;
     private RepoUsuario repoUsuario;
 
-    public ComunidadController(RepoComunidad repoComunidad, RepoUsuario repoUsuario) {
+    private RepoPrestacion repoPrestacion;
+
+    public ComunidadController(RepoComunidad repoComunidad, RepoUsuario repoUsuario, RepoPrestacion repoPrestacion) {
         this.repoComunidad = repoComunidad;
         this.repoUsuario = repoUsuario;
+        this.repoPrestacion = repoPrestacion;
     }
 
     public void index(Context ctx) {
@@ -27,6 +32,12 @@ public class ComunidadController {
         List<Comunidad> comunidades = usuario.getComunidades();
         Map<String, Object> model = new HashMap<>();
         model.put("comunidades", comunidades);
+
+
+        List<Comunidad> comunidadseQNoPretUsu = repoComunidad.buscarTodos().stream().
+                filter(comunidad -> !usuario.getComunidades().contains(comunidad)).
+                toList();
+        model.put("comunidadesQNoPretUsu", comunidadseQNoPretUsu); //deberia estar en otra parte pero me da paja hacer otro hbs y en otra funcion aparte
         ctx.render("comunidades/comunidades.hbs", model);
     }
 
@@ -47,23 +58,25 @@ public class ComunidadController {
 
 
     public void create(Context ctx) {
-        Comunidad comunidad = obtenerComunidad(ctx);
-        if (comunidad == null) {
-            return;
-        }
-
+        System.out.println("entre a crear comunidad");
         Map<String, Object> model = new HashMap<>();
-        model.put("comunidad", comunidad);
-        //List<PrestacionDeServicio> servicios = repoPrestacion.buscarTodos();
-        ctx.render("incidentes/crearComunidad.hbs", model);
+        List<PrestacionDeServicio> servicios = repoPrestacion.buscarTodos();
+        model.put("servicios", servicios);
+        ctx.render("comunidades/crearComunidad.hbs", model);
     }
 
     public void save(Context ctx){
-        Comunidad comunidad = new Comunidad();
-        comunidad.setNombre(ctx.formParam("nombre"));
-        String servicios = ctx.formParam("prestaciones[]");//son las id de todos los servicios.
 
-        List<String> servicioIds = Arrays.asList(servicios.split(","));
+        Usuario usuario = usuarioLogueado(ctx);
+
+        Comunidad comunidad = new Comunidad(ctx.formParam("nombre"));
+        Membresia membresia = new Membresia(comunidad, usuario , new RepoRol().buscarPorNombre("Administrador de Comunidad"));
+        comunidad.agregarMembresia(membresia);
+        usuario.unirseAComunidad(membresia);
+
+        List<String> servicioIds = ctx.formParams("prestaciones");//son las id de todos los servicios.
+
+       // List<String> servicioIds = Arrays.asList(servicios.split(","));
 
         List<Long> idsLong = servicioIds.stream()
                 .map(servicioId -> Long.parseLong(servicioId))
@@ -72,8 +85,9 @@ public class ComunidadController {
         idsLong.forEach(id -> {
             // Realiza operaciones con "id" aquí, por ejemplo:
 
-           if(repoPrestacion.buscar(id) != null){
-               comunidad.agregarServicioDeInteres(repoPrestacion.buscar(id));
+            PrestacionDeServicio prestacionDeServicio = repoPrestacion.buscar(id);
+           if( prestacionDeServicio != null){
+               comunidad.agregarServicioDeInteres(prestacionDeServicio);
            }
         });
 
@@ -81,6 +95,32 @@ public class ComunidadController {
         ctx.redirect("/comunidades");
     }
 
+    public void show(Context ctx) {
+        Comunidad comunidad = obtenerComunidad(ctx);
+        if (comunidad == null) {
+            return;
+        }
+
+        Map<String, Object> model = new HashMap<>();
+        model.put("comunidad", comunidad);
+        ctx.render("comunidades/comunidad.hbs", model);
+    }
+
+    public void unirse(Context ctx){
+        Usuario usuario = usuarioLogueado(ctx);
+        Long comunidadId = Long.parseLong(ctx.formParam("comunidad_id"));
+        Comunidad comunidad = repoComunidad.buscar(comunidadId);
+        if (comunidad == null) {
+            ctx.status(404);
+            ctx.result("Comunidad no encontrada");
+            return;
+        }
+        Membresia membresia = new Membresia(comunidad, usuario , new RepoRol().buscarPorNombre("Miembro"));
+        comunidad.agregarMembresia(membresia);
+        usuario.unirseAComunidad(membresia);
+        repoComunidad.modificar(comunidad);
+        ctx.redirect("/comunidades");
+    }
     private Comunidad obtenerComunidad(Context ctx) {
         Long comunidad_id = Long.parseLong(ctx.pathParam("id"));
         Comunidad comunidad = repoComunidad.buscar(comunidad_id);
