@@ -29,7 +29,7 @@ public class AuthController {
 
         ctx.cookie("tipo_rol", usuario.getTipoRol().toString());
         ctx.cookie("usuario_id", usuario.getId().toString());
-        ctx.redirect("/comunidades");
+        ctx.redirect("/");
     }
 
     public void logout(Context ctx) {

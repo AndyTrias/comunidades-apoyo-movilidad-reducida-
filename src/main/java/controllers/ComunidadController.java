@@ -1,5 +1,6 @@
 package controllers;
 import io.javalin.http.Context;
+import lombok.AllArgsConstructor;
 import models.comunidades.Comunidad;
 import models.comunidades.Membresia;
 import models.repositorios.RepoComunidad;
@@ -13,18 +14,14 @@ import models.usuario.Usuario;
 
 import java.util.*;
 import java.util.stream.Collectors;
-
+@AllArgsConstructor
 public class ComunidadController extends BaseController {
+
+
     private RepoComunidad repoComunidad;
     private RepoUsuario repoUsuario;
-
     private RepoPrestacion repoPrestacion;
 
-    public ComunidadController(RepoComunidad repoComunidad, RepoUsuario repoUsuario, RepoPrestacion repoPrestacion) {
-        this.repoComunidad = repoComunidad;
-        this.repoUsuario = repoUsuario;
-        this.repoPrestacion = repoPrestacion;
-    }
 
     public void index(Context ctx) {
         Long usuarioId = Long.valueOf(Objects.requireNonNull(ctx.cookie("usuario_id")));
@@ -79,8 +76,8 @@ public class ComunidadController extends BaseController {
        // List<String> servicioIds = Arrays.asList(servicios.split(","));
 
         List<Long> idsLong = servicioIds.stream()
-                .map(servicioId -> Long.parseLong(servicioId))
-                .collect(Collectors.toList());
+                .map(Long::parseLong)
+                .toList();
 
         idsLong.forEach(id -> {
             // Realiza operaciones con "id" aquí, por ejemplo:

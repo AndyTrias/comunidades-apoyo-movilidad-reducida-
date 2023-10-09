@@ -18,7 +18,12 @@ public class Router {
       ctx.render("error.hbs");
     });
 
+    app.get("/", ctx -> {
+      ctx.render("home.hbs");
+    });
+
     app.routes(() -> {
+
       app.get("comunidades", ((ComunidadController) FactoryController.controller("Comunidad"))::index);
       app.get("comunidades/create", ((ComunidadController) FactoryController.controller("Comunidad"))::create);
       app.post("comunidades", ((ComunidadController) FactoryController.controller("Comunidad"))::save);

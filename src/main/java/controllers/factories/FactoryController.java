@@ -15,6 +15,7 @@ public class FactoryController {
               new RepoComunidad(),
               new RepoUsuario(),
               new RepoPrestacion()
+
       );
       case "Auth" -> new AuthController(
               new RepoUsuario()
