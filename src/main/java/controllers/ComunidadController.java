@@ -2,15 +2,15 @@ package controllers;
 import io.javalin.http.Context;
 import models.comunidades.Comunidad;
 import models.repositorios.RepoComunidad;
+import models.repositorios.RepoPrestacion;
 import models.repositorios.RepoUsuario;
+import models.servicios.PrestacionDeServicio;
 import models.servicios.Servicio;
 import models.usuario.Usuario;
 
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class ComunidadController {
     private RepoComunidad repoComunidad;
@@ -54,16 +54,32 @@ public class ComunidadController {
 
         Map<String, Object> model = new HashMap<>();
         model.put("comunidad", comunidad);
-
-        ctx.render("incidentes/incidente.hbs", model);
+        //List<PrestacionDeServicio> servicios = repoPrestacion.buscarTodos();
+        ctx.render("incidentes/crearComunidad.hbs", model);
     }
 
-    /*public void save(Context ctx){
+    public void save(Context ctx){
         Comunidad comunidad = new Comunidad();
         comunidad.setNombre(ctx.formParam("nombre"));
-        comunidad.agregarServicioDeInteres( Servicio(ctx.formParam("servicio")));
+        String servicios = ctx.formParam("prestaciones[]");//son las id de todos los servicios.
 
-    }*/
+        List<String> servicioIds = Arrays.asList(servicios.split(","));
+
+        List<Long> idsLong = servicioIds.stream()
+                .map(servicioId -> Long.parseLong(servicioId))
+                .collect(Collectors.toList());
+
+        idsLong.forEach(id -> {
+            // Realiza operaciones con "id" aquí, por ejemplo:
+
+           if(repoPrestacion.buscar(id) != null){
+               comunidad.agregarServicioDeInteres(repoPrestacion.buscar(id));
+           }
+        });
+
+        repoComunidad.agregar(comunidad);
+        ctx.redirect("/comunidades");
+    }
 
     private Comunidad obtenerComunidad(Context ctx) {
         Long comunidad_id = Long.parseLong(ctx.pathParam("id"));
