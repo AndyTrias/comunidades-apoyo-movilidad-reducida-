@@ -32,6 +32,7 @@ public class Rol {
     private List<Permiso> permisos;
 
     @Setter
+    @Getter
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo")
     private TipoRol tipoRol;
