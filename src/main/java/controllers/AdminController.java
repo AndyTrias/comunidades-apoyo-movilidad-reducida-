@@ -2,6 +2,7 @@ package controllers;
 
 import io.javalin.http.Context;
 
+import models.comunidades.TipoRol;
 import models.entidades.Entidad;
 import models.entidades.Establecimiento;
 import models.localizacion.Localizacion;
@@ -9,17 +10,16 @@ import models.localizacion.UbicacionExacta;
 import models.repositorios.RepoEntidad;
 import models.repositorios.RepoEstablecimiento;
 import models.repositorios.RepoServicio;
-import models.repositorios.RepoPrestacion;
 import models.servicios.PrestacionDeServicio;
 import models.servicios.Servicio;
-import org.jetbrains.annotations.NotNull;
+import models.usuario.Usuario;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class AdminController {
+public class AdminController extends BaseController {
 
   private RepoServicio repoServicio;
   private RepoEntidad repoEntidad;
@@ -44,20 +44,41 @@ public class AdminController {
   }
 
   public void guardarServicio(Context ctx) {
+    Usuario usuario = usuarioLogueado(ctx);
+
+    if (usuario == null || !usuario.getRol().tenesPermiso("crear_servicio")) {
+      ctx.status(401);
+      ctx.redirect("/admin");
+    }
+
     Servicio servicio = new Servicio(ctx.formParam("nombre"));
     repoServicio.agregar(servicio);
     ctx.redirect("/admin");
   }
 
   public void guardarEntidad(Context ctx) {
+
+    Usuario usuario = usuarioLogueado(ctx);
+
+    if (usuario == null || !usuario.getRol().tenesPermiso("crear_entidad")) {
+      ctx.status(401);
+      ctx.redirect("/admin");
+    }
     Entidad entidad = new Entidad(ctx.formParam("nombre"), new Localizacion());
     repoEntidad.agregar(entidad);
     ctx.redirect("/admin");
   }
-  
-  public void guardarEstablecimiento(Context ctx) {
-    Entidad entidad = repoEntidad.buscar(Long.valueOf(Objects.requireNonNull(ctx.formParam("entidad"))));
 
+  public void guardarEstablecimiento(Context ctx) {
+
+    Usuario usuario = usuarioLogueado(ctx);
+
+    if (usuario == null || !usuario.getRol().tenesPermiso("crear_establecimiento")) {
+      ctx.status(401);
+      ctx.redirect("/admin");
+    }
+
+    Entidad entidad = repoEntidad.buscar(Long.valueOf(Objects.requireNonNull(ctx.formParam("entidad"))));
     if (entidad == null) {
       ctx.redirect("/admin");
     }
@@ -68,13 +89,22 @@ public class AdminController {
     );
 
     entidad.agregarEstablecimiento(establecimiento);
-
     repoEntidad.modificar(entidad);
+
     ctx.redirect("/admin");
   }
 
 
   public void guardarPrestacion(Context ctx) {
+
+    Usuario usuario = usuarioLogueado(ctx);
+
+    if (usuario == null || !usuario.getRol().tenesPermiso("crear_prestacion")) {
+      ctx.status(401);
+      ctx.redirect("/admin");
+    }
+
+
     Establecimiento establecimiento = repoEstablecimiento.buscar(Long.valueOf(Objects.requireNonNull(ctx.formParam("establecimiento"))));
     if (establecimiento == null) {
       ctx.status(401);
@@ -88,7 +118,7 @@ public class AdminController {
 
     PrestacionDeServicio prestacionDeServicio = new PrestacionDeServicio(servicio, ctx.formParam("nombre"), new UbicacionExacta());
     establecimiento.agregarServicioPrestado(prestacionDeServicio);
-    repoEstablecimiento.modificar(establecimiento );
+    repoEstablecimiento.modificar(establecimiento);
 
     ctx.redirect("/admin");
   }

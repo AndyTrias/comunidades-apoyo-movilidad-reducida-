@@ -30,10 +30,10 @@ public class Initializer implements WithSimplePersistenceUnit {
 
   private Initializer permisos() {
     String[][] permisos = {
-        {"Ver servicios", "ver_servicios"},
-        {"Crear servicios", "crear_servicios"},
-        {"Editar servicios", "editar_servicios"},
-        {"Eliminar servicios", "eliminar_servicios"},
+        {"Crear Establecimiento", "crear_establecimiento"},
+        {"Crear servicio", "crear_servicio"},
+        {"Crear Entidad", "crear_entidad"},
+        {"Crear Prestacion", "crear_prestacion"},
     };
 
     for (String[] unPermiso : permisos) {
@@ -63,24 +63,21 @@ public class Initializer implements WithSimplePersistenceUnit {
     administrador.setNombre("Administrador de Plataforma");
     administrador.setTipoRol(TipoRol.ADMINISTRADOR_PLATAFORMA);
     administrador.agregarPermisos(
-        buscadorDePermisos.buscarPermisoPorNombre("crear_servicios")
+        buscadorDePermisos.buscarPermisoPorNombre("crear_servicio"),
+        buscadorDePermisos.buscarPermisoPorNombre("crear_entidad"),
+        buscadorDePermisos.buscarPermisoPorNombre("crear_establecimiento"),
+        buscadorDePermisos.buscarPermisoPorNombre("crear_prestacion")
     );
     entityManager().persist(administrador);
 
     Rol consumidor = new Rol();
     consumidor.setNombre("Miembro");
     consumidor.setTipoRol(TipoRol.MIEMBRO);
-    consumidor.agregarPermisos(
-        buscadorDePermisos.buscarPermisoPorNombre("ver_servicios")
-    );
     entityManager().persist(consumidor);
 
     Rol prestador = new Rol();
     prestador.setNombre("Administrador de Comunidad");
     prestador.setTipoRol(TipoRol.ADMINISTRADOR_COMUNIDAD);
-    prestador.agregarPermisos(
-        buscadorDePermisos.buscarPermisoPorNombre("ver_servicios")
-    );
     entityManager().persist(prestador);
 
     return this;
