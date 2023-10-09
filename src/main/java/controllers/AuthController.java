@@ -1,7 +1,6 @@
 package controllers;
 
 import io.javalin.http.Context;
-import models.comunidades.TipoRol;
 import models.repositorios.RepoUsuario;
 import models.usuario.Usuario;
 
@@ -28,7 +27,7 @@ public class AuthController {
             return;
         }
 
-        ctx.cookie("tipo_rol", TipoRol.MIEMBRO.toString());
+        ctx.cookie("tipo_rol", usuario.getTipoRol().toString());
         ctx.cookie("usuario_id", usuario.getId().toString());
         ctx.redirect("/");
     }

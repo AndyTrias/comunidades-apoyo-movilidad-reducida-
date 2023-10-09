@@ -1,6 +1,7 @@
 package Persistencia;
 
 import models.comunidades.Comunidad;
+import models.comunidades.Membresia;
 import models.entidades.Entidad;
 import models.entidades.EntidadPrestadora;
 import models.entidades.Establecimiento;
@@ -33,6 +34,7 @@ public class AgregarDatosTest {
     private RepoLocalizacion repoLocalizacion;
     private RepoOrganismoDeControl repoOrganismoDeControl;
     private RepoPrestacion repoPrestacion;
+    private RepoRol repoRol;
 
     private Servicio banio;
     private Entidad lineaB;
@@ -57,6 +59,7 @@ public class AgregarDatosTest {
         repoEntidadPrestadora = new RepoEntidadPrestadora();
         repoOrganismoDeControl = new RepoOrganismoDeControl();
         repoPrestacion = new RepoPrestacion();
+        repoRol = new RepoRol();
 
         banio = new Servicio("baño");
         comunidad = new Comunidad("comunidad de baños del B");
@@ -152,6 +155,20 @@ public class AgregarDatosTest {
         usuario.setContrasenia("@ashffkrh3nksdnf214123cssdf");
         usuario.setTelefono("+5491131231231");
         usuario.setUbicacionExacta(new UbicacionExacta(1,1));
+        usuario.setRol(repoRol.buscarPorNombre("Administrador de Plataforma"));
         repoUsuario.agregar(usuario);
+    }
+
+    @Order(8)
+    @Test
+    void agregarMembresia() throws Exception {
+        Usuario usuario = repoUsuario.buscar(1L);
+        Comunidad comunidad = repoComunidad.buscar(1L);
+
+        Membresia membresia = new Membresia(comunidad, usuario, repoRol.buscarPorNombre("Administrador de Comunidad"));
+        comunidad.agregarMembresia(membresia);
+        usuario.unirseAComunidad(membresia);
+
+        repoComunidad.modificar(comunidad);
     }
 }

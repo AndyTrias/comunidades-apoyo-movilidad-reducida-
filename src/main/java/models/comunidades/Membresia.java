@@ -66,6 +66,10 @@ public class Membresia {
     return this.afectaciones.stream().filter(a -> a.getPrestacionDeServicio().equals(prestacion)).findFirst().get();
   }
 
+  public boolean esAdministrador() {
+    return this.rol.getNombre().equals("Administrador de Comunidad");
+  }
+
   public boolean esAfectado() {
     return this.afectaciones.stream().anyMatch(Afectacion::isAfectado);
   }

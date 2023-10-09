@@ -1,6 +1,5 @@
 package models.comunidades;
 
-import models.usuario.Usuario;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,7 +7,6 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "rol")
@@ -32,6 +30,7 @@ public class Rol {
     private List<Permiso> permisos;
 
     @Setter
+    @Getter
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo")
     private TipoRol tipoRol;
@@ -45,8 +44,8 @@ public class Rol {
         this.permisos = new ArrayList<>();
     }
 
-    public boolean tenesPermiso(Permiso permiso) {
-        return this.permisos.contains(permiso);
+    public boolean tenesPermiso(String nombreIntero) {
+        return this.permisos.stream().anyMatch(permiso -> permiso.getNombreInterno().equals(nombreIntero));
     }
 
     public void agregarPermiso(Permiso permiso) {

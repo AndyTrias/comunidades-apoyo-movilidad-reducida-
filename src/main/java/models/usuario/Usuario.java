@@ -68,7 +68,6 @@ public class Usuario {
     @JoinColumn(name = "usuario_id")
     private Set<Localizacion> localizaciones;
 
-    // TODO: Podria ir a la membresia. Si es mucho quilombo lo sacamos
     @Getter
     @Setter
     @OneToOne(cascade = CascadeType.ALL)
@@ -79,7 +78,7 @@ public class Usuario {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private UbicacionExacta ubicacionExacta;
 
-    // TODO: El usuario tiene un rol generico. Despues por cada comunidad tiene otro para esa comunidad
+
     @Getter
     @Setter
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
@@ -151,4 +150,6 @@ public class Usuario {
     public void agregarRevisionDeIncidente(Incidente incidente) {
         this.revisionDeIncidentes.add(incidente);
     }
+
+    public TipoRol getTipoRol() { return rol.getTipoRol(); }
 }

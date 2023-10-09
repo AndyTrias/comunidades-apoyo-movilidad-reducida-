@@ -2,7 +2,7 @@
 
     <div class="container mx-auto">
         <!-- Formulario para crear comunidad -->
-        <form action="/comunidades/create" method="POST" class="bg-white p-8 rounded-lg shadow-lg">
+        <form action="/comunidades" method="POST" class="bg-white p-8 rounded-lg shadow-lg">
             <h2 class="text-2xl font-semibold mb-4">Crear Comunidad</h2>
             <!-- Campo para ingresar el nombre de la comunidad -->
             <div class="mb-4">
@@ -13,9 +13,9 @@
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2">Prestaciones de Servicios:</label>
                 <div class="flex flex-wrap">
-                    {{#each servicios}} //necesito que me lleguen los servicios por el model
+                    {{#each servicios}}
                         <label class="mr-4 mb-2 cursor-pointer">
-                            <input type="checkbox" name="prestaciones[]" value="{{this}}" class="mr-2"> {{this}}
+                            <input type="checkbox" name="prestaciones[]" value="{{this.id}}" class="mr-2"> {{this.nombre}}
                         </label>
                     {{/each}}
                 </div>
