@@ -2,25 +2,25 @@
 
     <div class="container mx-auto p-10">
         <!-- Perfil de Usuario -->
-        <div class="cristal p-5 rounded-lg shadow-lg mb-6">
+        <div >
             <h2 class="text-2xl font-semibold mb-4">Perfil de Usuario</h2>
             <form>
                 <div class="mb-4">
                     <label for="nombre" class="block text-gray-700 font-bold">Nombre:</label>
-                    <input type="text" id="nombre" name="nombre" value={{this.nombre}} class="border border-gray-300 p-2 w-full cristal" readonly>
+                    <input type="text" id="nombre" name="nombre" value={{usuario.nombre}} class="border border-gray-300 p-2 w-full cristal" readonly>
                     <button onclick="habilitarEdicion()">Habilitar Edición</button>
                 </div>
                 <div class="mb-4">
                     <label for="apellido" class="block text-gray-700 font-bold">Apellido:</label>
-                    <input type="text" id="apellido" name="apellido"  value={{this.apellido}} class="border border-gray-300 p-2 w-full cristal" required>
+                    <input type="text" id="apellido" name="apellido"  value={{usuario.apellido}} class="border border-gray-300 p-2 w-full cristal" required>
                 </div>
                 <div class="mb-4">
                     <label for="email" class="block text-gray-700 font-bold">Correo Electrónico:</label>
-                    <input type="email" id="email" name="email" value={{this.mail}} class="border border-gray-300 p-2 w-full cristal" required>
+                    <input type="email" id="email" name="email" value={{usuario.correoElectronico}} class="border border-gray-300 p-2 w-full cristal" required>
                 </div>
                 <div class="mb-4">
                     <label for="telefono" class="block text-gray-700 font-bold">Teléfono:</label>
-                    <input type="tel" id="telefono" name="telefono" value={{this.telefono}} class="border border-gray-300 p-2 w-full cristal" required>
+                    <input type="tel" id="telefono" name="telefono" value={{usuario.telefono}} class="border border-gray-300 p-2 w-full cristal" required>
                 </div>
                 <div class="mb-4">
                     <label for="notificacion" class="block text-gray-700 font-bold">Método de Notificación:</label>
@@ -35,11 +35,11 @@
         </div>
 
         <!-- Intereses -->
-        <div class="cristal p-5 rounded-lg shadow-lg mb-6">
+        <div >
             <h2 class="text-2xl font-semibold mb-4">Intereses</h2>
             <div class="slider-container overflow-hidden">
                 <div class="slider-content flex flex-wrap gap-3">
-                    {{# each interes}}
+                    {{# each intereses}}
                     <div class="slide cristal p-4 rounded-lg">
                         <h2 class="text-lg font-semibold">Interés</h2>
                         <p class="text-sm text-gray-500">{{this.servicio}}</p>
@@ -50,15 +50,15 @@
         </div>
 
         <!-- Membresías -->
-        <div class="cristal p-5 rounded-lg shadow-lg mb-6 ">
+        <div>
             <h2 class="text-2xl font-semibold mb-4">Membresías</h2>
             <div class="slider-container overflow-hidden relative">
                 <div class="slider-content flex duration-300 flex-wrap gap-3">
-                    {{# each membresia}}
+                    {{# each comunidades}}
                     <!-- Tarjeta de Membresía 1 -->
-                    <div class="slide cristal p-4 rounded-lg">
-                        <h2 class="text-lg font-semibold">Membresía</h2>
-                        <p class="text-sm text-gray-500">{{this.membresia.comunidad}}</p>
+                    <div >
+                        <h2 class="text-lg font-semibold">comunidad</h2>
+                        <p class="text-sm text-gray-500">{{this.nombre}}</p>
                     </div>
                     {{/each}}
                 </div>

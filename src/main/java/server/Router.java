@@ -66,8 +66,10 @@ public class Router {
     });
 
     app.routes(() -> {
-      app.get("perfil", ((PerfilController) FactoryController.controller("perfil"))::index);
-    });
+      app.get("perfil", ((PerfilController) FactoryController.controller("Perfil"))::index);
+      //app.post("perfil", ((PerfilController) FactoryController.controller("perfil"))::save);
+            }
+    );
 
   }
 }
