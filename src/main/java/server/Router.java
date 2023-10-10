@@ -64,6 +64,11 @@ public class Router {
       app.post("admin/servicio", ((AdminController) FactoryController.controller("Administrador de plataforma"))::guardarServicio, TipoRol.ADMINISTRADOR_PLATAFORMA);
       app.post("admin/prestacion", ((AdminController) FactoryController.controller("Administrador de plataforma"))::guardarPrestacion, TipoRol.ADMINISTRADOR_PLATAFORMA);
     });
+
+    app.routes(() -> {
+      app.get("perfil", ((PerfilController) FactoryController.controller("perfil"))::index);
+    });
+
   }
 }
 
