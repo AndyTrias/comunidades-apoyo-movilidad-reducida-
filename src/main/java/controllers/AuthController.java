@@ -27,14 +27,14 @@ public class AuthController {
             return;
         }
 
-        ctx.cookie("tipo_rol", usuario.getTipoRol().toString());
-        ctx.cookie("usuario_id", usuario.getId().toString());
+        ctx.sessionAttribute("tipo_rol", usuario.getTipoRol().toString());
+        ctx.sessionAttribute("usuario_id", usuario.getId().toString());
         ctx.redirect("/");
     }
 
     public void logout(Context ctx) {
-        ctx.removeCookie("usuario_id");
-        ctx.removeCookie("tipo_rol");
+        ctx.consumeSessionAttribute("usuario_id");
+        ctx.consumeSessionAttribute("tipo_rol");
         ctx.redirect("/login");
     }
 }

@@ -19,17 +19,14 @@ public class ComunidadController extends BaseController {
 
 
     private RepoComunidad repoComunidad;
-    private RepoUsuario repoUsuario;
     private RepoPrestacion repoPrestacion;
 
 
     public void index(Context ctx) {
-        Long usuarioId = Long.valueOf(Objects.requireNonNull(ctx.cookie("usuario_id")));
-        Usuario usuario = repoUsuario.buscar(usuarioId);
+        Usuario usuario = usuarioLogueado(ctx);
         List<Comunidad> comunidades = usuario.getComunidades();
         Map<String, Object> model = new HashMap<>();
         model.put("comunidades", comunidades);
-
 
         List<Comunidad> comunidadseQNoPretUsu = repoComunidad.buscarTodos().stream().
                 filter(comunidad -> !usuario.getComunidades().contains(comunidad)).
@@ -94,12 +91,15 @@ public class ComunidadController extends BaseController {
 
     public void show(Context ctx) {
         Comunidad comunidad = obtenerComunidad(ctx);
+        Usuario usuario = usuarioLogueado(ctx);
         if (comunidad == null) {
             return;
         }
 
         Map<String, Object> model = new HashMap<>();
         model.put("comunidad", comunidad);
+        model.put("membresia", usuario.getMembresia(comunidad));
+
         ctx.render("comunidades/comunidad.hbs", model);
     }
 
