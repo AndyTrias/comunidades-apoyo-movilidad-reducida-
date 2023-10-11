@@ -1,15 +1,45 @@
+{{#partial "agregarAlHead"}}
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.css' rel='stylesheet' />
+
+{{/partial}}
 {{#partial "contenido"}}
 
     <div class="rounded-md bg-indigo-500 p-4">
         <section class="text-gray-600 body-font relative">
             <div class="container px-5 py-24 mx-auto flex sm:flex-nowrap flex-wrap">
-              <div class="lg:w-2/3 md:w-1/2 w-full bg-gray-300 rounded-lg overflow-hidden sm:mr-10 p-10 flex items-end justify-start relative">
-                <iframe class="absolute inset-0" style="filter: grayscale(1) contrast(1.2) opacity(0.4);" title="map" marginheight="0" marginwidth="0" scrolling="no" src="https://maps.google.com/maps?width=100%&height=600&hl=en&q=%C4%B0zmir+(My%20Business%20Name)&ie=UTF8&t=&z=14&iwloc=B&output=embed" width="100%" height="100%" frameborder="0"></iframe>
-              </div>
+                <div id = 'map'></div>
             </div>
         </section>
     </div>
 
+
+    {{#each incidentesARevisar}}
+        <div id="longitud">
+            {{this.prestacionDeServicio.ubicacionExacta.longitud}}
+        </div>
+    {{/each}}
+
+    {{#each incidentesARevisar}}
+        <div id="latitud">
+            {{this.prestacionDeServicio.ubicacionExacta.latitud}}
+        </div>
+    {{/each}}
+
+
+
+
+    <script>
+        var longitud = document.querySelector('#longitud').innerHTML;
+        var latitud = document.querySelector('#latitud').innerHTML;
+        mapboxgl.accessToken = 'pk.eyJ1IjoiZ3JpY2NlbGxpIiwiYSI6ImNsbm02enBteTI1bTYybW1zcm42eWU5OXYifQ.LyEGBVsVDCzzhzNbdD32tg'; // Nuestro Token de acceso
+        var map = new mapboxgl.Map({
+            container: 'map', // id del contenedor
+            style: 'mapbox://styles/mapbox/streets-v9', // localización del mapa de estilo
+            center: [latitud,longitud], // Posición inicial
+            zoom: 13 // Zoom inicial
+        });
+    </script>
 
 {{/partial}}
 {{> templates/template}}

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.css' rel='stylesheet' />
+	<style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; height: 550px; }
+	</style>
+</head>
+	<body>
+		<div id = 'map'></div>
+	</body>
+    <script> 
+        mapboxgl.accessToken = 'pk.eyJ1IjoiZ3JpY2NlbGxpIiwiYSI6ImNsbm02enBteTI1bTYybW1zcm42eWU5OXYifQ.LyEGBVsVDCzzhzNbdD32tg'; // Nuestro Token de acceso
+        var map = new mapboxgl.Map({
+            container: 'map', // id del contenedor
+            style: 'mapbox://styles/mapbox/streets-v9', // localización del mapa de estilo
+            center: [2.168,41.381], // Posición inicial
+            zoom: 13 // Zoom inicial
+        });
+        </script>
+
+        
+</html>
