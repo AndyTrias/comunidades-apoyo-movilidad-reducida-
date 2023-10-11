@@ -1,0 +1,78 @@
+{{#partial "contenido"}}
+
+    <div class="container mx-auto p-10">
+        <!-- Perfil de Usuario -->
+        <div >
+            <h2 class="text-2xl font-semibold mb-4">Perfil de Usuario</h2>
+            <form>
+                <div class="mb-4">
+                    <label for="nombre" class="block text-gray-700 font-bold">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" value={{usuario.nombre}} class="border border-gray-300 p-2 w-full cristal" readonly>
+                    <button onclick="habilitarEdicion()">Habilitar Edición</button>
+                </div>
+                <div class="mb-4">
+                    <label for="apellido" class="block text-gray-700 font-bold">Apellido:</label>
+                    <input type="text" id="apellido" name="apellido"  value={{usuario.apellido}} class="border border-gray-300 p-2 w-full cristal" required>
+                </div>
+                <div class="mb-4">
+                    <label for="email" class="block text-gray-700 font-bold">Correo Electrónico:</label>
+                    <input type="email" id="email" name="email" value={{usuario.correoElectronico}} class="border border-gray-300 p-2 w-full cristal" required>
+                </div>
+                <div class="mb-4">
+                    <label for="telefono" class="block text-gray-700 font-bold">Teléfono:</label>
+                    <input type="tel" id="telefono" name="telefono" value={{usuario.telefono}} class="border border-gray-300 p-2 w-full cristal" required>
+                </div>
+                <div class="mb-4">
+                    <label for="notificacion" class="block text-gray-700 font-bold">Método de Notificación:</label>
+                    <select id="notificacion" name="notificacion" class="border border-gray-300 p-2 w-full cristal" required>
+                        <option value="email">Correo Electrónico</option>
+                        <option value="sms">SMS</option>
+                        <option value="whatsapp">WhatsApp</option>
+                    </select>
+                </div>
+                <button type="submit" class="bg-indigo-500 text-white py-2 px-4 rounded-full hover:bg-indigo-600">Guardar</button>
+            </form>
+        </div>
+
+        <!-- Intereses -->
+        <div >
+            <h2 class="text-2xl font-semibold mb-4">Intereses</h2>
+            <div class="slider-container overflow-hidden">
+                <div class="slider-content flex flex-wrap gap-3">
+                    {{# each intereses}}
+                    <div class="slide cristal p-4 rounded-lg">
+                        <h2 class="text-lg font-semibold">Interés</h2>
+                        <p class="text-sm text-gray-500">{{this.servicio}}</p>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+
+        <!-- Membresías -->
+        <div>
+            <h2 class="text-2xl font-semibold mb-4">Membresías</h2>
+            <div class="slider-container overflow-hidden relative">
+                <div class="slider-content flex duration-300 flex-wrap gap-3">
+                    {{# each comunidades}}
+                    <!-- Tarjeta de Membresía 1 -->
+                    <div >
+                        <h2 class="text-lg font-semibold">comunidad</h2>
+                        <p class="text-sm text-gray-500">{{this.nombre}}</p>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        function habilitarEdicion() {
+            var campo = document.getElementById("miCampo");
+            campo.removeAttribute("readonly");
+            // Remueve el atributo "readonly" para permitir la edición del campo
+        }
+        </script>
+{{/partial}}
+
+{{> templates/template }}

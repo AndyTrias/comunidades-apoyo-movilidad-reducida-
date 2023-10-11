@@ -36,6 +36,8 @@ public class Usuario {
     @Column(name = "nombre")
     private String nombre;
 
+    @Getter
+    @Setter
     @Column(name = "apellido")
     private String apellido;
 
