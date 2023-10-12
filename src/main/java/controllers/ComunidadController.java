@@ -89,6 +89,7 @@ public class ComunidadController extends BaseController {
         ctx.redirect("/comunidades");
     }
 
+    // BORRAR
     public void show(Context ctx) {
         Comunidad comunidad = obtenerComunidad(ctx);
         Usuario usuario = usuarioLogueado(ctx);

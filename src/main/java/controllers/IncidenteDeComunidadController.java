@@ -16,6 +16,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class IncidenteDeComunidadController extends BaseController{
   private RepoComunidad repoComunidad;
@@ -28,16 +29,23 @@ public class IncidenteDeComunidadController extends BaseController{
 
   public void index(Context ctx) {
     Comunidad comunidad = obtenerComunidad(ctx);
+    Usuario usuario = usuarioLogueado(ctx);
     if (comunidad == null) {
       throw new RuntimeException("Comunidad no encontrada");
     }
+
+    List<PrestacionDeServicio> posiblesPrestacionesNuevas = repoPrestacion.buscarTodos().stream().
+        filter(p -> !comunidad.getServiciosDeInteres().contains(p))
+        .toList();
 
     List<IncidenteDeComunidad> incidentes = comunidad.getIncidentes();
     Map<String, Object> estadisticasComunidad = comunidad.getEstadisticas();
     Map<String, Object> model = new HashMap<>();
     model.put("incidentes", incidentes);
     model.put("comunidad", comunidad);
+    model.put("membresia", usuario.getMembresia(comunidad));
     model.put("estadisticas", estadisticasComunidad);
+    model.put("PrestacionesNoPertenecenAComunidad", posiblesPrestacionesNuevas);
     ctx.render("comunidades/listadoIncidentes.hbs", model);
   }
 
