@@ -20,7 +20,7 @@ public class RevisionDeIncidenteController {
         Usuario usuario = repoUsuario.buscar(usuarioId);
 
         Map<String, Object> model = new HashMap<>();
-        model.put("incidentesARevisar", usuario.getRevisionDeIncidentes());
+        model.put("incidenteARevisar", usuario.getRevisionDeIncidentes());
         ctx.render("generales/revisionDeIncidentes.hbs", model);
     }
 }
