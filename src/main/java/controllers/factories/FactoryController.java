@@ -8,14 +8,11 @@ public class FactoryController {
     return switch (nombre) {
       case "Incidente de comunidad" -> new IncidenteDeComunidadController(
           new RepoComunidad(),
-          new RepoPrestacion(),
-          new RepoUsuario()
+          new RepoPrestacion()
       );
       case "Comunidad" -> new ComunidadController(
               new RepoComunidad(),
-              new RepoUsuario(),
               new RepoPrestacion()
-
       );
       case "Auth" -> new AuthController(
               new RepoUsuario()
@@ -25,7 +22,6 @@ public class FactoryController {
           new RepoOrganismoDeControl()
       );
       case "Revision de incidentes" -> new RevisionDeIncidenteController(
-          new RepoUsuario()
       );
       case "Sugerencia de fusion" -> new ApiServicioController(
           new RepoComunidad(),
@@ -43,7 +39,6 @@ public class FactoryController {
       );
 
       case "Perfil" -> new PerfilController(
-              new RepoUsuario()
       );
 
       default -> null;

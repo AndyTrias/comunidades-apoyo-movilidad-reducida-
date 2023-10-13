@@ -16,7 +16,7 @@ public class AuthMiddleware {
                 return;
             }
 
-            if((permittedRoles.isEmpty() || permittedRoles.contains(userRole)) && ctx.cookie("usuario_id") != null) {
+            if((permittedRoles.isEmpty() || permittedRoles.contains(userRole)) && ctx.sessionAttribute("usuario_id") != null) {
                 handler.handle(ctx);
             }
             else {
@@ -26,10 +26,10 @@ public class AuthMiddleware {
     }
 
     private static TipoRol getUserRoleType(Context context) {
-        if (context.cookie("tipo_rol") == null) {
+        if (context.sessionAttribute("tipo_rol") == null) {
             return null;
         }
-        return TipoRol.valueOf(context.cookie("tipo_rol"));
+        return TipoRol.valueOf(context.sessionAttribute("tipo_rol"));
     }
 
     private static boolean authPath(String path) {

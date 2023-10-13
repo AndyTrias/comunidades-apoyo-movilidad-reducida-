@@ -8,16 +8,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class RevisionDeIncidenteController {
-    private RepoUsuario repoUsuario;
+public class RevisionDeIncidenteController extends BaseController{
 
-    public RevisionDeIncidenteController(RepoUsuario repoUsuario){
-        this.repoUsuario = repoUsuario;
+    public RevisionDeIncidenteController(){
+
     }
 
     public void show(Context ctx){
-        Long usuarioId = Long.valueOf(Objects.requireNonNull(ctx.cookie("usuario_id")));
-        Usuario usuario = repoUsuario.buscar(usuarioId);
+        Usuario usuario = usuarioLogueado(ctx);
 
         Map<String, Object> model = new HashMap<>();
         model.put("incidenteARevisar", usuario.getRevisionDeIncidentes());

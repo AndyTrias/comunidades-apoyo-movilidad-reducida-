@@ -16,30 +16,36 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
-public class IncidenteDeComunidadController{
+public class IncidenteDeComunidadController extends BaseController{
   private RepoComunidad repoComunidad;
   private RepoPrestacion repoPrestacion;
-  private RepoUsuario repoUsuario;
 
-  public IncidenteDeComunidadController(RepoComunidad repoComunidad, RepoPrestacion repoPrestacion, RepoUsuario repoUsuario){
+  public IncidenteDeComunidadController(RepoComunidad repoComunidad, RepoPrestacion repoPrestacion){
     this.repoComunidad = repoComunidad;
     this.repoPrestacion = repoPrestacion;
-    this.repoUsuario = repoUsuario;
   }
 
   public void index(Context ctx) {
     Comunidad comunidad = obtenerComunidad(ctx);
+    Usuario usuario = usuarioLogueado(ctx);
     if (comunidad == null) {
       throw new RuntimeException("Comunidad no encontrada");
     }
+
+    List<PrestacionDeServicio> posiblesPrestacionesNuevas = repoPrestacion.buscarTodos().stream().
+        filter(p -> !comunidad.getServiciosDeInteres().contains(p))
+        .toList();
 
     List<IncidenteDeComunidad> incidentes = comunidad.getIncidentes();
     Map<String, Object> estadisticasComunidad = comunidad.getEstadisticas();
     Map<String, Object> model = new HashMap<>();
     model.put("incidentes", incidentes);
     model.put("comunidad", comunidad);
+    model.put("membresia", usuario.getMembresia(comunidad));
     model.put("estadisticas", estadisticasComunidad);
+    model.put("PrestacionesNoPertenecenAComunidad", posiblesPrestacionesNuevas);
     ctx.render("comunidades/listadoIncidentes.hbs", model);
   }
 
@@ -75,8 +81,7 @@ public class IncidenteDeComunidadController{
     incidenteDTO.setFechaDeApertura(formatearFecha(ctx.formParam("fechaDeApertura")));
 
     PrestacionDeServicio prestacion = repoPrestacion.buscar(incidenteDTO.getPrestacionId());
-    Long usuarioId = Long.parseLong(Objects.requireNonNull(ctx.cookie("usuario_id")));
-    Usuario usuario = repoUsuario.buscar(usuarioId);
+    Usuario usuario = usuarioLogueado(ctx);
 
     if (prestacion == null) {
       ctx.status(400);
@@ -90,9 +95,7 @@ public class IncidenteDeComunidadController{
 
     Incidente incidente = new Incidente(usuario, incidenteDTO.getObservaciones(), prestacion, incidenteDTO.getFechaDeApertura());
     usuario.getComunidades().stream()
-            .filter(c -> {
-              return c.getServiciosDeInteres().contains(prestacion);
-            })
+            .filter(c -> c.getServiciosDeInteres().contains(prestacion))
             .forEach(c -> {
               c.abrirIncidente(incidente);
               repoComunidad.modificar(c);
@@ -117,8 +120,7 @@ public class IncidenteDeComunidadController{
       return;
     }
 
-    Long usuarioId = Long.parseLong(Objects.requireNonNull(ctx.cookie("usuario_id")));
-    Usuario usuario = repoUsuario.buscar(usuarioId);
+    Usuario usuario = usuarioLogueado(ctx);
     PrestacionDeServicio prestacion = incidente.getIncidente().getPrestacionDeServicio();
     usuario.getComunidades().stream()
             .filter(c -> c.getServiciosDeInteres().contains(prestacion))
@@ -163,9 +165,3 @@ public class IncidenteDeComunidadController{
   }
 }
 
-
-//comunidades/id/incidentes -> Listado de incidentes (GET) INDEX
-//comunidades/id/incidentes/create -> CREATE
-//comunidades/id/incidentes/id -> Detalle de incidente(Te dice si esta abierto o no) (GET) SHOW
-//comunidades/id/incidentes/id -> Cerrar incidente (POST) EDIT
-//comunidades/id/incidentes -> Crea un incidente (POST) SAVE

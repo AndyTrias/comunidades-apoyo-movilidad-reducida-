@@ -13,17 +13,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class PerfilController {
+public class PerfilController extends BaseController{
 
     private RepoUsuario repoUsuario;
 
-    public PerfilController(RepoUsuario repoUsuario) {
-        this.repoUsuario = repoUsuario;
+    public PerfilController() {
     }
 
     public void index (Context ctx){
-        Long usuarioId = Long.valueOf(Objects.requireNonNull(ctx.cookie("usuario_id")));
-        Usuario usuario = repoUsuario.buscar(usuarioId);
+        Usuario usuario = usuarioLogueado(ctx);
         List<Comunidad> comunidades = usuario.getComunidades();
         List<Interes> intereses= usuario.getIntereses();
         Map<String, Object> model = new HashMap<>();
@@ -34,8 +32,7 @@ public class PerfilController {
     }
 
     public void save (Context ctx){
-        Long usuarioId = Long.valueOf(Objects.requireNonNull(ctx.cookie("usuario_id")));
-        Usuario usuario = repoUsuario.buscar(usuarioId);
+        Usuario usuario = usuarioLogueado(ctx);
         String nombre = ctx.formParam("nombre");
         String apellido = ctx.formParam("apellido");
         String email = ctx.formParam("email");
