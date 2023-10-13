@@ -1,10 +1,10 @@
 {{#partial "contenido"}}
 
-    <div class="container mx-auto p-10">
+    <div class="mb-auto">
         <!-- Perfil de Usuario -->
-        <div >
+        <div>
             <h2 class="text-2xl font-semibold mb-4">Perfil de Usuario</h2>
-            <form>
+            <form action="/perfil" method="POST">
                 <div class="mb-4">
                     <label for="nombre" class="block text-gray-700 font-bold">Nombre:</label>
                     <input type="text" id="nombre" name="nombre" value={{usuario.nombre}} class="border border-gray-300 p-2 w-full cristal" readonly>
@@ -23,12 +23,28 @@
                     <input type="tel" id="telefono" name="telefono" value={{usuario.telefono}} class="border border-gray-300 p-2 w-full cristal" required>
                 </div>
                 <div class="mb-4">
-                    <label for="notificacion" class="block text-gray-700 font-bold">Método de Notificación:</label>
-                    <select id="notificacion" name="notificacion" class="border border-gray-300 p-2 w-full cristal" required>
-                        <option value="email">Correo Electrónico</option>
-                        <option value="sms">SMS</option>
-                        <option value="whatsapp">WhatsApp</option>
+                    <label for="medioNotificacion" class="block text-gray-700 font-bold">Método de Notificación:</label>
+                    <select id="medioNotificacion" name="medioNotificacion" class="border border-gray-300 p-2 w-full cristal" required>
+                        <option value="NotificarPorMail">Correo Electrónico</option>
+                        <option value="NotificarPorWhatsApp">WhatsApp</option>
                     </select>
+                </div>
+                <div class="mb-4">
+                    <label for="cuandoEnviar" class="block text-gray-700 font-bold">Cuando Enviar las notificaciones?:</label>
+                    <select id="cuandoEnviar" name="cuandoEnviar" class="border border-gray-300 p-2 w-full cristal" required>
+                        <option value="CuandoSuceden">Cuando suceden</option>
+                        <option value="SinApuros" onclick="clickSinApuros()">Sin apuros (hay que agregar minimo un horario)</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="horarios" class="block text-gray-700 font-bold">Horarios:</label>
+                    <div id="horariosContainer" class="flex flex-row gap-4">
+                        {{#each horarios}}
+                            <input type="time" id="horarios" name="horarios" value={{this.horario}} class="border border-gray-300 p-2">
+                        {{/each}}
+                        <input type="time" id="horarios" name="horarios" class="border border-gray-300 p-2">
+                    </div>
+                    <button onclick="agregarHorario()" type="button" class="mt-2 bg-indigo-500 text-white py-2 px-4 rounded-full hover:bg-indigo-600">Agregar nuevo horario</button>
                 </div>
                 <button type="submit" class="bg-indigo-500 text-white py-2 px-4 rounded-full hover:bg-indigo-600">Guardar</button>
             </form>
@@ -71,6 +87,21 @@
             var campo = document.getElementById("miCampo");
             campo.removeAttribute("readonly");
             // Remueve el atributo "readonly" para permitir la edición del campo
+        }
+
+        function agregarHorario() {
+            var horariosContainer = document.getElementById("horariosContainer");
+            var input = document.createElement("input");
+            input.type = "time";
+            input.id = "horarios";
+            input.name = "horarios";
+            input.className = "border border-gray-300 p-2";
+            horariosContainer.appendChild(input);
+        }
+
+        function clickSinApuros() {
+            var primerHorario = document.getElementById("horarios");
+            primerHorario.required = true;
         }
         </script>
 {{/partial}}

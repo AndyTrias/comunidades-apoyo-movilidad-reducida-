@@ -1,11 +1,26 @@
 package models.usuario.configuraciones.formas;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import models.notificaciones.Notificacion;
 
+import javax.persistence.*;
 import java.util.*;
 
+@Entity
+@Table(name = "sin_apuros")
 public class SinApuros implements EstrategiaDeNotificacion {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Getter
+    @ElementCollection
+    @CollectionTable(name = "horarios", joinColumns = @JoinColumn(name = "sinApuros_id"))
+    @Column(name = "horario")
     private List<Date> horarios;
+
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Notificacion> aNotificar;
 
     public SinApuros(Date horarioInicial){
@@ -14,7 +29,10 @@ public class SinApuros implements EstrategiaDeNotificacion {
         this.horarios.add(horarioInicial);
     }
 
-    public SinApuros() {}
+    public SinApuros() {
+        this.aNotificar = new ArrayList<>();
+        this.horarios = new ArrayList<>();
+    }
 
     public void agregarHorario(Date horario) {
         horarios.add(horario);
@@ -33,7 +51,9 @@ public class SinApuros implements EstrategiaDeNotificacion {
                 @Override
                 public void run() {
                     for (Notificacion notificacion : aNotificar) {
-                        notificacion.getDestinatario().getConfiguracionDeNotificaciones().getMedioPreferido().notificar(notificacion);
+                        new Thread(() -> {
+                            notificacion.getDestinatario().getConfiguracionDeNotificaciones().getMedioPreferido().notificar(notificacion);
+                        }).start();
                     }
 
                     aNotificar.clear();
