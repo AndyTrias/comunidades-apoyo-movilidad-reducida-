@@ -1,13 +1,13 @@
 package controllers;
 
 import io.javalin.http.Context;
+import lombok.AllArgsConstructor;
 import models.comunidades.Comunidad;
 import models.dto.IncidenteDeComunidadDTO;
 import models.incidentes.Incidente;
 import models.incidentes.IncidenteDeComunidad;
 import models.repositorios.RepoComunidad;
 import models.repositorios.RepoPrestacion;
-import models.repositorios.RepoUsuario;
 import models.usuario.Usuario;
 import models.servicios.PrestacionDeServicio;
 
@@ -17,15 +17,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-
+@AllArgsConstructor
 public class IncidenteDeComunidadController extends BaseController{
   private RepoComunidad repoComunidad;
   private RepoPrestacion repoPrestacion;
-
-  public IncidenteDeComunidadController(RepoComunidad repoComunidad, RepoPrestacion repoPrestacion){
-    this.repoComunidad = repoComunidad;
-    this.repoPrestacion = repoPrestacion;
-  }
 
   public void index(Context ctx) {
     Comunidad comunidad = obtenerComunidad(ctx);

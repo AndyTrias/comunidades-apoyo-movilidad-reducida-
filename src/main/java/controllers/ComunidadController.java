@@ -7,14 +7,11 @@ import models.comunidades.Membresia;
 import models.repositorios.RepoComunidad;
 import models.repositorios.RepoPrestacion;
 import models.repositorios.RepoRol;
-import models.repositorios.RepoUsuario;
 import models.servicios.PrestacionDeServicio;
-import models.servicios.Servicio;
 import models.usuario.Usuario;
 
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 public class ComunidadController extends BaseController {
