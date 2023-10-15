@@ -70,12 +70,8 @@ public class IncidenteDeComunidadController extends BaseController{
     if (comunidad == null) {
       return;
     }
-    IncidenteDeComunidadDTO incidenteDTO = new IncidenteDeComunidadDTO();
-    incidenteDTO.setPrestacionId(Long.parseLong(Objects.requireNonNull(ctx.formParam("prestacionId"))));
-    incidenteDTO.setObservaciones(ctx.formParam("observaciones"));
-    incidenteDTO.setFechaDeApertura(formatearFecha(ctx.formParam("fechaDeApertura")));
 
-    PrestacionDeServicio prestacion = repoPrestacion.buscar(incidenteDTO.getPrestacionId());
+    PrestacionDeServicio prestacion = repoPrestacion.buscar(Long.parseLong(Objects.requireNonNull(ctx.formParam("prestacionId"))));
     Usuario usuario = usuarioLogueado(ctx);
 
     if (prestacion == null) {
@@ -85,7 +81,7 @@ public class IncidenteDeComunidadController extends BaseController{
     }
 
 
-    Incidente incidente = new Incidente(usuario, incidenteDTO.getObservaciones(), prestacion, incidenteDTO.getFechaDeApertura());
+    Incidente incidente = new Incidente(usuario, ctx.formParam("prestacionId"), prestacion, formatearFecha(ctx.formParam("fechaDeApertura")));
     usuario.getComunidades().stream()
             .filter(c -> c.getServiciosDeInteres().contains(prestacion))
             .forEach(c -> {

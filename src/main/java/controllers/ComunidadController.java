@@ -7,6 +7,7 @@ import models.comunidades.Membresia;
 import models.repositorios.RepoComunidad;
 import models.repositorios.RepoPrestacion;
 import models.repositorios.RepoRol;
+import models.repositorios.RepoUsuario;
 import models.servicios.PrestacionDeServicio;
 import models.usuario.Usuario;
 
@@ -16,9 +17,9 @@ import java.util.*;
 @AllArgsConstructor
 public class ComunidadController extends BaseController {
 
-
   private RepoComunidad repoComunidad;
   private RepoPrestacion repoPrestacion;
+  private RepoUsuario repoUsuario;
 
 
   public void index(Context ctx) {
@@ -127,6 +128,7 @@ public class ComunidadController extends BaseController {
     Membresia membresia = new Membresia(comunidad, usuario, new RepoRol().buscarPorNombre("Miembro"));
     comunidad.agregarMembresia(membresia);
     usuario.unirseAComunidad(membresia);
+    repoUsuario.modificar(usuario);
     repoComunidad.modificar(comunidad);
     ctx.redirect("/comunidades");
   }

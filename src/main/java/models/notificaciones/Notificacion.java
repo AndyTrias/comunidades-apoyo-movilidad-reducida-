@@ -1,5 +1,7 @@
 package models.notificaciones;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import models.converters.EstrategiaDeNotificacionConverter;
 import models.usuario.Usuario;
 import models.usuario.configuraciones.formas.EstrategiaDeNotificacion;
@@ -8,9 +10,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-@Getter
-@Setter
+@Data
 @Entity
+@NoArgsConstructor
 public class Notificacion {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
