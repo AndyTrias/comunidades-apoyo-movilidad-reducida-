@@ -19,6 +19,7 @@ document.querySelectorAll(".incidente").forEach((incidente) => {
 var searchFilter = () => {
     let selectedStatus = document.getElementById("filter").value;
     let incidentes = document.querySelectorAll(".incidente");
+    console.log(incidentes)
     incidentes.forEach((incidente) => {
         /* data-abierto */
         if (selectedStatus == "abierto") {

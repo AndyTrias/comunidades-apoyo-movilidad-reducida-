@@ -7,6 +7,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 public class RepoComunidad extends RepoGenerico<Comunidad> {
+    public static RepoComunidad INSTANCE = new RepoComunidad();
 
     public RepoComunidad() {
         super(Comunidad.class);

@@ -21,4 +21,8 @@ public class RevisionDeIncidenteController extends BaseController{
         model.put("incidenteARevisar", usuario.getRevisionDeIncidentes());
         ctx.render("generales/revisionDeIncidentes.hbs", model);
     }
+
+    public void showIncidente(Context ctx) {
+        ctx.render("generales/revisionDeUnIncidente.hbs");
+    }
 }

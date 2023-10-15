@@ -105,7 +105,8 @@ public class Usuario {
 
     }
 
-    public Usuario() {}
+    public Usuario() {
+    }
 
     public void setContrasenia(String contrasenia) throws Exception {
         if (ServiceLocator.getValidador().validarContrasenia(contrasenia)) {

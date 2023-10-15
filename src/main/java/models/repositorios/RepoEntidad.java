@@ -6,6 +6,7 @@ import models.servicios.PrestacionDeServicio;
 import java.util.List;
 
 public class RepoEntidad extends RepoGenerico<Entidad> {
+    public static RepoEntidad INSTANCE = new RepoEntidad();
 
     public RepoEntidad() {
         super(Entidad.class);

@@ -5,6 +5,9 @@ import models.incidentes.IncidenteDeComunidad;
 import java.util.List;
 
 public class RepoIncidenteDeComunidad extends RepoGenerico<IncidenteDeComunidad>{
+
+    public static RepoIncidenteDeComunidad INSTANCE = new RepoIncidenteDeComunidad();
+
     public RepoIncidenteDeComunidad() {
         super(IncidenteDeComunidad.class);
     }

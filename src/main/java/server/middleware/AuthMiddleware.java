@@ -33,6 +33,6 @@ public class AuthMiddleware {
     }
 
     private static boolean authPath(String path) {
-        return path.contains("/login") || path.contains("/registrarse");
+        return path.contains("/login") || path.contains("/register");
     }
 }

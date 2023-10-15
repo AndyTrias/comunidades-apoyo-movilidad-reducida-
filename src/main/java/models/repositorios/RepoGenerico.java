@@ -6,7 +6,6 @@ import javax.persistence.EntityTransaction;
 import javax.transaction.Transactional;
 import java.util.List;
 
-@Transactional
 public abstract class RepoGenerico<T> implements WithSimplePersistenceUnit {
     private final Class<T> entityClass;
 

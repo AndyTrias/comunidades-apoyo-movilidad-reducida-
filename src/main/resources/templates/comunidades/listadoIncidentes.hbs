@@ -75,8 +75,8 @@
                        data-abierto={{this.abierto}}
                     >
                         <div class="leftContainer">
-                            <h2 class="text-lg font-semibold flex">{{this.incidente.prestacionDeServicio.nombre}}</h2>
-                            <p class="text-sm text-gray-500 flex">{{this.incidente.observaciones}}</p>
+                            <h2 class="text-lg font-semibold">{{this.incidente.prestacionDeServicio.nombre}}</h2>
+                            <p class="text-sm text-gray-500 overflow-hidden whitespace-nowrap text-ellipsis block w-24">{{this.incidente.observaciones}}</p>
                             <div class="mt-4 flex flex-col sm:flex-row">
                                 <span class="mr-2 text-gray-400">por <strong>{{this.incidente.abiertoPor.nombre}}</strong> </span>
                                 <span class="text-gray-400">{{this.incidente.fechaDeApertura}}</span>

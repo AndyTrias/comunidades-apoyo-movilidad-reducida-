@@ -37,4 +37,8 @@ public class AuthController {
         ctx.consumeSessionAttribute("tipo_rol");
         ctx.redirect("/login");
     }
+
+    public void register(Context ctx) {
+        ctx.render("auth/register.hbs");
+    }
 }

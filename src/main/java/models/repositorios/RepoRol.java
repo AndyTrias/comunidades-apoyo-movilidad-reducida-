@@ -3,6 +3,9 @@ package models.repositorios;
 import models.comunidades.Rol;
 
 public class RepoRol extends RepoGenerico<Rol>{
+
+    public static RepoRol INSTANCE = new RepoRol();
+
     public RepoRol() {
         super(Rol.class);
     }
