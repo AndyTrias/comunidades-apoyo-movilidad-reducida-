@@ -7,6 +7,7 @@ import models.entidades.EntidadPrestadora;
 import models.entidades.Establecimiento;
 import models.localizacion.Localizacion;
 import models.repositorios.*;
+import models.usuario.configuraciones.formas.SinApuros;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -120,5 +121,23 @@ public class PersistenciaTest {
         EntidadPrestadora santander = repoEntidadPrestadora.buscar(1L);
         santander.agregarEntidad(entidad);
         repoEntidadPrestadora.agregar(santander);
+    }
+
+    @Test
+    void agregarNotificacionSinApuros(){
+        Usuario usuario = repoUsuario.buscar(1L);
+
+        Date horario = new Date();
+        horario.setMinutes(21);
+        SinApuros sinApuros = new SinApuros(horario);
+        usuario.getConfiguracionDeNotificaciones().setEstrategiaDeNotificacion(sinApuros);
+        repoUsuario.modificar(usuario);
+
+    }
+
+    @Test
+    void asd(){
+        Usuario usuario2 = repoUsuario.buscar(1L);
+
     }
 }

@@ -18,7 +18,7 @@ public class RevisionDeIncidenteController extends BaseController{
         Usuario usuario = usuarioLogueado(ctx);
 
         Map<String, Object> model = new HashMap<>();
-        model.put("incidentesARevisar", usuario.getRevisionDeIncidentes());
+        model.put("incidenteARevisar", usuario.getRevisionDeIncidentes());
         ctx.render("generales/revisionDeIncidentes.hbs", model);
     }
 }

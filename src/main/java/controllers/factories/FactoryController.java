@@ -39,6 +39,7 @@ public class FactoryController {
       );
 
       case "Perfil" -> new PerfilController(
+            new RepoUsuario()
       );
 
       default -> null;
