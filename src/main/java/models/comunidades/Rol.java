@@ -12,6 +12,7 @@ import java.util.List;
 @Table(name = "rol")
 public class Rol {
     @Id
+    @Getter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

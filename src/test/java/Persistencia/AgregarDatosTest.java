@@ -163,7 +163,7 @@ public class AgregarDatosTest {
     @Order(8)
     @Test
     void agregarMembresia() throws Exception {
-        Usuario usuario = repoUsuario.buscar(3L);
+        Usuario usuario = repoUsuario.buscar(1L);
         Comunidad comunidad = repoComunidad.buscar(1L);
 
         Membresia membresia = new Membresia(comunidad, usuario, repoRol.buscarPorNombre("Administrador de Comunidad"));

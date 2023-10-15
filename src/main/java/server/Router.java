@@ -28,6 +28,7 @@ public class Router {
       app.get("comunidades/create", ((ComunidadController) FactoryController.controller("Comunidad"))::create);
       app.post("comunidades", ((ComunidadController) FactoryController.controller("Comunidad"))::save);
       app.post("comunidades/unirse", ((ComunidadController) FactoryController.controller("Comunidad"))::unirse);
+      app.post("comunidades/{id}/prestacion", ((ComunidadController) FactoryController.controller("Comunidad"))::agregarPrestacion);
       path("comunidades/{id}/incidentes", () -> {
         app.get("comunidades/{id}/incidentes", ((IncidenteDeComunidadController) FactoryController.controller("Incidente de comunidad"))::index);
         app.get("comunidades/{id}/incidentes/create", ((IncidenteDeComunidadController) FactoryController.controller("Incidente de comunidad"))::create);
@@ -75,8 +76,3 @@ public class Router {
 }
 
 
-//comunidades/id/incidentes -> Listado de incidentes (GET) INDEX
-//comunidades/id/incidentes/create -> CREATE
-//comunidades/id/incidentes/id -> Detalle de incidente (GET) SHOW
-//comunidades/id/incidentes/id -> Cerrar incidente (POST) EDIT
-//comunidades/id/incidentes -> Crea un incidente (POST) CREATE

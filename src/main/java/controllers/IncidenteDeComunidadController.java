@@ -16,7 +16,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.stream.Collectors;
+
 
 public class IncidenteDeComunidadController extends BaseController{
   private RepoComunidad repoComunidad;
@@ -87,11 +87,8 @@ public class IncidenteDeComunidadController extends BaseController{
       ctx.status(400);
       ctx.result("Prestacion no encontrada");
       return;
-    } else if (usuario == null) {
-      ctx.status(400);
-      ctx.result("Usuario no encontrado");
-      return;
     }
+
 
     Incidente incidente = new Incidente(usuario, incidenteDTO.getObservaciones(), prestacion, incidenteDTO.getFechaDeApertura());
     usuario.getComunidades().stream()
