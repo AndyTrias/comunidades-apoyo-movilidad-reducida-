@@ -1,6 +1,7 @@
 package models.repositorios;
 
 import models.comunidades.Rol;
+import models.comunidades.TipoRol;
 
 public class RepoRol extends RepoGenerico<Rol>{
 
@@ -10,10 +11,10 @@ public class RepoRol extends RepoGenerico<Rol>{
         super(Rol.class);
     }
 
-    public Rol buscarPorNombre(String nombre){
+    public Rol buscarPorNombre(TipoRol tipoRol){
         return (Rol) entityManager()
-                .createQuery("from Rol where nombre = :nombre")
-                .setParameter("nombre", nombre)
+                .createQuery("from Rol where tipoRol = :tipoRol")
+                .setParameter("tipoRol", tipoRol)
                 .getSingleResult();
     }
 }

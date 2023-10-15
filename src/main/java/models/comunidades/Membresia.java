@@ -67,7 +67,7 @@ public class Membresia {
   }
 
   public boolean esAdministrador() {
-    return this.rol.getNombre().equals("Administrador de Comunidad");
+    return this.rol.getTipoRol() == TipoRol.ADMINISTRADOR_COMUNIDAD;
   }
 
   public boolean esAfectado() {

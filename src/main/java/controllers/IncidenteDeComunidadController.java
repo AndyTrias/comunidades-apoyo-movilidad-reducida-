@@ -1,13 +1,13 @@
 package controllers;
 
 import io.javalin.http.Context;
+import lombok.AllArgsConstructor;
 import models.comunidades.Comunidad;
 import models.dto.IncidenteDeComunidadDTO;
 import models.incidentes.Incidente;
 import models.incidentes.IncidenteDeComunidad;
 import models.repositorios.RepoComunidad;
 import models.repositorios.RepoPrestacion;
-import models.repositorios.RepoUsuario;
 import models.usuario.Usuario;
 import models.servicios.PrestacionDeServicio;
 
@@ -17,37 +17,13 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-
+@AllArgsConstructor
 public class IncidenteDeComunidadController extends BaseController{
   private RepoComunidad repoComunidad;
   private RepoPrestacion repoPrestacion;
 
-  public IncidenteDeComunidadController(RepoComunidad repoComunidad, RepoPrestacion repoPrestacion){
-    this.repoComunidad = repoComunidad;
-    this.repoPrestacion = repoPrestacion;
-  }
 
-  public void index(Context ctx) {
-    Comunidad comunidad = obtenerComunidad(ctx);
-    Usuario usuario = usuarioLogueado(ctx);
-    if (comunidad == null) {
-      throw new RuntimeException("Comunidad no encontrada");
-    }
 
-    List<PrestacionDeServicio> posiblesPrestacionesNuevas = repoPrestacion.buscarTodos().stream().
-        filter(p -> !comunidad.getServiciosDeInteres().contains(p))
-        .toList();
-
-    List<IncidenteDeComunidad> incidentes = comunidad.getIncidentes();
-    Map<String, Object> estadisticasComunidad = comunidad.getEstadisticas();
-    Map<String, Object> model = new HashMap<>();
-    model.put("incidentes", incidentes);
-    model.put("comunidad", comunidad);
-    model.put("membresia", usuario.getMembresia(comunidad));
-    model.put("estadisticas", estadisticasComunidad);
-    model.put("PrestacionesNoPertenecenAComunidad", posiblesPrestacionesNuevas);
-    ctx.render("comunidades/listadoIncidentes.hbs", model);
-  }
 
   public void show(Context ctx) {
     Map<String, Object> model = new HashMap<>();

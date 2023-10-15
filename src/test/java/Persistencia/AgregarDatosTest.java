@@ -3,6 +3,7 @@ package Persistencia;
 import models.comunidades.Comunidad;
 import models.comunidades.Membresia;
 import models.comunidades.Rol;
+import models.comunidades.TipoRol;
 import models.entidades.Entidad;
 import models.entidades.EntidadPrestadora;
 import models.entidades.Establecimiento;
@@ -156,7 +157,7 @@ public class AgregarDatosTest {
         usuario.setContrasenia("@ashffkrh3nksdnf214123cssdf");
         usuario.setTelefono("+5491131231231");
         usuario.setUbicacionExacta(new UbicacionExacta(1,1));
-        usuario.setRol(repoRol.buscarPorNombre("Administrador de Plataforma"));
+        usuario.setRol(repoRol.buscarPorNombre(TipoRol.ADMINISTRADOR_PLATAFORMA));
         repoUsuario.agregar(usuario);
     }
 
@@ -166,7 +167,7 @@ public class AgregarDatosTest {
         Usuario usuario = repoUsuario.buscar(1L);
         Comunidad comunidad = repoComunidad.buscar(1L);
 
-        Membresia membresia = new Membresia(comunidad, usuario, repoRol.buscarPorNombre("Administrador de Comunidad"));
+        Membresia membresia = new Membresia(comunidad, usuario, repoRol.buscarPorNombre(TipoRol.MIEMBRO));
         comunidad.agregarMembresia(membresia);
         usuario.unirseAComunidad(membresia);
 
