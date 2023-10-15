@@ -1,11 +1,14 @@
 package models.repositorios;
 
+import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import models.comunidades.Comunidad;
+import models.incidentes.IncidenteDeComunidad;
 import models.servicios.PrestacionDeServicio;
 import models.servicios.Servicio;
 import models.usuario.Usuario;
 
 import java.util.List;
+import java.util.Optional;
 
 public class RepoUsuario extends RepoGenerico<Usuario> {
 
@@ -27,10 +30,12 @@ public class RepoUsuario extends RepoGenerico<Usuario> {
                 .getResultList();
     }
 
-    public Usuario buscarPorEmail(String email) {
+    public Optional<Usuario> buscarPorEmail(String email) {
         return entityManager().createQuery("select e from Usuario e where e.correoElectronico = :email", Usuario.class)
                 .setParameter("email", email)
-                .getSingleResult();
+                .getResultStream()
+                .findFirst();
     }
+
 }
 

@@ -1,13 +1,14 @@
 package models.repositorios;
 
+import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import models.comunidades.Comunidad;
 import models.incidentes.IncidenteDeComunidad;
 
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
+import java.util.List;
 
-public class RepoComunidad extends RepoGenerico<Comunidad> {
-    public static RepoComunidad INSTANCE = new RepoComunidad();
+public class RepoComunidad extends RepoGenerico<Comunidad>{
 
     public RepoComunidad() {
         super(Comunidad.class);
@@ -29,7 +30,6 @@ public class RepoComunidad extends RepoGenerico<Comunidad> {
             return null; // Return null when no matching IncidenteDeComunidad is found.
         }
     }
-
 
 }
 

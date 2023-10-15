@@ -18,10 +18,7 @@ import models.usuario.configuraciones.formas.CuandoSuceden;
 import models.usuario.configuraciones.medios.mail.NotificarPorMail;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "usuario")
@@ -135,7 +132,7 @@ public class Usuario {
     }
 
     public Membresia getMembresia(Comunidad comunidad){
-        return membresias.stream().filter(m -> m.getComunidad().equals(comunidad)).findFirst().get();
+        return membresias.stream().filter(m -> m.getComunidad().getId().equals(comunidad.getId())).findFirst().get();
     }
 
     public void notificar(Notificacion notificacion) {
