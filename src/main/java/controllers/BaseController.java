@@ -6,6 +6,7 @@ import models.usuario.Usuario;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public abstract class BaseController implements WithSimplePersistenceUnit {
 
@@ -13,7 +14,7 @@ public abstract class BaseController implements WithSimplePersistenceUnit {
     if (ctx.sessionAttribute("usuario_id") == null)
       return null;
     return entityManager()
-        .find(Usuario.class, Long.parseLong(ctx.sessionAttribute("usuario_id")));
+        .find(Usuario.class, Long.parseLong(Objects.requireNonNull(ctx.sessionAttribute("usuario_id"))));
   }
 
   Map<String, Object> crearModel(Context ctx) {

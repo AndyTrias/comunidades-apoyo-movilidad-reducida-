@@ -38,7 +38,7 @@ public class Comunidad {
     private Set<PrestacionDeServicio> serviciosDeInteres;
 
     @Getter
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "comunidad_id")
     private List<IncidenteDeComunidad> incidentes;
 

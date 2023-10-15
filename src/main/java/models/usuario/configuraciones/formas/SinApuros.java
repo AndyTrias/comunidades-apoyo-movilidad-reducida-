@@ -2,18 +2,16 @@ package models.usuario.configuraciones.formas;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import models.notificaciones.Notificacion;
+import models.usuario.Usuario;
 
 import javax.persistence.*;
 import java.util.*;
 
 @Entity
 @Table(name = "sin_apuros")
-public class SinApuros implements EstrategiaDeNotificacion {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class SinApuros extends EstrategiaDeNotificacion {
     @Getter
     @ElementCollection
     @CollectionTable(name = "horarios", joinColumns = @JoinColumn(name = "sinApuros_id"))

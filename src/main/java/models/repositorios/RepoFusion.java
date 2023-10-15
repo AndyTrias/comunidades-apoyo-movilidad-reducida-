@@ -5,6 +5,9 @@ import models.comunidades.Fusion;
 import java.util.Optional;
 
 public class RepoFusion extends RepoGenerico<Fusion> {
+
+    public static RepoFusion INSTANCE = new RepoFusion();
+
     public RepoFusion() {
         super(Fusion.class);
     }

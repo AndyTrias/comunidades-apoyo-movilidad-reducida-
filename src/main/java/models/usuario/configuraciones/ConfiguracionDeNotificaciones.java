@@ -19,8 +19,7 @@ public class ConfiguracionDeNotificaciones {
 
   @Getter
   @Setter
-  @Convert(converter = EstrategiaDeNotificacionConverter.class)
-  @Column(name = "estrategia_de_notificacion")
+  @ManyToOne(cascade = CascadeType.ALL)
   private EstrategiaDeNotificacion estrategiaDeNotificacion;
 
   @Getter

@@ -8,6 +8,9 @@ import models.usuario.Usuario;
 import java.util.List;
 
 public class RepoUsuario extends RepoGenerico<Usuario> {
+
+    public static RepoUsuario INSTANCE = new RepoUsuario();
+
     public RepoUsuario() {
         super(Usuario.class);
     }

@@ -43,6 +43,7 @@ public class Router {
       app.get("login", ((AuthController) FactoryController.controller("Auth"))::showLogin);
       app.post("login", ((AuthController) FactoryController.controller("Auth"))::login);
       app.get("logout", ((AuthController) FactoryController.controller("Auth"))::logout);
+      app.get("register", ((AuthController) FactoryController.controller("Auth"))::register);
     });
 
     app.routes(() -> {
@@ -52,6 +53,7 @@ public class Router {
 
     app.routes(() -> {
       app.get("revisionDeIncidentes", ((RevisionDeIncidenteController) FactoryController.controller("Revision de incidentes"))::show);
+      app.get("revisionDeIncidentes/{id}", ((RevisionDeIncidenteController) FactoryController.controller("Revision de incidentes"))::showIncidente);
     });
 
     app.routes(() -> {
