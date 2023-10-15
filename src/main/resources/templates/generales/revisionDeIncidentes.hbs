@@ -1,75 +1,35 @@
 {{#partial "agregarAlHead"}}
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.js'></script>
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.css' rel='stylesheet' />
+
 
 {{/partial}}
 {{#partial "contenido"}}
 
     <h1 class="text-3xl font-semibold text-gray-900">
-        Incidentes a revisar
+       Listado de incidentes a revisar
     </h1>
 
-    <div class="rounded-md w-full h-full bg-indigo-500 p-4">
+    <section class="text-gray-600 body-font container p-10 mx-auto flex justify-center flex-wrap gap-5">
 
-        <section class="w-3/4 h-full flex justify-center items-center md:flex-row flex-col">
-            <div class="w-full h-full">
-                    <div id = 'map' class="w-5/6 h-full"></div>
-            </div>
+            <a class="rounded-lg w-3/4 grid grid-cols-12 bg-white opacity-75 shadow gap-2 items-center hover:shadow-lg transition delay-150 duration-300 ease-in-out hover:scale-105 transform" href="/revisionDeUnIncidente">
 
-            <div class="grid gap-4 grid-cols-1 grid-rows-2">
-                <h2 class="text-2xl font-semibold text-white">
-                    AAAAAAAAAAAAAAAAAAAAAAAAA
-                    <!-- {{incidenteARevisar.prestacionDeServicio.servicio.nombre}} -->
-                </h2>
-                <div class="text-white">
-                    Esta es la descripcion de un problema problemoso que puede ocurrir cuando te fallan los divs
+                <div class="col-span-12 md:col-span-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="#2563eb">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+                    </svg>
                 </div>
-                    <span class="items-center bg-red-100">
-                        ¿Se ha solucionado el incidente?
-                    </span>
-                <div>
-                    <div class="inline-flex">
-                        <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-4 px-10 rounded-l">
-                            SI
-                        </button>
-                        <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-4 px-10 rounded-r">
-                            NO
-                        </button>
-                    </div>
+
+                <div class="col-span-11 xl:-ml-5">
+                    <p class="text-indigo-500 p-1 font-semibold">Nombre de la Prestacion de Servicio</p>
                 </div>
-            </div>
-        </section>
-    </div>
+
+                <div class="md:col-start-2 col-span-11 xl:-ml-5">
+                    <p class="text-sm text-gray-800 font-light"> Prestacion de Servicio | Entidad Prestadora  </p>
+                </div>
+
+            </a>
 
 
-
-    {{#each incidentesARevisar}}
-        <div id="nombrePrestacion">
-            {{this.previsionDeServicio.nombre}}
-        </div>
-    {{/each}}
-
-    {{#each incidentesARevisar}}
-        <div id="descripcion">
-            {{this.previsionDeServicio.descripcion}}
-        </div>
-    {{/each}}
-
-    {{#each incidentesARevisar}}
-        <div id="longitud">
-            {{this.prestacionDeServicio.ubicacionExacta.longitud}}
-        </div>
-    {{/each}}
-
-    {{#each incidentesARevisar}}
-        <div id="latitud">
-            {{this.prestacionDeServicio.ubicacionExacta.latitud}}
-        </div>
-    {{/each}}
-
-    {{#partial "agregarScript"}}
-        <script src="\js\localizacion.js"></script>
-    {{/partial}}
+    </section>
 
 
 {{/partial}}

@@ -1,0 +1,76 @@
+{{#partial "agregarAlHead"}}
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.css' rel='stylesheet' />
+
+{{/partial}}
+{{#partial "contenido"}}
+
+    <h1 class="text-3xl font-semibold text-gray-900">
+        Incidente a revisar
+    </h1>
+
+    <div class="rounded-md w-full h-full bg-indigo-500 p-4">
+
+        <section class="w-3/4 h-full flex justify-center items-center md:flex-row flex-col">
+            <div class="w-full h-full">
+                <div id = 'map' class="w-5/6 h-full"></div>
+            </div>
+
+            <div class="grid gap-4 grid-cols-1 grid-rows-2">
+                <h2 class="text-2xl font-semibold text-white">
+                    AAAAAAAAAAAAAAAAAAAAAAAAA
+                    <!-- {{incidenteARevisar.prestacionDeServicio.servicio.nombre}} -->
+                </h2>
+                <div class="text-white">
+                    Esta es la descripcion de un problema problemoso que puede ocurrir cuando te fallan los divs
+                </div>
+                <span class="items-center bg-red-100">
+                        ¿Se ha solucionado el incidente?
+                    </span>
+                <div>
+                    <div class="inline-flex">
+                        <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-4 px-10 rounded-l">
+                            SI
+                        </button>
+                        <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-4 px-10 rounded-r">
+                            NO
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+
+    {{#each incidentesARevisar}}
+        <div id="nombrePrestacion">
+            {{this.previsionDeServicio.nombre}}
+        </div>
+    {{/each}}
+
+    {{#each incidentesARevisar}}
+        <div id="descripcion">
+            {{this.previsionDeServicio.descripcion}}
+        </div>
+    {{/each}}
+
+    {{#each incidentesARevisar}}
+        <div id="longitud">
+            {{this.prestacionDeServicio.ubicacionExacta.longitud}}
+        </div>
+    {{/each}}
+
+    {{#each incidentesARevisar}}
+        <div id="latitud">
+            {{this.prestacionDeServicio.ubicacionExacta.latitud}}
+        </div>
+    {{/each}}
+
+    {{#partial "agregarScript"}}
+        <script src="\js\localizacion.js"></script>
+    {{/partial}}
+
+
+{{/partial}}
+{{> templates/template}}
