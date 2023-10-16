@@ -16,6 +16,7 @@ import lombok.Setter;
 import models.notificaciones.Notificacion;
 import models.usuario.configuraciones.formas.CuandoSuceden;
 import models.usuario.configuraciones.medios.mail.NotificarPorMail;
+import server.exceptions.ContraseniaInvalidaException;
 
 import javax.persistence.*;
 import java.util.*;
@@ -105,12 +106,12 @@ public class Usuario {
     public Usuario() {
     }
 
-    public void setContrasenia(String contrasenia) throws Exception {
-        if (ServiceLocator.getValidador().validarContrasenia(contrasenia)) {
+    public void setContrasenia(String contrasenia) throws ContraseniaInvalidaException {
+        if (ServiceLocator.getValidadorCompleto().validarContrasenia(contrasenia)) {
             this.contrasenia = contrasenia;
         }
         else {
-            throw new Exception("La contraseña no es valida");
+            throw new ContraseniaInvalidaException("La contraseña no es valida");
         }
     }
 

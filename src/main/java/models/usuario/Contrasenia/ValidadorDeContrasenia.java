@@ -2,29 +2,20 @@ package models.usuario.Contrasenia;
 import java.util.Collections;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ValidadorDeContrasenia {
-  private final ArrayList<PuedeValidar> disponibles;
-  private final ArrayList<PuedeValidar> activos;
+  private List<PuedeValidar> validadores;
 
   public ValidadorDeContrasenia() {
-    this.disponibles = new ArrayList<>();
-    this.activos = new ArrayList<>();
+    this.validadores = new ArrayList<>();
   }
 
   public boolean validarContrasenia(String contrasenia) {
-    return activos.stream().allMatch(validador -> validador.validar(contrasenia));
+    return validadores.stream().allMatch(validador -> validador.validar(contrasenia));
   }
 
-  public void activarValidador(PuedeValidar... validador) {
-    Collections.addAll(activos, validador);
-  }
-
-  public void desactivarValidador(PuedeValidar validador) {
-    activos.remove(validador);
-  }
-
-  public void agregarADisponible(PuedeValidar validador) { //el validador lo llama cuando esta listo
-    disponibles.add(validador);
+public void agregarValidador(PuedeValidar ... validador) {
+  Collections.addAll(validadores, validador);
   }
 }

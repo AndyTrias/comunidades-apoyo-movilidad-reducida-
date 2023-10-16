@@ -59,8 +59,8 @@ public class AuthController {
             loguear_atributos(ctx,usuario);
 
         } catch (Exception e) {
-            ctx.status(400); // HTTP 400 Bad Request - Weak password
-            ctx.result("Contraseña debil");
+            ctx.status(400);
+            ctx.result("contrasenia debil");
         }
     }
 
