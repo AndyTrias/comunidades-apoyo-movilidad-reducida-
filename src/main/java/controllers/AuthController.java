@@ -6,6 +6,7 @@ import models.comunidades.TipoRol;
 import models.repositorios.RepoRol;
 import models.repositorios.RepoUsuario;
 import models.usuario.Usuario;
+import server.exceptions.CredencialesInvalidaException;
 
 @AllArgsConstructor
 public class AuthController {
@@ -23,9 +24,7 @@ public class AuthController {
         Usuario usuario = repoUsuario.buscarPorEmail(email).orElse(null);
 
         if (usuario == null || !usuario.getContrasenia().equals(password)) {
-            ctx.status(401);
-            ctx.result("Usuario o contraseña incorrectos");
-            return;
+            throw new CredencialesInvalidaException("Usuario o contrasenia Incorrectos");
         }
 
         loguear_atributos(ctx, usuario);
@@ -47,6 +46,7 @@ public class AuthController {
 
         if (repoUsuario.buscarPorEmail(email).orElse(null) != null) {
             ctx.status(409);
+            ctx.result("Ya existe un usuario con ese email");
             return;
         }
 

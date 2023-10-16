@@ -23,21 +23,5 @@ public class CierreIncidente implements Notificador {
             }
         }));
 
-        /*RepoEntidad RepoEntidades = new RepoEntidad();
-        RepoUsuario RepoUsuarios = new RepoUsuario();
-        List<Entidad> entidadesConLaPrestacion = RepoEntidades.getEntidadesConPrestacion(incidente.getPrestacionDeServicio());
-        List<Usuario> usuariosConInteresEnElServicio = RepoUsuarios.getUsuariosConInteresEnServicio(incidente.getPrestacionDeServicio().getServicio());
-
-        // filtro a los usuarios que no tengan alguna de las entidades relacionadas en su interes
-        List<Usuario> usuariosANotificarPorInteres = usuariosConInteresEnElServicio.stream().filter(usuario -> usuario.getIntereses().stream().anyMatch(interes -> entidadesConLaPrestacion.contains(interes.getEntidad()))).toList();
-
-        usuariosANotificarPorInteres.forEach(usuario -> {
-            if (!usuariosNotificados.contains(usuario)) {
-                notificacion.setDestinatario(usuario);
-                notificacion.setEstrategiaDeNotificacion(usuario.getConfiguracionDeNotificaciones().getEstrategiaDeNotificacion());
-                usuario.notificar(notificacion);
-                usuariosNotificados.add(usuario);
-            }
-        });*/
     }
 }

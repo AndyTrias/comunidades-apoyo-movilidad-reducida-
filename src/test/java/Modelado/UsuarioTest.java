@@ -4,23 +4,22 @@ import models.comunidades.Comunidad;
 import models.comunidades.Membresia;
 import models.comunidades.Rol;
 import models.usuario.Usuario;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.util.HashSet;
 import java.util.List;
 
 public class UsuarioTest {
     private Usuario usuario;
     private Comunidad comunidad;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         usuario = new Usuario("John", "Doe", "");
         comunidad = new Comunidad("Comunidad de Prueba");
     }
-
 
     @Test
     public void testUnirseAComunidad() {
@@ -28,16 +27,16 @@ public class UsuarioTest {
         usuario.unirseAComunidad(membresiaNueva);
 
         List<Membresia> membresias = usuario.getMembresias();
-        Assert.assertEquals(1, membresias.size());
+        assertEquals(1, membresias.size());
 
         Membresia membresia = membresias.get(0);
-        Assert.assertEquals(comunidad, membresia.getComunidad());
+        assertEquals(comunidad, membresia.getComunidad());
     }
 
-    @Test(expected = Exception.class)
-    public void testAbandonarComunidadNoPertenece() throws Exception {
+    @Test
+    public void testAbandonarComunidadNoPertenece() {
         Comunidad otraComunidad = new Comunidad("Otra Comunidad");
-        usuario.abandonarComunidad(otraComunidad);
+        assertThrows(Exception.class, () -> usuario.abandonarComunidad(otraComunidad));
     }
 
     @Test
@@ -47,7 +46,7 @@ public class UsuarioTest {
         usuario.abandonarComunidad(comunidad);
 
         List<Membresia> membresias = usuario.getMembresias();
-        Assert.assertEquals(0, membresias.size());
+        assertEquals(0, membresias.size());
     }
-
 }
+

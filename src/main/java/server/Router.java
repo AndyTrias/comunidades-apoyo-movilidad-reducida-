@@ -4,8 +4,8 @@ import controllers.*;
 import controllers.factories.FactoryController;
 import io.javalin.Javalin;
 import models.comunidades.TipoRol;
-import models.entidades.Establecimiento;
-import models.repositorios.RepoComunidad;
+import server.exceptions.CredencialesInvalidaException;
+import server.exceptions.ExceptionHandler;
 
 import static io.javalin.apibuilder.ApiBuilder.path;
 
@@ -73,6 +73,9 @@ public class Router {
         app.get("perfil", ((PerfilController) FactoryController.controller("Perfil"))::index);
         app.post("perfil", ((PerfilController) FactoryController.controller("Perfil"))::save);
     });
+
+    app.exception(CredencialesInvalidaException.class, ExceptionHandler::handleInvalidCredentials);
+
 
   }
 }

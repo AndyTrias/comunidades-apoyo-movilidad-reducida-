@@ -50,8 +50,8 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- dependency test -->
 
+        <!-- dependency test -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
@@ -134,12 +134,8 @@
             <artifactId>converter-gson</artifactId>
             <version>2.9.0</version>
         </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>RELEASE</version>
-            <scope>test</scope>
-        </dependency>
+
+
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-email</artifactId>

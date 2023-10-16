@@ -39,7 +39,7 @@ public class ComunidadController extends BaseController {
 
 
   public void delete(Context ctx) {
-    Comunidad comunidad = obtenerComunidad(ctx);
+    Comunidad comunidad = obtenerComunidad(ctx, ctx.pathParam("id"));
     if (comunidad == null) {
       return;
     }
@@ -72,7 +72,7 @@ public class ComunidadController extends BaseController {
 
 
   public void agregarPrestacion(Context ctx) {
-    Comunidad comunidad = obtenerComunidad(ctx);
+    Comunidad comunidad = obtenerComunidad(ctx, ctx.pathParam("id"));
     if (comunidad == null) {
       return;
     }
@@ -100,7 +100,7 @@ public class ComunidadController extends BaseController {
 
   public void unir(Context ctx) {
     Usuario usuario = usuarioLogueado(ctx);
-    Comunidad comunidad = obtenerComunidad(ctx);
+    Comunidad comunidad = obtenerComunidad(ctx, ctx.formParam("comunidad_id"));
 
     if (comunidad == null) {
       return;
@@ -115,7 +115,7 @@ public class ComunidadController extends BaseController {
   }
 
   public void show(Context ctx) {
-    Comunidad comunidad = obtenerComunidad(ctx);
+    Comunidad comunidad = obtenerComunidad(ctx, ctx.pathParam("id"));
     if (comunidad == null) {
       return;
     }
@@ -134,9 +134,8 @@ public class ComunidadController extends BaseController {
   }
 
 
-  private Comunidad obtenerComunidad(Context ctx) {
-    Long comunidad_id = Long.parseLong(ctx.pathParam("id"));
-    Comunidad comunidad = repoComunidad.buscar(comunidad_id);
+  private Comunidad obtenerComunidad(Context ctx, String id) {
+    Comunidad comunidad = repoComunidad.buscar(Long.parseLong(id));
 
     if (comunidad == null) {
       ctx.status(404);

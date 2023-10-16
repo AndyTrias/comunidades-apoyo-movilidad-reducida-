@@ -5,6 +5,8 @@
 
     <button class="bg-indigo-400 text-white font-bold py-2 px-4 rounded hover:bg-indigo-500" > <a href="/comunidades/create">Crear Comunidad</a> </button>
     <form action="comunidades/unirse" method="post">
+
+        <label for="comunidad_id"></label>
         <select id="comunidad_id" name="comunidad_id" class="border rounded-md py-1 px-2" required>
             <option selected disabled hidden value="">Seleccionar comunidad</option>
             {{#each comunidadesQNoPretUsu}}

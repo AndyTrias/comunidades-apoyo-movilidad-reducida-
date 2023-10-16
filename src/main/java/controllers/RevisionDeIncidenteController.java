@@ -1,20 +1,18 @@
 package controllers;
 
 import io.javalin.http.Context;
-import models.repositorios.RepoUsuario;
 import models.usuario.Usuario;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
-public class RevisionDeIncidenteController extends BaseController{
+public class RevisionDeIncidenteController extends BaseController {
 
-    public RevisionDeIncidenteController(){
+    public RevisionDeIncidenteController() {
 
     }
 
-    public void show(Context ctx){
+    public void show(Context ctx) {
         Usuario usuario = usuarioLogueado(ctx);
 
         Map<String, Object> model = new HashMap<>();
@@ -25,4 +23,7 @@ public class RevisionDeIncidenteController extends BaseController{
     public void showIncidente(Context ctx) {
         ctx.render("generales/revisionDeUnIncidente.hbs");
     }
+
 }
+
+

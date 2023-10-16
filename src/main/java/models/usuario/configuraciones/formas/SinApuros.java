@@ -10,7 +10,7 @@ import javax.persistence.*;
 import java.util.*;
 
 @Entity
-@Table(name = "sin_apuros")
+@DiscriminatorValue("sinApuros")
 public class SinApuros extends EstrategiaDeNotificacion {
     @Getter
     @ElementCollection

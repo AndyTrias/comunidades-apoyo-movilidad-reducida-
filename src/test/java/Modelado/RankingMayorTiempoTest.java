@@ -1,21 +1,22 @@
 package Modelado;
 
+import models.entidades.Entidad;
+import models.entidades.Establecimiento;
 import models.incidentes.Incidente;
+import models.localizacion.Localizacion;
 import models.localizacion.UbicacionExacta;
+import models.rankings.criterios.MayorTiempo;
 import models.servicios.PrestacionDeServicio;
 import models.servicios.Servicio;
 import models.usuario.Usuario;
-import models.entidades.Entidad;
-import models.entidades.Establecimiento;
-import models.localizacion.Localizacion;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import models.rankings.criterios.MayorTiempo;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RankingMayorTiempoTest {
 
@@ -72,8 +73,8 @@ public class RankingMayorTiempoTest {
         List<Entidad> rankingList = ranking.generarRanking(entidades);
 
         // Validamos que el orden sea Entidad 3, Entidad 1, Entidad 2
-        Assert.assertEquals(entidad3, rankingList.get(2));
-        Assert.assertEquals(entidad1, rankingList.get(0));
-        Assert.assertEquals(entidad2, rankingList.get(1));
+        assertEquals(entidad3, rankingList.get(2));
+        assertEquals(entidad1, rankingList.get(0));
+        assertEquals(entidad2, rankingList.get(1));
     }
 }

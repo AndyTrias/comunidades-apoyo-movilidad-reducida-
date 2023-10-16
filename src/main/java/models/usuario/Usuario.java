@@ -5,10 +5,8 @@ import models.comunidades.Membresia;
 import models.comunidades.Rol;
 import models.comunidades.TipoRol;
 import models.incidentes.Incidente;
-import models.servicios.PrestacionDeServicio;
 import models.usuario.configuraciones.ConfiguracionDeNotificaciones;
 import models.configs.ServiceLocator;
-import models.incidentes.RevisionDeIncidente;
 import models.localizacion.Localizacion;
 import models.localizacion.UbicacionExacta;
 import lombok.Getter;
@@ -16,7 +14,7 @@ import lombok.Setter;
 import models.notificaciones.Notificacion;
 import models.usuario.configuraciones.formas.CuandoSuceden;
 import models.usuario.configuraciones.medios.mail.NotificarPorMail;
-import server.exceptions.ContraseniaInvalidaException;
+import server.exceptions.CredencialesInvalidaException;
 
 import javax.persistence.*;
 import java.util.*;
@@ -106,12 +104,12 @@ public class Usuario {
     public Usuario() {
     }
 
-    public void setContrasenia(String contrasenia) throws ContraseniaInvalidaException {
+    public void setContrasenia(String contrasenia) throws CredencialesInvalidaException {
         if (ServiceLocator.getValidadorCompleto().validarContrasenia(contrasenia)) {
             this.contrasenia = contrasenia;
         }
         else {
-            throw new ContraseniaInvalidaException("La contraseña no es valida");
+            throw new CredencialesInvalidaException("La contraseña no es segura");
         }
     }
 
