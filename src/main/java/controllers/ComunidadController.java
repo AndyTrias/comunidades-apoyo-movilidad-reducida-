@@ -11,9 +11,13 @@ import models.repositorios.RepoRol;
 import models.repositorios.RepoUsuario;
 import models.servicios.PrestacionDeServicio;
 import models.usuario.Usuario;
+import server.exceptions.EntidadNoExistenteException;
+import server.exceptions.PermisosInvalidosException;
 
-
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @AllArgsConstructor
 public class ComunidadController extends BaseController {
@@ -37,16 +41,6 @@ public class ComunidadController extends BaseController {
     ctx.render("comunidades/comunidades.hbs", model);
   }
 
-
-  public void delete(Context ctx) {
-    Comunidad comunidad = obtenerComunidad(ctx, ctx.pathParam("id"));
-    if (comunidad == null) {
-      return;
-    }
-
-    repoComunidad.eliminar(comunidad);
-    ctx.status(204);
-  }
 
 
   public void create(Context ctx) {
@@ -72,24 +66,15 @@ public class ComunidadController extends BaseController {
 
 
   public void agregarPrestacion(Context ctx) {
-    Comunidad comunidad = obtenerComunidad(ctx, ctx.pathParam("id"));
-    if (comunidad == null) {
-      return;
-    }
-
-    PrestacionDeServicio prestacion = repoPrestacion.buscar(Long.parseLong(ctx.formParam("prestacion")));
+    Comunidad comunidad = obtenerComunidad(ctx.pathParam("id"));
+    PrestacionDeServicio prestacion = repoPrestacion.buscar(Long.parseLong(Objects.requireNonNull(ctx.formParam("prestacion"))));
     if (prestacion == null) {
-      ctx.status(404);
-      ctx.result("Prestacion no encontrada");
-      return;
+      throw new EntidadNoExistenteException("No existe la prestacion");
     }
 
     Usuario usuario = usuarioLogueado(ctx);
-    if (usuario == null ||
-        !usuario.getMembresia(comunidad).getRol().
-            tenesPermiso("agregar_servicio_de_interes")) {
-      ctx.status(401);
-      return;
+    if (usuario == null || !usuario.getMembresia(comunidad).getRol().tenesPermiso("agregar_servicio_de_interes")) {
+      throw new PermisosInvalidosException("No tienes los permisos para agregar un servicio");
     }
 
 
@@ -100,11 +85,8 @@ public class ComunidadController extends BaseController {
 
   public void unir(Context ctx) {
     Usuario usuario = usuarioLogueado(ctx);
-    Comunidad comunidad = obtenerComunidad(ctx, ctx.formParam("comunidad_id"));
+    Comunidad comunidad = obtenerComunidad(ctx.formParam("comunidad_id"));
 
-    if (comunidad == null) {
-      return;
-    }
 
     Membresia membresia = new Membresia(comunidad, usuario, new RepoRol().buscarPorNombre(TipoRol.MIEMBRO));
     comunidad.agregarMembresia(membresia);
@@ -115,10 +97,7 @@ public class ComunidadController extends BaseController {
   }
 
   public void show(Context ctx) {
-    Comunidad comunidad = obtenerComunidad(ctx, ctx.pathParam("id"));
-    if (comunidad == null) {
-      return;
-    }
+    Comunidad comunidad = obtenerComunidad(ctx.pathParam("id"));
 
     Usuario usuario = usuarioLogueado(ctx);
     List<PrestacionDeServicio> posiblesPrestacionesNuevas = obtenerPrestacionesNuevas(comunidad);
@@ -133,18 +112,6 @@ public class ComunidadController extends BaseController {
     ctx.render("comunidades/comunidad.hbs", model);
   }
 
-
-  private Comunidad obtenerComunidad(Context ctx, String id) {
-    Comunidad comunidad = repoComunidad.buscar(Long.parseLong(id));
-
-    if (comunidad == null) {
-      ctx.status(404);
-      ctx.result("Comunidad no encontrada");
-      return null;
-    }
-
-    return comunidad;
-  }
 
   private Comunidad crearComunidadConAdmin(Usuario usuario, String nombre) {
     Comunidad comunidad = new Comunidad(nombre);

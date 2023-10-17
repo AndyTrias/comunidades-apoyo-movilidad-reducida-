@@ -8,10 +8,6 @@ import java.util.Map;
 
 public class RevisionDeIncidenteController extends BaseController {
 
-    public RevisionDeIncidenteController() {
-
-    }
-
     public void show(Context ctx) {
         Usuario usuario = usuarioLogueado(ctx);
 

@@ -5,7 +5,9 @@ import controllers.factories.FactoryController;
 import io.javalin.Javalin;
 import models.comunidades.TipoRol;
 import server.exceptions.CredencialesInvalidaException;
+import server.exceptions.EntidadNoExistenteException;
 import server.exceptions.ExceptionHandler;
+import server.exceptions.PermisosInvalidosException;
 
 import static io.javalin.apibuilder.ApiBuilder.path;
 
@@ -53,12 +55,14 @@ public class Router {
     });
 
     app.routes(() -> {
+      /*app.post("revisionDeIncidentes", ((RevisionDeIncidenteController) FactoryController.controller("Revision de incidentes"))::postUbicacionExacta);*/
       app.get("revisionDeIncidentes", ((RevisionDeIncidenteController) FactoryController.controller("Revision de incidentes"))::show);
       app.get("revisionDeIncidentes/{id}", ((RevisionDeIncidenteController) FactoryController.controller("Revision de incidentes"))::showIncidente);
     });
 
     app.routes(() -> {
       app.post("sugerenciaDeFusion", ((ApiServicioController) FactoryController.controller("Sugerencia de fusion"))::fusionDeComunidades);
+      app.post("rankingEntidades", ((ApiServicioController) FactoryController.controller("Sugerencia de fusion"))::rankingEntidades);
     });
 
     app.routes(() -> {
@@ -75,6 +79,8 @@ public class Router {
     });
 
     app.exception(CredencialesInvalidaException.class, ExceptionHandler::handleInvalidCredentials);
+    app.exception(PermisosInvalidosException.class, ExceptionHandler::handleInvalidPermission);
+    app.exception(EntidadNoExistenteException.class, ExceptionHandler::handleEntidadNoExistente);
 
 
   }

@@ -35,7 +35,7 @@ def sort_json():
 
         sorted_data = sorted(entidades, key=criterioRanking, reverse=False)
 
-        return jsonify(sorted_data), 200
+        return jsonify({'entidades': sorted_data}), 200
     except Exception as e:
         mensaje = 'Ocurrió un error al procesar la solicitud.'
         detalles = str(e)

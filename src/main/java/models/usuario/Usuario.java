@@ -29,26 +29,26 @@ public class Usuario {
 
     @Getter
     @Setter
-    @Column(name = "nombre")
+    @Column(name = "nombre", nullable = false)
     private String nombre;
 
     @Getter
     @Setter
-    @Column(name = "apellido")
+    @Column(name = "apellido", nullable = false)
     private String apellido;
 
     @Getter
     @Setter
-    @Column(name = "correo_electronico")
+    @Column(name = "correo_electronico", nullable = false)
     private String correoElectronico;
 
     @Getter
-    @Column(name = "contrasenia")
+    @Column(name = "contrasenia", nullable = false)
     private String contrasenia;
 
     @Getter
     @Setter
-    @Column(name = "telefono")
+    @Column(name = "telefono", nullable = false)
     private String telefono;
 
     @Getter

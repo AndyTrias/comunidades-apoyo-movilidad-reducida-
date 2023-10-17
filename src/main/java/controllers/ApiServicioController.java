@@ -54,7 +54,7 @@ public class ApiServicioController {
 
         try {
             PayloadServicio3DTO response = ApiServicio3.getInstancia().rankingEntidades(payloadServicio3DTO);
-            // TODO: ver que hacer con el ranking
+            //TODO guardar en la db para la prox entrega
         } catch (Exception e) {
             e.printStackTrace();
         }

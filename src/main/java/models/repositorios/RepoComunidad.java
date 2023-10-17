@@ -10,6 +10,8 @@ import java.util.List;
 
 public class RepoComunidad extends RepoGenerico<Comunidad>{
 
+    public static final RepoComunidad INSTANCE = new RepoComunidad();
+
     public RepoComunidad() {
         super(Comunidad.class);
     }

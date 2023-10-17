@@ -45,23 +45,19 @@ public class AuthController {
         String telefono = ctx.formParam("telefono");
 
         if (repoUsuario.buscarPorEmail(email).orElse(null) != null) {
-            ctx.status(409);
-            ctx.result("Ya existe un usuario con ese email");
-            return;
+            throw new CredencialesInvalidaException("Ya existe un usuario con ese email");
         }
 
-        try {
-            Usuario usuario = new Usuario(nombre, apellido, email);
-            usuario.setTelefono(telefono);
-            usuario.setContrasenia(password);
-            usuario.setRol(RepoRol.INSTANCE.buscarPorNombre(TipoRol.MIEMBRO));
-            repoUsuario.agregar(usuario);
-            loguear_atributos(ctx,usuario);
 
-        } catch (Exception e) {
-            ctx.status(400);
-            ctx.result("contrasenia debil");
-        }
+        Usuario usuario = new Usuario(nombre, apellido, email);
+        usuario.setTelefono(telefono);
+        usuario.setContrasenia(password);
+        usuario.setRol(RepoRol.INSTANCE.buscarPorNombre(TipoRol.MIEMBRO));
+        repoUsuario.agregar(usuario);
+
+        loguear_atributos(ctx,usuario);
+
+
     }
 
     public void loguear_atributos(Context ctx, Usuario usuario) {

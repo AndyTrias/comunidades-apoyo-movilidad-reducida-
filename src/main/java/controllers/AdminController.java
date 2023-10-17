@@ -13,6 +13,8 @@ import models.repositorios.RepoServicio;
 import models.servicios.PrestacionDeServicio;
 import models.servicios.Servicio;
 import models.usuario.Usuario;
+import server.exceptions.EntidadNoExistenteException;
+import server.exceptions.PermisosInvalidosException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -47,8 +49,7 @@ public class AdminController extends BaseController {
     Usuario usuario = usuarioLogueado(ctx);
 
     if (usuario == null || !usuario.getRol().tenesPermiso("crear_servicio")) {
-      ctx.status(401);
-      ctx.redirect("/admin");
+      throw new PermisosInvalidosException("No tienes permisos para crear un servicio");
     }
 
     Servicio servicio = new Servicio(ctx.formParam("nombre"));
@@ -61,8 +62,7 @@ public class AdminController extends BaseController {
     Usuario usuario = usuarioLogueado(ctx);
 
     if (usuario == null || !usuario.getRol().tenesPermiso("crear_entidad")) {
-      ctx.status(401);
-      ctx.redirect("/admin");
+      throw new PermisosInvalidosException("No tienes permisos para crear un entidad");
     }
     Entidad entidad = new Entidad(ctx.formParam("nombre"), new Localizacion());
     repoEntidad.agregar(entidad);
@@ -74,13 +74,12 @@ public class AdminController extends BaseController {
     Usuario usuario = usuarioLogueado(ctx);
 
     if (usuario == null || !usuario.getRol().tenesPermiso("crear_establecimiento")) {
-      ctx.status(401);
-      ctx.redirect("/admin");
+      throw new PermisosInvalidosException("No tienes permisos para crear un establecimiento");
     }
 
     Entidad entidad = repoEntidad.buscar(Long.valueOf(Objects.requireNonNull(ctx.formParam("entidad"))));
     if (entidad == null) {
-      ctx.redirect("/admin");
+      throw new EntidadNoExistenteException("No existe esa entidad");
     }
 
     Establecimiento establecimiento = new Establecimiento(
@@ -100,20 +99,18 @@ public class AdminController extends BaseController {
     Usuario usuario = usuarioLogueado(ctx);
 
     if (usuario == null || !usuario.getRol().tenesPermiso("crear_prestacion")) {
-      ctx.status(401);
-      ctx.redirect("/admin");
+      throw new PermisosInvalidosException("No tienes permisos para crear un prestacion");
     }
 
 
     Establecimiento establecimiento = repoEstablecimiento.buscar(Long.valueOf(Objects.requireNonNull(ctx.formParam("establecimiento"))));
     if (establecimiento == null) {
-      ctx.status(401);
-      ctx.redirect("/admin");
+      throw new EntidadNoExistenteException("No existe ese establecimiento");
     }
 
     Servicio servicio = repoServicio.buscar(Long.valueOf(Objects.requireNonNull(ctx.formParam("servicio"))));
     if (servicio == null) {
-      ctx.redirect("/admin");
+      throw new EntidadNoExistenteException("No existe ese servicio");
     }
 
     PrestacionDeServicio prestacionDeServicio = new PrestacionDeServicio(servicio, ctx.formParam("nombre"), new UbicacionExacta());
