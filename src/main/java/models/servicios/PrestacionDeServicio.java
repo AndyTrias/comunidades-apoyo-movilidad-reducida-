@@ -21,7 +21,7 @@ public class PrestacionDeServicio {
     private String nombre;
 
     @Getter
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "servicio_id", nullable = false)
     private Servicio servicio;
 

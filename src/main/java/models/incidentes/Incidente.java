@@ -41,6 +41,7 @@ public class Incidente {
 
     @Getter
     @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "prestacion_de_servicio_id")
     private PrestacionDeServicio prestacionDeServicio;
 
     @Convert(converter = NotificadorConverter.class)
