@@ -80,7 +80,7 @@ public class ComunidadController extends BaseController {
 
     comunidad.agregarServicioDeInteres(prestacion);
     repoComunidad.modificar(comunidad);
-    ctx.redirect("/comunidades/" + comunidad.getId() + "/incidentes");
+    ctx.redirect("/comunidades/" + comunidad.getId());
   }
 
   public void unir(Context ctx) {

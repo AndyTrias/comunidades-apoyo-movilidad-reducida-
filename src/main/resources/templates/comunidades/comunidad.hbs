@@ -44,7 +44,7 @@
                     <form action="/comunidades/{{comunidad.id}}/prestacion" method="post">
                         <select id="prestacion" name="prestacion" class="border rounded-md py-1 px-2" required>
                             <option selected disabled hidden value="">Seleccionar Prestacion</option>
-                            {{#each PrestacionesNoPertenecenAComunidad}}
+                            {{#each prestacionesNoPertenecenAComunidad}}
                                 <option value="{{this.id}}">{{this.nombre}}</option>
                             {{/each}}
                         </select>

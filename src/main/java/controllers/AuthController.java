@@ -44,10 +44,10 @@ public class AuthController {
         String password = ctx.formParam("password");
         String telefono = ctx.formParam("telefono");
 
+
         if (repoUsuario.buscarPorEmail(email).orElse(null) != null) {
             throw new CredencialesInvalidaException("Ya existe un usuario con ese email");
         }
-
 
         Usuario usuario = new Usuario(nombre, apellido, email);
         usuario.setTelefono(telefono);

@@ -23,7 +23,7 @@ public class IncidenteDeComunidad {
 
   @Getter
   @Setter
-  @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+  @ManyToOne
   private Incidente incidente;
 
   @Getter

@@ -14,6 +14,7 @@ import java.util.List;
 @Entity
 @Table(name = "revision_de_incidentes")
 public class RevisionDeIncidente {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

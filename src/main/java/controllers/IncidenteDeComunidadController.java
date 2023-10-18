@@ -6,6 +6,7 @@ import models.comunidades.Comunidad;
 import models.incidentes.Incidente;
 import models.incidentes.IncidenteDeComunidad;
 import models.repositorios.RepoComunidad;
+import models.repositorios.RepoIncidentes;
 import models.repositorios.RepoPrestacion;
 import models.servicios.PrestacionDeServicio;
 import models.usuario.Usuario;
@@ -23,8 +24,7 @@ import java.util.Objects;
 public class IncidenteDeComunidadController extends BaseController{
   private RepoComunidad repoComunidad;
   private RepoPrestacion repoPrestacion;
-
-
+  private RepoIncidentes repoIncidente;
 
 
   public void show(Context ctx) {
@@ -56,6 +56,7 @@ public class IncidenteDeComunidadController extends BaseController{
 
 
     Incidente incidente = new Incidente(usuario, ctx.formParam("observaciones"), prestacion, formatearFecha(ctx.formParam("fechaDeApertura")));
+    repoIncidente.agregar(incidente);
     usuario.getComunidades().stream()
             .filter(c -> c.getServiciosDeInteres().contains(prestacion))
             .forEach(c -> {
@@ -63,10 +64,10 @@ public class IncidenteDeComunidadController extends BaseController{
               repoComunidad.modificar(c);
             });
 
-    ctx.redirect("/comunidades/" + comunidad.getId() + "/incidentes");
+    ctx.redirect("/comunidades/" + comunidad.getId());
   }
 
-  public void delete(Context ctx) {
+  public void cerrarIncidente(Context ctx) {
     Comunidad comunidad = obtenerComunidad(ctx.pathParam("id"));
 
 
@@ -86,7 +87,7 @@ public class IncidenteDeComunidadController extends BaseController{
               repoComunidad.modificar(c);
             });
 
-    ctx.redirect("/comunidades/" + comunidad.getId() + "/incidentes");
+    ctx.redirect("/comunidades/" + comunidad.getId());
 
   }
 

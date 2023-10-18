@@ -8,7 +8,8 @@ public class FactoryController {
     return switch (nombre) {
       case "Incidente de comunidad" -> new IncidenteDeComunidadController(
           new RepoComunidad(),
-          new RepoPrestacion()
+          new RepoPrestacion(),
+          new RepoIncidentes()
       );
       case "Comunidad" -> new ComunidadController(
               new RepoComunidad(),
@@ -23,6 +24,8 @@ public class FactoryController {
           new RepoOrganismoDeControl()
       );
       case "Revision de incidentes" -> new RevisionDeIncidenteController(
+          new RepoIncidentes(),
+          new RepoUsuario()
       );
       case "Sugerencia de fusion" -> new ApiServicioController(
           new RepoComunidad(),

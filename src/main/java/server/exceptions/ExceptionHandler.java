@@ -24,6 +24,17 @@ public class ExceptionHandler {
     renderizarError(ctx);
   }
 
+  public static void handleServerException(ServerErrorException e, Context ctx) {
+    ctx.status(500);
+    ctx.result(e.getMessage());
+    renderizarError(ctx);
+  }
+
+  public static void handlePaginaNoEncontrada(PaginaNoEncontradaException e, Context ctx) {
+    ctx.result(e.getMessage());
+    renderizarError(ctx);
+  }
+
   private static void renderizarError(Context ctx){
     Map<String, Object> model = new HashMap<>();
     model.put("error", ctx.status());

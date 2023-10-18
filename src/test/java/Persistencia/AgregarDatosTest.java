@@ -44,6 +44,7 @@ public class AgregarDatosTest {
     private Establecimiento estacionAlem;
 
     private Comunidad comunidad;
+    private Comunidad comunidad1;
 
     private PrestacionDeServicio banioMedrano1;
     private PrestacionDeServicio banioMedrano2;
@@ -65,6 +66,7 @@ public class AgregarDatosTest {
 
         banio = new Servicio("baño");
         comunidad = new Comunidad("comunidad de baños del B");
+        comunidad1 = new Comunidad("comunidad de baños de Medrano");
         lineaB = new Entidad("Linea B", new Localizacion());
         estacionMedrano = new Establecimiento("Estacion Medrano", new Localizacion());
         estacionAlem = new Establecimiento("Estacion Alem", new Localizacion());
@@ -114,6 +116,7 @@ public class AgregarDatosTest {
     @Test
     void agregarComunidad() {
         repoComunidad.agregar(comunidad);
+        repoComunidad.agregar(comunidad1);
     }
 
     @Order(5)
@@ -124,6 +127,8 @@ public class AgregarDatosTest {
 
         // Use the agregarServiciosDeInteres method to add multiple prestations
         comunidad.agregarServiciosDeInteres(prestaciones.toArray(new PrestacionDeServicio[0]));
+
+
 
         repoComunidad.modificar(comunidad);
     }

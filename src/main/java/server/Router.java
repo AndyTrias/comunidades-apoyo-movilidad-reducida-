@@ -4,10 +4,11 @@ import controllers.*;
 import controllers.factories.FactoryController;
 import io.javalin.Javalin;
 import models.comunidades.TipoRol;
-import server.exceptions.CredencialesInvalidaException;
-import server.exceptions.EntidadNoExistenteException;
-import server.exceptions.ExceptionHandler;
-import server.exceptions.PermisosInvalidosException;
+import server.exceptions.*;
+
+import java.rmi.ServerError;
+import java.util.HashMap;
+import java.util.Map;
 
 import static io.javalin.apibuilder.ApiBuilder.path;
 
@@ -17,7 +18,11 @@ public class Router {
     Javalin app = Server.app();
 
     app.error(404, ctx -> {
-      ctx.render("error.hbs");
+      throw new PaginaNoEncontradaException("No se encontro la pagina solicitada");
+    });
+
+    app.error(500, ctx -> {
+      throw new ServerErrorException("F");
     });
 
     app.get("/", ctx -> {
@@ -36,7 +41,7 @@ public class Router {
         app.get("comunidades/{id}/incidentes/create", ((IncidenteDeComunidadController) FactoryController.controller("Incidente de comunidad"))::create);
         app.get("comunidades/{id}/incidentes/{id_incidente}", ((IncidenteDeComunidadController) FactoryController.controller("Incidente de comunidad"))::show);
         app.post("comunidades/{id}/incidentes", ((IncidenteDeComunidadController) FactoryController.controller("Incidente de comunidad"))::save);
-        app.post("comunidades/{id}/incidentes/{id_incidente}", ((IncidenteDeComunidadController) FactoryController.controller("Incidente de comunidad"))::delete);
+        app.post("comunidades/{id}/incidentes/{id_incidente}/cerrar", ((IncidenteDeComunidadController) FactoryController.controller("Incidente de comunidad"))::cerrarIncidente);
 
       });
     });
@@ -55,7 +60,7 @@ public class Router {
     });
 
     app.routes(() -> {
-      /*app.post("revisionDeIncidentes", ((RevisionDeIncidenteController) FactoryController.controller("Revision de incidentes"))::postUbicacionExacta);*/
+      app.post("revisionDeIncidentes", ((RevisionDeIncidenteController) FactoryController.controller("Revision de incidentes"))::postUbicacionExacta);
       app.get("revisionDeIncidentes", ((RevisionDeIncidenteController) FactoryController.controller("Revision de incidentes"))::show);
       app.get("revisionDeIncidentes/{id}", ((RevisionDeIncidenteController) FactoryController.controller("Revision de incidentes"))::showIncidente);
     });
@@ -81,6 +86,8 @@ public class Router {
     app.exception(CredencialesInvalidaException.class, ExceptionHandler::handleInvalidCredentials);
     app.exception(PermisosInvalidosException.class, ExceptionHandler::handleInvalidPermission);
     app.exception(EntidadNoExistenteException.class, ExceptionHandler::handleEntidadNoExistente);
+    app.exception(PaginaNoEncontradaException.class, ExceptionHandler::handlePaginaNoEncontrada);
+    app.exception(ServerErrorException.class, ExceptionHandler::handleServerException);
 
 
   }

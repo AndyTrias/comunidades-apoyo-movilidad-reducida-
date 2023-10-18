@@ -3,6 +3,7 @@ package controllers;
 import io.javalin.http.Context;
 import io.javalin.http.UploadedFile;
 import io.javalin.util.FileUtil;
+import lombok.AllArgsConstructor;
 import models.entidades.EntidadPrestadora;
 import models.entidades.OrganismoDeControl;
 import models.readerCSV.LectorEntidadPrestadora;
@@ -13,14 +14,12 @@ import models.repositorios.RepoOrganismoDeControl;
 import java.util.List;
 import java.util.Set;
 
+@AllArgsConstructor
 public class CargaMasivaController {
     private RepoEntidadPrestadora repoEntidadPrestadora;
     private RepoOrganismoDeControl repoOrganismoDeControl;
 
-    public CargaMasivaController(RepoEntidadPrestadora repoEntidadPrestadora, RepoOrganismoDeControl repoOrganismoDeControl){
-        this.repoEntidadPrestadora = repoEntidadPrestadora;
-        this.repoOrganismoDeControl = repoOrganismoDeControl;
-    }
+
 
     public void show(Context ctx){
         ctx.render("generales/cargaMasiva.hbs");
