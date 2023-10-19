@@ -34,7 +34,7 @@ public class Comunidad {
     private List<Membresia> membresias;
 
     @Getter
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToMany(cascade = {CascadeType.MERGE})
     private Set<PrestacionDeServicio> serviciosDeInteres;
 
     @Getter

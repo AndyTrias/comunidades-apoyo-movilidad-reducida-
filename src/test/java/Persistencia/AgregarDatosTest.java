@@ -123,14 +123,17 @@ public class AgregarDatosTest {
     @Test
     void agregarPrestacionAComunidad() {
         comunidad = repoComunidad.buscar(1L);
+        comunidad1 = repoComunidad.buscar(2L);
         List<PrestacionDeServicio> prestaciones = repoPrestacion.buscarTodos();
-
-        // Use the agregarServiciosDeInteres method to add multiple prestations
         comunidad.agregarServiciosDeInteres(prestaciones.toArray(new PrestacionDeServicio[0]));
-
-
-
         repoComunidad.modificar(comunidad);
+
+        PrestacionDeServicio banioMedrano1 = repoPrestacion.buscar(1L);
+        PrestacionDeServicio banioMedrano2 = repoPrestacion.buscar(2L);
+        comunidad1.agregarServicioDeInteres(banioMedrano1);
+        comunidad1.agregarServicioDeInteres(banioMedrano2);
+        repoComunidad.modificar(comunidad1);
+
     }
 
 //    @Test

@@ -30,14 +30,8 @@ public class IncidenteDeComunidadController extends BaseController{
   public void show(Context ctx) {
     Map<String, Object> model = new HashMap<>();
 
-    Comunidad comunidad = obtenerComunidad(ctx.pathParam("id"));
-    Long incidenteId = Long.parseLong(ctx.pathParam("id_incidente"));
-    IncidenteDeComunidad incidente = repoComunidad.buscarIncidenteDeComunidad(comunidad.getId(), incidenteId);
-
-    if (incidente == null) {
-      throw new EntidadNoExistenteException("No existe el incidente seleccionado");
-    }
-
+    Comunidad comunidad = obtenerComunidadConUsuario(ctx, ctx.pathParam("id"));
+    IncidenteDeComunidad incidente = obtenerIncidenteDeComunidad(comunidad, ctx.pathParam("id_incidente"));
 
     model.put("incidente", incidente);
     ctx.render("comunidades/cierreIncidente.hbs", model);
@@ -46,14 +40,13 @@ public class IncidenteDeComunidadController extends BaseController{
 
 
   public void save(Context ctx) {
-    Comunidad comunidad = obtenerComunidad(ctx.pathParam("id"));
-    PrestacionDeServicio prestacion = repoPrestacion.buscar(Long.parseLong(Objects.requireNonNull(ctx.formParam("prestacionId"))));
+    Comunidad comunidad = obtenerComunidadConUsuario(ctx, ctx.pathParam("id"));
     Usuario usuario = usuarioLogueado(ctx);
 
+    PrestacionDeServicio prestacion = repoPrestacion.buscar(Long.parseLong(Objects.requireNonNull(ctx.formParam("prestacionId"))));
     if (prestacion == null) {
       throw new EntidadNoExistenteException("No existe esa prestacion");
     }
-
 
     Incidente incidente = new Incidente(usuario, ctx.formParam("observaciones"), prestacion, formatearFecha(ctx.formParam("fechaDeApertura")));
     repoIncidente.agregar(incidente);
@@ -68,17 +61,10 @@ public class IncidenteDeComunidadController extends BaseController{
   }
 
   public void cerrarIncidente(Context ctx) {
-    Comunidad comunidad = obtenerComunidad(ctx.pathParam("id"));
-
-
-    Long incidenteId = Long.parseLong(ctx.pathParam("id_incidente"));
-    IncidenteDeComunidad incidente = repoComunidad.buscarIncidenteDeComunidad(comunidad.getId(), incidenteId);
-
-    if (incidente == null) {
-      throw new EntidadNoExistenteException("No existe el incidente seleccionado");
-    }
-
+    Comunidad comunidad = obtenerComunidadConUsuario(ctx, ctx.pathParam("id"));
     Usuario usuario = usuarioLogueado(ctx);
+
+    IncidenteDeComunidad incidente = obtenerIncidenteDeComunidad(comunidad, ctx.pathParam("id_incidente"));
     PrestacionDeServicio prestacion = incidente.getIncidente().getPrestacionDeServicio();
     usuario.getComunidades().stream()
             .filter(c -> c.getServiciosDeInteres().contains(prestacion))
@@ -92,11 +78,10 @@ public class IncidenteDeComunidadController extends BaseController{
   }
 
   public void create(Context ctx) {
-    Comunidad comunidad = obtenerComunidad(ctx.pathParam("id"));
+    Comunidad comunidad = obtenerComunidadConUsuario(ctx, ctx.pathParam("id"));
 
     Map<String, Object> model = new HashMap<>();
     model.put("comunidad", comunidad);
-
     ctx.render("comunidades/aperturaIncidente.hbs", model);
   }
 
@@ -106,6 +91,26 @@ public class IncidenteDeComunidadController extends BaseController{
     LocalDateTime fechaDeApertura = LocalDateTime.parse(fecha, formatter);
     Timestamp timestamp = Timestamp.valueOf(fechaDeApertura);
     return new Date(timestamp.getTime());
+  }
+
+  private Comunidad obtenerComunidadConUsuario(Context ctx, String id) {
+    Comunidad comunidad = obtenerComunidad(id);
+
+    if (!usuarioLogueado(ctx).getComunidades().contains(comunidad)) {
+      throw new EntidadNoExistenteException("No perteneces a esa comunidad");
+    }
+
+    return comunidad;
+
+  }
+
+  private IncidenteDeComunidad obtenerIncidenteDeComunidad(Comunidad comunidad, String id) {
+    Long incidenteIdLong = Long.parseLong(id);
+    IncidenteDeComunidad incidente = repoComunidad.buscarIncidenteDeComunidad(comunidad.getId(), incidenteIdLong);
+    if (incidente == null) {
+      throw new EntidadNoExistenteException("No existe el incidente seleccionado");
+    }
+    return incidente;
   }
 }
 

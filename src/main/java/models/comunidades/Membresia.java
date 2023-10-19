@@ -13,14 +13,15 @@ import java.util.List;
 public class Membresia {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Getter
   private Long id;
 
   @Getter
-  @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+  @ManyToOne(cascade = {CascadeType.REFRESH})
   private Usuario usuario;
 
   @Getter
-  @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+  @ManyToOne(cascade = {CascadeType.REFRESH})
   private Comunidad comunidad;
 
   @Getter
