@@ -21,10 +21,10 @@ public class Establecimiento {
     @Column(name = "nombre")
     @Getter private String nombre;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     @Getter @Setter private Localizacion localizacion;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     @JoinColumn(name = "establecimiento_id", nullable = false)
     @Getter private Set<PrestacionDeServicio> servicios;
 

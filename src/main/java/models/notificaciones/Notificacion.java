@@ -24,7 +24,7 @@ public class Notificacion {
   @Column(name = "cuerpo")
   private String cuerpo;
 
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne
   private Usuario destinatario;
 
   @Convert(converter = EstrategiaDeNotificacionConverter.class)

@@ -19,7 +19,7 @@ public class ConfiguracionDeNotificaciones {
 
   @Getter
   @Setter
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
   private EstrategiaDeNotificacion estrategiaDeNotificacion;
 
   @Getter

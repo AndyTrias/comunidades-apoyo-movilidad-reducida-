@@ -17,11 +17,11 @@ public class Membresia {
   private Long id;
 
   @Getter
-  @ManyToOne(cascade = {CascadeType.REFRESH})
+  @ManyToOne(cascade = {CascadeType.MERGE})
   private Usuario usuario;
 
   @Getter
-  @ManyToOne(cascade = {CascadeType.REFRESH})
+  @ManyToOne(cascade = {CascadeType.MERGE})
   private Comunidad comunidad;
 
   @Getter
