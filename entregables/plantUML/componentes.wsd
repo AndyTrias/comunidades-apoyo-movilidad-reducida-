@@ -33,11 +33,14 @@ node "Servidor de Aplicacion" as server1 {
 }
 
 node "Servidor de Aplicacion" as server2 {
-  [ServicioRankings] as rankings  
+  [Servicio Rankings] as rankings  
 }
 
+node "Servidor de Aplicacion" as server3 {
+  [Servicio Fusión comununidades] as fusion  
+}
 
-
+retrofit --> fusion : API REST
 retrofit --> georef : API REST
 retrofit --> rankings : API REST
 Browser --> controller : HTTP
