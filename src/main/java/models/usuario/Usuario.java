@@ -85,6 +85,8 @@ public class Usuario {
     @Getter
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<Incidente> revisionDeIncidentes;
+    
+
 
     public Usuario(String nombre, String apellido, String correoElectronico) {
         this.nombre = nombre;

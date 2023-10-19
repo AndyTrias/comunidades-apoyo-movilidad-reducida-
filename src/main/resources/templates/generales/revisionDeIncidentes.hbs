@@ -9,8 +9,8 @@
     </h1>
 
     <section class="text-gray-600 body-font container p-10 mx-auto flex justify-center flex-wrap gap-5">
-        {{#if incidentesARevisar.length}}
-            {{#each incidentesARevisar}}
+        {{#if incidenteARevisar.length}}
+            {{#each incidenteARevisar}}
                 <a class="rounded-lg w-3/4 grid grid-cols-12 bg-white opacity-75 shadow gap-2 items-center hover:shadow-lg transition delay-150 duration-300 ease-in-out hover:scale-105 transform" href="/revisionDeIncidentes/{{this.id}}">
 
                     <div class="col-span-12 md:col-span-1">
@@ -18,7 +18,7 @@
                     </div>
 
                     <div class="col-span-11 xl:-ml-5">
-                        <p class="text-indigo-500 p-1 font-semibold">{{this.pretacionDeServicio.nombre}}</p>
+                        <p class="text-black p-1 font-semibold"> {{this.pretacionDeServicio.nombre}} </p>
                     </div>
 
                     <div class="md:col-start-2 col-span-11 xl:-ml-5">
@@ -28,21 +28,6 @@
                 </a>
             {{/each}}
         {{else}}
-            <a class="rounded-lg w-3/4 grid grid-cols-12 bg-white opacity-75 shadow gap-2 items-center hover:shadow-lg transition delay-150 duration-300 ease-in-out hover:scale-105 transform" href="/revisionDeIncidentes/{{this.id}}">
-
-                <div class="ml-2 mt-2 place-content-center col-span-12 md:col-span-1">
-                    <img src="/img/warning.png" alt="warning" class="h-6 w-6">
-                </div>
-
-                <div class="col-span-11 xl:-ml-5">
-                    <p class="text-indigo-500 p-1 font-semibold">generico}</p>
-                </div>
-
-                <div class="md:col-start-2 col-span-11 xl:-ml-5">
-                    <p class="text-sm text-gray-800 font-light"> borrar despues </p>
-                </div>
-
-            </a>
             <p class="text-red-700 text-center">No hay incidentes a revisar</p>
         {{/if}}
 

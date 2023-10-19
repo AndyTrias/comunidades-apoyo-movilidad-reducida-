@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const longitud = "-58.405303028930845"
-    const latitud = "-34.67391747003893"
-    //var longitud = document.querySelector('#longitud').innerHTML;
-    //var latitud = document.querySelector('#latitud').innerHTML;
+    //const longitud = "-58.405303028930845"
+    //const latitud = "-34.67391747003893"
+    var longitud = document.querySelector('#longitud').innerHTML;
+    var latitud = document.querySelector('#latitud').innerHTML;
     mapboxgl.accessToken = 'pk.eyJ1IjoiZ3JpY2NlbGxpIiwiYSI6ImNsbm02enBteTI1bTYybW1zcm42eWU5OXYifQ.LyEGBVsVDCzzhzNbdD32tg'; // Nuestro Token de acceso
     var map = new mapboxgl.Map({
         container: 'map', // id del contenedor
