@@ -1,5 +1,6 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.javalin.http.Context;
 import lombok.AllArgsConstructor;
 import models.comunidades.Comunidad;
@@ -49,12 +50,13 @@ public class ApiServicioController {
     public void rankingEntidades(Context ctx) {
         List<Entidad> entidades = repoEntidad.buscarTodos();
 
-        List<EntidadDTO> entidadesDTO = Mapper.mapEntidadesToEntidadesDTO(entidades);
+        List<EntidadDTO> entidadesDTO = Mapper.mapEntidadesToEntidadesDTO(entidades, repoComunidad);
         PayloadServicio3DTO payloadServicio3DTO = new PayloadServicio3DTO(entidadesDTO);
 
         try {
             PayloadServicio3DTO response = ApiServicio3.getInstancia().rankingEntidades(payloadServicio3DTO);
-            //TODO guardar en la db para la prox entrega
+            ObjectMapper mapper = new ObjectMapper();
+            ctx.result(mapper.writeValueAsString(response));
         } catch (Exception e) {
             e.printStackTrace();
         }

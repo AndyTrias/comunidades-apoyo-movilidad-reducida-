@@ -18,6 +18,7 @@ import java.util.List;
 public class Incidente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
     private Long id;
 
     @Getter

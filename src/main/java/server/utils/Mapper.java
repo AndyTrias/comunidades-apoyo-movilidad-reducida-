@@ -9,7 +9,9 @@ import models.external.retrofit.apiServicio1.responseClases.FusionDTO;
 import models.external.retrofit.apiServicio3.responseClases.EntidadDTO;
 import models.external.retrofit.apiServicio3.responseClases.IncidenteDTO;
 import models.incidentes.Incidente;
+import models.incidentes.IncidenteDeComunidad;
 import models.repositorios.RepoComunidad;
+import models.repositorios.RepoIncidenteDeComunidad;
 import models.repositorios.RepoMembresia;
 import models.repositorios.RepoPrestacion;
 
@@ -71,32 +73,38 @@ public class Mapper {
         return fusion;
     }
 
-    public static List<EntidadDTO> mapEntidadesToEntidadesDTO(List<Entidad> entidades) {
+    public static List<EntidadDTO> mapEntidadesToEntidadesDTO(List<Entidad> entidades, RepoComunidad repoComunidad) {
         List<EntidadDTO> entidadesDTO = new ArrayList<>();
         for (Entidad e : entidades) {
-            entidadesDTO.add(mapEntidadToEntidadDTO(e));
+            entidadesDTO.add(mapEntidadToEntidadDTO(e, repoComunidad));
         }
         return entidadesDTO;
     }
 
-    public static EntidadDTO mapEntidadToEntidadDTO(Entidad e) {
+    public static EntidadDTO mapEntidadToEntidadDTO(Entidad e, RepoComunidad repoComunidad) {
         EntidadDTO entidadDTO = new EntidadDTO();
         entidadDTO.setId(Integer.parseInt(String.valueOf(e.getId())));
-        entidadDTO.setIncidentes(mapIncidentesToIncidentesDTO(e.getIncidentes()));
+        entidadDTO.setIncidentes(mapIncidentesToIncidentesDTO(e.getIncidentes(), repoComunidad));
         return entidadDTO;
     }
 
-    public static IncidenteDTO mapIncidenteToIncidenteDTO(Incidente i) {
+    public static IncidenteDTO mapIncidenteToIncidenteDTO(Incidente i, RepoComunidad repoComunidad) {
         IncidenteDTO incidenteDTO = new IncidenteDTO();
         incidenteDTO.setFechaApertura(DateTimeConversion.dateToLocalDateTime(i.getFechaDeApertura()).toString());
         incidenteDTO.setFechaCierre(DateTimeConversion.dateToLocalDateTime(i.calcularPromedioFechasCierre()).toString());
+        List<Comunidad> comunidadesConIncidente = repoComunidad.buscarTodosPorIncidente(i);
+        int cantidadDeAfectados = 0;
+        for (Comunidad c : comunidadesConIncidente) {
+            cantidadDeAfectados += c.getCantidadDeAfectados(i.getPrestacionDeServicio());
+        }
+        incidenteDTO.setMiembrosAfectados(cantidadDeAfectados);
         return incidenteDTO;
     }
 
-    public static List<IncidenteDTO> mapIncidentesToIncidentesDTO(List<Incidente> incidentes) {
+    public static List<IncidenteDTO> mapIncidentesToIncidentesDTO(List<Incidente> incidentes, RepoComunidad repoComunidad) {
         List<IncidenteDTO> incidentesDTO = new ArrayList<>();
         for (Incidente i : incidentes) {
-            incidentesDTO.add(mapIncidenteToIncidenteDTO(i));
+            incidentesDTO.add(mapIncidenteToIncidenteDTO(i, repoComunidad));
         }
         return incidentesDTO;
     }

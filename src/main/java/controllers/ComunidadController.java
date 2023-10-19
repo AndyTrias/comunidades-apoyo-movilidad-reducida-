@@ -14,10 +14,7 @@ import models.usuario.Usuario;
 import server.exceptions.EntidadNoExistenteException;
 import server.exceptions.PermisosInvalidosException;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @AllArgsConstructor
 public class ComunidadController extends BaseController {
@@ -73,7 +70,7 @@ public class ComunidadController extends BaseController {
     }
 
     Usuario usuario = usuarioLogueado(ctx);
-    if (usuario == null || !usuario.getMembresia(comunidad).getRol().tenesPermiso("agregar_servicio_de_interes")) {
+    if (usuario == null || !usuario.getMembresia(comunidad).get().getRol().tenesPermiso("agregar_servicio_de_interes")) {
       throw new PermisosInvalidosException("No tienes los permisos para agregar un servicio");
     }
 
@@ -109,7 +106,8 @@ public class ComunidadController extends BaseController {
     Map<String, Object> model = new HashMap<>();
     model.put("incidentes", comunidad.getIncidentes());
     model.put("comunidad", comunidad);
-    model.put("membresia", usuario.getMembresia(comunidad));
+    Optional<Membresia> membresia = usuario.getMembresia(comunidad);
+    model.put("membresia", membresia);
     model.put("estadisticas", comunidad.getEstadisticas());
     model.put("prestacionesNoPertenecenAComunidad", posiblesPrestacionesNuevas);
 
