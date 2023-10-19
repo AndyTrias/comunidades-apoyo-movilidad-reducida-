@@ -9,11 +9,17 @@ node "Client PC" {
 node "Servidor de Aplicacion" as server {
   
 node "Aplicacion" {
-  [Controller] as controller
+  node "Controller" {
+    [Router] as router
+    [Controladores] as controller
+    [Javalin] as javalin
+  }
   [Repositorios] as repos
-  [Javalin] as javalin
-  [Vistas] as vistas
-  node "Modelos" {
+  node "View" {
+    [Templates] as templates
+    [Handelbars] as handelbars
+  }
+  node "Model" {
     [Lógica de negocios] as negocios
     [Adapters] as adapters
   }
@@ -33,22 +39,27 @@ node "Servidor de Aplicacion" as server1 {
 }
 
 node "Servidor de Aplicacion" as server2 {
-  [ServicioRankings] as rankings  
+  [Servicio Rankings] as rankings  
 }
 
+node "Servidor de Aplicacion" as server3 {
+  [Servicio Fusión comununidades] as fusion  
+}
 
-
+retrofit --> fusion : API REST
 retrofit --> georef : API REST
 retrofit --> rankings : API REST
-Browser --> controller : HTTP
+Browser --> javalin : HTTP
+javalin --> router
 controller --> repos
-controller --> javalin
-controller --> vistas
+controller --> templates
+templates --> handelbars
 controller --> negocios : Uses
 negocios --> adapters
 repos --> hibernate
 hibernate --> db
 db --> Database
 adapters --> retrofit
+router --> controller
 
 @enduml
