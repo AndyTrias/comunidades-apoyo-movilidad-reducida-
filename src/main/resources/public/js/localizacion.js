@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+
     const longitud = document.getElementById("longitud").innerHTML
     const latitud = document.getElementById("latitud").innerHTML
 

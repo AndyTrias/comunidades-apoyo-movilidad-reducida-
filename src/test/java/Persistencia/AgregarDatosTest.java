@@ -9,6 +9,7 @@ import models.entidades.EntidadPrestadora;
 import models.entidades.Establecimiento;
 import models.entidades.OrganismoDeControl;
 import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
+import models.incidentes.Incidente;
 import models.localizacion.Localizacion;
 import models.localizacion.UbicacionExacta;
 import models.repositorios.*;
@@ -19,6 +20,7 @@ import models.servicios.PrestacionDeServicio;
 import models.servicios.Servicio;
 import models.usuario.Usuario;
 
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -37,6 +39,8 @@ public class AgregarDatosTest {
     private RepoOrganismoDeControl repoOrganismoDeControl;
     private RepoPrestacion repoPrestacion;
     private RepoRol repoRol;
+
+    private RepoIncidentes repoIncidentes;
 
     private Servicio banio;
     private Entidad lineaB;
@@ -63,6 +67,7 @@ public class AgregarDatosTest {
         repoOrganismoDeControl = new RepoOrganismoDeControl();
         repoPrestacion = new RepoPrestacion();
         repoRol = new RepoRol();
+        repoIncidentes = new RepoIncidentes();
 
         banio = new Servicio("baño");
         comunidad = new Comunidad("comunidad de baños del B");
@@ -182,13 +187,22 @@ public class AgregarDatosTest {
         repoComunidad.modificar(comunidad);
     }
 
-    /*
+
     @Order(9)
     @Test
     void agregarIncidenteARevisar(){
         Usuario usuario = repoUsuario.buscar(1L);
-        Comunidad comunidad = repoComunidad.buscar(1L);
 
+        PrestacionDeServicio banioMedrano1 = repoPrestacion.buscar(1L);
+        PrestacionDeServicio banioMedrano2 = repoPrestacion.buscar(2L);
+
+        PrestacionDeServicio prestacionDeServicio = repoPrestacion.buscar(1L);
+        Incidente incidente = new Incidente(usuario, "baño sucio", banioMedrano1, new Date());
+
+        repoIncidentes.agregar(incidente);
+
+        usuario.agregarRevisionDeIncidente(repoIncidentes.buscar(1L));
+        repoUsuario.modificar(usuario);
     }
-     */
+
 }
