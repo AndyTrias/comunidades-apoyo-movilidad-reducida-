@@ -15,10 +15,7 @@ import server.exceptions.EntidadNoExistenteException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @AllArgsConstructor
 public class IncidenteDeComunidadController extends BaseController{
@@ -57,7 +54,8 @@ public class IncidenteDeComunidadController extends BaseController{
 
     Incidente incidente = new Incidente(usuario, ctx.formParam("observaciones"), prestacion, formatearFecha(ctx.formParam("fechaDeApertura")));
     repoIncidente.agregar(incidente);
-    usuario.getComunidades().stream()
+    List<Comunidad> comunidades = usuario.getComunidades();
+    comunidades.stream()
             .filter(c -> c.getServiciosDeInteres().contains(prestacion))
             .forEach(c -> {
               c.abrirIncidente(incidente);
