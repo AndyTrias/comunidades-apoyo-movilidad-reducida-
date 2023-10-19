@@ -24,12 +24,12 @@ public class Entidad {
     private long id;
 
     @Getter
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     @JoinColumn(name = "entidad_id", nullable = false)
     private Set<Establecimiento> establecimientos;
 
     @Setter
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     private Localizacion localizacion;
 
     @Getter

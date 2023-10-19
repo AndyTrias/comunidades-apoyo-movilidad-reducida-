@@ -26,12 +26,12 @@ public class PrestacionDeServicio {
     private Servicio servicio;
 
     @Getter
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "prestacion_de_servicio_id")
     private List<Incidente> incidentes;
 
     @Getter
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     private UbicacionExacta ubicacionExacta;
 
     public PrestacionDeServicio(Servicio servicio, String nombre, UbicacionExacta ubicacionExacta) {

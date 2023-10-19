@@ -30,15 +30,15 @@ public class Comunidad {
     private String nombre;
 
     @Getter
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "comunidad")
+    @OneToMany(cascade = {CascadeType.REMOVE},  mappedBy = "comunidad")
     private List<Membresia> membresias;
 
     @Getter
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToMany(cascade = {CascadeType.MERGE})
     private Set<PrestacionDeServicio> serviciosDeInteres;
 
     @Getter
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, fetch = FetchType.EAGER)
     @JoinColumn(name = "comunidad_id")
     private List<IncidenteDeComunidad> incidentes;
 

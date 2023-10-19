@@ -22,7 +22,6 @@ public class Incidente {
     private Long id;
 
     @Getter
-
     @Column(name = "fecha_de_apertura")
     private Date fechaDeApertura;
 

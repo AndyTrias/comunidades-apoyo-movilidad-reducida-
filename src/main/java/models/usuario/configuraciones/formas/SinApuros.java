@@ -18,7 +18,7 @@ public class SinApuros extends EstrategiaDeNotificacion {
     @Column(name = "horario")
     private List<Date> horarios;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     private List<Notificacion> aNotificar;
 
     public SinApuros(Date horarioInicial){

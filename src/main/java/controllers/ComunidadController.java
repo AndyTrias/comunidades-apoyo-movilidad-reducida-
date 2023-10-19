@@ -95,8 +95,12 @@ public class ComunidadController extends BaseController {
 
   public void show(Context ctx) {
     Comunidad comunidad = obtenerComunidad(ctx.pathParam("id"));
-
     Usuario usuario = usuarioLogueado(ctx);
+
+    if (!usuario.getComunidades().contains(comunidad)) {
+      throw new PermisosInvalidosException("No tienes los permisos para ver esta comunidad");
+    }
+
     List<PrestacionDeServicio> posiblesPrestacionesNuevas = obtenerPrestacionesNuevas(comunidad);
 
     Map<String, Object> model = new HashMap<>();
