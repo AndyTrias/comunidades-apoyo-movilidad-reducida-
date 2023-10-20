@@ -1,9 +1,13 @@
-@startuml
+@startuml diagramaDeComponentes
 
 !define RECTANGLE class
 
 node "Client PC" {
   [Web Browser] as Browser
+}
+
+node "Client Mobile" {
+  [Mobile Browser] as MobileBrowser
 }
 
 node "Servidor de Aplicacion" as server {
@@ -12,9 +16,10 @@ node "Aplicacion" {
   node "Controller" {
     [Router] as router
     [Controladores] as controller
+    [Hibernate] as hibernate
     [Javalin] as javalin
+    [Repositorios] as repos
   }
-  [Repositorios] as repos
   node "View" {
     [Templates] as templates
     [Handelbars] as handelbars
@@ -22,9 +27,8 @@ node "Aplicacion" {
   node "Model" {
     [Lógica de negocios] as negocios
     [Adapters] as adapters
+    [Retrofit] as retrofit
   }
-  [Hibernate] as hibernate
-  [Retrofit] as retrofit
 }
 }
 
@@ -46,6 +50,8 @@ node "Servidor de Aplicacion" as server3 {
   [Servicio Fusión comununidades] as fusion  
 }
 
+
+MobileBrowser --> javalin : HTTP
 retrofit --> fusion : API REST
 retrofit --> georef : API REST
 retrofit --> rankings : API REST
