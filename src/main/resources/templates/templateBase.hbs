@@ -21,34 +21,25 @@
     {{/block}}
 </head>
 <body class="h-screen flex flex-col bg-gradient-to-l from-indigo-400 via-purple-500 to-cyan-500">
-
-{{#block "header"}}
-{{/block}}
 <div class="container mx-auto">
     <header>
         <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-                <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
-                         stroke-linejoin="round" stroke-width="2"
-                         class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
-                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-                    </svg>
-                    <a class="ml-3 text-xl" href="/">
-                        Monitoreo de Estado de Servicios
-                    </a>
+            <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
+                     stroke-linejoin="round" stroke-width="2"
+                     class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                </svg>
+                <a class="ml-3 text-xl" href="/">
+                    Monitoreo de Estado de Servicios
                 </a>
-
-            {{#if administrador}}
-
-            {{else if entidadPrestadora}}
-
-
-            {{else if organismoDeControl}}
-
-            {{else if notlogged}}
-
-            {{else}}
-                <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
+            </a>
+            <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
+                {{#if administrador}}
+                {{else if entidadPrestadora}}
+                {{else if organismoDeControl}}
+                {{else if notlogged}}
+                {{else}}
                     <a class="mr-5 text-white hover:text-gray-900" href="/comunidades">
                         Comunidades
                     </a>
@@ -58,12 +49,14 @@
                     <a class="mr-5 text-white hover:text-gray-900" href="/perfil">
                         Perfil
                     </a>
-                </nav>
-                <a href="/logout"
-                   class="flex flex-col justify-center items-center bg-red-400 border-0 py-1 px-3 focus:outline-none hover:bg-red-600 rounded text-base mt-4 md:mt-0 w-20 h-8">
-                    <i class="fas fa-sign-out-alt text-white"></i>
-                </a>
-            {{/if}}
+                {{/if}}
+                {{#unless notlogged}}
+                    <a href="/logout"
+                       class="flex flex-col justify-center items-center bg-red-400 border-0 py-1 px-3 focus:outline-none hover:bg-red-600 rounded ml-auto text-base mt-4 md:mt-0 w-20 h-8">
+                        <i class="fas fa-sign-out-alt text-white"></i>
+                    </a>
+                {{/unless}}
+            </nav>
         </div>
     </header>
 

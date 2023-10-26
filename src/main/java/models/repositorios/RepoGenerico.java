@@ -29,6 +29,8 @@ public abstract class RepoGenerico<T> implements WithSimplePersistenceUnit {
         beginTransaction();
         remove(entidad);
         commitTransaction();
+
+
     }
 
     public T buscar(Long id) {
@@ -39,5 +41,9 @@ public abstract class RepoGenerico<T> implements WithSimplePersistenceUnit {
         return entityManager()
                 .createQuery("select e from " + entityClass.getSimpleName() + " e", entityClass)
                 .getResultList();
+
+
     }
+
+
 }

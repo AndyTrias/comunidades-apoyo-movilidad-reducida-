@@ -13,6 +13,7 @@ import javax.persistence.*;
 public class Afectacion {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Getter
   private Long id;
 
   @Getter

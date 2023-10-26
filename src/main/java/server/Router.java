@@ -1,20 +1,16 @@
 package server;
 
-
 import controllers.*;
 import controllers.factories.FactoryController;
 import controllers.factories.HomeController;
 import io.javalin.Javalin;
-import io.javalin.apibuilder.ApiBuilder;
 import models.comunidades.TipoRol;
 import server.exceptions.*;
 
 
-public class Router {
+import static io.javalin.apibuilder.ApiBuilder.path;
 
-  private static <T> T controller(String name) {
-    return (T) FactoryController.controller(name);
-  }
+public class Router {
 
   public static void init() {
     Javalin app = Server.app();
@@ -27,75 +23,65 @@ public class Router {
       throw new ServerErrorException("F");
     });
 
-    app.get("/", ctx -> {
-      HomeController homeController = controller("Home");
-      homeController.index(ctx);
-    });
-
+    app.get("/", ((HomeController) FactoryController.controller("Home"))::index);
 
     app.routes(() -> {
-      ApiBuilder.path("comunidades/", () -> {
-        ComunidadController comunidadController = controller("Comunidad");
-        ApiBuilder.get(comunidadController::index);
-        ApiBuilder.get("create", comunidadController::create);
-        ApiBuilder.post(comunidadController::save);
-        ApiBuilder.post("unirse", comunidadController::unir);
-        ApiBuilder.path("{id}", () -> {
-          ApiBuilder.get(comunidadController::show);
-          ApiBuilder.post("prestacion", comunidadController::agregarPrestacion);
-          ApiBuilder.path("incidentes", () -> {
-            IncidenteDeComunidadController incidenteController = controller("Incidente de comunidad");
-            ApiBuilder.get("create", incidenteController::create);
-            ApiBuilder.get("{id_incidente}", incidenteController::show);
-            ApiBuilder.post(incidenteController::save);
-            ApiBuilder.post("{id_incidente}/cerrar", incidenteController::cerrarIncidente);
-          });
-        });
-      });
 
-      ApiBuilder.path("", () -> {
-        AuthController authController = controller("Auth");
-        ApiBuilder.get("login", authController::showLogin);
-        ApiBuilder.get("logout", authController::logout);
-        ApiBuilder.get("register", authController::showRegister);
-        ApiBuilder.post("login", authController::login);
-        ApiBuilder.post("register", authController::register);
-      });
+      app.get("comunidades/create", ((ComunidadController) FactoryController.controller("Comunidad"))::create);
+      app.get("comunidades", ((ComunidadController) FactoryController.controller("Comunidad"))::index);
+      app.post("comunidades", ((ComunidadController) FactoryController.controller("Comunidad"))::save);
 
-      ApiBuilder.path("cargaMasiva/", () -> {
-        CargaMasivaController cargaMasivaController = controller("Carga masiva");
-        ApiBuilder.get(cargaMasivaController::show);
-        ApiBuilder.post(cargaMasivaController::cargaMasiva);
-      });
+      app.post("comunidades/unirse", ((ComunidadController) FactoryController.controller("Comunidad"))::unir);
 
-      ApiBuilder.path("revisionDeIncidentes/", () -> {
-        RevisionDeIncidenteController revisionController = controller("Revision de incidentes");
-        ApiBuilder.post(revisionController::postUbicacionExacta);
-        ApiBuilder.get(revisionController::show);
-        ApiBuilder.get("{id}", revisionController::showIncidente);
-        ApiBuilder.post("{id}", revisionController::resolucionDeIncidente);
-      });
+      app.post("comunidades/{id}/prestacion", ((ComunidadController) FactoryController.controller("Comunidad"))::agregarPrestacion);
+      app.get("comunidades/{id}/prestacion", ((ComunidadController) FactoryController.controller("Comunidad"))::mostrarPrestaciones);
 
-      ApiBuilder.path("sugerenciaDeFusion/", () -> {
-        ApiServicioController apiServicioController = controller("Sugerencia de fusion");
-        ApiBuilder.post(apiServicioController::fusionDeComunidades);
-        ApiBuilder.post("rankingEntidades", apiServicioController::rankingEntidades);
-      });
+      app.get("comunidades/{id}", ((ComunidadController) FactoryController.controller("Comunidad"))::show);
+      path("comunidades/{id}/incidentes", () -> {
+        app.get("comunidades/{id}/incidentes/create", ((IncidenteDeComunidadController) FactoryController.controller("Incidente de comunidad"))::create);
+        app.get("comunidades/{id}/incidentes/{id_incidente}", ((IncidenteDeComunidadController) FactoryController.controller("Incidente de comunidad"))::show);
+        app.post("comunidades/{id}/incidentes", ((IncidenteDeComunidadController) FactoryController.controller("Incidente de comunidad"))::save);
+        app.post("comunidades/{id}/incidentes/{id_incidente}/cerrar", ((IncidenteDeComunidadController) FactoryController.controller("Incidente de comunidad"))::cerrarIncidente);
 
-      ApiBuilder.path("admin/", () -> {
-        AdminController adminController = controller("Administrador de plataforma");
-        ApiBuilder.get(adminController::show, TipoRol.ADMINISTRADOR_PLATAFORMA);
-        ApiBuilder.post("entidad", adminController::guardarEntidad, TipoRol.ADMINISTRADOR_PLATAFORMA);
-        ApiBuilder.post("establecimiento", adminController::guardarEstablecimiento, TipoRol.ADMINISTRADOR_PLATAFORMA);
-        ApiBuilder.post("servicio", adminController::guardarServicio, TipoRol.ADMINISTRADOR_PLATAFORMA);
-        ApiBuilder.post("prestacion", adminController::guardarPrestacion, TipoRol.ADMINISTRADOR_PLATAFORMA);
       });
+    });
 
-      ApiBuilder.path("perfil/", () -> {
-        PerfilController perfilController = controller("Perfil");
-        ApiBuilder.get(perfilController::index);
-        ApiBuilder.post(perfilController::save);
-      });
+    app.routes(() -> {
+      app.get("login", ((AuthController) FactoryController.controller("Auth"))::showLogin);
+      app.get("logout", ((AuthController) FactoryController.controller("Auth"))::logout);
+      app.get("register", ((AuthController) FactoryController.controller("Auth"))::showRegister);
+      app.post("login", ((AuthController) FactoryController.controller("Auth"))::login);
+      app.post("register", ((AuthController) FactoryController.controller("Auth"))::register);
+    });
+
+    app.routes(() -> {
+      app.get("cargaMasiva", ((CargaMasivaController) FactoryController.controller("Carga masiva"))::show);
+      app.post("cargaMasiva", ((CargaMasivaController) FactoryController.controller("Carga masiva"))::cargaMasiva);
+    });
+
+    app.routes(() -> {
+      app.post("revisionDeIncidentes", ((RevisionDeIncidenteController) FactoryController.controller("Revision de incidentes"))::postUbicacionExacta);
+      app.get("revisionDeIncidentes", ((RevisionDeIncidenteController) FactoryController.controller("Revision de incidentes"))::show);
+      app.get("revisionDeIncidentes/{id}", ((RevisionDeIncidenteController) FactoryController.controller("Revision de incidentes"))::showIncidente);
+      app.post("revisionDeIncidentes/{id}", ((RevisionDeIncidenteController) FactoryController.controller("Revision de incidentes"))::resolucionDeIncidente);
+    });
+
+    app.routes(() -> {
+      app.post("sugerenciaDeFusion", ((ApiServicioController) FactoryController.controller("Sugerencia de fusion"))::fusionDeComunidades);
+      app.post("rankingEntidades", ((ApiServicioController) FactoryController.controller("Sugerencia de fusion"))::rankingEntidades);
+    });
+
+    app.routes(() -> {
+      app.get("admin", ((AdminController) FactoryController.controller("Administrador de plataforma"))::show, TipoRol.ADMINISTRADOR_PLATAFORMA);
+      app.post("admin/entidad", ((AdminController) FactoryController.controller("Administrador de plataforma"))::guardarEntidad, TipoRol.ADMINISTRADOR_PLATAFORMA);
+      app.post("admin/establecimiento", ((AdminController) FactoryController.controller("Administrador de plataforma"))::guardarEstablecimiento, TipoRol.ADMINISTRADOR_PLATAFORMA);
+      app.post("admin/servicio", ((AdminController) FactoryController.controller("Administrador de plataforma"))::guardarServicio, TipoRol.ADMINISTRADOR_PLATAFORMA);
+      app.post("admin/prestacion", ((AdminController) FactoryController.controller("Administrador de plataforma"))::guardarPrestacion, TipoRol.ADMINISTRADOR_PLATAFORMA);
+    });
+
+    app.routes(() -> {
+      app.get("perfil", ((PerfilController) FactoryController.controller("Perfil"))::index);
+      app.post("perfil", ((PerfilController) FactoryController.controller("Perfil"))::save);
     });
 
     app.exception(CredencialesInvalidaException.class, ExceptionHandler::handleInvalidCredentials);
@@ -103,6 +89,7 @@ public class Router {
     app.exception(EntidadNoExistenteException.class, ExceptionHandler::handleEntidadNoExistente);
     app.exception(PaginaNoEncontradaException.class, ExceptionHandler::handlePaginaNoEncontrada);
     app.exception(ServerErrorException.class, ExceptionHandler::handleServerException);
+
   }
 }
 

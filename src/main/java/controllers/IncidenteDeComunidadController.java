@@ -45,7 +45,7 @@ public class IncidenteDeComunidadController extends BaseController{
       throw new EntidadNoExistenteException("No existe esa prestacion");
     }
 
-    Incidente incidente = new Incidente(usuario, ctx.formParam("observaciones"), prestacion, formatearFecha(ctx.formParam("fechaDeApertura")));
+    Incidente incidente = new Incidente(usuario, ctx.formParam("observaciones"), prestacion, new Date());
     repoIncidente.agregar(incidente);
     List<Comunidad> comunidades = usuario.getComunidades();
     comunidades.stream()
@@ -83,13 +83,6 @@ public class IncidenteDeComunidadController extends BaseController{
     ctx.render("comunidades/aperturaIncidente.hbs", model);
   }
 
-
-  private Date formatearFecha(String fecha) {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-    LocalDateTime fechaDeApertura = LocalDateTime.parse(fecha, formatter);
-    Timestamp timestamp = Timestamp.valueOf(fechaDeApertura);
-    return new Date(timestamp.getTime());
-  }
 
   private Comunidad obtenerComunidadConUsuario(Context ctx, String id) {
     Comunidad comunidad = obtenerComunidad(id);

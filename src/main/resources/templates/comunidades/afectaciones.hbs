@@ -1,0 +1,30 @@
+{{#partial "contenido"}}
+    <h1 class="text-2xl font-bold mb-4">Select Your Role for Each Item</h1>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {{#each afectaciones}}
+        <div class="bg-white p-4 rounded-lg shadow-md">
+            <h2 class="text-lg font-semibold">{{this.prestacion.nombre}}</h2>
+            <div class="mt-2">
+                <label for="{{this.id}}" class="flex items-center space-x-2 cursor-pointer">
+                    <div class="text-gray-700 font-semibold text-lg">
+                        <i class="far fa-eye text-blue-500"></i> Observador
+                    </div>
+                    <div>
+                        <input type="checkbox" id="{{this.id}}" name="{{this.id}}" class="hidden" {{#if this.afectado}}checked{{/if}}>
+                        <div class="relative w-14 h-8 bg-gray-300 rounded-full">
+                            <div class="w-6 h-6 bg-white rounded-full shadow-md transform translate-x-0 transition-transform"></div>
+                        </div>
+                    </div>
+                    <div class="text-gray-700 font-semibold text-lg">
+                        <i class="fas fa-exclamation-triangle text-red-500"></i> Afectado
+                    </div>
+                </label>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+{{/partial}}
+{{#partial "agregarScript"}}
+    <script src="/js/afectaciones.js"></script>
+{{/partial}}
+{{>templates/templateBase}}
