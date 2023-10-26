@@ -22,10 +22,22 @@
 </head>
 <body class="h-screen flex flex-col bg-gradient-to-l from-indigo-400 via-purple-500 to-cyan-500">
 
-{{#block "auth"}}
-    <div class="container mx-auto">
-        <header class="text-gray-600 body-font">
-            <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+{{#block "header"}}
+{{/block}}
+<div class="container mx-auto">
+    <header>
+        <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+
+            {{#if administrador}}
+
+            {{else if entidadPrestadora}}
+
+
+            {{else if organismoDeControl}}
+
+            {{else if notlogged}}
+
+            {{else}}
                 <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
                          stroke-linejoin="round" stroke-width="2"
@@ -51,45 +63,36 @@
                    class="flex flex-col justify-center items-center bg-red-400 border-0 py-1 px-3 focus:outline-none hover:bg-red-600 rounded text-base mt-4 md:mt-0 w-20 h-8">
                     <i class="fas fa-sign-out-alt text-white"></i>
                 </a>
-            </div>
-        </header>
+            {{/if}}
+        </div>
+    </header>
 
-        <main class="mb-auto p-10">
-            {{#block "contenido"}}
-            {{/block}}
-        </main>
-    </div>
+    {{#block "contenido"}}
+    {{/block}}
+</div>
 
 
-    <footer class="text-gray-600 body-font mt-auto">
-        <div class="container p-5 mx-auto flex items-center sm:flex-row flex-col">
-            <a class="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
-                     stroke-linejoin="round" stroke-width="2"
-                     class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
-                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-                </svg>
-                <span class="ml-3 text-xl">
+<footer class="text-gray-600 body-font mt-auto">
+    <div class="container p-5 mx-auto flex items-center sm:flex-row flex-col">
+        <a class="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
+                 stroke-linejoin="round" stroke-width="2"
+                 class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+            </svg>
+            <span class="ml-3 text-xl">
             Monitoreo de Estado de Servicios
           </span>
-            </a>
-            <p class="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">©
-                2023 Diseño de Sistemas UTN —
-                <a href="https://github.com/dds-utn/2023-tpa-mama-grupo-06" class="text-gray-600 ml-1"
-                   rel="noopener noreferrer" target="_blank">Github</a>
-            </p>
-        </div>
-    </footer>
+        </a>
+        <p class="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">©
+            2023 Diseño de Sistemas UTN —
+            <a href="https://github.com/dds-utn/2023-tpa-mama-grupo-06" class="text-gray-600 ml-1"
+               rel="noopener noreferrer" target="_blank">Github</a>
+        </p>
+    </div>
+</footer>
 
-    {{#block "agregarScript"}}
-
-    {{/block}}
-
-    {{#block "exceptions"}}
-    {{/block}}
-
+{{#block "agregarScript"}}
 {{/block}}
-
-
 </body>
 </html>

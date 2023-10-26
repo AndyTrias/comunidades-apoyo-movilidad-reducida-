@@ -194,9 +194,7 @@ public class AgregarDatosTest {
         Usuario usuario = repoUsuario.buscar(1L);
 
         PrestacionDeServicio banioMedrano1 = repoPrestacion.buscar(1L);
-        PrestacionDeServicio banioMedrano2 = repoPrestacion.buscar(2L);
 
-        PrestacionDeServicio prestacionDeServicio = repoPrestacion.buscar(1L);
         Incidente incidente = new Incidente(usuario, "baño sucio", banioMedrano1, new Date());
 
         repoIncidentes.agregar(incidente);

@@ -47,6 +47,8 @@ public class FactoryController {
             new RepoUsuario()
       );
 
+      case "Home" -> new HomeController();
+
 
       default -> null;
     };

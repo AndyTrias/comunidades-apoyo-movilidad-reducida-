@@ -70,7 +70,7 @@ public class ComunidadController extends BaseController {
     }
 
     Usuario usuario = usuarioLogueado(ctx);
-    if (usuario == null || !usuario.getMembresia(comunidad).get().getRol().tenesPermiso("agregar_servicio_de_interes")) {
+    if (usuario == null || !usuario.getMembresia(comunidad).getRol().tenesPermiso("agregar_servicio_de_interes")) {
       throw new PermisosInvalidosException("No tienes los permisos para agregar un servicio");
     }
 
@@ -106,7 +106,7 @@ public class ComunidadController extends BaseController {
     Map<String, Object> model = new HashMap<>();
     model.put("incidentes", comunidad.getIncidentes());
     model.put("comunidad", comunidad);
-    Optional<Membresia> membresia = usuario.getMembresia(comunidad);
+    Membresia membresia = usuario.getMembresia(comunidad);
     model.put("membresia", membresia);
     model.put("estadisticas", comunidad.getEstadisticas());
     model.put("prestacionesNoPertenecenAComunidad", posiblesPrestacionesNuevas);

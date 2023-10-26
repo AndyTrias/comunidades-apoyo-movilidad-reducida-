@@ -133,9 +133,13 @@ public class Usuario {
         return membresias.stream().map(Membresia::getComunidad).toList();
     }
 
-    public Optional<Membresia> getMembresia(Comunidad comunidad){
-        return membresias.stream().filter(m -> m.getComunidad().getId().equals(comunidad.getId())).findFirst();
+    public Membresia getMembresia(Comunidad comunidad) {
+        return membresias.stream()
+            .filter(m -> m.getComunidad().equals(comunidad))
+            .findFirst()
+            .orElse(null);
     }
+
 
     public void notificar(Notificacion notificacion) {
         configuracionDeNotificaciones.notificar(notificacion);

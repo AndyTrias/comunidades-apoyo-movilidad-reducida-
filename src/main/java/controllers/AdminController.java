@@ -41,6 +41,7 @@ public class AdminController extends BaseController {
     model.put("entidades", repoEntidad.buscarTodos());
     model.put("servicios", repoServicio.buscarTodos());
     model.put("establecimientos", repoEstablecimiento.buscarTodos());
+    model.put("administrador", true);
 
     ctx.render("admin/admin.hbs", model);
   }

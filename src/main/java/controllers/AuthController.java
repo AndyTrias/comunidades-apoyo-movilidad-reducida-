@@ -8,14 +8,24 @@ import models.repositorios.RepoUsuario;
 import models.usuario.Usuario;
 import server.exceptions.CredencialesInvalidaException;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @AllArgsConstructor
 public class AuthController {
     private RepoUsuario repoUsuario;
 
     public void showLogin(Context ctx) {
-        ctx.render("auth/login.hbs");
+        Map<String, Object> model = new HashMap<>();
+        model.put("notlogged", true);
+        ctx.render("auth/login.hbs", model);
+
     }
-    public void showRegister(Context ctx) {ctx.render("auth/register.hbs"); }
+    public void showRegister(Context ctx) {
+        Map<String, Object> model = new HashMap<>();
+        model.put("notlogged", true);
+        ctx.render("auth/register.hbs", model);
+    }
 
     public void login(Context ctx) {
         String email = ctx.formParam("email");
