@@ -13,9 +13,17 @@ public class HomeController extends BaseController {
 
 
     switch (usuario.getRol().getTipoRol()) {
-      case MIEMBRO, ENTIDAD_PRESTADORA, ORGANISMO_DE_CONTROL -> ctx.render("home.hbs");
+      case MIEMBRO -> ctx.render("home.hbs");
       case ADMINISTRADOR_PLATAFORMA -> {
-        ctx.redirect("/admin");
+       ctx.redirect("/admin");
+      }
+
+      case ENTIDAD_PRESTADORA -> {
+        ctx.redirect("/entidadPrestadora");
+      }
+
+      case ORGANISMO_DE_CONTROL -> {
+        ctx.redirect("/organismoDeControl");
       }
     }
 

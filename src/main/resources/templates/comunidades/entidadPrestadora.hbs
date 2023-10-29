@@ -1,8 +1,8 @@
 {{#partial "contenido"}}
     <div class="flex md:flex-row flex-col h-full items-center gap-10 justify-center">
         <div class="card-container">
-            <a class="card" href="/comunidades">
-                <h3 class="text-white text-2xl font-bold">Comunidades</h3><br>
+            <a class="card" href="/establecimientos/{{this.id}}">
+                <h3 class="text-white text-2xl font-bold">Establecimientos</h3><br>
                 <div class="layers">
                     <div class="layer"></div>
                     <div class="layer"></div>
@@ -19,8 +19,8 @@
         </div>
 
         <div class="card-container">
-            <a class="card" href="/revisionDeIncidentes">
-                <h3 class="text-white text-2xl font-bold">Revision de Incidentes</h3><br>
+            <a class="card" href="/cargaManual">
+                <h3 class="text-white text-2xl font-bold">Carga Manual</h3><br>
                 <div class="layers">
                     <div class="layer"></div>
                     <div class="layer"></div>
@@ -37,8 +37,8 @@
         </div>
 
         <div class="card-container">
-            <a class="card" href="/perfil">
-                <h3 class="text-white text-2xl font-bold">Perfil</h3><br>
+            <a class="card" href="/cargaMasiva">
+                <h3 class="text-white text-2xl font-bold">Carga Masiva</h3><br>
                 <div class="layers">
                     <div class="layer"></div>
                     <div class="layer"></div>
@@ -55,5 +55,6 @@
         </div>
     </div>
 
+    {{> templates/templateBase }}
+
 {{/partial}}
-{{> templates/templateBase }}
