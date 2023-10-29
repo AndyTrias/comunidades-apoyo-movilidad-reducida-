@@ -34,7 +34,8 @@ public class Initializer implements WithSimplePersistenceUnit {
         {"Crear servicio", "crear_servicio"},
         {"Crear Entidad", "crear_entidad"},
         {"Crear Prestacion", "crear_prestacion"},
-        {"Agregar Servicio de Interes", "agregar_servicio_de_interes"}
+        {"Agregar Servicio de Interes", "agregar_servicio_de_interes"},
+        {"Afectar Prestacion", "afectar_prestaciones"}
     };
 
     for (String[] unPermiso : permisos) {
@@ -71,10 +72,12 @@ public class Initializer implements WithSimplePersistenceUnit {
     );
     entityManager().persist(administrador);
 
-    Rol consumidor = new Rol();
-    consumidor.setNombre("Miembro");
-    consumidor.setTipoRol(TipoRol.MIEMBRO);
-    entityManager().persist(consumidor);
+    Rol miembro = new Rol();
+    miembro.setNombre("Miembro");
+    miembro.setTipoRol(TipoRol.MIEMBRO);
+    miembro.agregarPermisos(
+        buscadorDePermisos.buscarPermisoPorNombre("afectar_prestaciones"));
+    entityManager().persist(miembro);
 
     Rol prestador = new Rol();
     prestador.setNombre("Administrador de Comunidad");

@@ -5,6 +5,7 @@ import controllers.factories.FactoryController;
 import controllers.factories.HomeController;
 import io.javalin.Javalin;
 import models.comunidades.TipoRol;
+import org.hsqldb.SessionManager;
 import server.exceptions.*;
 
 
@@ -34,7 +35,8 @@ public class Router {
       app.post("comunidades/unirse", ((ComunidadController) FactoryController.controller("Comunidad"))::unir);
 
       app.post("comunidades/{id}/prestacion", ((ComunidadController) FactoryController.controller("Comunidad"))::agregarPrestacion);
-      app.get("comunidades/{id}/prestacion", ((ComunidadController) FactoryController.controller("Comunidad"))::mostrarPrestaciones);
+      app.get("comunidades/{id}/prestaciones", ((ComunidadController) FactoryController.controller("Comunidad"))::mostrarPrestaciones);
+      app.post("comunidades/{id}/prestaciones", ((ComunidadController) FactoryController.controller("Comunidad"))::afectarPrestaciones);
 
       app.get("comunidades/{id}", ((ComunidadController) FactoryController.controller("Comunidad"))::show);
       path("comunidades/{id}/incidentes", () -> {
@@ -89,6 +91,7 @@ public class Router {
     app.exception(EntidadNoExistenteException.class, ExceptionHandler::handleEntidadNoExistente);
     app.exception(PaginaNoEncontradaException.class, ExceptionHandler::handlePaginaNoEncontrada);
     app.exception(ServerErrorException.class, ExceptionHandler::handleServerException);
+
 
   }
 }
