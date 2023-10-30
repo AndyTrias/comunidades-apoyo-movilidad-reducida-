@@ -1,11 +1,10 @@
-package controllers.factories;
+package controllers;
 
 import controllers.BaseController;
 import io.javalin.http.Context;
 import models.usuario.Usuario;
 
-import java.util.HashMap;
-import java.util.Map;
+
 
 public class HomeController extends BaseController {
   public void index(Context ctx) {

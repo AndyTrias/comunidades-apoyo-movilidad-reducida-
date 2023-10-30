@@ -2,10 +2,9 @@ package server;
 
 import controllers.*;
 import controllers.factories.FactoryController;
-import controllers.factories.HomeController;
+import controllers.HomeController;
 import io.javalin.Javalin;
 import models.comunidades.TipoRol;
-import org.hsqldb.SessionManager;
 import server.exceptions.*;
 
 
@@ -57,11 +56,6 @@ public class Router {
     });
 
     app.routes(() -> {
-      app.get("cargaMasiva", ((CargaMasivaController) FactoryController.controller("Carga masiva"))::show);
-      app.post("cargaMasiva", ((CargaMasivaController) FactoryController.controller("Carga masiva"))::cargaMasiva);
-    });
-
-    app.routes(() -> {
       app.post("revisionDeIncidentes", ((RevisionDeIncidenteController) FactoryController.controller("Revision de incidentes"))::postUbicacionExacta);
       app.get("revisionDeIncidentes", ((RevisionDeIncidenteController) FactoryController.controller("Revision de incidentes"))::show);
       app.get("revisionDeIncidentes/{id}", ((RevisionDeIncidenteController) FactoryController.controller("Revision de incidentes"))::showIncidente);
@@ -75,6 +69,9 @@ public class Router {
 
     app.routes(() -> {
       app.get("admin", ((AdminController) FactoryController.controller("Administrador de plataforma"))::show, TipoRol.ADMINISTRADOR_PLATAFORMA);
+      app.get("admin/cargaMasiva", ((CargaMasivaController) FactoryController.controller("Carga masiva"))::show);
+      app.post("admin/cargaMasiva", ((CargaMasivaController) FactoryController.controller("Carga masiva"))::cargaMasiva);
+      app.get("admin/cargaManual", ((AdminController) FactoryController.controller("Administrador de plataforma"))::cargaManual, TipoRol.ADMINISTRADOR_PLATAFORMA);
       app.post("admin/entidad", ((AdminController) FactoryController.controller("Administrador de plataforma"))::guardarEntidad, TipoRol.ADMINISTRADOR_PLATAFORMA);
       app.post("admin/establecimiento", ((AdminController) FactoryController.controller("Administrador de plataforma"))::guardarEstablecimiento, TipoRol.ADMINISTRADOR_PLATAFORMA);
       app.post("admin/servicio", ((AdminController) FactoryController.controller("Administrador de plataforma"))::guardarServicio, TipoRol.ADMINISTRADOR_PLATAFORMA);

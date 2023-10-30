@@ -1,6 +1,7 @@
 package controllers.factories;
 
 import controllers.*;
+import models.entidades.EntidadPrestadora;
 import models.repositorios.*;
 
 public class FactoryController {
@@ -40,7 +41,8 @@ public class FactoryController {
       case "Administrador de plataforma" -> new AdminController(
           new RepoServicio(),
           new RepoEntidad(),
-          new RepoEstablecimiento()
+          new RepoEstablecimiento(),
+          new RepoEntidadPrestadora()
       );
 
       case "Perfil" -> new PerfilController(

@@ -2,12 +2,14 @@ package controllers;
 
 import io.javalin.http.Context;
 
-import models.comunidades.TipoRol;
+import lombok.AllArgsConstructor;
 import models.entidades.Entidad;
+import models.entidades.EntidadPrestadora;
 import models.entidades.Establecimiento;
 import models.localizacion.Localizacion;
 import models.localizacion.UbicacionExacta;
 import models.repositorios.RepoEntidad;
+import models.repositorios.RepoEntidadPrestadora;
 import models.repositorios.RepoEstablecimiento;
 import models.repositorios.RepoServicio;
 import models.servicios.PrestacionDeServicio;
@@ -17,32 +19,33 @@ import server.exceptions.EntidadNoExistenteException;
 import server.exceptions.PermisosInvalidosException;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+@AllArgsConstructor
 public class AdminController extends BaseController {
 
   private RepoServicio repoServicio;
   private RepoEntidad repoEntidad;
   private RepoEstablecimiento repoEstablecimiento;
+  private RepoEntidadPrestadora repoEntidadPrestadora;
 
-  public AdminController(RepoServicio repoServicio, RepoEntidad repoEntidad, RepoEstablecimiento repoEstablecimiento) {
-    this.repoServicio = repoServicio;
-    this.repoEntidad = repoEntidad;
-    this.repoEstablecimiento = repoEstablecimiento;
-  }
 
-  public void show(Context ctx) {
+  public void cargaManual(Context ctx) {
     Map<String, Object> model = new HashMap<>();
-    List<Entidad> entidades = repoEntidad.buscarTodos();
-    System.out.println(entidades);
 
     model.put("entidades", repoEntidad.buscarTodos());
     model.put("servicios", repoServicio.buscarTodos());
     model.put("establecimientos", repoEstablecimiento.buscarTodos());
+    model.put("prestadoras", repoEntidadPrestadora.buscarTodos());
     model.put("administrador", true);
 
+    ctx.render("admin/cargaManual.hbs", model);
+  }
+
+  public void show(Context ctx) {
+    Map<String, Object> model = new HashMap<>();
+    model.put("administrador", true);
     ctx.render("admin/admin.hbs", model);
   }
 
@@ -65,8 +68,11 @@ public class AdminController extends BaseController {
     if (usuario == null || !usuario.getRol().tenesPermiso("crear_entidad")) {
       throw new PermisosInvalidosException("No tienes permisos para crear un entidad");
     }
+
+    EntidadPrestadora entidadPrestadora = repoEntidadPrestadora.buscar(Long.valueOf(ctx.formParam("prestadora")));
     Entidad entidad = new Entidad(ctx.formParam("nombre"), new Localizacion());
-    repoEntidad.agregar(entidad);
+    entidadPrestadora.agregarEntidad(entidad);
+    repoEntidadPrestadora.modificar(entidadPrestadora);
     ctx.redirect("/admin");
   }
 
