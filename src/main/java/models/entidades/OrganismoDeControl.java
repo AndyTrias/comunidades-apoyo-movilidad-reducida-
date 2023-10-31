@@ -24,6 +24,7 @@ import javax.persistence.Transient;
 public class OrganismoDeControl {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
     private Long id;
 
     @Getter

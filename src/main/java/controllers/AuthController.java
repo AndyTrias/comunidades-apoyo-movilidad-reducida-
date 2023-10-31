@@ -130,7 +130,7 @@ public class AuthController {
 
         Usuario usuario = new Usuario(organismoDeControl.getNombre(), "", email);
         usuario.setContrasenia(password);
-        usuario.setRol(repoRol.buscarPorNombre(TipoRol.ENTIDAD_PRESTADORA));
+        usuario.setRol(repoRol.buscarPorNombre(TipoRol.ORGANISMO_DE_CONTROL));
         repoUsuario.agregar(usuario);
 
         ctx.redirect("/admin/usuarios");
