@@ -4,6 +4,7 @@ import models.comunidades.Comunidad;
 import models.entidades.Entidad;
 import lombok.Setter;
 
+import java.util.Date;
 import java.util.List;
 
 public class Exportador {

@@ -49,6 +49,8 @@ public class FactoryController {
 
       case "Home" -> new HomeController();
 
+      case "Informe" -> new RepoInformes();
+
 
       default -> null;
     };
