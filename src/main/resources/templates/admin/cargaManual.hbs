@@ -13,16 +13,18 @@
                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     required>
                 <option selected disabled hidden>Seleccionar prestadora</option>
-                {{#each prestadora}}
+                {{#each prestadoras}}
                     <option value="{{this.id}}">{{this.nombre}}</option>
                 {{/each}}
             </select>
         </div>
         <div class="mb-4">
-            <label for="provincia" class="block text-gray-700 text-sm font-bold mb-2">Provincia</label>
+            <label for="provincia" class="block text-sm font-bold mb-2">Provincia</label>
             <select required id="provincia" name="provincia"
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    required>
+                    class="shadow border rounded w-full py-2 px-3 focus:outline-none focus:shadow-outline"
+                    required
+                onchange="getLocalidades(this.value)">
+            >
                 <option selected disabled hidden>Seleccionar Provincia</option>
                 {{#each provincias}}
                     <option value="{{this.id}}">{{this.nombre}}</option>
@@ -35,7 +37,7 @@
                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     required>
                 <option selected disabled hidden>Seleccionar localidad</option>
-                {{#each localidad}}
+                {{#each localidades}}
                     <option value="{{this.id}}">{{this.nombre}}</option>
                 {{/each}}
             </select>

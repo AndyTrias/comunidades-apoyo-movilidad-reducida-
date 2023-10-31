@@ -25,11 +25,15 @@ public class Georef extends ApiCaller {
         super(Config.API_GEOREF);
     }
 
-    public ListadoProvincias listadoProvincias() throws IOException {
+    public ListadoProvincias listadoProvincias(){
         GeorefService georefService = this.retrofit.create(GeorefService.class);
         Call<ListadoProvincias> requestProvinciasArg = georefService.provincias();
-        Response<ListadoProvincias> responseProvinciasArg = requestProvinciasArg.execute();
-        return responseProvinciasArg.body();
+        try {
+            Response<ListadoProvincias> responseProvinciasArg = requestProvinciasArg.execute();
+            return responseProvinciasArg.body();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public ListadoProvincias listadoProvincias(int idProvincia) throws IOException {

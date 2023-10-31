@@ -1,18 +1,17 @@
 package models.external.retrofit.georef.responseClases;
 
+import lombok.Getter;
+
 import javax.persistence.*;
 
+@Getter
 @Entity
 @Table(name = "provincia")
 public class Provincia {
     @Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     public int id;
 
     @Column(name = "nombre")
-    public  String nombre;
-
-    public Provincia() {
-    }
+    public String nombre;
 }

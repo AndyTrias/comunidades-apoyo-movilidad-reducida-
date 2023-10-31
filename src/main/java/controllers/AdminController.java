@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import models.entidades.Entidad;
 import models.entidades.EntidadPrestadora;
 import models.entidades.Establecimiento;
+import models.external.retrofit.georef.Georef;
+import models.external.retrofit.georef.responseClases.ListadoProvincias;
+import models.external.retrofit.georef.responseClases.Provincia;
 import models.localizacion.Localizacion;
 import models.localizacion.UbicacionExacta;
 import models.repositorios.RepoEntidad;
@@ -19,6 +22,7 @@ import server.exceptions.EntidadNoExistenteException;
 import server.exceptions.PermisosInvalidosException;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -39,6 +43,7 @@ public class AdminController extends BaseController {
     model.put("establecimientos", repoEstablecimiento.buscarTodos());
     model.put("prestadoras", repoEntidadPrestadora.buscarTodos());
     model.put("administrador", true);
+    model.put("provincias", Georef.getInstancia().listadoProvincias().provincias);
 
     ctx.render("admin/cargaManual.hbs", model);
   }

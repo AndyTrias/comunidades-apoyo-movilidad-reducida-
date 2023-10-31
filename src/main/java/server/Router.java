@@ -3,6 +3,7 @@ package server;
 import controllers.*;
 import controllers.factories.FactoryController;
 import controllers.HomeController;
+import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import io.javalin.Javalin;
 import models.comunidades.TipoRol;
 import server.exceptions.*;
@@ -10,9 +11,13 @@ import server.exceptions.*;
 
 import static io.javalin.apibuilder.ApiBuilder.path;
 
-public class Router {
+public class Router implements WithSimplePersistenceUnit {
 
-  public static void init() {
+  public Router() {
+    init();
+  }
+
+  public void init() {
     Javalin app = Server.app();
 
     app.error(404, ctx -> {
@@ -89,7 +94,9 @@ public class Router {
     app.exception(PaginaNoEncontradaException.class, ExceptionHandler::handlePaginaNoEncontrada);
     app.exception(ServerErrorException.class, ExceptionHandler::handleServerException);
 
-
+    app.after(ctx -> {
+      entityManager().clear();
+    });
   }
 }
 
