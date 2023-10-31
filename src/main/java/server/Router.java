@@ -68,14 +68,19 @@ public class Router {
     });
 
     app.routes(() -> {
-      app.get("admin", ((AdminController) FactoryController.controller("Administrador de plataforma"))::show, TipoRol.ADMINISTRADOR_PLATAFORMA);
+      app.get("admin", ((CargaManualController) FactoryController.controller("Administrador de plataforma"))::show, TipoRol.ADMINISTRADOR_PLATAFORMA);
+      app.get("admin/cargaManual", ((CargaManualController) FactoryController.controller("Administrador de plataforma"))::cargaManual, TipoRol.ADMINISTRADOR_PLATAFORMA);
+      app.post("admin/entidad", ((CargaManualController) FactoryController.controller("Administrador de plataforma"))::guardarEntidad, TipoRol.ADMINISTRADOR_PLATAFORMA);
+      app.post("admin/establecimiento", ((CargaManualController) FactoryController.controller("Administrador de plataforma"))::guardarEstablecimiento, TipoRol.ADMINISTRADOR_PLATAFORMA);
+      app.post("admin/servicio", ((CargaManualController) FactoryController.controller("Administrador de plataforma"))::guardarServicio, TipoRol.ADMINISTRADOR_PLATAFORMA);
+      app.post("admin/prestacion", ((CargaManualController) FactoryController.controller("Administrador de plataforma"))::guardarPrestacion, TipoRol.ADMINISTRADOR_PLATAFORMA);
+
+      app.get("admin/usuarios", ((AuthController) FactoryController.controller("Auth"))::showAdmin, TipoRol.ADMINISTRADOR_PLATAFORMA);
+      app.post("admin/usuarios/entidad", ((AuthController) FactoryController.controller("Auth"))::registerEntidad, TipoRol.ADMINISTRADOR_PLATAFORMA);
+      app.post("admin/usuarios/organismo", ((AuthController) FactoryController.controller("Auth"))::registerOrganismo, TipoRol.ADMINISTRADOR_PLATAFORMA);
+
       app.get("admin/cargaMasiva", ((CargaMasivaController) FactoryController.controller("Carga masiva"))::show, TipoRol.ADMINISTRADOR_PLATAFORMA);
       app.post("admin/cargaMasiva", ((CargaMasivaController) FactoryController.controller("Carga masiva"))::cargaMasiva);
-      app.get("admin/cargaManual", ((AdminController) FactoryController.controller("Administrador de plataforma"))::cargaManual, TipoRol.ADMINISTRADOR_PLATAFORMA);
-      app.post("admin/entidad", ((AdminController) FactoryController.controller("Administrador de plataforma"))::guardarEntidad, TipoRol.ADMINISTRADOR_PLATAFORMA);
-      app.post("admin/establecimiento", ((AdminController) FactoryController.controller("Administrador de plataforma"))::guardarEstablecimiento, TipoRol.ADMINISTRADOR_PLATAFORMA);
-      app.post("admin/servicio", ((AdminController) FactoryController.controller("Administrador de plataforma"))::guardarServicio, TipoRol.ADMINISTRADOR_PLATAFORMA);
-      app.post("admin/prestacion", ((AdminController) FactoryController.controller("Administrador de plataforma"))::guardarPrestacion, TipoRol.ADMINISTRADOR_PLATAFORMA);
     });
 
     app.routes(() -> {
