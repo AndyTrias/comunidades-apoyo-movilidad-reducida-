@@ -27,7 +27,7 @@ public class CargaMasivaController {
     public void show(Context ctx){
         Map<String, Object> model = new HashMap<>();
         model.put("administrador", true);
-        ctx.render("generales/cargaMasiva.hbs", model);
+        ctx.render("admin/cargaMasiva.hbs", model);
     }
     public void cargaMasiva(Context ctx){
         LectorEntidadPrestadora lectorEntidadPrestadora = new LectorEntidadPrestadora();

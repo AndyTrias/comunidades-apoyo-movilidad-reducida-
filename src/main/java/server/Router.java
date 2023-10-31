@@ -69,7 +69,7 @@ public class Router {
 
     app.routes(() -> {
       app.get("admin", ((AdminController) FactoryController.controller("Administrador de plataforma"))::show, TipoRol.ADMINISTRADOR_PLATAFORMA);
-      app.get("admin/cargaMasiva", ((CargaMasivaController) FactoryController.controller("Carga masiva"))::show);
+      app.get("admin/cargaMasiva", ((CargaMasivaController) FactoryController.controller("Carga masiva"))::show, TipoRol.ADMINISTRADOR_PLATAFORMA);
       app.post("admin/cargaMasiva", ((CargaMasivaController) FactoryController.controller("Carga masiva"))::cargaMasiva);
       app.get("admin/cargaManual", ((AdminController) FactoryController.controller("Administrador de plataforma"))::cargaManual, TipoRol.ADMINISTRADOR_PLATAFORMA);
       app.post("admin/entidad", ((AdminController) FactoryController.controller("Administrador de plataforma"))::guardarEntidad, TipoRol.ADMINISTRADOR_PLATAFORMA);
