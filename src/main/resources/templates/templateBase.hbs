@@ -17,6 +17,11 @@
     <link rel="stylesheet" href="\css\incidentes.css">
     <script src="\js\script.js"></script>
     <script src="\js\incidentes.js"></script>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
     {{#block "agregarAlHead"}}
     {{/block}}
 </head>
@@ -60,6 +65,13 @@
                     </a>
                 {{/if}}
                 {{#unless notlogged}}
+
+                    <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" onclick="goBack()">
+                        <!-- El botón para volver a la página anterior -->
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Volver
+                        </button>
+                    </a>
                     <a href="/logout"
                        class="flex flex-col justify-center items-center bg-red-400 border-0 py-1 px-3 focus:outline-none hover:bg-red-600 rounded ml-auto text-base mt-4 md:mt-0 w-20 h-8">
                         <i class="fas fa-sign-out-alt text-white"></i>
