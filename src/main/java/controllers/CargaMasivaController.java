@@ -36,7 +36,7 @@ public class CargaMasivaController {
         UploadedFile uploadedFile = ctx.uploadedFile("archivo");
 
         if (uploadedFile == null) {
-            ctx.redirect("/cargaMasiva");
+            ctx.redirect("/admin/cargaMasiva");
             return;
         }
 
@@ -53,7 +53,7 @@ public class CargaMasivaController {
             ctx.redirect("/admin/cargaMasiva");
         }
 
-        ctx.redirect("/cargaMasiva");
+        ctx.redirect("/admin/cargaMasiva");
     }
 
     private void cargarEntidadesPrestadoras(Map<EntidadPrestadora, Long> entidadPrestadoras){

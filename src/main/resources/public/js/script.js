@@ -23,3 +23,7 @@ function handleClick(e) {
         window.location = href;
     });
 }
+
+function getLocalidades(selectedValue) {
+    console.log(selectedValue);
+}
