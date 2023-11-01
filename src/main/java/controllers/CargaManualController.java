@@ -25,7 +25,7 @@ import server.exceptions.PermisosInvalidosException;
 import java.util.*;
 
 @AllArgsConstructor
-public class AdminController extends BaseController {
+public class CargaManualController extends BaseController {
 
   private RepoServicio repoServicio;
   private RepoEntidad repoEntidad;
@@ -68,6 +68,8 @@ public class AdminController extends BaseController {
     model.put("administrador", true);
     ctx.render("admin/admin.hbs", model);
   }
+
+
 
   public void guardarServicio(Context ctx) {
     Usuario usuario = usuarioLogueado(ctx);

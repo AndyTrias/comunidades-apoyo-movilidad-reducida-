@@ -79,14 +79,33 @@ public class Initializer implements WithSimplePersistenceUnit {
         buscadorDePermisos.buscarPermisoPorNombre("afectar_prestaciones"));
     entityManager().persist(miembro);
 
-    Rol prestador = new Rol();
-    prestador.setNombre("Administrador de Comunidad");
-    prestador.setTipoRol(TipoRol.ADMINISTRADOR_COMUNIDAD);
-    prestador.agregarPermisos(
+    Rol adminComunidad = new Rol();
+    adminComunidad.setNombre("Administrador de Comunidad");
+    adminComunidad.setTipoRol(TipoRol.ADMINISTRADOR_COMUNIDAD);
+    adminComunidad.agregarPermisos(
         buscadorDePermisos.buscarPermisoPorNombre("agregar_servicio_de_interes")
     );
-    entityManager().persist(prestador);
+    entityManager().persist(adminComunidad);
 
+    Rol organismo = new Rol();
+    organismo.setNombre("Organismo de Control");
+    organismo.setTipoRol(TipoRol.ORGANISMO_DE_CONTROL);
+    organismo.agregarPermisos(
+        buscadorDePermisos.buscarPermisoPorNombre("crear_entidad"),
+        buscadorDePermisos.buscarPermisoPorNombre("crear_establecimiento"),
+        buscadorDePermisos.buscarPermisoPorNombre("ver rankins de organismos"),
+        buscadorDePermisos.buscarPermisoPorNombre("ver rankins de entidades")
+    );
+
+    Rol entidad = new Rol();
+    entidad.setNombre("Entidad Prestadora");
+    entidad.setTipoRol(TipoRol.ENTIDAD_PRESTADORA);
+    entidad.agregarPermisos(
+        buscadorDePermisos.buscarPermisoPorNombre("crear_entidad"),
+        buscadorDePermisos.buscarPermisoPorNombre("crear_establecimiento"),
+        buscadorDePermisos.buscarPermisoPorNombre("crear_prestacion"),
+        buscadorDePermisos.buscarPermisoPorNombre("agregar_servicio_de_interes")
+    );
     return this;
   }
 }
