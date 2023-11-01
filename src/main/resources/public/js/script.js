@@ -24,6 +24,22 @@ function handleClick(e) {
     });
 }
 
-function getLocalidades(selectedValue) {
-    console.log(selectedValue);
+function showLocalidadField(provinciaValue) {
+    document.getElementById("municipioField").style.display = "block";
+
+    var currentURL = window.location.href;
+
+    var newURL = currentURL + (currentURL.includes('?') ? '&' : '?') + 'provincia=' + provinciaValue;
+
+    window.location.href = newURL;
+}
+
+function showMunicipioField(localidadValue) {
+    document.getElementById("localidadField").style.display = "block";
+
+    var currentURL = window.location.href;
+
+    var newURL = currentURL + (currentURL.includes('?') ? '&' : '?') + 'municipio=' + localidadValue;
+
+    window.location.href = newURL;
 }

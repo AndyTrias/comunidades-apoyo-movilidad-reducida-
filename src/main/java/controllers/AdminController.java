@@ -8,6 +8,7 @@ import models.entidades.EntidadPrestadora;
 import models.entidades.Establecimiento;
 import models.external.retrofit.georef.Georef;
 import models.external.retrofit.georef.responseClases.ListadoProvincias;
+import models.external.retrofit.georef.responseClases.Municipio;
 import models.external.retrofit.georef.responseClases.Provincia;
 import models.localizacion.Localizacion;
 import models.localizacion.UbicacionExacta;
@@ -21,10 +22,7 @@ import models.usuario.Usuario;
 import server.exceptions.EntidadNoExistenteException;
 import server.exceptions.PermisosInvalidosException;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @AllArgsConstructor
 public class AdminController extends BaseController {
@@ -43,9 +41,26 @@ public class AdminController extends BaseController {
     model.put("establecimientos", repoEstablecimiento.buscarTodos());
     model.put("prestadoras", repoEntidadPrestadora.buscarTodos());
     model.put("administrador", true);
-    model.put("provincias", Georef.getInstancia().listadoProvincias().provincias);
 
     ctx.render("admin/cargaManual.hbs", model);
+  }
+
+  public void seleccionarUbicacion(Context ctx) {
+    Map<String, Object> model = new HashMap<>();
+
+    model.put("provincias", Georef.getInstancia().listadoProvincias().provincias);
+
+    ctx.render("admin/seleccionarProvincia.hbs", model);
+  }
+
+  public void seleccionarMunicipio(Context ctx) {
+    Map<String, Object> model = new HashMap<>();
+    Localizacion localizacion = new Localizacion();
+    String idProvincia = ctx.queryParam("provincia");
+
+    model.put("municipios", Georef.getInstancia().listadoMunicipios(idProvincia).municipios);
+
+    ctx.render("admin/seleccionarMunicipio.hbs", model);
   }
 
   public void show(Context ctx) {

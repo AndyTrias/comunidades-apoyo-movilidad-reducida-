@@ -81,6 +81,8 @@ public class Router implements WithSimplePersistenceUnit {
       app.post("admin/establecimiento", ((AdminController) FactoryController.controller("Administrador de plataforma"))::guardarEstablecimiento, TipoRol.ADMINISTRADOR_PLATAFORMA);
       app.post("admin/servicio", ((AdminController) FactoryController.controller("Administrador de plataforma"))::guardarServicio, TipoRol.ADMINISTRADOR_PLATAFORMA);
       app.post("admin/prestacion", ((AdminController) FactoryController.controller("Administrador de plataforma"))::guardarPrestacion, TipoRol.ADMINISTRADOR_PLATAFORMA);
+      app.get("admin/cargaManual/seleccionarUbicacion", ((AdminController) FactoryController.controller("Administrador de plataforma"))::seleccionarUbicacion, TipoRol.ADMINISTRADOR_PLATAFORMA);
+      app.get("admin/cargaManual/seleccionarMunicipio", ((AdminController) FactoryController.controller("Administrador de plataforma"))::seleccionarMunicipio, TipoRol.ADMINISTRADOR_PLATAFORMA);
     });
 
     app.routes(() -> {

@@ -18,41 +18,15 @@
                 {{/each}}
             </select>
         </div>
-        <div class="mb-4">
-            <label for="provincia" class="block text-sm font-bold mb-2">Provincia</label>
-            <select required id="provincia" name="provincia"
-                    class="shadow border rounded w-full py-2 px-3 focus:outline-none focus:shadow-outline"
-                    required
-                onchange="getLocalidades(this.value)">
-            >
-                <option selected disabled hidden>Seleccionar Provincia</option>
-                {{#each provincias}}
-                    <option value="{{this.id}}">{{this.nombre}}</option>
-                {{/each}}
-            </select>
+
+        <div class="flex items-center justify-between">
+            <a href="./cargaManual/seleccionarUbicacion"
+                    class="flex-row bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                Seleccionar ubicacion
+            </a>
         </div>
-        <div class="mb-4">
-            <label for="localidad" class="block text-gray-700 text-sm font-bold mb-2">Localidad</label>
-            <select required id="localidad" name="localidad"
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    required>
-                <option selected disabled hidden>Seleccionar localidad</option>
-                {{#each localidades}}
-                    <option value="{{this.id}}">{{this.nombre}}</option>
-                {{/each}}
-            </select>
-        </div>
-        <div class="mb-4">
-            <label for="municipio" class="block text-gray-700 text-sm font-bold mb-2">Municipio</label>
-            <select required id="municipio" name="municipio"
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    required>
-                <option selected disabled hidden>Seleccionar municipio</option>
-                {{#each municipio}}
-                    <option value="{{this.id}}">{{this.nombre}}</option>
-                {{/each}}
-            </select>
-        </div>
+
+
         <div class="flex items-center justify-between">
             <button type="submit"
                     class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
