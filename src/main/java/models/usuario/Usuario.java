@@ -2,10 +2,7 @@ package models.usuario;
 
 import models.comunidades.Comunidad;
 import models.comunidades.Membresia;
-import models.comunidades.Rol;
-import models.comunidades.TipoRol;
 import models.incidentes.Incidente;
-import models.incidentes.RevisionDeIncidente;
 import models.usuario.configuraciones.ConfiguracionDeNotificaciones;
 import models.configs.ServiceLocator;
 import models.localizacion.Localizacion;
@@ -49,7 +46,7 @@ public class Usuario {
 
     @Getter
     @Setter
-    @Column(name = "telefono", nullable = false)
+    @Column(name = "telefono")
     private String telefono;
 
     @Getter
@@ -87,7 +84,6 @@ public class Usuario {
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<Incidente> revisionDeIncidentes;
     
-
 
     public Usuario(String nombre, String apellido, String correoElectronico) {
         this.nombre = nombre;

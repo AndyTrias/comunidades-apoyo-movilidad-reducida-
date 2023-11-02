@@ -24,8 +24,9 @@ import javax.persistence.Transient;
 @Table(name = "entidad_prestadora")
 public class EntidadPrestadora {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)//lo agregue porq rompia un test
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter
+    @Getter
     private Long id;
 
     @Getter
@@ -33,7 +34,8 @@ public class EntidadPrestadora {
     private String nombre;
 
     @Setter
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}) 
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @Getter
     private Usuario personaDesignada;
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})

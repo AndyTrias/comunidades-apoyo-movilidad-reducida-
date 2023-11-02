@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import models.comunidades.Afectacion;
 import models.comunidades.Comunidad;
 import models.comunidades.Membresia;
-import models.comunidades.TipoRol;
+import models.usuario.TipoRol;
 import models.repositorios.*;
 import models.servicios.PrestacionDeServicio;
 import models.usuario.Usuario;

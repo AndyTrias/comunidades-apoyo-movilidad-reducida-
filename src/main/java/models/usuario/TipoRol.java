@@ -1,4 +1,4 @@
-package models.comunidades;
+package models.usuario;
 
 import io.javalin.security.RouteRole;
 

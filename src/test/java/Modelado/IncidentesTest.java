@@ -2,7 +2,7 @@ package Modelado;
 
 import models.comunidades.Comunidad;
 import models.comunidades.Membresia;
-import models.comunidades.Rol;
+import models.usuario.Rol;
 import models.incidentes.Incidente;
 import models.localizacion.UbicacionExacta;
 import models.servicios.PrestacionDeServicio;

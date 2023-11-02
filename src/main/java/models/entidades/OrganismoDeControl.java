@@ -5,6 +5,7 @@ import models.entidades.enviadorDeInformacion.AdapterEnviadorDeInformacion;
 import models.usuario.Usuario;
 import lombok.Getter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -32,7 +33,8 @@ public class OrganismoDeControl {
     private String nombre;
 
     @Setter
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @Getter
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     private Usuario personaDesignada;
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -43,16 +45,14 @@ public class OrganismoDeControl {
     private AdapterEnviadorDeInformacion enviadorDeInformacion;
 
     public OrganismoDeControl(String nombre){
+
         this.nombre = nombre;
+        this.entidadesQuePosee = new ArrayList<>();
     }
 
     public OrganismoDeControl() {}
 
-    public void enviarInformacion(){
-        enviadorDeInformacion.enviarInformacion();
-    }
-
-    public void agregarEntidad(EntidadPrestadora entidad){
+    public void agregarPrestadora(EntidadPrestadora entidad){
         entidadesQuePosee.add(entidad);
     }
 }

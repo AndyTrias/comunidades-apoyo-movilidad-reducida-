@@ -1,4 +1,4 @@
-package models.comunidades;
+package models.usuario;
 
 import lombok.Getter;
 import lombok.Setter;

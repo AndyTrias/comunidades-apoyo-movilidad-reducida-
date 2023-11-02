@@ -5,7 +5,7 @@ import controllers.factories.FactoryController;
 import controllers.HomeController;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import io.javalin.Javalin;
-import models.comunidades.TipoRol;
+import models.usuario.TipoRol;
 import server.exceptions.*;
 
 
@@ -28,7 +28,6 @@ public class Router implements WithSimplePersistenceUnit {
       throw new ServerErrorException("F");
     });
 
-    app.get("/", ((HomeController) FactoryController.controller("Home"))::index);
 
     app.routes(() -> {
 
@@ -73,18 +72,24 @@ public class Router implements WithSimplePersistenceUnit {
     });
 
     app.routes(() -> {
-      app.get("admin", ((CargaManualController) FactoryController.controller("Administrador de plataforma"))::show, TipoRol.ADMINISTRADOR_PLATAFORMA);
       app.get("admin/cargaManual", ((CargaManualController) FactoryController.controller("Administrador de plataforma"))::cargaManual, TipoRol.ADMINISTRADOR_PLATAFORMA);
-      app.post("admin/entidad", ((CargaManualController) FactoryController.controller("Administrador de plataforma"))::guardarEntidad, TipoRol.ADMINISTRADOR_PLATAFORMA);
+      app.get("admin/cargaManual/seleccionarUbicacion", ((CargaManualController) FactoryController.controller("Administrador de plataforma"))::seleccionarUbicacion, TipoRol.ADMINISTRADOR_PLATAFORMA);
+      app.get("admin/cargaManual/seleccionarMunicipio", ((CargaManualController) FactoryController.controller("Administrador de plataforma"))::seleccionarMunicipio, TipoRol.ADMINISTRADOR_PLATAFORMA);
+      app.post("admin/entidad", ((CargaManualController) FactoryController.controller("Administrador de plataforma"))::guardarEntidad, TipoRol.ADMINISTRADOR_PLATAFORMA, TipoRol.ORGANISMO_DE_CONTROL, TipoRol.ENTIDAD_PRESTADORA);
       app.post("admin/establecimiento", ((CargaManualController) FactoryController.controller("Administrador de plataforma"))::guardarEstablecimiento, TipoRol.ADMINISTRADOR_PLATAFORMA);
       app.post("admin/servicio", ((CargaManualController) FactoryController.controller("Administrador de plataforma"))::guardarServicio, TipoRol.ADMINISTRADOR_PLATAFORMA);
       app.post("admin/prestacion", ((CargaManualController) FactoryController.controller("Administrador de plataforma"))::guardarPrestacion, TipoRol.ADMINISTRADOR_PLATAFORMA);
-      app.get("admin/cargaManual/seleccionarUbicacion", ((CargaManualController) FactoryController.controller("Administrador de plataforma"))::seleccionarUbicacion, TipoRol.ADMINISTRADOR_PLATAFORMA);
-      app.get("admin/cargaManual/seleccionarMunicipio", ((CargaManualController) FactoryController.controller("Administrador de plataforma"))::seleccionarMunicipio, TipoRol.ADMINISTRADOR_PLATAFORMA);
+      app.get("admin/cargaMasiva", ((CargaMasivaController) FactoryController.controller("Carga masiva"))::show, TipoRol.ADMINISTRADOR_PLATAFORMA);
+      app.post("admin/cargaMasiva", ((CargaMasivaController) FactoryController.controller("Carga masiva"))::cargaMasiva);
 
       app.get("admin/usuarios", ((AuthController) FactoryController.controller("Auth"))::showAdmin, TipoRol.ADMINISTRADOR_PLATAFORMA);
       app.post("admin/usuarios/entidad", ((AuthController) FactoryController.controller("Auth"))::registerEntidad, TipoRol.ADMINISTRADOR_PLATAFORMA);
       app.post("admin/usuarios/organismo", ((AuthController) FactoryController.controller("Auth"))::registerOrganismo, TipoRol.ADMINISTRADOR_PLATAFORMA);
+
+      app.get("/", ((HomeController) FactoryController.controller("Home"))::index);
+      app.get("admin", ((HomeController) FactoryController.controller("Home"))::showAdmin, TipoRol.ADMINISTRADOR_PLATAFORMA);
+      app.get("organismoDeControl", ((HomeController) FactoryController.controller("Home"))::showOrganismo, TipoRol.ORGANISMO_DE_CONTROL);
+      app.get("entidadPrestadora", ((HomeController) FactoryController.controller("Home"))::showEntidad, TipoRol.ENTIDAD_PRESTADORA);
 
     });
 

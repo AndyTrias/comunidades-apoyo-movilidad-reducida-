@@ -1,7 +1,6 @@
 package Persistencia;
 
 import models.comunidades.Membresia;
-import models.comunidades.Permiso;
 import models.entidades.Entidad;
 import models.entidades.EntidadPrestadora;
 import models.entidades.Establecimiento;
@@ -12,9 +11,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import models.comunidades.Comunidad;
-import models.comunidades.Rol;
+import models.usuario.Rol;
 import models.incidentes.Incidente;
-import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
 import models.servicios.PrestacionDeServicio;
 import models.servicios.Servicio;
 import models.usuario.Interes;

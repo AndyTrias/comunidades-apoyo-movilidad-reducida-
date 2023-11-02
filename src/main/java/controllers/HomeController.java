@@ -2,8 +2,13 @@ package controllers;
 
 import controllers.BaseController;
 import io.javalin.http.Context;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import models.usuario.Usuario;
 
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class HomeController extends BaseController {
@@ -12,9 +17,9 @@ public class HomeController extends BaseController {
 
 
     switch (usuario.getRol().getTipoRol()) {
-      case MIEMBRO -> ctx.render("home.hbs");
+      case MIEMBRO -> ctx.render("show/home.hbs");
       case ADMINISTRADOR_PLATAFORMA -> {
-       ctx.redirect("/admin");
+        ctx.redirect("/admin");
       }
 
       case ENTIDAD_PRESTADORA -> {
@@ -24,7 +29,26 @@ public class HomeController extends BaseController {
       case ORGANISMO_DE_CONTROL -> {
         ctx.redirect("/organismoDeControl");
       }
-    }
 
+    }
+  }
+
+  public void showAdmin(Context ctx) {
+    Map<String, Object> model = new HashMap<>();
+    model.put("administrador", true);
+    ctx.render("show/admin.hbs", model);
+  }
+
+  public void showEntidad(Context ctx) {
+    Map<String, Object> model = new HashMap<>();
+    model.put("entidadPrestadora", true);
+    ctx.render("show/prestadora.hbs", model);
+  }
+
+  public void showOrganismo(Context ctx) {
+    Map<String, Object> model = new HashMap<>();
+    model.put("organismoDeControl", true);
+    ctx.render("show/organismo.hbs", model);
   }
 }
+

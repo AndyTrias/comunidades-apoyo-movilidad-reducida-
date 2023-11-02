@@ -4,21 +4,18 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import models.comunidades.Comunidad;
 import models.comunidades.Membresia;
-import models.comunidades.Rol;
+import models.usuario.Rol;
 import models.entidades.Establecimiento;
 import models.external.retrofit.apiServicio3.ApiServicio3;
 import models.external.retrofit.apiServicio3.responseClases.EntidadDTO;
 import models.external.retrofit.apiServicio3.responseClases.IncidenteDTO;
 import models.external.retrofit.apiServicio3.responseClases.PayloadServicio3DTO;
-import models.incidentes.Incidente;
 import models.repositorios.RepoComunidad;
 import models.repositorios.RepoEstablecimiento;
 import models.servicios.PrestacionDeServicio;
 import models.usuario.Usuario;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import server.utils.Mapper;
 
 import java.util.List;
 

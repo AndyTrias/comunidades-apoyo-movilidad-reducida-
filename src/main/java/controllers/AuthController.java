@@ -1,10 +1,8 @@
 package controllers;
 
 import io.javalin.http.Context;
-import io.jsonwebtoken.PrematureJwtException;
 import lombok.AllArgsConstructor;
-import models.comunidades.Rol;
-import models.comunidades.TipoRol;
+import models.usuario.TipoRol;
 import models.entidades.EntidadPrestadora;
 import models.entidades.OrganismoDeControl;
 import models.repositorios.RepoEntidadPrestadora;
@@ -107,8 +105,8 @@ public class AuthController {
     Usuario usuario = new Usuario(entidadPrestadora.getNombre(), "", email);
     usuario.setContrasenia(password);
     usuario.setRol(repoRol.buscarPorNombre(TipoRol.ENTIDAD_PRESTADORA));
-    repoUsuario.agregar(usuario);
-
+    entidadPrestadora.setPersonaDesignada(usuario);
+    repoEntidadPrestadora.modificar(entidadPrestadora);
     ctx.redirect("/admin/usuarios");
   }
 
@@ -128,11 +126,12 @@ public class AuthController {
             throw new EntidadNoExistenteException("No existe ese organimo");
         }
 
-        Usuario usuario = new Usuario(organismoDeControl.getNombre(), "", email);
+        Usuario usuario = new Usuario(organismoDeControl.getNombre(), "Organismo", email);
         usuario.setContrasenia(password);
         usuario.setRol(repoRol.buscarPorNombre(TipoRol.ORGANISMO_DE_CONTROL));
-        repoUsuario.agregar(usuario);
 
+        organismoDeControl.setPersonaDesignada(usuario);
+        repoOrganismoDeControl.modificar(organismoDeControl);
         ctx.redirect("/admin/usuarios");
     }
 

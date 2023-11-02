@@ -62,7 +62,7 @@ public class CargaMasivaController {
             if (organismo == null){
                 throw new EntidadNoExistenteException("No existe el organismo de control con id: " + entidad.getValue());
             }
-            organismo.agregarEntidad(entidad.getKey());
+            organismo.agregarPrestadora(entidad.getKey());
             repoOrganismoDeControl.modificar(organismo);
         }
     }

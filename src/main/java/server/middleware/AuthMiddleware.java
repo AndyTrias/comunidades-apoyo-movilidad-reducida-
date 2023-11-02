@@ -2,10 +2,8 @@ package server.middleware;
 
 import io.javalin.config.JavalinConfig;
 import io.javalin.http.Context;
-import models.comunidades.TipoRol;
+import models.usuario.TipoRol;
 import server.exceptions.PermisosInvalidosException;
-
-import java.nio.file.AccessDeniedException;
 
 public class AuthMiddleware {
     public static void apply(JavalinConfig config) {

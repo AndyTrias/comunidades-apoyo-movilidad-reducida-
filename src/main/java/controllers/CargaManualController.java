@@ -63,13 +63,6 @@ public class CargaManualController extends BaseController {
     ctx.render("admin/seleccionarMunicipio.hbs", model);
   }
 
-  public void show(Context ctx) {
-    Map<String, Object> model = new HashMap<>();
-    model.put("administrador", true);
-    ctx.render("admin/admin.hbs", model);
-  }
-
-
 
   public void guardarServicio(Context ctx) {
     Usuario usuario = usuarioLogueado(ctx);

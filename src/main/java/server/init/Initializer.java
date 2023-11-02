@@ -1,15 +1,15 @@
 package server.init;
 
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
-import models.comunidades.Permiso;
-import models.comunidades.Rol;
-import models.comunidades.TipoRol;
+import models.usuario.Permiso;
+import models.usuario.Rol;
+import models.usuario.TipoRol;
 import models.repositorios.RepoRol;
 
 public class Initializer implements WithSimplePersistenceUnit {
 
   public static void init() {
-    if (new RepoRol().buscarTodos().size() == 0) {
+    if (new RepoRol().buscarTodos().size() < 4) {
       new Initializer()
           .iniciarTransaccion()
           .permisos()
@@ -35,7 +35,9 @@ public class Initializer implements WithSimplePersistenceUnit {
         {"Crear Entidad", "crear_entidad"},
         {"Crear Prestacion", "crear_prestacion"},
         {"Agregar Servicio de Interes", "agregar_servicio_de_interes"},
-        {"Afectar Prestacion", "afectar_prestaciones"}
+        {"Afectar Prestacion", "afectar_prestaciones"},
+        {"Ver ranking de Organismos", "ver ranking de organismos"},
+        {"Ver ranking de Entidades", "ver ranking de entidades"}
     };
 
     for (String[] unPermiso : permisos) {
@@ -93,9 +95,11 @@ public class Initializer implements WithSimplePersistenceUnit {
     organismo.agregarPermisos(
         buscadorDePermisos.buscarPermisoPorNombre("crear_entidad"),
         buscadorDePermisos.buscarPermisoPorNombre("crear_establecimiento"),
-        buscadorDePermisos.buscarPermisoPorNombre("ver rankins de organismos"),
-        buscadorDePermisos.buscarPermisoPorNombre("ver rankins de entidades")
+        buscadorDePermisos.buscarPermisoPorNombre("ver ranking de organismos"),
+        buscadorDePermisos.buscarPermisoPorNombre("ver ranking de entidades")
     );
+    entityManager().persist(organismo);
+
 
     Rol entidad = new Rol();
     entidad.setNombre("Entidad Prestadora");
@@ -103,9 +107,10 @@ public class Initializer implements WithSimplePersistenceUnit {
     entidad.agregarPermisos(
         buscadorDePermisos.buscarPermisoPorNombre("crear_entidad"),
         buscadorDePermisos.buscarPermisoPorNombre("crear_establecimiento"),
-        buscadorDePermisos.buscarPermisoPorNombre("crear_prestacion"),
-        buscadorDePermisos.buscarPermisoPorNombre("agregar_servicio_de_interes")
+        buscadorDePermisos.buscarPermisoPorNombre("ver ranking de entidades")
     );
+    entityManager().persist(entidad);
     return this;
+
   }
 }
