@@ -8,4 +8,10 @@ public class RepoEntidadPrestadora extends RepoGenerico<EntidadPrestadora>{
     public RepoEntidadPrestadora() {
         super(EntidadPrestadora.class);
     }
+
+    public EntidadPrestadora buscarporUsuarioDesignado(Long idUsuario){
+        return entityManager().createQuery("SELECT ep FROM EntidadPrestadora ep WHERE ep.personaDesignada.id = :idUsuario", EntidadPrestadora.class)
+                .setParameter("idUsuario", idUsuario)
+                .getSingleResult();
+    }
 }

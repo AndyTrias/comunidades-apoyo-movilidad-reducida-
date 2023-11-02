@@ -2,13 +2,11 @@ package controllers;
 
 import io.javalin.http.Context;
 import lombok.AllArgsConstructor;
+import models.comunidades.Afectacion;
 import models.comunidades.Comunidad;
 import models.comunidades.Membresia;
-import models.comunidades.TipoRol;
-import models.repositorios.RepoComunidad;
-import models.repositorios.RepoPrestacion;
-import models.repositorios.RepoRol;
-import models.repositorios.RepoUsuario;
+import models.usuario.TipoRol;
+import models.repositorios.*;
 import models.servicios.PrestacionDeServicio;
 import models.usuario.Usuario;
 import server.exceptions.EntidadNoExistenteException;
@@ -37,7 +35,6 @@ public class ComunidadController extends BaseController {
     model.put("comunidadesQNoPretUsu", comunidadesNoPertenecientes);
     ctx.render("comunidades/comunidades.hbs", model);
   }
-
 
 
   public void create(Context ctx) {
@@ -120,6 +117,29 @@ public class ComunidadController extends BaseController {
     Membresia membresia = usuarioLogueado(ctx).getMembresia(comunidad);
     model.put("afectaciones", membresia.getAfectaciones());
     ctx.render("comunidades/afectaciones.hbs", model);
+  }
+
+  public void afectarPrestaciones(Context ctx) {
+    Comunidad comunidad = obtenerComunidad(ctx.pathParam("id"));
+    Usuario usuario = usuarioLogueado(ctx);
+    Membresia membresia = usuario.getMembresia(comunidad);
+    if (!membresia.getRol().tenesPermiso("afectar_prestaciones")) {
+      throw new PermisosInvalidosException("No tienes los permisos para afectar prestaciones");
+    }
+
+    List<String> afectacionesIds = ctx.formParams("afectacion");
+
+    for (String id : afectacionesIds) {
+      Afectacion afectacion = RepoAfectacion.INSTANCE.buscar(Long.parseLong(id));
+      if (afectacion != null) {
+        afectacion.setAfectado(true);
+      } else {
+        throw new EntidadNoExistenteException("No existe ese servicio de interes");
+      }
+    }
+
+    repoUsuario.modificar(usuario);
+    ctx.redirect("/comunidades/" + comunidad.getId());
   }
 
 

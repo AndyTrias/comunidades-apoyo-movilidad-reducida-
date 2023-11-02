@@ -17,12 +17,16 @@ public class FactoryController {
               new RepoUsuario()
       );
       case "Auth" -> new AuthController(
-              new RepoUsuario()
+              new RepoUsuario(),
+              new RepoRol(),
+              new RepoEntidadPrestadora(),
+              new RepoOrganismoDeControl()
       );
       case "Carga masiva" -> new CargaMasivaController(
           new RepoEntidadPrestadora(),
           new RepoOrganismoDeControl()
       );
+
       case "Revision de incidentes" -> new RevisionDeIncidenteController(
           new RepoIncidentes(),
           new RepoUsuario(),
@@ -37,17 +41,21 @@ public class FactoryController {
           new RepoEntidad()
       );
 
-      case "Administrador de plataforma" -> new AdminController(
+      case "Administrador de plataforma" -> new CargaManualController(
           new RepoServicio(),
           new RepoEntidad(),
-          new RepoEstablecimiento()
+          new RepoEstablecimiento(),
+          new RepoEntidadPrestadora()
       );
 
       case "Perfil" -> new PerfilController(
             new RepoUsuario()
       );
 
-      case "Home" -> new HomeController();
+      case "Home" -> new HomeController(
+          new RepoOrganismoDeControl(),
+          new RepoEntidadPrestadora()
+      );
 
       case "Informe" -> new RepoInformes();
 

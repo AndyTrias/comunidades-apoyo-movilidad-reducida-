@@ -26,7 +26,7 @@ public class Server {
       Integer port = Integer.parseInt(System.getProperty("port", "8080"));
       app = Javalin.create(config()).start(port);
       initTemplateEngine();
-      Router.init();
+      new Router();
       Initializer.init();
       System.out.println("Server started on port: " + port);
     }

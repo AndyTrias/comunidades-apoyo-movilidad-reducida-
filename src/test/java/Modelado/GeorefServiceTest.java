@@ -38,7 +38,7 @@ public class GeorefServiceTest {
         ListadoMunicipios municipios = localizacion.getMunicipiosDeProvincia("6");
 
         for (int i = 0; i < municipios.municipios.size(); i++) {
-            //System.out.println(municipios.municipios.get(i).id + " " + municipios.municipios.get(i).nombre);
+            System.out.println(municipios.municipios.get(i).id + " " + municipios.municipios.get(i).nombre);
         }
 
         assertEquals("Bahía Blanca", municipios.municipios.get(0).nombre);

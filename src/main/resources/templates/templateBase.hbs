@@ -17,11 +17,18 @@
     <link rel="stylesheet" href="\css\incidentes.css">
     <script src="\js\script.js"></script>
     <script src="\js\incidentes.js"></script>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+    <link rel="stylesheet" href="https://unpkg.com/flowbite@latest/dist/flowbite.min.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.css" rel="stylesheet" />
     {{#block "agregarAlHead"}}
     {{/block}}
 </head>
 <body class="h-screen flex flex-col bg-gradient-to-l from-indigo-400 via-purple-500 to-cyan-500">
-<div class="container mx-auto">
+
     <header>
         <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
             <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
@@ -34,8 +41,17 @@
                     Monitoreo de Estado de Servicios
                 </a>
             </a>
-            <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
+            <nav class="md:ml-auto flex flex-wrap items-center gap-3 text-base justify-center">
                 {{#if administrador}}
+                    <a class="mr-5 text-white hover:text-gray-900" href="admin/usuarios">
+                        Usuarios
+                    </a>
+                    <a class="mr-5 text-white hover:text-gray-900" href="/admin/cargaManual">
+                        Carga Manual
+                    </a>
+                    <a class="mr-5 text-white hover:text-gray-900" href="admin/cargaMasiva">
+                        Carga Masiva
+                    </a>
                 {{else if entidadPrestadora}}
                 {{else if organismoDeControl}}
                 {{else if notlogged}}
@@ -51,6 +67,13 @@
                     </a>
                 {{/if}}
                 {{#unless notlogged}}
+
+                    <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" onclick="goBack()">
+                        <!-- El botón para volver a la página anterior -->
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded">
+                            Volver
+                        </button>
+                    </a>
                     <a href="/logout"
                        class="flex flex-col justify-center items-center bg-red-400 border-0 py-1 px-3 focus:outline-none hover:bg-red-600 rounded ml-auto text-base mt-4 md:mt-0 w-20 h-8">
                         <i class="fas fa-sign-out-alt text-white"></i>
@@ -60,12 +83,12 @@
         </div>
     </header>
 
+
     {{#block "contenido"}}
     {{/block}}
-</div>
 
 
-<footer class="text-gray-600 body-font mt-auto">
+    <footer class="text-gray-600 body-font mt-auto">
     <div class="container p-5 mx-auto flex items-center sm:flex-row flex-col">
         <a class="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
@@ -85,7 +108,8 @@
     </div>
 </footer>
 
-{{#block "agregarScript"}}
-{{/block}}
+    {{#block "agregarScript"}}
+    {{/block}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.js"></script>
 </body>
 </html>

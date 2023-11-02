@@ -28,8 +28,12 @@ public class Localizacion {
         return adapter.getListadoProvincias();
     }
 
-    public ListadoMunicipios getMunicipiosDeProvincia(String idProvincia) throws Exception {
-        return adapter.getMunicipiosDeProvincia(idProvincia);
+    public ListadoMunicipios getMunicipiosDeProvincia(String idProvincia) {
+        try {
+            return adapter.getMunicipiosDeProvincia(idProvincia);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public ListadoLocalidades getLocalidadesDeMunicipio(String idProvincia, String idMunicipio) throws Exception {

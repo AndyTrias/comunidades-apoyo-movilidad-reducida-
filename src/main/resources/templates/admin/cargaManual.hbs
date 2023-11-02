@@ -1,6 +1,4 @@
 {{#partial "contenido"}}
-
-    {{!--
     <form action="admin/entidad" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <h2 class="text-lg font-semibold mb-4">Entidad</h2>
         <div class="mb-4">
@@ -9,6 +7,26 @@
                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                    required>
         </div>
+        <div class="mb-4">
+            <label for="prestadora" class="block text-gray-700 text-sm font-bold mb-2">Entidad Prestadora:</label>
+            <select required id="prestadora" name="prestadora"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    required>
+                <option selected disabled hidden>Seleccionar prestadora</option>
+                {{#each prestadoras}}
+                    <option value="{{this.id}}">{{this.nombre}}</option>
+                {{/each}}
+            </select>
+        </div>
+
+        <div class="flex items-center justify-between">
+            <a href="./cargaManual/seleccionarUbicacion"
+                    class="flex-row bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                Seleccionar ubicacion
+            </a>
+        </div>
+
+
         <div class="flex items-center justify-between">
             <button type="submit"
                     class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
@@ -99,66 +117,5 @@
             </button>
         </div>
     </form>
-
---}}
-
-    {{!--Todo esto va en otra pantalla--}}
-
-    <div class="flex md:flex-row flex-col h-full items-center gap-10 justify-center">
-        <div class="card-container">
-            <a class="card" href="/crearPerfil">
-                <h3 class="text-white text-2xl font-bold">Crear Perfil</h3><br>
-                <div class="layers">
-                    <div class="layer"></div>
-                    <div class="layer"></div>
-                    <div class="layer"></div>
-                    <div class="layer"></div>
-                    <div class="layer"></div>
-                    <div class="layer"></div>
-                    <div class="layer"></div>
-                    <div class="layer"></div>
-                    <div class="layer"></div>
-                    <div class="layer"></div>
-                </div>
-            </a>
-        </div>
-
-        <div class="card-container">
-            <a class="card" href="/cargaManual">
-                <h3 class="text-white text-2xl font-bold">Carga Manual</h3><br>
-                <div class="layers">
-                    <div class="layer"></div>
-                    <div class="layer"></div>
-                    <div class="layer"></div>
-                    <div class="layer"></div>
-                    <div class="layer"></div>
-                    <div class="layer"></div>
-                    <div class="layer"></div>
-                    <div class="layer"></div>
-                    <div class="layer"></div>
-                    <div class="layer"></div>
-                </div>
-            </a>
-        </div>
-
-        <div class="card-container">
-            <a class="card" href="/cargaMasiva">
-                <h3 class="text-white text-2xl font-bold">Carga Masiva</h3><br>
-                <div class="layers">
-                    <div class="layer"></div>
-                    <div class="layer"></div>
-                    <div class="layer"></div>
-                    <div class="layer"></div>
-                    <div class="layer"></div>
-                    <div class="layer"></div>
-                    <div class="layer"></div>
-                    <div class="layer"></div>
-                    <div class="layer"></div>
-                    <div class="layer"></div>
-                </div>
-            </a>
-        </div>
-    </div>
-
 {{/partial}}
 {{> templates/templateBase }}

@@ -24,8 +24,9 @@ import javax.persistence.Transient;
 @Table(name = "entidad_prestadora")
 public class EntidadPrestadora {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)//lo agregue porq rompia un test
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter
+    @Getter
     private Long id;
 
     @Getter
@@ -33,19 +34,20 @@ public class EntidadPrestadora {
     private String nombre;
 
     @Setter
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}) 
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    @Getter
     private Usuario personaDesignada;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     @JoinColumn(name = "entidad_prestadora_id")
-    private List<Entidad> serviciosPrestados;
+    private List<Entidad> entidades;
 
     @Transient
     private AdapterEnviadorDeInformacion enviadorDeInformacion;
 
     public EntidadPrestadora(String nombre){
         this.nombre = nombre;
-        this.serviciosPrestados = new ArrayList<>();
+        this.entidades = new ArrayList<>();
     }
 
     public EntidadPrestadora() {
@@ -57,6 +59,6 @@ public class EntidadPrestadora {
     }
 
     public void agregarEntidad(Entidad entidad){
-        serviciosPrestados.add(entidad);
+        entidades.add(entidad);
     }
 }

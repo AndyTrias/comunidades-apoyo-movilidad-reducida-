@@ -1,6 +1,6 @@
 package models.configs;
 
-import models.comunidades.Rol;
+import models.usuario.Rol;
 import models.usuario.Contrasenia.DiezMilPeoresContrasenias;
 import models.usuario.Contrasenia.ValidadorDeContrasenia;
 import lombok.Getter;

@@ -2,13 +2,11 @@ package Persistencia;
 
 import models.comunidades.Comunidad;
 import models.comunidades.Membresia;
-import models.comunidades.Rol;
-import models.comunidades.TipoRol;
+import models.usuario.TipoRol;
 import models.entidades.Entidad;
 import models.entidades.EntidadPrestadora;
 import models.entidades.Establecimiento;
 import models.entidades.OrganismoDeControl;
-import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
 import models.incidentes.Incidente;
 import models.localizacion.Localizacion;
 import models.localizacion.UbicacionExacta;
@@ -42,8 +40,13 @@ public class AgregarDatosTest {
 
     private RepoIncidentes repoIncidentes;
 
+    private OrganismoDeControl ciudad;
+    private EntidadPrestadora sbase;
+
     private Servicio banio;
     private Entidad lineaB;
+
+
     private Establecimiento estacionMedrano;
     private Establecimiento estacionAlem;
 
@@ -75,7 +78,8 @@ public class AgregarDatosTest {
         lineaB = new Entidad("Linea B", new Localizacion());
         estacionMedrano = new Establecimiento("Estacion Medrano", new Localizacion());
         estacionAlem = new Establecimiento("Estacion Alem", new Localizacion());
-
+        ciudad = new OrganismoDeControl("Gobierno de la Ciudad de Buenos Aires");
+        sbase = new EntidadPrestadora("Subterráneos de Buenos Aires Sociedad del Estado");
         
 
     }
@@ -88,13 +92,21 @@ public class AgregarDatosTest {
 
     @Order(2)
     @Test
+    void agregarOrganismoDeControl(){
+        ciudad.agregarPrestadora(sbase);
+        repoOrganismoDeControl.agregar(ciudad);
+    }
+
+    @Order(3)
+    @Test
     void agregarEntidad() {
+
         lineaB.agregarEstablecimiento(estacionMedrano);
         lineaB.agregarEstablecimiento(estacionAlem);
         repoEntidad.agregar(lineaB);
     }
 
-    @Order(3)
+    @Order(4)
     @Test
     void agregarPrestacionAEstablecimiento() {
         Servicio banio = repoServicio.buscar(1L);
@@ -117,14 +129,14 @@ public class AgregarDatosTest {
         repoEstablecimiento.modificar(estacionAlem);
     }
 
-    @Order(4)
+    @Order(5)
     @Test
     void agregarComunidad() {
         repoComunidad.agregar(comunidad);
         repoComunidad.agregar(comunidad1);
     }
 
-    @Order(5)
+    @Order(6)
     @Test
     void agregarPrestacionAComunidad() {
         comunidad = repoComunidad.buscar(1L);
@@ -141,21 +153,7 @@ public class AgregarDatosTest {
 
     }
 
-//    @Test
-//    void agregarEntidadPrestadora(){
-//      EntidadPrestadora santander = new EntidadPrestadora("Santander Rio Argentina");
-//      santander.setPersonaDesignada(new Usuario());
-//      repoEntidadPrestadora.agregar(santander);
-//    }
-//
-//    @Test
-//    void agregarOrganismoDeControl(){
-//        OrganismoDeControl bancos = new OrganismoDeControl("Bancos");
-//        bancos.setPersonaDesignada(new Usuario());
-//        repoOrganismoDeControl.agregar(bancos);
-//    }
-
-    @Order(6)
+    @Order(7)
     @Test
     void agregarLocalizacion() throws Exception {
         Localizacion localizacion = new Localizacion();
@@ -163,7 +161,7 @@ public class AgregarDatosTest {
         repoLocalizacion.agregar(localizacion);
     }
 
-    @Order(7)
+    @Order(8)
     @Test
     void agregarUsuarioCompleto() throws Exception {
         Usuario usuario = new Usuario("franco", "pesce", "francopescee@gmail.com");
@@ -182,7 +180,7 @@ public class AgregarDatosTest {
 
     }
 
-    @Order(8)
+    @Order(9)
     @Test
     void agregarMembresia() throws Exception {
         Usuario usuario = repoUsuario.buscar(1L);
@@ -196,7 +194,7 @@ public class AgregarDatosTest {
     }
 
 
-    @Order(9)
+    @Order(10)
     @Test
     void agregarIncidenteARevisar(){
         Usuario usuario = repoUsuario.buscar(1L);

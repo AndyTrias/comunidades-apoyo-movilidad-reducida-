@@ -29,8 +29,6 @@ public abstract class RepoGenerico<T> implements WithSimplePersistenceUnit {
         beginTransaction();
         remove(entidad);
         commitTransaction();
-
-
     }
 
     public T buscar(Long id) {

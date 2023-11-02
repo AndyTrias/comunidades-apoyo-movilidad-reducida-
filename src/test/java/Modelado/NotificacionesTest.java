@@ -2,7 +2,7 @@ package Modelado;
 
 import models.comunidades.Comunidad;
 import models.comunidades.Membresia;
-import models.comunidades.Rol;
+import models.usuario.Rol;
 import models.usuario.Interes;
 import models.usuario.configuraciones.formas.CuandoSuceden;
 import models.usuario.configuraciones.formas.EstrategiaDeNotificacion;
@@ -14,7 +14,6 @@ import models.usuario.configuraciones.medios.whatsapp.NotificarPorWhatsApp;
 import models.entidades.Entidad;
 import models.entidades.Establecimiento;
 import models.incidentes.Incidente;
-import models.incidentes.RevisionDeIncidente;
 import models.localizacion.Localizacion;
 import models.localizacion.UbicacionExacta;
 import models.servicios.PrestacionDeServicio;
@@ -69,9 +68,6 @@ public class NotificacionesTest {
         establecimiento1.agregarServicioPrestado(banioCastroBarros);
         this.entidad1 = new Entidad("entidad1", new Localizacion());
         entidad1.agregarEstablecimiento(establecimiento1);
-
-        /*RepoEntidades.getInstance().agregarEntidad(entidad1);*/
-        /*RepoUsuarios.getInstance().agregarUsuario(fede);*/
 
         // Creamos la configuracion de notificaciones
         ConfiguracionDeNotificaciones config = FactoryConfiguracionDeNotificaciones.crearConfiguracionDeNotificaciones("M_C");

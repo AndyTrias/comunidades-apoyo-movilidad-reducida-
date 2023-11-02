@@ -25,11 +25,15 @@ public class Georef extends ApiCaller {
         super(Config.API_GEOREF);
     }
 
-    public ListadoProvincias listadoProvincias() throws IOException {
+    public ListadoProvincias listadoProvincias(){
         GeorefService georefService = this.retrofit.create(GeorefService.class);
         Call<ListadoProvincias> requestProvinciasArg = georefService.provincias();
-        Response<ListadoProvincias> responseProvinciasArg = requestProvinciasArg.execute();
-        return responseProvinciasArg.body();
+        try {
+            Response<ListadoProvincias> responseProvinciasArg = requestProvinciasArg.execute();
+            return responseProvinciasArg.body();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public ListadoProvincias listadoProvincias(int idProvincia) throws IOException {
@@ -40,19 +44,27 @@ public class Georef extends ApiCaller {
         return responseProvinciasArg.body();
     }
 
-    public ListadoMunicipios listadoMunicipios(String id) throws IOException {
-        GeorefService georefService = this.retrofit.create(GeorefService.class);
-        Call<ListadoMunicipios> requestMunicipiosArg = georefService.municipios(id);
-        Response<ListadoMunicipios> responseMunicipiosArg = requestMunicipiosArg.execute();
-        return responseMunicipiosArg.body();
+    public ListadoMunicipios listadoMunicipios(String id) {
+        try {
+            GeorefService georefService = this.retrofit.create(GeorefService.class);
+            Call<ListadoMunicipios> requestMunicipiosArg = georefService.municipios(id, 5000);
+            Response<ListadoMunicipios> responseMunicipiosArg = requestMunicipiosArg.execute();
+            return responseMunicipiosArg.body();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public ListadoMunicipios listadoMunicipios(int idProvincia) throws IOException {
+    public ListadoMunicipios listadoMunicipios(int idProvincia) {
         GeorefService georefService = this.retrofit.create(GeorefService.class);
         String campos = "id,nombre,provincia";
         Call<ListadoMunicipios> requestMunicipiosArg = georefService.municipios(idProvincia, campos);
-        Response<ListadoMunicipios> responseMunicipiosArg = requestMunicipiosArg.execute();
-        return responseMunicipiosArg.body();
+        try {
+            Response<ListadoMunicipios> responseMunicipiosArg = requestMunicipiosArg.execute();
+            return responseMunicipiosArg.body();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public ListadoLocalidades listadoLocalidades(String idProvincia, String idMunicipio) throws IOException {
