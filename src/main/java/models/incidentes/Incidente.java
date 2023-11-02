@@ -88,7 +88,7 @@ public class Incidente {
         Date fechaPromedioCierre = calcularPromedioFechasCierre();
 
         if (fechaPromedioCierre == null) {
-            return 0;  // O devuelve otro valor adecuado en caso de que no haya fechas de cierre
+            return 0; // maxima cantidad de tiempo en una semana
         }
 
         long aperturaMillis = fechaDeApertura.getTime();

@@ -57,7 +57,9 @@ public class FactoryController {
           new RepoEntidadPrestadora()
       );
 
-      case "Informe" -> new RepoInformes();
+      case "Informe" -> new InformesController(
+          new RepoEntidad()
+      );
 
 
       default -> null;

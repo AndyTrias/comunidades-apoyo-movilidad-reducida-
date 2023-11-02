@@ -1,4 +1,4 @@
-package models.rankings.criterios;
+package models.rankings.criteriosNoUsados;
 
 import models.comunidades.Comunidad;
 

@@ -13,12 +13,16 @@ public class MayorCantidad extends CriteriosEntidadesQueUsanIncidentes {
   }
 
   public List<Entidad> generarRanking(List<Entidad> entidades) {
-    return entidades.stream().sorted((entidad1, entidad2) -> Integer.compare(cantidadDeIncidentesEnLaSemana(entidad1), cantidadDeIncidentesEnLaSemana(entidad2))).collect(Collectors.toList());
+    return entidades.stream().sorted((entidad1, entidad2) -> Integer
+            .compare(cantidadDeIncidentesEnLaSemana(entidad1), cantidadDeIncidentesEnLaSemana(entidad2)))
+            .collect(Collectors.toList());
   }
 
   private int cantidadDeIncidentesEnLaSemana(Entidad entidad) {
     List<Incidente> incidentes = obtenerIncidentesDeEntidad(entidad);
-    List<Incidente> incidentesValidos = incidentes.stream().filter(i -> incidenteNoOcurrioHace24Hs(i, incidentes) && i.ocurrioEstaSemana()).toList();
+    List<Incidente> incidentesValidos = incidentes.stream()
+        .filter(i -> incidenteNoOcurrioHace24Hs(i, incidentes) && i.ocurrioEstaSemana())
+        .toList();
     return incidentesValidos.size();
   }
 

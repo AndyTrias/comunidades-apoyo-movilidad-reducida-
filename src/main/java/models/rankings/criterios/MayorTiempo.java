@@ -13,18 +13,22 @@ public class MayorTiempo extends CriteriosEntidadesQueUsanIncidentes {
     }
 
     public List<Entidad> generarRanking(List<Entidad> entidades) {
-//        List<Entidad> entidades = RepoEntidades.getInstance().getEntidades();
-        Collections.sort(entidades, (entidad1, entidad2) -> Float.compare(promedioTiempoDeCierre(entidad1), promedioTiempoDeCierre(entidad2)));
+        entidades.sort((entidad1, entidad2) ->
+            Float.compare(promedioTiempoDeCierre(entidad1), promedioTiempoDeCierre(entidad2)));
+
         return entidades;
     }
 
-    private float promedioTiempoDeCierre(Entidad entidad){
+    private float promedioTiempoDeCierre(Entidad entidad) {
         List<Incidente> incidentes = obtenerIncidentesDeEntidad(entidad);
+        if (incidentes.isEmpty()) {
+            return 0;
+        }
+
         float suma = 0;
         for (Incidente incidente : incidentes) {
             suma += incidente.tiempoActivo();
         }
         return suma / incidentes.size();
     }
-
 }

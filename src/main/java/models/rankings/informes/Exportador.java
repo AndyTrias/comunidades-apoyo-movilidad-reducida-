@@ -16,7 +16,7 @@ public class Exportador {
     this.estrategia = estrategia;
   }
 
-  public String exportarConEstrategia(List<Entidad> entidades, List<Comunidad> comunidades, String nombreArchivo) {
-    return this.estrategia.exportar(this.exportable.generarDatos(entidades, comunidades), nombreArchivo);
+  public String exportarConEstrategia(List<Entidad> entidades, String nombreArchivo) {
+    return this.estrategia.exportar(this.exportable.generarDatos(entidades), nombreArchivo);
   }
 }

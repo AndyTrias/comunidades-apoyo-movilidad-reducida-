@@ -3,37 +3,32 @@ package controllers;
 import lombok.AllArgsConstructor;
 import models.comunidades.Comunidad;
 import models.entidades.Entidad;
-import models.rankings.criterios.CriteriosDeComunidades;
+import models.external.json.ServicioJson;
 import models.rankings.criterios.CriteriosDeEntidades;
+import models.rankings.criterios.MayorCantidad;
+import models.rankings.criterios.MayorTiempo;
+import models.rankings.informes.EstrategiaDeExportacion;
+import models.rankings.informes.Exportador;
+import models.rankings.informes.ExportarAJson;
 import models.rankings.informes.GeneradorDeInformes;
+import models.repositorios.RepoEntidad;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @AllArgsConstructor
 public class InformesController {
 
-//lo que tengo es el repositorio con los informes buscados por fecha
-    // necesito los datos para pasarle al generador de informes
+    private RepoEntidad repoEntidad;
 
+    public void generarRankings(List<CriteriosDeEntidades> criteriosEntidades) {
+        EstrategiaDeExportacion estrategia = new ExportarAJson(new ServicioJson());
 
+        GeneradorDeInformes generadorDeInformes = new GeneradorDeInformes();
+        generadorDeInformes.agregarCriteriosDeEntidad(criteriosEntidades);
 
-    public List<List<String>> generarInformes(List<CriteriosDeComunidades> criteriosComunidades, List<CriteriosDeEntidades> criteriosEntidades, List<Comunidad> comunidades, List<Entidad> entidades) {
-        GeneradorDeInformes generador = new GeneradorDeInformes();
-
-        // Agregar los criterios al generador
-        for (CriteriosDeComunidades criterio : criteriosComunidades) {
-            generador.agregarCriterioDeComunidad(criterio);
-        }
-
-        for (CriteriosDeEntidades criterio : criteriosEntidades) {
-            generador.agregarCriterioDeEntidad(criterio);
-        }
-
-        // Generar los datos del informe
-        List<List<String>> informes = generador.generarDatos(entidades, comunidades);
-
-        return informes;
-
+        Exportador exportador = new Exportador(generadorDeInformes, estrategia);
+        exportador.exportarConEstrategia(repoEntidad.buscarTodos(), "ranking_" + LocalDate.now() + ".json");
     }
 
 }

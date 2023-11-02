@@ -6,12 +6,13 @@ import models.rankings.informes.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import models.rankings.criterios.ImpactoComunidades;
+import models.rankings.criteriosNoUsados.ImpactoComunidades;
 import models.rankings.criterios.MayorCantidad;
 import models.rankings.criterios.MayorTiempo;
 import models.repositorios.RepoComunidad;
 import models.repositorios.RepoEntidad;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -28,11 +29,10 @@ public class informesTest {
 
 
       generadorDeInformes = new GeneradorDeInformes();
-      generadorDeInformes.agregarCriterioDeComunidad(new ImpactoComunidades("Impacto de la comunidad"));
       generadorDeInformes.agregarCriterioDeEntidad(new MayorCantidad("Cantidad de incidentes"));
       generadorDeInformes.agregarCriterioDeEntidad(new MayorTiempo("Tiempo de resolucion"));
 
-      informes = generadorDeInformes.generarDatos(repoEntidad.buscarTodos(), repoComunidad.buscarTodos());
+      informes = generadorDeInformes.generarDatos(repoEntidad.buscarTodos());
     }
 
     @Test
@@ -40,7 +40,7 @@ public class informesTest {
       ExportarCSV exportarCSVMock = Mockito.mock(ExportarCSV.class);
 
       Exportador exportador = new Exportador(generadorDeInformes, exportarCSVMock);
-      exportador.exportarConEstrategia(repoEntidad.buscarTodos(), repoComunidad.buscarTodos(), "informes.csv");
+      exportador.exportarConEstrategia(repoEntidad.buscarTodos(), "informes.csv");
 
       Mockito.verify(exportarCSVMock).exportar(informes, "informes.csv");
     }
@@ -51,8 +51,10 @@ public class informesTest {
       ServicioJson servicioJsonMock = Mockito.mock(ServicioJson.class);
       EstrategiaDeExportacion estrategia = new ExportarAJson(servicioJsonMock);
 
+//      String nombreArchivo = "ranking_" + LocalDate.now() + ".json";
+
       Exportador exportador = new Exportador(generadorDeInformes, estrategia);
-      exportador.exportarConEstrategia(repoEntidad.buscarTodos(), repoComunidad.buscarTodos(), "informes.json");
+      exportador.exportarConEstrategia(repoEntidad.buscarTodos(), "ranking_" + LocalDate.now() + ".json");
 
       String ruta = Config.PATH_INFORMES + "informes.json";
 
@@ -63,14 +65,14 @@ public class informesTest {
     public void csvSinMock(){
       EstrategiaDeExportacion estrategia = new ExportarCSV();
       Exportador exportador = new Exportador(generadorDeInformes, estrategia);
-      exportador.exportarConEstrategia(repoEntidad.buscarTodos(), repoComunidad.buscarTodos(), "informes.csv");
+      exportador.exportarConEstrategia(repoEntidad.buscarTodos(), "informes.csv");
     }
 
     @Test
     public void jsonSinMock() {
       EstrategiaDeExportacion estrategiaDeExportacion = new ExportarAJson(new ServicioJson());
       Exportador exportador = new Exportador(generadorDeInformes, estrategiaDeExportacion);
-      exportador.exportarConEstrategia(repoEntidad.buscarTodos(), repoComunidad.buscarTodos(), "informes.json");
+      exportador.exportarConEstrategia(repoEntidad.buscarTodos(),  "informes.json");
     }
 
   }
