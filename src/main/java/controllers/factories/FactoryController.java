@@ -52,7 +52,10 @@ public class FactoryController {
             new RepoUsuario()
       );
 
-      case "Home" -> new HomeController();
+      case "Home" -> new HomeController(
+          new RepoOrganismoDeControl(),
+          new RepoEntidadPrestadora()
+      );
 
 
       default -> null;

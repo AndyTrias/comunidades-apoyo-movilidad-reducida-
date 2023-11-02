@@ -34,7 +34,7 @@ public class EntidadPrestadora {
     private String nombre;
 
     @Setter
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     @Getter
     private Usuario personaDesignada;
 

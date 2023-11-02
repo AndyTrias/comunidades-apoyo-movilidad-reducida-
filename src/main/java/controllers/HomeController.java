@@ -2,16 +2,23 @@ package controllers;
 
 import controllers.BaseController;
 import io.javalin.http.Context;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import models.repositorios.RepoEntidadPrestadora;
+import models.repositorios.RepoOrganismoDeControl;
 import models.usuario.Usuario;
 
 import java.util.HashMap;
 import java.util.Map;
 
-
+@AllArgsConstructor
 public class HomeController extends BaseController {
+
+  private RepoOrganismoDeControl repoOrganismoDeControl;
+  private RepoEntidadPrestadora repoEntidadPrestadora;
+
   public void index(Context ctx) {
     Usuario usuario = usuarioLogueado(ctx);
 
@@ -42,13 +49,15 @@ public class HomeController extends BaseController {
   public void showEntidad(Context ctx) {
     Map<String, Object> model = new HashMap<>();
     model.put("entidadPrestadora", true);
-    ctx.render("show/prestadora.hbs", model);
+    model.put("prestadora", repoEntidadPrestadora.buscarporUsuarioDesignado(usuarioLogueado(ctx).getId()));
+    ctx.render("show/rankings.hbs", model);
   }
 
   public void showOrganismo(Context ctx) {
     Map<String, Object> model = new HashMap<>();
     model.put("organismoDeControl", true);
-    ctx.render("show/organismo.hbs", model);
+    model.put("organismo", repoOrganismoDeControl.buscarPorUsarioDesignado(usuarioLogueado(ctx).getId()));
+    ctx.render("show/rankings.hbs", model);
   }
 }
 
