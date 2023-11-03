@@ -9,15 +9,13 @@ import models.external.retrofit.apiServicio1.responseClases.FusionDTO;
 import models.external.retrofit.apiServicio3.responseClases.EntidadDTO;
 import models.external.retrofit.apiServicio3.responseClases.IncidenteDTO;
 import models.incidentes.Incidente;
-import models.incidentes.IncidenteDeComunidad;
 import models.repositorios.RepoComunidad;
-import models.repositorios.RepoIncidenteDeComunidad;
 import models.repositorios.RepoMembresia;
 import models.repositorios.RepoPrestacion;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Mapper {
@@ -91,7 +89,7 @@ public class Mapper {
     public static IncidenteDTO mapIncidenteToIncidenteDTO(Incidente i, RepoComunidad repoComunidad) {
         IncidenteDTO incidenteDTO = new IncidenteDTO();
         incidenteDTO.setFechaApertura(DateTimeConversion.dateToLocalDateTime(i.getFechaDeApertura()).toString());
-        incidenteDTO.setFechaCierre(DateTimeConversion.dateToLocalDateTime(i.calcularPromedioFechasCierre()).toString());
+        incidenteDTO.setFechaCierre(LocalDateTime.now().plusMinutes(i.calcularPromedioFechasCierre()).format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")));
         List<Comunidad> comunidadesConIncidente = repoComunidad.buscarTodosPorIncidente(i);
         int cantidadDeAfectados = 0;
         for (Comunidad c : comunidadesConIncidente) {

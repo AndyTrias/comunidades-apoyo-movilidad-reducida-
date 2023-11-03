@@ -150,12 +150,12 @@ public class ServicioApiTest {
         IncidenteDTO incidenteDTO6 = new IncidenteDTO();
         incidenteDTO6.setFechaApertura("2023-08-25");
         incidenteDTO6.setFechaCierre("2023-09-18");
-        incidenteDTO6.setMiembrosAfectados(89);
+        incidenteDTO6.setMiembrosAfectados(1);
 
         IncidenteDTO incidenteDTO7 = new IncidenteDTO();
         incidenteDTO7.setFechaApertura("2023-07-30");
         incidenteDTO7.setFechaCierre("2023-08-05");
-        incidenteDTO7.setMiembrosAfectados(45);
+        incidenteDTO7.setMiembrosAfectados(1);
 
         EntidadDTO entidadDTO3 = new EntidadDTO();
         entidadDTO3.setId(3);

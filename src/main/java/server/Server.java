@@ -23,11 +23,12 @@ public class Server {
 
   public static void init() {
     if(app == null) {
-      Integer port = Integer.parseInt(System.getProperty("port", "8080"));
+      int port = Integer.parseInt(System.getProperty("port", "8080"));
       app = Javalin.create(config()).start(port);
       initTemplateEngine();
       new Router();
       Initializer.init();
+      Initializer.activarProcesos();
       System.out.println("Server started on port: " + port);
 
     }

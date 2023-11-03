@@ -120,7 +120,7 @@ public class Initializer implements WithSimplePersistenceUnit {
 
   }
 
-  private void activarProcesos() {
+  public static void activarProcesos() {
     ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
 
     executor.scheduleWithFixedDelay(() -> {
