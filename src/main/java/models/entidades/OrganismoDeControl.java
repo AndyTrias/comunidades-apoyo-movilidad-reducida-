@@ -37,6 +37,7 @@ public class OrganismoDeControl {
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     private Usuario personaDesignada;
 
+    @Getter
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "organismo_de_control_id")
     private List<EntidadPrestadora> entidadesQuePosee;
