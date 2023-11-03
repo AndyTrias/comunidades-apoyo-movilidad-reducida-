@@ -8,6 +8,7 @@ import models.entidades.Entidad;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class CriteriosEntidadesQueUsanIncidentes implements CriteriosDeEntidades {
 
@@ -19,13 +20,10 @@ public abstract class CriteriosEntidadesQueUsanIncidentes implements CriteriosDe
 
     public abstract List<Entidad> generarRanking(List<Entidad> entidades);
 
-    protected List<Incidente> obtenerIncidentesDeEntidad(Entidad entidad) {
-
-        List<Incidente> incidentes = new ArrayList<>();
-        for (PrestacionDeServicio prestacion : entidad.getPrestacionesDeServicios()) {
-            List<Incidente> incidentesPrestacion = new ArrayList<>(prestacion.getIncidentes());
-            incidentes.addAll(incidentesPrestacion);
-        }
-        return incidentes;
+    protected List<Incidente> obtenerIncidentesDeEntidadEnlaSemana(Entidad entidad) {
+        return entidad.getPrestacionesDeServicios().stream()
+            .flatMap(prestacion -> prestacion.getIncidentes().stream())
+            .filter(Incidente::ocurrioEstaSemana)
+            .collect(Collectors.toList());
     }
 }

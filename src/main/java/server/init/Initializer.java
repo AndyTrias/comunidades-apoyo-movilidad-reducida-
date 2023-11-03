@@ -1,10 +1,16 @@
 package server.init;
 
+import controllers.InformesController;
+import controllers.factories.FactoryController;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import models.usuario.Permiso;
 import models.usuario.Rol;
 import models.usuario.TipoRol;
 import models.repositorios.RepoRol;
+
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class Initializer implements WithSimplePersistenceUnit {
 
@@ -113,5 +119,16 @@ public class Initializer implements WithSimplePersistenceUnit {
     return this;
 
   }
+
+  private void activarProcesos() {
+    ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
+
+    executor.scheduleWithFixedDelay(() -> {
+      InformesController informesController = (InformesController) FactoryController.controller("Informe");
+      informesController.generarRankings();
+      System.out.println("Tarea programada ejecutada");
+    }, 7, 7, TimeUnit.DAYS);
+  }
+
 
 }

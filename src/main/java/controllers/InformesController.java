@@ -1,31 +1,29 @@
 package controllers;
 
 import lombok.AllArgsConstructor;
-import models.comunidades.Comunidad;
-import models.entidades.Entidad;
 import models.external.json.ServicioJson;
-import models.rankings.criterios.CriteriosDeEntidades;
 import models.rankings.criterios.MayorCantidad;
 import models.rankings.criterios.MayorTiempo;
-import models.rankings.informes.EstrategiaDeExportacion;
+import models.rankings.estrategiaDeExportacion.EstrategiaDeExportacion;
+import models.rankings.estrategiaDeExportacion.ExportarCSV;
 import models.rankings.informes.Exportador;
-import models.rankings.informes.ExportarAJson;
+import models.rankings.estrategiaDeExportacion.ExportarAJson;
 import models.rankings.informes.GeneradorDeInformes;
 import models.repositorios.RepoEntidad;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @AllArgsConstructor
 public class InformesController {
 
     private RepoEntidad repoEntidad;
 
-    public void generarRankings(List<CriteriosDeEntidades> criteriosEntidades) {
+    public void generarRankings() {
         EstrategiaDeExportacion estrategia = new ExportarAJson(new ServicioJson());
 
         GeneradorDeInformes generadorDeInformes = new GeneradorDeInformes();
-        generadorDeInformes.agregarCriteriosDeEntidad(criteriosEntidades);
+        generadorDeInformes.agregarCriterioDeEntidad(new MayorTiempo("Tiempo de resolucion"));
+        generadorDeInformes.agregarCriterioDeEntidad(new MayorCantidad("Cantidad de incidentes"));
 
         Exportador exportador = new Exportador(generadorDeInformes, estrategia);
         exportador.exportarConEstrategia(repoEntidad.buscarTodos(), "ranking_" + LocalDate.now() + ".json");

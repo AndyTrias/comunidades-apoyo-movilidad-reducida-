@@ -19,10 +19,6 @@ public class GeneradorDeInformes {
     this.criteriosDeEntidades.add(criterio);
   }
 
-  public void agregarCriteriosDeEntidad(List<CriteriosDeEntidades> criterios) {
-    this.criteriosDeEntidades.addAll(criterios);
-  }
-
   public List<List<String>> generarDatos(List<Entidad> entidades) {
     List<List<String>> datos = new ArrayList<>();
 
@@ -42,7 +38,6 @@ public class GeneradorDeInformes {
 
       datos.add(columnas);
     }
-
 
     return datos;
   }

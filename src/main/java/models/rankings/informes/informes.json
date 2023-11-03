@@ -2,19 +2,19 @@
   {
     "Criterio": "Cantidad de incidentes",
     "Ranking": [
-      "Linea B, Linea B, Santander Rio Argentina, Linea B"
+      "10, 2, 7, 5"
     ]
   },
   {
     "Criterio": "Tiempo de resolucion",
     "Ranking": [
-      "Linea B, Linea B, Santander Rio Argentina, Linea B"
+      "3, 2, 8, 4"
     ]
   },
   {
     "Criterio": "Impacto de la comunidad",
     "Ranking": [
-      "comunidad de baños del B, comunidad de baños del B, comunidad de baños del B"
+      "5, 3, 1"
     ]
   }
 ]

@@ -2,11 +2,13 @@ package Modelado;
 
 import models.configs.Config;
 import models.external.json.ServicioJson;
+import models.rankings.estrategiaDeExportacion.EstrategiaDeExportacion;
+import models.rankings.estrategiaDeExportacion.ExportarAJson;
+import models.rankings.estrategiaDeExportacion.ExportarCSV;
 import models.rankings.informes.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import models.rankings.criteriosNoUsados.ImpactoComunidades;
 import models.rankings.criterios.MayorCantidad;
 import models.rankings.criterios.MayorTiempo;
 import models.repositorios.RepoComunidad;

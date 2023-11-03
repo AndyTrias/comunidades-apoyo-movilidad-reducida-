@@ -29,6 +29,7 @@ public class Server {
       new Router();
       Initializer.init();
       System.out.println("Server started on port: " + port);
+
     }
   }
 

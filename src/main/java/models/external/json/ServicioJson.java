@@ -2,7 +2,7 @@ package models.external.json;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import models.rankings.informes.AdapterJson;
+import models.rankings.estrategiaDeExportacion.AdapterJson;
 
 import java.io.FileWriter;
 import java.io.IOException;
