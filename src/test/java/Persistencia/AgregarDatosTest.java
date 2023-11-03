@@ -2,13 +2,12 @@ package Persistencia;
 
 import models.comunidades.Comunidad;
 import models.comunidades.Membresia;
-import models.comunidades.Rol;
-import models.comunidades.TipoRol;
+import models.usuario.TipoRol;
 import models.entidades.Entidad;
 import models.entidades.EntidadPrestadora;
 import models.entidades.Establecimiento;
 import models.entidades.OrganismoDeControl;
-import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
+import models.incidentes.Incidente;
 import models.localizacion.Localizacion;
 import models.localizacion.UbicacionExacta;
 import models.repositorios.*;
@@ -19,6 +18,7 @@ import models.servicios.PrestacionDeServicio;
 import models.servicios.Servicio;
 import models.usuario.Usuario;
 
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -38,8 +38,15 @@ public class AgregarDatosTest {
     private RepoPrestacion repoPrestacion;
     private RepoRol repoRol;
 
+    private RepoIncidentes repoIncidentes;
+
+    private OrganismoDeControl ciudad;
+    private EntidadPrestadora sbase;
+
     private Servicio banio;
     private Entidad lineaB;
+
+
     private Establecimiento estacionMedrano;
     private Establecimiento estacionAlem;
 
@@ -63,6 +70,7 @@ public class AgregarDatosTest {
         repoOrganismoDeControl = new RepoOrganismoDeControl();
         repoPrestacion = new RepoPrestacion();
         repoRol = new RepoRol();
+        repoIncidentes = new RepoIncidentes();
 
         banio = new Servicio("baño");
         comunidad = new Comunidad("comunidad de baños del B");
@@ -70,7 +78,8 @@ public class AgregarDatosTest {
         lineaB = new Entidad("Linea B", new Localizacion());
         estacionMedrano = new Establecimiento("Estacion Medrano", new Localizacion());
         estacionAlem = new Establecimiento("Estacion Alem", new Localizacion());
-
+        ciudad = new OrganismoDeControl("Gobierno de la Ciudad de Buenos Aires");
+        sbase = new EntidadPrestadora("Subterráneos de Buenos Aires Sociedad del Estado");
         
 
     }
@@ -83,19 +92,27 @@ public class AgregarDatosTest {
 
     @Order(2)
     @Test
+    void agregarOrganismoDeControl(){
+        ciudad.agregarPrestadora(sbase);
+        repoOrganismoDeControl.agregar(ciudad);
+    }
+
+    @Order(3)
+    @Test
     void agregarEntidad() {
+
         lineaB.agregarEstablecimiento(estacionMedrano);
         lineaB.agregarEstablecimiento(estacionAlem);
         repoEntidad.agregar(lineaB);
     }
 
-    @Order(3)
+    @Order(4)
     @Test
     void agregarPrestacionAEstablecimiento() {
         Servicio banio = repoServicio.buscar(1L);
         
-        banioMedrano1 = new PrestacionDeServicio(banio, "baño Medrano inferior", new UbicacionExacta(3, 3));
-        banioMedrano2 = new PrestacionDeServicio(banio, "baño Medrano superior", new UbicacionExacta(2, 2));
+        banioMedrano1 = new PrestacionDeServicio(banio, "baño Medrano inferior", new UbicacionExacta(-34.602993100046, -58.42114971730332));
+        banioMedrano2 = new PrestacionDeServicio(banio, "baño Medrano superior", new UbicacionExacta(-34.602993100046, -58.42114971730332));
         banioAlem = new PrestacionDeServicio(banio, "Baño Alem", new UbicacionExacta(1, 1));
         
         Entidad lineaB = repoEntidad.buscar(1L);
@@ -112,14 +129,14 @@ public class AgregarDatosTest {
         repoEstablecimiento.modificar(estacionAlem);
     }
 
-    @Order(4)
+    @Order(5)
     @Test
     void agregarComunidad() {
         repoComunidad.agregar(comunidad);
         repoComunidad.agregar(comunidad1);
     }
 
-    @Order(5)
+    @Order(6)
     @Test
     void agregarPrestacionAComunidad() {
         comunidad = repoComunidad.buscar(1L);
@@ -136,21 +153,7 @@ public class AgregarDatosTest {
 
     }
 
-//    @Test
-//    void agregarEntidadPrestadora(){
-//      EntidadPrestadora santander = new EntidadPrestadora("Santander Rio Argentina");
-//      santander.setPersonaDesignada(new Usuario());
-//      repoEntidadPrestadora.agregar(santander);
-//    }
-//
-//    @Test
-//    void agregarOrganismoDeControl(){
-//        OrganismoDeControl bancos = new OrganismoDeControl("Bancos");
-//        bancos.setPersonaDesignada(new Usuario());
-//        repoOrganismoDeControl.agregar(bancos);
-//    }
-
-    @Order(6)
+    @Order(7)
     @Test
     void agregarLocalizacion() throws Exception {
         Localizacion localizacion = new Localizacion();
@@ -158,7 +161,7 @@ public class AgregarDatosTest {
         repoLocalizacion.agregar(localizacion);
     }
 
-    @Order(7)
+    @Order(8)
     @Test
     void agregarUsuarioCompleto() throws Exception {
         Usuario usuario = new Usuario("franco", "pesce", "francopescee@gmail.com");
@@ -167,9 +170,17 @@ public class AgregarDatosTest {
         usuario.setUbicacionExacta(new UbicacionExacta(1,1));
         usuario.setRol(repoRol.buscarPorNombre(TipoRol.ADMINISTRADOR_PLATAFORMA));
         repoUsuario.agregar(usuario);
+
+        Usuario usuario2 = new Usuario("Gian", "Riccelli", "yayoriccelli@gmail.com");
+        usuario2.setContrasenia("@ashffkrh3nksdnf214123cssdf");
+        usuario2.setTelefono("+5491131231231");
+        usuario2.setUbicacionExacta(new UbicacionExacta(1,1));
+        //usuario.setRol(repoRol.buscarPorNombre(TipoRol.ADMINISTRADOR_PLATAFORMA));
+        repoUsuario.agregar(usuario);
+
     }
 
-    @Order(8)
+    @Order(9)
     @Test
     void agregarMembresia() throws Exception {
         Usuario usuario = repoUsuario.buscar(1L);
@@ -182,13 +193,20 @@ public class AgregarDatosTest {
         repoComunidad.modificar(comunidad);
     }
 
-    /*
-    @Order(9)
+
+    @Order(10)
     @Test
     void agregarIncidenteARevisar(){
         Usuario usuario = repoUsuario.buscar(1L);
-        Comunidad comunidad = repoComunidad.buscar(1L);
 
+        PrestacionDeServicio banioMedrano1 = repoPrestacion.buscar(1L);
+
+        Incidente incidente = new Incidente(usuario, "baño sucio", banioMedrano1, new Date());
+
+        repoIncidentes.agregar(incidente);
+
+        usuario.agregarRevisionDeIncidente(repoIncidentes.buscar(1L));
+        repoUsuario.modificar(usuario);
     }
-     */
+
 }

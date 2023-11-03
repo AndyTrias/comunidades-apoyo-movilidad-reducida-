@@ -2,37 +2,44 @@ package server.middleware;
 
 import io.javalin.config.JavalinConfig;
 import io.javalin.http.Context;
-import models.comunidades.TipoRol;
-
-import java.nio.file.AccessDeniedException;
+import models.usuario.TipoRol;
+import server.exceptions.PermisosInvalidosException;
 
 public class AuthMiddleware {
     public static void apply(JavalinConfig config) {
         config.accessManager((handler, ctx, permittedRoles) -> {
-            TipoRol userRole = getUserRoleType(ctx);
+            String path = ctx.path();
 
-            if (authPath(ctx.path())) {
+            if (authPath(path)) {
                 handler.handle(ctx);
                 return;
             }
 
-            if((permittedRoles.isEmpty() || permittedRoles.contains(userRole)) && ctx.sessionAttribute("usuario_id") != null) {
-                handler.handle(ctx);
-            }
-            else {
+            if (ctx.sessionAttribute("usuario_id") == null) {
                 ctx.redirect("/login");
+                return;
             }
+
+            TipoRol userRole = getUserRoleType(ctx);
+            if (permittedRoles.isEmpty() || permittedRoles.contains(userRole)) {
+                handler.handle(ctx);
+                return;
+            }
+
+            throw new PermisosInvalidosException("No tiene permisos para acceder a la siguiente ruta");
         });
     }
 
     private static TipoRol getUserRoleType(Context context) {
-        if (context.sessionAttribute("tipo_rol") == null) {
+        Object tipoRolAttribute = context.sessionAttribute("tipo_rol");
+        if (tipoRolAttribute == null) {
             return null;
         }
-        return TipoRol.valueOf(context.sessionAttribute("tipo_rol"));
+        return TipoRol.valueOf(tipoRolAttribute.toString());
     }
 
     private static boolean authPath(String path) {
         return path.contains("/login") || path.contains("/register");
     }
 }
+

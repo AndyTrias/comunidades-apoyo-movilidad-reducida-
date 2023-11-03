@@ -2,6 +2,8 @@ package models.comunidades;
 
 import models.servicios.PrestacionDeServicio;
 import lombok.Getter;
+import models.usuario.Rol;
+import models.usuario.TipoRol;
 import models.usuario.Usuario;
 
 import javax.persistence.*;

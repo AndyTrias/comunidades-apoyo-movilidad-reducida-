@@ -3,8 +3,8 @@ package models.rankings.criterios;
 import models.incidentes.Incidente;
 import models.entidades.Entidad;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class MayorTiempo extends CriteriosEntidadesQueUsanIncidentes {
 
@@ -13,18 +13,19 @@ public class MayorTiempo extends CriteriosEntidadesQueUsanIncidentes {
     }
 
     public List<Entidad> generarRanking(List<Entidad> entidades) {
-//        List<Entidad> entidades = RepoEntidades.getInstance().getEntidades();
-        Collections.sort(entidades, (entidad1, entidad2) -> Float.compare(promedioTiempoDeCierre(entidad1), promedioTiempoDeCierre(entidad2)));
-        return entidades;
+        return entidades.stream()
+            .sorted(Comparator.comparingDouble(this::promedioTiempoDeCierre))
+            .collect(Collectors.toList());
     }
 
-    private float promedioTiempoDeCierre(Entidad entidad){
-        List<Incidente> incidentes = obtenerIncidentesDeEntidad(entidad);
-        float suma = 0;
-        for (Incidente incidente : incidentes) {
-            suma += incidente.tiempoActivo();
-        }
-        return suma / incidentes.size();
-    }
 
+    private float promedioTiempoDeCierre(Entidad entidad) {
+        List<Incidente> incidentes = obtenerIncidentesDeEntidadEnlaSemana(entidad);
+
+        OptionalDouble promedio = incidentes.stream()
+            .mapToDouble(Incidente::tiempoActivo)
+            .average();
+
+        return (float) promedio.orElse(0.0);
+    }
 }

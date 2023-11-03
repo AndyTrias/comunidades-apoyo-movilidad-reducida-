@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoreo estados y servicios</title>
+    <link
+            href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+            rel="stylesheet"
+    />
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+            rel="stylesheet"
+    />
+    <link rel="stylesheet" href="\css\style.css">
+    <link rel="stylesheet" href="\css\background.css">
+    <link rel="stylesheet" href="\css\incidentes.css">
+    <script src="\js\script.js"></script>
+    <script src="\js\incidentes.js"></script>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+    <link rel="stylesheet" href="https://unpkg.com/flowbite@latest/dist/flowbite.min.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.css" rel="stylesheet" />
+    {{#block "agregarAlHead"}}
+    {{/block}}
+</head>
+<body class="h-screen flex flex-col bg-gradient-to-l from-indigo-400 via-purple-500 to-cyan-500">
+
+    <header>
+        <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+            <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
+                     stroke-linejoin="round" stroke-width="2"
+                     class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                </svg>
+                <a class="ml-3 text-xl" href="/">
+                    Monitoreo de Estado de Servicios
+                </a>
+            </a>
+            <nav class="md:ml-auto flex flex-wrap items-center gap-3 text-base justify-center">
+                {{#if administrador}}
+                    <a class="mr-5 text-white hover:text-gray-900" href="admin/usuarios">
+                        Usuarios
+                    </a>
+                    <a class="mr-5 text-white hover:text-gray-900" href="/admin/cargaManual">
+                        Carga Manual
+                    </a>
+                    <a class="mr-5 text-white hover:text-gray-900" href="admin/cargaMasiva">
+                        Carga Masiva
+                    </a>
+                {{else if entidadPrestadora}}
+                {{else if organismoDeControl}}
+                {{else if notlogged}}
+                {{else}}
+                    <a class="mr-5 text-white hover:text-gray-900" href="/comunidades">
+                        Comunidades
+                    </a>
+                    <a class="mr-5 text-white hover:text-gray-900" href="/revisionDeIncidentes">
+                        Revision de incidentes
+                    </a>
+                    <a class="mr-5 text-white hover:text-gray-900" href="/perfil">
+                        Perfil
+                    </a>
+                {{/if}}
+                {{#unless notlogged}}
+
+                    <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" onclick="goBack()">
+                        <!-- El botón para volver a la página anterior -->
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded">
+                            Volver
+                        </button>
+                    </a>
+                    <a href="/logout"
+                       class="flex flex-col justify-center items-center bg-red-400 border-0 py-1 px-3 focus:outline-none hover:bg-red-600 rounded ml-auto text-base mt-4 md:mt-0 w-20 h-8">
+                        <i class="fas fa-sign-out-alt text-white"></i>
+                    </a>
+                {{/unless}}
+            </nav>
+        </div>
+    </header>
+
+
+    {{#block "contenido"}}
+    {{/block}}
+
+
+    <footer class="text-gray-600 body-font mt-auto">
+    <div class="container p-5 mx-auto flex items-center sm:flex-row flex-col">
+        <a class="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
+                 stroke-linejoin="round" stroke-width="2"
+                 class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+            </svg>
+            <span class="ml-3 text-xl">
+            Monitoreo de Estado de Servicios
+          </span>
+        </a>
+        <p class="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">©
+            2023 Diseño de Sistemas UTN —
+            <a href="https://github.com/dds-utn/2023-tpa-mama-grupo-06" class="text-gray-600 ml-1"
+               rel="noopener noreferrer" target="_blank">Github</a>
+        </p>
+    </div>
+</footer>
+
+    {{#block "agregarScript"}}
+    {{/block}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.js"></script>
+</body>
+</html>

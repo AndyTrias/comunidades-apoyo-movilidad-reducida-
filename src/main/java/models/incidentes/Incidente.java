@@ -9,6 +9,9 @@ import models.notificaciones.notificador.AperturaDeIncidente;
 import models.notificaciones.notificador.Notificador;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,6 +21,7 @@ import java.util.List;
 public class Incidente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
     private Long id;
 
     @Getter
@@ -69,32 +73,22 @@ public class Incidente {
     }
 
 
-    public Date calcularPromedioFechasCierre() {
+    public long calcularPromedioFechasCierre() {
         if (fechasDeCierre.isEmpty()) {
-            return null;
+            return fechaDeApertura.getTime() + (7 * 24 * 60 * 60 * 1000); // Si no hay fechas de cierre, tiempo activo de una semana
         }
 
-        long totalMillis = 0;
-        for (Date fechaCierre : fechasDeCierre) {
-            totalMillis += fechaCierre.getTime();
-        }
-
-        long promedioMillis = totalMillis / fechasDeCierre.size();
-        return new Date(promedioMillis);
+        long totalMillis = fechasDeCierre.stream().mapToLong(Date::getTime).sum();
+        return totalMillis / fechasDeCierre.size();
     }
 
     public long tiempoActivo() {
-        Date fechaPromedioCierre = calcularPromedioFechasCierre();
-
-        if (fechaPromedioCierre == null) {
-            return 0;  // O devuelve otro valor adecuado en caso de que no haya fechas de cierre
-        }
+        long fechaPromedioCierreMillis = calcularPromedioFechasCierre();
 
         long aperturaMillis = fechaDeApertura.getTime();
-        long promedioCierreMillis = fechaPromedioCierre.getTime();
-        long diferenciaMillis = promedioCierreMillis - aperturaMillis;
+        long diferenciaMillis = fechaPromedioCierreMillis - aperturaMillis;
 
-        return diferenciaMillis / (1000 * 60);  // Convertir de milisegundos a minutos
+        return diferenciaMillis / (60 * 1000); // Convertir de milisegundos a minutos
     }
 
     public void notificarApertura(){
@@ -105,10 +99,18 @@ public class Incidente {
         return fechasDeCierre.isEmpty();
     }
 
-    public boolean ocurrioEstaSemana(){
-        Date hoy = new Date();
-        Date haceUnaSemana = new Date(hoy.getTime() - 7 * 24 * 3600 * 1000);
-        return fechaDeApertura.after(haceUnaSemana);
+    public boolean ocurrioEstaSemana() {
+        LocalDate hoy = LocalDate.now();
+        LocalDate fechaDeAperturaLocalDate = fechaDeApertura.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate haceUnaSemana = hoy.minus(7, ChronoUnit.DAYS);
+        return fechaDeAperturaLocalDate.isAfter(haceUnaSemana);
+    }
+
+    public boolean noOcurrioHace24Hs() {
+        LocalDate hoy = LocalDate.now();
+        LocalDate fechaDeAperturaLocalDate = fechaDeApertura.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate hace24Hs = hoy.minus(1, ChronoUnit.DAYS);
+        return fechaDeAperturaLocalDate.isBefore(hace24Hs);
     }
 
 

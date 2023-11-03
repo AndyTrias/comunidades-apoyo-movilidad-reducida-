@@ -29,7 +29,7 @@ public class IncidenteDeComunidad {
   @Getter
   @Setter
   @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
-  private Usuario CerradoPor;
+  private Usuario cerradoPor;
 
   @Getter
   @Setter
@@ -38,7 +38,7 @@ public class IncidenteDeComunidad {
 
   public void cerrarIncidente(Usuario usuario) {
     this.abierto = false;
-    this.CerradoPor = usuario;
+    this.cerradoPor = usuario;
     this.fechaDeCierre = new Date();
   }
 

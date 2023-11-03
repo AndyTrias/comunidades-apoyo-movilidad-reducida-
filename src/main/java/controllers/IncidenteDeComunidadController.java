@@ -15,10 +15,7 @@ import server.exceptions.EntidadNoExistenteException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @AllArgsConstructor
 public class IncidenteDeComunidadController extends BaseController{
@@ -48,9 +45,10 @@ public class IncidenteDeComunidadController extends BaseController{
       throw new EntidadNoExistenteException("No existe esa prestacion");
     }
 
-    Incidente incidente = new Incidente(usuario, ctx.formParam("observaciones"), prestacion, formatearFecha(ctx.formParam("fechaDeApertura")));
+    Incidente incidente = new Incidente(usuario, ctx.formParam("observaciones"), prestacion, new Date());
     repoIncidente.agregar(incidente);
-    usuario.getComunidades().stream()
+    List<Comunidad> comunidades = usuario.getComunidades();
+    comunidades.stream()
             .filter(c -> c.getServiciosDeInteres().contains(prestacion))
             .forEach(c -> {
               c.abrirIncidente(incidente);
@@ -85,13 +83,6 @@ public class IncidenteDeComunidadController extends BaseController{
     ctx.render("comunidades/aperturaIncidente.hbs", model);
   }
 
-
-  private Date formatearFecha(String fecha) {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-    LocalDateTime fechaDeApertura = LocalDateTime.parse(fecha, formatter);
-    Timestamp timestamp = Timestamp.valueOf(fechaDeApertura);
-    return new Date(timestamp.getTime());
-  }
 
   private Comunidad obtenerComunidadConUsuario(Context ctx, String id) {
     Comunidad comunidad = obtenerComunidad(id);

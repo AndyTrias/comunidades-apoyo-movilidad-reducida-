@@ -1,0 +1,40 @@
+{{#partial "contenido"}}
+    <h1 class="text-2xl font-bold mb-4">Selecciona su rol para cada Prestacion</h1>
+        {{#if afectaciones}}
+            <form action="" method="post">
+            <div class="flex flex-col gap-4">
+                {{#each afectaciones}}
+                    <div class="bg-white p-4 rounded-lg shadow-md">
+                        <h2 class="text-lg font-semibold">{{this.prestacionDeServicio.nombre}}</h2>
+                        <div class="mt-2">
+                            <label for="{{this.id}}" class="flex items-center space-x-2 cursor-pointer">
+                                <div class="text-gray-700 font-semibold text-lg">
+                                    <i class="far fa-eye text-blue-500"></i> Observador
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="{{this.id}}" name="afectacion" value={{this.id}}
+                                           class="hidden" {{#if this.afectado}}checked{{/if}}>
+                                    <div class="relative w-14 h-8 bg-gray-300 rounded-full">
+                                        <div class="w-6 h-6 bg-white rounded-full shadow-md transform translate-x-0 transition-transform"></div>
+                                    </div>
+                                </div>
+                                <div class="text-gray-700 font-semibold text-lg">
+                                    <i class="fas fa-exclamation-triangle text-red-500"></i> Afectado
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                {{/each}}
+                <button type="submit" class="bg-indigo-400 text-white font-bold py-2 px-4 rounded hover:bg-indigo-500 shadow">
+                    Guardar
+                </button>
+            </form>
+        {{else}}
+            <p>No hay afectaciones</p>
+        {{/if}}
+    </div>
+{{/partial}}
+{{#partial "agregarScript"}}
+    <script src="/js/afectaciones.js"></script>
+{{/partial}}
+{{>templates/templateBase}}

@@ -1,15 +1,21 @@
 package server.init;
 
+import controllers.InformesController;
+import controllers.factories.FactoryController;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
-import models.comunidades.Permiso;
-import models.comunidades.Rol;
-import models.comunidades.TipoRol;
+import models.usuario.Permiso;
+import models.usuario.Rol;
+import models.usuario.TipoRol;
 import models.repositorios.RepoRol;
+
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class Initializer implements WithSimplePersistenceUnit {
 
   public static void init() {
-    if (new RepoRol().buscarTodos().size() == 0) {
+    if (new RepoRol().buscarTodos().size() < 4) {
       new Initializer()
           .iniciarTransaccion()
           .permisos()
@@ -34,7 +40,10 @@ public class Initializer implements WithSimplePersistenceUnit {
         {"Crear servicio", "crear_servicio"},
         {"Crear Entidad", "crear_entidad"},
         {"Crear Prestacion", "crear_prestacion"},
-        {"Agregar Servicio de Interes", "agregar_servicio_de_interes"}
+        {"Agregar Servicio de Interes", "agregar_servicio_de_interes"},
+        {"Afectar Prestacion", "afectar_prestaciones"},
+        {"Ver ranking de Organismos", "ver ranking de organismos"},
+        {"Ver ranking de Entidades", "ver ranking de entidades"}
     };
 
     for (String[] unPermiso : permisos) {
@@ -71,19 +80,55 @@ public class Initializer implements WithSimplePersistenceUnit {
     );
     entityManager().persist(administrador);
 
-    Rol consumidor = new Rol();
-    consumidor.setNombre("Miembro");
-    consumidor.setTipoRol(TipoRol.MIEMBRO);
-    entityManager().persist(consumidor);
+    Rol miembro = new Rol();
+    miembro.setNombre("Miembro");
+    miembro.setTipoRol(TipoRol.MIEMBRO);
+    miembro.agregarPermisos(
+        buscadorDePermisos.buscarPermisoPorNombre("afectar_prestaciones"));
+    entityManager().persist(miembro);
 
-    Rol prestador = new Rol();
-    prestador.setNombre("Administrador de Comunidad");
-    prestador.setTipoRol(TipoRol.ADMINISTRADOR_COMUNIDAD);
-    prestador.agregarPermisos(
+    Rol adminComunidad = new Rol();
+    adminComunidad.setNombre("Administrador de Comunidad");
+    adminComunidad.setTipoRol(TipoRol.ADMINISTRADOR_COMUNIDAD);
+    adminComunidad.agregarPermisos(
         buscadorDePermisos.buscarPermisoPorNombre("agregar_servicio_de_interes")
     );
-    entityManager().persist(prestador);
+    entityManager().persist(adminComunidad);
 
+    Rol organismo = new Rol();
+    organismo.setNombre("Organismo de Control");
+    organismo.setTipoRol(TipoRol.ORGANISMO_DE_CONTROL);
+    organismo.agregarPermisos(
+        buscadorDePermisos.buscarPermisoPorNombre("crear_entidad"),
+        buscadorDePermisos.buscarPermisoPorNombre("crear_establecimiento"),
+        buscadorDePermisos.buscarPermisoPorNombre("ver ranking de organismos"),
+        buscadorDePermisos.buscarPermisoPorNombre("ver ranking de entidades")
+    );
+    entityManager().persist(organismo);
+
+
+    Rol entidad = new Rol();
+    entidad.setNombre("Entidad Prestadora");
+    entidad.setTipoRol(TipoRol.ENTIDAD_PRESTADORA);
+    entidad.agregarPermisos(
+        buscadorDePermisos.buscarPermisoPorNombre("crear_entidad"),
+        buscadorDePermisos.buscarPermisoPorNombre("crear_establecimiento"),
+        buscadorDePermisos.buscarPermisoPorNombre("ver ranking de entidades")
+    );
+    entityManager().persist(entidad);
     return this;
+
   }
+
+  public static void activarProcesos() {
+    ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
+
+    executor.scheduleWithFixedDelay(() -> {
+      InformesController informesController = (InformesController) FactoryController.controller("Informe");
+      informesController.generarRankings();
+      System.out.println("Tarea programada ejecutada");
+    }, 7, 7, TimeUnit.DAYS);
+  }
+
+
 }

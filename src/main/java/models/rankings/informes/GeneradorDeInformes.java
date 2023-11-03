@@ -1,8 +1,6 @@
 package models.rankings.informes;
 
-import models.comunidades.Comunidad;
 import models.entidades.Entidad;
-import models.rankings.criterios.CriteriosDeComunidades;
 import models.rankings.criterios.CriteriosDeEntidades;
 
 import java.util.ArrayList;
@@ -11,23 +9,17 @@ import java.util.stream.Collectors;
 
 public class GeneradorDeInformes {
 
-  private List<CriteriosDeComunidades> criteriosDeComunidades;
   private List<CriteriosDeEntidades> criteriosDeEntidades;
 
   public GeneradorDeInformes() {
-    this.criteriosDeComunidades = new ArrayList<>();
     this.criteriosDeEntidades = new ArrayList<>();
-  }
-
-  public void agregarCriterioDeComunidad(CriteriosDeComunidades criterio) {
-    this.criteriosDeComunidades.add(criterio);
   }
 
   public void agregarCriterioDeEntidad(CriteriosDeEntidades criterio) {
     this.criteriosDeEntidades.add(criterio);
   }
 
-  public List<List<String>> generarDatos(List<Entidad> entidades, List<Comunidad> comunidades) {
+  public List<List<String>> generarDatos(List<Entidad> entidades) {
     List<List<String>> datos = new ArrayList<>();
 
     List<String> encabezados = new ArrayList<>();
@@ -47,19 +39,6 @@ public class GeneradorDeInformes {
       datos.add(columnas);
     }
 
-
-    for (CriteriosDeComunidades criterio : criteriosDeComunidades) {
-      List<String> columnas = new ArrayList<>();
-      columnas.add(criterio.getNombre());
-
-      List<String> rankingNombres = criterio.generarRanking(comunidades).stream()
-          .map(Comunidad::getNombre)
-          .collect(Collectors.toList());
-      String rankings = String.join(", ", rankingNombres);
-      columnas.add(rankings);
-
-      datos.add(columnas);
-    }
     return datos;
   }
 

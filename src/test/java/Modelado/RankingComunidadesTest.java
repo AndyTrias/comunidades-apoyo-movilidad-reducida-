@@ -2,7 +2,7 @@ package Modelado;
 
 import models.comunidades.Comunidad;
 import models.localizacion.UbicacionExacta;
-import models.rankings.criterios.ImpactoComunidades;
+import models.rankings.criteriosNoUsados.ImpactoComunidades;
 import models.servicios.PrestacionDeServicio;
 import models.servicios.Servicio;
 import org.junit.jupiter.api.BeforeEach;

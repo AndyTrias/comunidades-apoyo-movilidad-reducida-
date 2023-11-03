@@ -2,6 +2,7 @@ package models.repositorios;
 
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import models.comunidades.Comunidad;
+import models.incidentes.Incidente;
 import models.incidentes.IncidenteDeComunidad;
 
 import javax.persistence.NoResultException;
@@ -31,6 +32,18 @@ public class RepoComunidad extends RepoGenerico<Comunidad>{
         } catch (NoResultException e) {
             return null; // Return null when no matching IncidenteDeComunidad is found.
         }
+    }
+
+    public List<Comunidad> buscarTodosPorIncidente(Incidente i){
+        TypedQuery<Comunidad> query = entityManager().createQuery(
+            "SELECT c FROM Comunidad c " +
+                "JOIN c.incidentes ic " +
+                "WHERE ic.id = :incidenteId",
+            Comunidad.class);
+
+        query.setParameter("incidenteId", i.getId());
+
+        return query.getResultList();
     }
 
 }

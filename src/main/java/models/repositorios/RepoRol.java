@@ -1,7 +1,7 @@
 package models.repositorios;
 
-import models.comunidades.Rol;
-import models.comunidades.TipoRol;
+import models.usuario.Rol;
+import models.usuario.TipoRol;
 
 public class RepoRol extends RepoGenerico<Rol>{
 

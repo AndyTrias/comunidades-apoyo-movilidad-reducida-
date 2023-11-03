@@ -2,8 +2,6 @@ package models.usuario;
 
 import models.comunidades.Comunidad;
 import models.comunidades.Membresia;
-import models.comunidades.Rol;
-import models.comunidades.TipoRol;
 import models.incidentes.Incidente;
 import models.usuario.configuraciones.ConfiguracionDeNotificaciones;
 import models.configs.ServiceLocator;
@@ -48,7 +46,7 @@ public class Usuario {
 
     @Getter
     @Setter
-    @Column(name = "telefono", nullable = false)
+    @Column(name = "telefono")
     private String telefono;
 
     @Getter
@@ -85,6 +83,7 @@ public class Usuario {
     @Getter
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<Incidente> revisionDeIncidentes;
+    
 
     public Usuario(String nombre, String apellido, String correoElectronico) {
         this.nombre = nombre;
@@ -130,9 +129,13 @@ public class Usuario {
         return membresias.stream().map(Membresia::getComunidad).toList();
     }
 
-    public Membresia getMembresia(Comunidad comunidad){
-        return membresias.stream().filter(m -> m.getComunidad().getId().equals(comunidad.getId())).findFirst().get();
+    public Membresia getMembresia(Comunidad comunidad) {
+        return membresias.stream()
+            .filter(m -> m.getComunidad().equals(comunidad))
+            .findFirst()
+            .orElse(null);
     }
+
 
     public void notificar(Notificacion notificacion) {
         configuracionDeNotificaciones.notificar(notificacion);
@@ -151,4 +154,8 @@ public class Usuario {
     }
 
     public TipoRol getTipoRol() { return rol.getTipoRol(); }
+
+    public Incidente getRevisionDeIncidente(Long id) {
+        return revisionDeIncidentes.stream().filter(r -> r.getId().equals(id)).findFirst().get();
+    }
 }

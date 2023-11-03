@@ -18,54 +18,35 @@
 
             <div class="grid gap-4 grid-cols-1 grid-rows-2">
                 <h2 class="text-2xl font-semibold text-white overflow-hidden ">
-                    AAAAAAAAAAAAAAAAAAAAAAAAA
-                    <!-- {{incidenteARevisar.prestacionDeServicio.servicio.nombre}} -->
+                    {{incidente.prestacionDeServicio.nombre}}
                 </h2>
                 <div class="text-white overflow-hidden">
-                    Esta es la descripcion de un problema problemoso que puede ocurrir cuando te fallan los divs
+                    {{incidente.observaciones}}
                 </div>
                 <span class="items-center overflow-hidden">
                         ¿Se ha solucionado el incidente?
                     </span>
-                <div>
+                <form method="POST">
                     <div class="inline-flex">
-                        <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-4 px-10 rounded-l">
+                        <button name="Si" value="Si" type="submit" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-4 px-10 rounded-l">
                             SI
                         </button>
-                        <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-4 px-10 rounded-r">
+                        <button name="No" value="No" type="submit" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-4 px-10 rounded-r">
                             NO
                         </button>
                     </div>
-                </div>
+                </form>
             </div>
         </section>
     </div>
 
+    <div id="latitud" class="hidden">
+        {{incidente.prestacionDeServicio.ubicacionExacta.latitud}}
+    </div>
 
-
-    {{#each incidentesARevisar}}
-        <div id="nombrePrestacion">
-            {{this.previsionDeServicio.nombre}}
-        </div>
-    {{/each}}
-
-    {{#each incidentesARevisar}}
-        <div id="descripcion">
-            {{this.previsionDeServicio.descripcion}}
-        </div>
-    {{/each}}
-
-    {{#each incidentesARevisar}}
-        <div id="longitud">
-            {{this.prestacionDeServicio.ubicacionExacta.longitud}}
-        </div>
-    {{/each}}
-
-    {{#each incidentesARevisar}}
-        <div id="latitud">
-            {{this.prestacionDeServicio.ubicacionExacta.latitud}}
-        </div>
-    {{/each}}
+    <div id="longitud" class="hidden">
+        {{incidente.prestacionDeServicio.ubicacionExacta.longitud}}
+    </div>
 
     {{#partial "agregarScript"}}
         <script src="\js\localizacion.js"></script>
@@ -73,4 +54,4 @@
 
 
 {{/partial}}
-{{> templates/template}}
+{{> templates/templateBase}}

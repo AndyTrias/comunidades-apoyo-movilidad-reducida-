@@ -1,9 +1,9 @@
-package models.rankings.criterios;
+package models.rankings.criteriosNoUsados;
 
 import models.comunidades.Comunidad;
-import models.incidentes.Incidente;
 import lombok.Getter;
 import models.incidentes.IncidenteDeComunidad;
+import models.rankings.criteriosNoUsados.CriteriosDeComunidades;
 
 import java.util.Comparator;
 import java.util.List;

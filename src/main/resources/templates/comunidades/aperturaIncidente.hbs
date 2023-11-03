@@ -6,10 +6,6 @@
                 <h1 class="title-font text-lg font-medium text-gray-900 mb-3">Agregar Incidente</h1>
                 <form action="/comunidades/{{comunidad.id}}/incidentes" method="POST">
                     <div class="mb-4 flex flex-col">
-                        <label for="fechaDeApertura" class="text-sm text-gray-500 mb-2">Fecha del Incidente:</label>
-                        <input type="datetime-local" id="fechaDeApertura" name="fechaDeApertura" class="border rounded-md py-1 px-2" required>
-                    </div>
-                    <div class="mb-4 flex flex-col">
                         <label for="prestacionId" class="text-sm text-gray-500 mb-2">Prestación de Servicio:</label>
                         <select id="prestacionId" name="prestacionId" class="border rounded-md py-1 px-2" required>
                             <option selected disabled hidden>Seleccionar Prestación</option>
@@ -32,4 +28,4 @@
 </main>
 
 {{/partial}}
-{{> templates/template }}
+{{> templates/templateBase }}

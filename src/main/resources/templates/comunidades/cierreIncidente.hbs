@@ -5,7 +5,8 @@
         <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
             <div class="p-6 flex flex-col justify-center items-center">
                 <h1 class="title-font text-lg font-medium text-gray-900 mb-2 capitalize">{{incidente.incidente.prestacionDeServicio.nombre}}</h1>
-                <form action = "{{incidente.id}}/cerrar" method="POST" class="p-6 flex flex-col justify-center items-center">
+                <form action="{{incidente.id}}/cerrar" method="POST"
+                      class="p-6 flex flex-col justify-center items-center">
                     <h3 class="text-xl font-medium text-gray-700 mb-2">Datos del Incidente</h3>
                     <div class="mb-4 flex flex-col">
                         <p class="text-gray-600 mb-2">
@@ -30,9 +31,11 @@
                             Cerrar Incidente
                         </button>
                     {{else}}
-                        <div class="inline-flex text-white bg-red-500 border-0 py-2 px-6 focus:outline-none rounded text-lg">
+                        <div class="inline-flex text-red-500  py-2 px-6 focus:outline-none rounded text-lg">
                             <p> Incidente Cerrado </p>
                         </div>
+                        <p>Cerrado Por: {{incidente.cerradoPor.nombre}}</p>
+                        <p>Fecha de Cierre: {{incidente.fechaDeCierre}}</p>
                     {{/if}}
 
                 </form>
@@ -43,4 +46,4 @@
 
 
 {{/partial}}
-{{> templates/template }}
+{{> templates/templateBase }}

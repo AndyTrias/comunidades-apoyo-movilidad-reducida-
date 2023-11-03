@@ -17,8 +17,8 @@ public class LectorOrganismoDeControl extends FileStream {
     }
 
     protected void levantarObjetos(List<String[]> csvComoLista) {
-        for (int i = 1; i < csvComoLista.size(); i++) {
-            OrganismoDeControl organismoDeControl = new OrganismoDeControl(csvComoLista.get(i)[0]);
+        for (String[] strings : csvComoLista) {
+            OrganismoDeControl organismoDeControl = new OrganismoDeControl(strings[0]);
             organismosLeidos.add(organismoDeControl);
         }
     }

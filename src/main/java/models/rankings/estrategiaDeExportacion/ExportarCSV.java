@@ -1,4 +1,4 @@
-package models.rankings.informes;
+package models.rankings.estrategiaDeExportacion;
 
 import models.configs.Config;
 

@@ -16,9 +16,6 @@
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/tp?createDatabaseIfNotExist=true&amp;useSSL=false&amp;serverTimezone=UTC" />
             <property name="hibernate.connection.username" value="root" />
             <property name="hibernate.connection.password" value="" />
-            <property name="hibernate.cache.use_query_cache" value="false"/>
-
-
 
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
 
