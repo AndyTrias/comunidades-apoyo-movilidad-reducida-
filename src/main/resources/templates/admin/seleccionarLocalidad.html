@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoreo estados y servicios</title>
+    <link
+            href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+            rel="stylesheet"
+    />
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+            rel="stylesheet"
+    />
+    <link rel="stylesheet" href="\css\style.css">
+    <link rel="stylesheet" href="\css\background.css">
+    <link rel="stylesheet" href="\css\incidentes.css">
+    <script src="\js\script.js"></script>
+    <script src="\js\incidentes.js"></script>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+    <link rel="stylesheet" href="https://unpkg.com/flowbite@latest/dist/flowbite.min.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.css" rel="stylesheet" />
+    <style>
+        .goBack {
+            box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
+
+        }
+
+        .goBack:hover {
+            box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
+            transform: scale(1.05);
+            transition: all 0.3s ease 0s;
+        }
+
+        .primary {
+            background-color: #DDDDDD;
+        }
+
+        .primaryText {
+            color: #DDDDDD;
+        }
+
+        .secondary {
+            background-color: #F05454;
+        }
+
+        .secondaryText {
+            color: #F05454;
+        }
+
+        .accent {
+            background-color: #30475E;
+        }
+
+        .accentText {
+            color: #30475E;
+        }
+
+        .background {
+            background-color: #222831;
+        }
+
+        .backgroundText {
+            color: #222831;
+        }
+    </style>
+</head>
+<body class="h-screen flex flex-col background">
+
+    <header class="primary">
+        <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+            <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
+                     stroke-linejoin="round" stroke-width="2"
+                     class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                </svg>
+                <a class="ml-3 text-xl" href="/">
+                    Monitoreo de Estado de Servicios
+                </a>
+            </a>
+            <nav class="md:ml-auto flex flex-wrap items-center gap-3 text-base justify-center">
+                    <a class="mr-5 text-white hover:text-gray-900" href="/comunidades">
+                        Comunidades
+                    </a>
+                    <a class="mr-5 text-white hover:text-gray-900" href="/revisionDeIncidentes">
+                        Revision de incidentes
+                    </a>
+                    <a class="mr-5 text-white hover:text-gray-900" href="/perfil">
+                        Perfil
+                    </a>
+                    <a href="/logout"
+                       class="flex flex-col justify-center items-center bg-red-400 border-0 py-1 px-3 focus:outline-none hover:bg-red-600 rounded ml-auto text-base mt-4 md:mt-0 w-20 h-8">
+                        <i class="fas fa-sign-out-alt text-white"></i>
+                    </a>
+            </nav>
+        </div>
+    </header>
+
+
+    <div class="m-5 flex flex-col justify-center items-center">
+        <ol class="secondary flex items-center mb-2 w-1/2 p-3 space-x-2 text-sm font-medium text-center rounded-lg shadow-sm sm:text-base sm:p-4 sm:space-x-4">
+            <li class="flex items-center primaryText">
+                <span class="flex items-center justify-center w-5 h-5 mr-2 text-xs border border-white rounded-full shrink-0 dark:border-blue-500">
+                    1
+                </span>
+                Provincia
+                <svg class="w-3 h-3 ml-2 sm:ml-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 9 4-4-4-4M1 9l4-4-4-4"/>
+                </svg>
+            </li>
+            <li class="flex items-center primaryText">
+                <span class="flex items-center justify-center w-5 h-5 mr-2 text-xs border border-gray-500 rounded-full shrink-0 dark:border-gray-400">
+                    2
+                </span>
+                Municipio
+                <svg class="w-3 h-3 ml-2 sm:ml-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 9 4-4-4-4M1 9l4-4-4-4"/>
+                </svg>
+            </li>
+            <li class="flex items-center">
+                <span class="flex items-center justify-center w-5 h-5 mr-2 text-xs border border-gray-500 rounded-full shrink-0 dark:border-gray-400">
+                    3
+                </span>
+                Localidad
+            </li>
+        </ol>
+
+
+
+        <!-- Dropdown menu -->
+        <div id="dropdownSearch" class="w-1/2 z-10 bg-white rounded-lg shadow secondary">
+            <div class="p-3">
+                <label for="input-group-search" class="sr-only">Buscar Municipio</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                        </svg>
+                    </div>
+                    <input type="text" id="input-group-search"
+                        class="block w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Buscar Localidad">
+                </div>
+            </div>
+            <ul class="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownRadioBgHoverButton">
+                    <li>
+                      <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                          <input id="default-radio-4" type="radio" value={{this.id}} name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                          <label for="default-radio-4" class="w-full ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Vicente Lopez</label>
+                      </div>
+                    </li>
+              </ul>
+        </div>
+    
+        <div class="flex justify-center mt-6">
+            <a href="/seleccionarLocalidad"
+                class="accent text-gray-300 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                Terminar
+                <i class="fas fa-check ml-2"></i>
+            </a>
+        </div>
+
+    </div>
+
+
+    <button
+        class="bg-blue-700 hover:bg-blue-800 text-white font-bold w-20 h-20 absolute bottom-20 left-5 rounded-full goBack"
+        onclick="goBack()"
+    >
+        <i class="fas fa-arrow-left"></i>
+        Volver
+    </button>
+
+    <footer class="text-gray-600 body-font mt-auto primary">
+    <div class="container p-5 mx-auto flex items-center sm:flex-row flex-col">
+        <a class="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
+                 stroke-linejoin="round" stroke-width="2"
+                 class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+            </svg>
+            <span class="ml-3 text-xl">
+            Monitoreo de Estado de Servicios
+          </span>
+        </a>
+        <p class="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">©
+            2023 Diseño de Sistemas UTN —
+            <a href="https://github.com/dds-utn/2023-tpa-mama-grupo-06" class="text-gray-600 ml-1"
+               rel="noopener noreferrer" target="_blank">Github</a>
+        </p>
+    </div>
+</footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.js"></script>
+</body>
+</html>
