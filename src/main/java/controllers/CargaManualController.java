@@ -55,7 +55,6 @@ public class CargaManualController extends BaseController {
 
   public void seleccionarMunicipio(Context ctx) {
     Map<String, Object> model = new HashMap<>();
-    Localizacion localizacion = new Localizacion();
     String idProvincia = ctx.queryParam("provincia");
 
     model.put("municipios", Georef.getInstancia().listadoMunicipios(idProvincia).municipios);

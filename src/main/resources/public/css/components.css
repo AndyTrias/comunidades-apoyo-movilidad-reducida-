@@ -1,3 +1,8 @@
+*::-webkit-scrollbar {
+    width: 0em;
+    height: 0em;
+}
+
 :root{
     --primary: #000080;
     --secondary: #D3D3D3;
@@ -5,6 +10,38 @@
     --background: #FFFFFF;
     --text: #000000;
     --contrast-text: #FFFFFF;
+}
+
+.primary {
+    background-color: var(--primary) !important;
+}
+
+.secondary {
+    background-color: var(--secondary) !important;
+}
+
+.accent {
+    background-color: var(--accent) !important;
+}
+
+.background {
+    background-color: var(--background) !important;
+}
+
+.text {
+    color: var(--text) !important;
+}
+
+.contrast-text {
+    color: var(--contrast-text) !important;
+}
+
+.colorPrimary {
+    color: var(--primary) !important;
+}
+
+.colorSecondary {
+    color: var(--secondary) !important;
 }
 
 .linkButton {
@@ -183,3 +220,21 @@ ol.stepper {
       background: var(--active-b);
     }
   }
+
+.option {
+    background-color: var(--secondary);
+    color: var(--text);
+    padding: 20px !important;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.option:hover {
+    background-color: var(--primary);
+    color: var(--contrast-text);
+}
+
+.option.active {
+    background-color: var(--accent);
+    color: var(--contrast-text);
+}
