@@ -2,7 +2,7 @@
  * Twitter: @kootoopas
  */
 /* Exo thin font from Google. */
-@import url(https://fonts.googleapis.com/css?family=Exo:100);
+
 /* Background data (Original source: https://subtlepatterns.com/grid-me/) */
 /* Animations */
 @-webkit-keyframes bg-scrolling-reverse {
@@ -232,7 +232,7 @@ ol.stepper {
     display: grid;
     place-items: center;
     gap: 5px;
-    font-family: sans-serif;
+    font-family: inherit;
     position: relative;
   }
   ol.stepper li::before {
@@ -247,7 +247,7 @@ ol.stepper {
     background: var(--active-b);
     color: var(--active-c);
     border-radius: 50%;
-    font-family: monospace;
+    font-family: inherit;
     z-index: 1;
   }
   ol.stepper li.active ~ li::before{
@@ -305,4 +305,92 @@ ol.stepper {
 .option.active {
     background-color: var(--accent);
     color: var(--contrast-text);
+}
+
+
+.carrousel {
+    width: 100%;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 50px;
+}
+
+.carrousel > div {
+    flex: 0 0 250px;
+    border-radius: 0.5rem;
+    transition: 0.5s ease-in-out;
+    cursor: pointer;
+    box-shadow: 1px 5px 15px var(--primary);
+    position: relative;
+    overflow: hidden;
+}
+
+@media (max-width: 768px) {
+    .carrousel > div {
+        flex: 0 0 120px;
+    }
+
+    .carrousel > div:hover {
+        flex: 0 0 180px;
+    }
+}
+
+.carrousel > div:nth-of-type(1) {
+    background: url("https://images.pexels.com/photos/3585089/pexels-photo-3585089.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1") no-repeat 50% / cover;
+}
+
+.carrousel > div:nth-of-type(2) {
+    background: url("https://images.pexels.com/photos/3153204/pexels-photo-3153204.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1") no-repeat 50% / cover;
+}
+
+.carrousel > div:nth-of-type(3) {
+    background: url("https://images.pexels.com/photos/6169668/pexels-photo-6169668.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1") no-repeat 50% / cover;
+}
+
+.carrousel > div .component {
+    font-size: 1.5rem;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    opacity: 0;
+    flex-direction: column;
+    height: 100%;
+    justify-content: flex-end;
+    background: var(--primary);
+    background: linear-gradient(0deg, var(--primary) 0%, rgba(255,255,255,0) 100%);
+    transform: translatey(100%);
+    transition: opacity 0.5s ease-in-out, transform 0.5s 0.2s;
+    visibility: hidden;
+}
+
+.carrousel > div:hover {
+    flex: 0 0 500px;
+    box-shadow: 1px 3px 15px var(--primary);
+    transform: translatey(-30px);
+}
+
+.carrousel > div:hover .component {
+    opacity: 1;
+    transform: translatey(0%);
+    visibility: visible;
+}
+
+.carrousel > div .component span {
+    display: block;
+    margin-top: 5px;
+    font-size: 1.2rem;
+}
+
+.input {
+    background-color: #eee;
+    border: none;
+    margin: 8px 0;
+    padding: 10px 15px;
+    font-size: 13px;
+    border-radius: 8px !important;
+    width: 100%;
+    outline: none;
 }

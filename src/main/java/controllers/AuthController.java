@@ -33,7 +33,7 @@ public class AuthController {
   public void showRegister(Context ctx) {
     Map<String, Object> model = new HashMap<>();
     model.put("notlogged", true);
-    ctx.render("auth/register.hbs", model);
+    ctx.render("auth/login.hbs", model);
   }
 
   public void showAdmin(Context ctx) {

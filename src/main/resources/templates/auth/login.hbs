@@ -1,46 +1,61 @@
+{{#partial "agregarAlHead"}}
+    <link rel="stylesheet" href="\css\auth.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/css/intlTelInput.css">
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
+    <script src="\js\form.js"></script>
+{{/partial}}
+
 {{#partial "contenido"}}
-    <div class="flex justify-center items-center h-full w-full">
-        <div class="md:block hidden absolute left-0 md:flex flex-col justify-center items-center w-1/2 h-full p-10">
-            <h1 class="text-6xl font-bold text-gray-800 mb-1">Monitoreo de estados y servicios</h1>
-            <img src="\img\logo.png" alt="logo" class="w-1/2">
+    <div class="flex flex-col items-center justify-center h-full">
+        <div class="container" id="container">
+            <form class="form-container sign-up" action="register" method="POST">
+                <div>
+                    <h1>Crea tu Cuenta</h1>
+                    <input type="text" name="nombre" placeholder="Nombre" required>
+                    <input type="text" name="apellido" placeholder="Apellido" required>
+                    <input type="email" name="email" placeholder="Correo Electrónico" required>
+                    <input type="password" name="password" placeholder="Contraseña" required>
+                    <input type="tel" name="telefono" placeholder="Número de teléfono" required>
+                    <button type="submit" class="button mt-2">Registrarse</button>
+                </div>
+            </form>
+            <form class="form-container sign-in" action="login" method="POST">
+                <div>
+                    <h1>Iniciar Sesion</h1>
+                    <input type="email" name="email" placeholder="Correo Electronico">
+                    <input type="password" name="password" placeholder="Contraseña">
+                    <a href="#">Olvidaste tu Contraseña?</a>
+                    <button class="button mt-2">Iniciar Sesion</button>
+                </div>
+            </form>
+            <div class="toggle-container">
+                <div class="toggle">
+                    <div class="toggle-panel toggle-left">
+                        <h1>Hola de nuevo!</h1>
+                        <p>Inicia sesion con tus datos personales para poder reportar incidentes</p>
+                        <button class="notShown button text background" id="login">Iniciar Sesion</button>
+                    </div>
+                    <div class="toggle-panel toggle-right">
+                        <h1>Hola Ciudadano!</h1>
+                        <p>Registrate con tus datos personales para poder empezar a reportar incidentes</p>
+                        <button class="notShown button text background" id="register" type="submit">Registrate</button>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <form class="absolute md:right-0 glass md:w-1/2 h-full p-10 justify-center flex flex-col" action="login" method="POST">
-            <h1 class="text-3xl font-bold text-gray-800 mb-2">
-                Iniciar Sesion
-            </h1>
-            <p class="text-gray-800 mb-8">
-                Inicia sesion para poder acceder a la plataforma
-            </p>
-            <div class="flex items-center border-2 mb-8 py-2 px-3 rounded-2xl w-full">
-                <i class="fas fa-user text-white"></i>
-                <label for="email"></label>
-                <input id="email" class="pl-2 w-full outline-none border-none bg-transparent text-white"
-                       type="email"
-                       name="email" placeholder="Correo Electronico"/>
-            </div>
-            <div class="flex items-center border-2 mb-2 py-2 px-3 rounded-2xl">
-                <i class="fas fa-lock text-white"></i>
-                <label for="password"></label><input
-                    class="pl-2 w-full outline-none border-none bg-transparent text-white"
-                    type="password" name="password" id="password"
-                    placeholder="Contraseña"/>
-
-            </div>
-            <a href="#"
-               class="place-self-end text-sm ml-2 hover:text-blue-500 cursor-pointer hover:-translate-y-1 duration-500 transition-all">
-                Olvidaste tu Contraseña?
-            </a>
-            <button type="submit"
-                    class="block w-full bg-indigo-600 mt-2 py-2 rounded-2xl hover:bg-indigo-700 hover:-translate-y-1 transition-all duration-500 text-white font-semibold mb-2">
-                Iniciar Sesion
-            </button>
-
-            <a href="/register"
-               class=" text-sm ml-2 hover:text-blue-500 cursor-pointer hover:-translate-y-1 duration-500 transition-all">
-                No tienes una cuenta? Registrate
-            </a>
-        </form>
     </div>
+    <script>
+        const container = document.getElementById('container');
+        const registerBtn = document.getElementById('register');
+        const loginBtn = document.getElementById('login');
+
+        registerBtn.addEventListener('click', () => {
+            container.classList.add("active");
+        });
+
+        loginBtn.addEventListener('click', () => {
+            container.classList.remove("active");
+        });
+    </script>
 {{/partial}}
 {{> templates/templateBase }}
