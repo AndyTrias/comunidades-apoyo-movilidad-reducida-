@@ -59,10 +59,15 @@ public class FactoryController {
 
       case "Informe" -> new InformesController(
           new RepoEntidad(),
-            new RepoInformes(),
-              new RepoOrganismoDeControl()
+          new RepoInformes(),
+          new RepoOrganismoDeControl()
       );
 
+      case "Intereses" -> new InteresesController(
+          new RepoUsuario(),
+          new RepoEntidad(),
+          new RepoServicio()
+      );
 
       default -> null;
     };

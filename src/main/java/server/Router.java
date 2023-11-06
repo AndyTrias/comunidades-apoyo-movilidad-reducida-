@@ -98,6 +98,10 @@ public class Router implements WithSimplePersistenceUnit {
       app.post("perfil", ((PerfilController) FactoryController.controller("Perfil"))::save);
     });
 
+    app.routes(() -> {
+      app.get("intereses", ((InteresesController) FactoryController.controller("Intereses"))::index);
+    });
+
     app.exception(CredencialesInvalidaException.class, ExceptionHandler::handleInvalidCredentials);
     app.exception(PermisosInvalidosException.class, ExceptionHandler::handleInvalidPermission);
     app.exception(EntidadNoExistenteException.class, ExceptionHandler::handleEntidadNoExistente);

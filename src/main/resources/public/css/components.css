@@ -1,50 +1,51 @@
-/* Cool infinite background scrolling animation.
- * Twitter: @kootoopas
- */
-/* Exo thin font from Google. */
-
-/* Background data (Original source: https://subtlepatterns.com/grid-me/) */
-/* Animations */
 @-webkit-keyframes bg-scrolling-reverse {
     100% {
         background-position: 50px 50px;
     }
 }
+
 @-moz-keyframes bg-scrolling-reverse {
     100% {
         background-position: 50px 50px;
     }
 }
+
 @-o-keyframes bg-scrolling-reverse {
     100% {
         background-position: 50px 50px;
     }
 }
+
 @keyframes bg-scrolling-reverse {
     100% {
         background-position: 50px 50px;
     }
 }
+
 @-webkit-keyframes bg-scrolling {
     0% {
         background-position: 50px 50px;
     }
 }
+
 @-moz-keyframes bg-scrolling {
     0% {
         background-position: 50px 50px;
     }
 }
+
 @-o-keyframes bg-scrolling {
     0% {
         background-position: 50px 50px;
     }
 }
+
 @keyframes bg-scrolling {
     0% {
         background-position: 50px 50px;
     }
 }
+
 /* Main styles */
 body {
     color: #999;
@@ -66,12 +67,7 @@ body {
     animation-timing-function: linear;
 }
 
-*::-webkit-scrollbar {
-    width: 0em;
-    height: 0em;
-}
-
-:root{
+:root {
     --primary: #000080;
     --secondary: #D3D3D3;
     --accent: #4169E1;
@@ -125,7 +121,7 @@ body {
     transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
     transition-duration: 400ms;
     transition-property: color;
-  }
+}
 
 .linkButton:focus,
 .linkButton:hover {
@@ -170,7 +166,8 @@ body {
     z-index: 1;
 }
 
-.button::before, .button::after {
+.button::before,
+.button::after {
     content: '';
     display: block;
     width: 50px;
@@ -193,7 +190,8 @@ body {
     top: calc(100% + 1em);
 }
 
-.button:hover::before, .button:hover::after {
+.button:hover::before,
+.button:hover::after {
     height: 410px;
     width: 410px;
 }
@@ -211,15 +209,16 @@ ol.stepper {
     --default-c: var(--text);
     --active-b: var(--primary);
     --active-c: var(--contrast-text);
-    --circle: 3.5em; /* size of circle */
-    --b: 5px; /* line thickness */
-    
+    --circle: 3.5em;
+    /* size of circle */
+    --b: 5px;
+    /* line thickness */
+
     display: flex;
     list-style: none;
     justify-content: space-between;
-    background: 
-      linear-gradient(var(--default-b) 0 0) no-repeat
-      50% calc((var(--circle) - var(--b))/2)/100% var(--b);
+    background:
+        linear-gradient(var(--default-b) 0 0) no-repeat 50% calc((var(--circle) - var(--b))/2)/100% var(--b);
     counter-reset: step;
     margin: 20px;
     padding: 0;
@@ -227,15 +226,17 @@ ol.stepper {
     font-weight: bold;
     counter-reset: step;
     overflow: hidden;
-  }
-  ol.stepper li {
+}
+
+ol.stepper li {
     display: grid;
     place-items: center;
     gap: 5px;
     font-family: inherit;
     position: relative;
-  }
-  ol.stepper li::before {
+}
+
+ol.stepper li::before {
     content: counter(step) " ";
     counter-increment: step;
     display: grid;
@@ -249,12 +250,14 @@ ol.stepper {
     border-radius: 50%;
     font-family: inherit;
     z-index: 1;
-  }
-  ol.stepper li.active ~ li::before{
+}
+
+ol.stepper li.active~li::before {
     background: var(--default-b);
     color: var(--default-c);
-  }
-  ol.stepper li.active::after {
+}
+
+ol.stepper li.active::after {
     content: "";
     position: absolute;
     height: var(--b);
@@ -262,32 +265,33 @@ ol.stepper {
     top: calc((var(--circle) - var(--b))/2);
     width: 100vw;
     background: var(--active-b);
-  }
-  
-  
-  @media (max-width: 600px) {
+}
+
+
+@media (max-width: 600px) {
     ol.stepper {
-     display: grid;
-     gap: 20px;
-    background: 
-      linear-gradient(var(--default-b) 0 0) no-repeat
-      calc((var(--circle) - var(--b))/2) 50%/ var(--b) 100%;
+        display: grid;
+        gap: 20px;
+        background:
+            linear-gradient(var(--default-b) 0 0) no-repeat calc((var(--circle) - var(--b))/2) 50%/ var(--b) 100%;
     }
+
     ol.stepper li {
-      display: flex;
+        display: flex;
     }
+
     ol.stepper li.active::after {
-      content: "";
-      position: absolute;
-      width: var(--b);
-      bottom: 100%;
-      left: calc((var(--circle) - var(--b))/2);
-      top: auto;
-      right: auto;
-      height: 100vw;
-      background: var(--active-b);
+        content: "";
+        position: absolute;
+        width: var(--b);
+        bottom: 100%;
+        left: calc((var(--circle) - var(--b))/2);
+        top: auto;
+        right: auto;
+        height: 100vw;
+        background: var(--active-b);
     }
-  }
+}
 
 .option {
     background-color: var(--secondary);
@@ -317,7 +321,7 @@ ol.stepper {
     margin-top: 50px;
 }
 
-.carrousel > div {
+.carrousel>div {
     flex: 0 0 250px;
     border-radius: 0.5rem;
     transition: 0.5s ease-in-out;
@@ -328,28 +332,28 @@ ol.stepper {
 }
 
 @media (max-width: 768px) {
-    .carrousel > div {
+    .carrousel>div {
         flex: 0 0 120px;
     }
 
-    .carrousel > div:hover {
+    .carrousel>div:hover {
         flex: 0 0 180px;
     }
 }
 
-.carrousel > div:nth-of-type(1) {
+.carrousel>div:nth-of-type(1) {
     background: url("https://images.pexels.com/photos/3585089/pexels-photo-3585089.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1") no-repeat 50% / cover;
 }
 
-.carrousel > div:nth-of-type(2) {
+.carrousel>div:nth-of-type(2) {
     background: url("https://images.pexels.com/photos/3153204/pexels-photo-3153204.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1") no-repeat 50% / cover;
 }
 
-.carrousel > div:nth-of-type(3) {
+.carrousel>div:nth-of-type(3) {
     background: url("https://images.pexels.com/photos/6169668/pexels-photo-6169668.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1") no-repeat 50% / cover;
 }
 
-.carrousel > div .component {
+.carrousel>div .component {
     font-size: 1.5rem;
     color: #fff;
     display: flex;
@@ -360,25 +364,25 @@ ol.stepper {
     height: 100%;
     justify-content: flex-end;
     background: var(--primary);
-    background: linear-gradient(0deg, var(--primary) 0%, rgba(255,255,255,0) 100%);
+    background: linear-gradient(0deg, var(--primary) 0%, rgba(255, 255, 255, 0) 100%);
     transform: translatey(100%);
     transition: opacity 0.5s ease-in-out, transform 0.5s 0.2s;
     visibility: hidden;
 }
 
-.carrousel > div:hover {
+.carrousel>div:hover {
     flex: 0 0 500px;
     box-shadow: 1px 3px 15px var(--primary);
     transform: translatey(-30px);
 }
 
-.carrousel > div:hover .component {
+.carrousel>div:hover .component {
     opacity: 1;
     transform: translatey(0%);
     visibility: visible;
 }
 
-.carrousel > div .component span {
+.carrousel>div .component span {
     display: block;
     margin-top: 5px;
     font-size: 1.2rem;
@@ -393,4 +397,177 @@ ol.stepper {
     border-radius: 8px !important;
     width: 100%;
     outline: none;
+}
+
+dialog {
+    padding: 1rem 3rem;
+    background: white;
+    max-width: 400px;
+    padding-top: 2rem;
+    border-radius: 20px;
+    border: 0;
+    box-shadow: 0 5px 30px 0 rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1s ease both;
+}
+
+dialog::backdrop {
+    animation: fadeIn 1s ease both;
+    background: rgba(255, 255, 255, 0.4);
+    z-index: 2;
+    backdrop-filter: blur(20px);
+}
+
+dialog .x {
+    filter: grayscale(1);
+    border: none;
+    background: none;
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    transition: filter ease, transform 0.3s;
+    cursor: pointer;
+    transform-origin: center;
+}
+
+dialog .x:hover {
+    filter: grayscale(0);
+    transform: scale(1.1);
+}
+
+dialog h2 {
+    font-weight: 600;
+    font-size: 2rem;
+    padding-bottom: 1rem;
+}
+
+dialog p {
+    font-size: 1rem;
+    line-height: 1.3rem;
+    padding: 0.5rem 0;
+}
+
+dialog p a:visited {
+    color: rgb(var(--vs-primary));
+}
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.customCheckBoxHolder {
+    margin: 5px;
+    display: flex;
+}
+
+.customCheckBox {
+    width: fit-content;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    user-select: none;
+    padding: 2px 8px;
+    background-color: var(--secondary);
+    border-radius: 0px;
+    color: rgba(255, 255, 255, 0.7);
+    transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition-duration: 300ms;
+    transition-property: color, background-color, box-shadow;
+    display: flex;
+    height: 32px;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 1px 0px inset, rgba(255, 255, 255, 0.17) 0px 1px 1px 0px;
+    outline: none;
+    justify-content: center;
+    min-width: 55px;
+}
+
+.customCheckBox:hover {
+    background-color: var(--primary);
+    color: var(--contrast-text);
+    box-shadow: rgba(0, 0, 0, 0.23) 0px -4px 1px 0px inset, rgba(255, 255, 255, 0.17) 0px -1px 1px 0px, rgba(0, 0, 0, 0.17) 0px 2px 4px 1px;
+}
+
+.customCheckBox .inner {
+    font-size: 18px;
+    font-weight: 900;
+    pointer-events: none;
+    transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition-duration: 300ms;
+    transition-property: transform;
+    transform: translateY(0px);
+}
+
+.customCheckBox:hover .inner {
+    transform: translateY(-2px);
+}
+
+.customCheckBoxWrapper:first-of-type .customCheckBox {
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+    border-right: 0px;
+}
+
+.customCheckBoxWrapper:last-of-type .customCheckBox {
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+    border-left: 0px;
+}
+
+.customCheckBoxInput {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+    display: none;
+}
+
+.customCheckBoxInput:checked+.customCheckBoxWrapper .customCheckBox {
+    background-color: var(--accent);
+    color: white;
+    box-shadow: rgba(0, 0, 0, 0.23) 0px -4px 1px 0px inset, rgba(255, 255, 255, 0.17) 0px -1px 1px 0px, rgba(0, 0, 0, 0.17) 0px 2px 4px 1px;
+}
+
+.customCheckBoxInput:checked+.customCheckBoxWrapper .customCheckBox .inner {
+    transform: translateY(-2px);
+}
+
+.customCheckBoxInput:checked+.customCheckBoxWrapper .customCheckBox:hover {
+    background-color: var(--accent);
+    box-shadow: rgba(0, 0, 0, 0.26) 0px -4px 1px 0px inset, rgba(255, 255, 255, 0.17) 0px -1px 1px 0px, rgba(0, 0, 0, 0.15) 0px 3px 6px 2px;
+}
+
+.customCheckBoxWrapper .customCheckBox:hover .inner {
+    transform: translateY(-2px);
+}
+
+.circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: var(--secondary);
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
+}
+
+.circle:hover {
+    background-color: var(--primary);
+    color: var(--contrast-text);
+    scale: 1.1;
+}
+
+.circle.selected {
+    background-color: var(--accent);
+    color: var(--contrast-text);
 }

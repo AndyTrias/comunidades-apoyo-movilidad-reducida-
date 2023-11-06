@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Table(name = "interes")
 public class Interes {
     @Id
+    @Getter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -23,9 +24,5 @@ public class Interes {
     @Setter
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Entidad entidad;
-
-
-    public Interes(){
-    }
 
 }

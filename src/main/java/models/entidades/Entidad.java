@@ -6,6 +6,7 @@ import models.localizacion.Localizacion;
 import models.servicios.PrestacionDeServicio;
 import lombok.Getter;
 import lombok.Setter;
+import models.servicios.Servicio;
 
 import javax.persistence.*;
 

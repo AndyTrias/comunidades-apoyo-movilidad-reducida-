@@ -89,7 +89,7 @@ public class PersistenciaTest {
 
     @Test
     void agregarInteresAUsuario(){//agrega una ubicacion sin datos y una localizacion relacionada
-        Usuario usuario = repoUsuario.buscar(1L);
+        Usuario usuario = repoUsuario.buscar(3L);
         Interes interes = new Interes();
         interes.setEntidad(entidad);
         interes.setServicio(servicio);

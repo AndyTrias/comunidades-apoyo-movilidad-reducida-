@@ -1,0 +1,93 @@
+{{#partial "contenido"}}
+    <main class="flex flex-row h-full">
+        <div class="w-1/2 flex flex-col justify-center items-center p-10">
+            <h1 class="text-2xl mb-4">Mis Intereses</h1>
+            <div class="flex justify-center items-center overflow-scroll flex-wrap flex-grow">
+                {{#each intereses}}
+                    <input class="customCheckBoxInput" id="cCB{{this.id}}" type="radio" name="entidades" value="{{this.id}}">
+                    <label class="customCheckBoxWrapper" for="cCB{{this.id}}">
+                        <div class="customCheckBox">
+                            <div class="inner">{{this.entidad.nombre}}</div>
+                        </div>
+                    </label>
+                {{/each}}
+                <input class="customCheckBoxInput" id="cCB6" type="radio" name="entidades" value="add">
+                <label class="customCheckBoxWrapper" for="cCB6">
+                    <button class="customCheckBox inner" onclick="window.dialog.showModal();">+</button>
+                </label>
+            </div>
+            <div class="flex flex-row overflow-scroll flex-wrap flex-grow p-10 gap-4 h-96">
+                {{#each intereses}}
+                    <div class="circle servicio" id={{this.id}}>
+                        {{this.servicio.nombre}}
+                    </div>
+                {{/each}}
+            </div>
+            <button class="button" onclick="guardarCambios()">Guardar Cambios</button>
+        </div>
+
+        <div class="w-1/2 flex flex-col justify-center items-center">
+            <h1>Incidentes de Intereses</h1>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+        <dialog id="dialog">
+            <button onclick="window.dialog.close();" aria-label="close" class="x">❌</button>
+            <h1 class="text-2xl mb-4">Interesate en una nueva entidad!</h1>
+
+            <div class="mb-4 w-full">
+                <select required="" id="rol" name="prestadora" class="input">
+                    <option selected="" disabled="" hidden="">Seleccionar entidad</option>
+                    <option value="1">Entidad 1</option>
+                </select>
+            </div>
+
+            <button class="button" onclick="window.location.reload()">Agregar</button>
+        </dialog>
+    </main>
+{{/partial}}
+
+{{#partial "agregarScript"}}
+<script>
+        function guardarCambios() {
+        const entidadesSeleccionadas = document.querySelectorAll('input[name="entidades"]:checked');
+        const servicios = document.querySelectorAll('.servicio');
+
+        entidadesSeleccionadas.forEach((entidad) => {
+            /* if servicio.id = entidad.value then show, if not, hide */
+            servicios.forEach((servicio) => {
+                if (servicio.id === entidad.value) {
+                    servicio.style.display = "block";
+                } else {
+                    servicio.style.display = "none";
+                }
+            });
+        });
+
+        console.log("Baños Seleccionados:");
+        bañosSeleccionados.forEach((baño) => {
+            console.log("Baño");
+        });
+    }
+
+    const circles = document.querySelectorAll('.circle');
+
+    circles.forEach((circle) => {
+        circle.addEventListener('click', () => {
+            circle.classList.toggle('selected');
+        });
+    });
+
+</script>
+{{/partial}}
+{{> templates/templateBase }}
