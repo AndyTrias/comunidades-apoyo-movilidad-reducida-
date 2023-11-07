@@ -80,7 +80,7 @@ public class AgregarDatosTest {
         estacionAlem = new Establecimiento("Estacion Alem", new Localizacion());
         ciudad = new OrganismoDeControl("Gobierno de la Ciudad de Buenos Aires");
         sbase = new EntidadPrestadora("Subterráneos de Buenos Aires Sociedad del Estado");
-        
+
 
     }
 
@@ -92,7 +92,7 @@ public class AgregarDatosTest {
 
     @Order(2)
     @Test
-    void agregarOrganismoDeControl(){
+    void agregarOrganismoDeControl() {
         ciudad.agregarPrestadora(sbase);
         repoOrganismoDeControl.agregar(ciudad);
     }
@@ -110,15 +110,15 @@ public class AgregarDatosTest {
     @Test
     void agregarPrestacionAEstablecimiento() {
         Servicio banio = repoServicio.buscar(1L);
-        
+
         banioMedrano1 = new PrestacionDeServicio(banio, "baño Medrano inferior", new UbicacionExacta(-34.602993100046, -58.42114971730332));
         banioMedrano2 = new PrestacionDeServicio(banio, "baño Medrano superior", new UbicacionExacta(-34.602993100046, -58.42114971730332));
         banioAlem = new PrestacionDeServicio(banio, "Baño Alem", new UbicacionExacta(1, 1));
-        
+
         Entidad lineaB = repoEntidad.buscar(1L);
         estacionMedrano = lineaB.getEstablecimientos().stream().filter(establecimiento -> establecimiento.getNombre().equals("Estacion Medrano")).findFirst().get();
 
-        
+
         estacionMedrano.agregarServicioPrestado(banioMedrano1);
         estacionMedrano.agregarServicioPrestado(banioMedrano2);
 
@@ -167,14 +167,14 @@ public class AgregarDatosTest {
         Usuario usuario = new Usuario("franco", "pesce", "francopescee@gmail.com");
         usuario.setContrasenia("@ashffkrh3nksdnf214123cssdf");
         usuario.setTelefono("+5491131231231");
-        usuario.setUbicacionExacta(new UbicacionExacta(1,1));
+        usuario.setUbicacionExacta(new UbicacionExacta(1, 1));
         usuario.setRol(repoRol.buscarPorNombre(TipoRol.ADMINISTRADOR_PLATAFORMA));
         repoUsuario.agregar(usuario);
 
         Usuario usuario2 = new Usuario("Gian", "Riccelli", "yayoriccelli@gmail.com");
         usuario2.setContrasenia("@ashffkrh3nksdnf214123cssdf");
         usuario2.setTelefono("+5491131231231");
-        usuario2.setUbicacionExacta(new UbicacionExacta(1,1));
+        usuario2.setUbicacionExacta(new UbicacionExacta(1, 1));
         //usuario.setRol(repoRol.buscarPorNombre(TipoRol.ADMINISTRADOR_PLATAFORMA));
         repoUsuario.agregar(usuario);
 
@@ -196,7 +196,7 @@ public class AgregarDatosTest {
 
     @Order(10)
     @Test
-    void agregarIncidenteARevisar(){
+    void agregarIncidenteARevisar() {
         Usuario usuario = repoUsuario.buscar(1L);
 
         PrestacionDeServicio banioMedrano1 = repoPrestacion.buscar(1L);
@@ -208,5 +208,4 @@ public class AgregarDatosTest {
         usuario.agregarRevisionDeIncidente(repoIncidentes.buscar(1L));
         repoUsuario.modificar(usuario);
     }
-
 }
