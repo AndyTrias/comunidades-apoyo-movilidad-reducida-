@@ -1,7 +1,5 @@
-package controllers;
+package Persistencia;
 
-
-import lombok.AllArgsConstructor;
 import models.external.json.ServicioJson;
 import models.rankings.criterios.MayorCantidad;
 import models.rankings.criterios.MayorTiempo;
@@ -12,19 +10,24 @@ import models.rankings.informes.GeneradorDeInformes;
 import models.rankings.informes.Informe;
 import models.repositorios.RepoEntidad;
 import models.repositorios.RepoInformes;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.Date;
 
-
-@AllArgsConstructor
-public class InformesController extends BaseController {
-
-
-  private RepoEntidad repoEntidad;
+public class RankingTest {
   private RepoInformes repoInformes;
+  private RepoEntidad repoEntidad;
 
-  public void generarRankings() {
+  @BeforeEach
+  public void setUp() {
+    repoInformes = new RepoInformes();
+    repoEntidad = new RepoEntidad();
+  }
+
+  @Test
+  public void TestRanking() {
     EstrategiaDeExportacion estrategia = new ExportarAJson(new ServicioJson());
 
     GeneradorDeInformes generadorDeInformes = new GeneradorDeInformes();
@@ -39,5 +42,4 @@ public class InformesController extends BaseController {
     Informe informe = new Informe(new Date(), rutaArchivo);
     repoInformes.agregar(informe);
   }
-
 }

@@ -15,10 +15,6 @@ import java.util.Map;
 
 @AllArgsConstructor
 public class HomeController extends BaseController {
-
-  private RepoOrganismoDeControl repoOrganismoDeControl;
-  private RepoEntidadPrestadora repoEntidadPrestadora;
-
   public void index(Context ctx) {
     Usuario usuario = usuarioLogueado(ctx);
 
@@ -46,18 +42,5 @@ public class HomeController extends BaseController {
     ctx.render("show/admin.hbs", model);
   }
 
-  public void showEntidad(Context ctx) {
-    Map<String, Object> model = new HashMap<>();
-    model.put("entidadPrestadora", true);
-    model.put("prestadora", repoEntidadPrestadora.buscarporUsuarioDesignado(usuarioLogueado(ctx).getId()));
-    ctx.render("show/rankings.hbs", model);
-  }
-
-  public void showOrganismo(Context ctx) {
-    Map<String, Object> model = new HashMap<>();
-    model.put("organismoDeControl", true);
-    model.put("organismo", repoOrganismoDeControl.buscarPorUsarioDesignado(usuarioLogueado(ctx).getId()));
-    ctx.render("show/rankings.hbs", model);
-  }
 }
 

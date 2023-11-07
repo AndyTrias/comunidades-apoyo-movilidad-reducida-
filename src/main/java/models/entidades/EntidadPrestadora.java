@@ -40,10 +40,9 @@ public class EntidadPrestadora {
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     @JoinColumn(name = "entidad_prestadora_id")
+    @Getter
     private List<Entidad> entidades;
 
-    @Transient
-    private AdapterEnviadorDeInformacion enviadorDeInformacion;
 
     public EntidadPrestadora(String nombre){
         this.nombre = nombre;
@@ -52,10 +51,6 @@ public class EntidadPrestadora {
 
     public EntidadPrestadora() {
 
-    }
-
-    public void enviarInformacion(){
-        enviadorDeInformacion.enviarInformacion();
     }
 
     public void agregarEntidad(Entidad entidad){

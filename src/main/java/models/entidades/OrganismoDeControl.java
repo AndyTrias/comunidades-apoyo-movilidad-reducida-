@@ -7,6 +7,7 @@ import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -42,8 +43,6 @@ public class OrganismoDeControl {
     @JoinColumn(name = "organismo_de_control_id")
     private List<EntidadPrestadora> entidadesQuePosee;
 
-    @Transient
-    private AdapterEnviadorDeInformacion enviadorDeInformacion;
 
     public OrganismoDeControl(String nombre){
 
@@ -56,4 +55,11 @@ public class OrganismoDeControl {
     public void agregarPrestadora(EntidadPrestadora entidad){
         entidadesQuePosee.add(entidad);
     }
+
+    public List<Entidad> obtenerEntidades() {
+        return entidadesQuePosee.stream()
+            .flatMap(e -> e.getEntidades().stream())
+            .collect(Collectors.toList());
+    }
+
 }
