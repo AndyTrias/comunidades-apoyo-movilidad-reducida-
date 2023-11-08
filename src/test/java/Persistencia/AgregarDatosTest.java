@@ -75,12 +75,8 @@ public class AgregarDatosTest {
         banio = new Servicio("baño");
         comunidad = new Comunidad("comunidad de baños del B");
         comunidad1 = new Comunidad("comunidad de baños de Medrano");
-        lineaB = new Entidad("Linea B", new Localizacion());
-        estacionMedrano = new Establecimiento("Estacion Medrano", new Localizacion());
-        estacionAlem = new Establecimiento("Estacion Alem", new Localizacion());
         ciudad = new OrganismoDeControl("Gobierno de la Ciudad de Buenos Aires");
         sbase = new EntidadPrestadora("Subterráneos de Buenos Aires Sociedad del Estado");
-        
 
     }
 
@@ -97,13 +93,35 @@ public class AgregarDatosTest {
         repoOrganismoDeControl.agregar(ciudad);
     }
 
+
     @Order(3)
     @Test
-    void agregarEntidad() {
+    void agregarEntidades() {
+        Localizacion localizacion = new Localizacion();
+        Servicio servicio = repoServicio.buscar(1L);
+        Usuario usuario = repoUsuario.buscar(1L);
+        Comunidad comunidad1 = RepoComunidad.INSTANCE.buscar(1L);
+        Comunidad comunidad2 = RepoComunidad.INSTANCE.buscar(2L);
 
-        lineaB.agregarEstablecimiento(estacionMedrano);
-        lineaB.agregarEstablecimiento(estacionAlem);
-        repoEntidad.agregar(lineaB);
+        EntidadPrestadora prestadora = repoEntidadPrestadora.buscar(1L);
+
+        Entidad lineaA = new Entidad("Linea A", localizacion);
+        prestadora.agregarEntidades(lineaA);
+
+        Establecimiento establecimientoA1 = new Establecimiento("Estacion A1", localizacion);
+        Establecimiento establecimientoA2 = new Establecimiento("Estacion A2", localizacion);
+        lineaA.agregarEstablecimiento(establecimientoA1);
+        lineaA.agregarEstablecimiento(establecimientoA2);
+
+
+        PrestacionDeServicio prestacion1 = new PrestacionDeServicio(servicio, "baño A1", new UbicacionExacta(1, 1));
+        establecimientoA1.agregarServicioPrestado(prestacion1);
+
+        PrestacionDeServicio prestacion2 = new PrestacionDeServicio(servicio, "baño A2", new UbicacionExacta(1, 1));
+        establecimientoA2.agregarServicioPrestado(prestacion2);
+
+
+        repoEntidadPrestadora.modificar(prestadora);
     }
 
     @Order(4)
@@ -153,13 +171,13 @@ public class AgregarDatosTest {
 
     }
 
-    @Order(7)
-    @Test
-    void agregarLocalizacion() throws Exception {
-        Localizacion localizacion = new Localizacion();
-        localizacion.setUbicacionAsLocalidad(6056010001L);
-        repoLocalizacion.agregar(localizacion);
-    }
+//    @Order(7)
+//    @Test
+//    void agregarLocalizacion() throws Exception {
+//        Localizacion localizacion = localizacion;
+//        localizacion.setUbicacionAsLocalidad(6056010001L);
+//        repoLocalizacion.agregar(localizacion);
+//    }
 
     @Order(8)
     @Test
@@ -189,7 +207,6 @@ public class AgregarDatosTest {
         Membresia membresia = new Membresia(comunidad, usuario, repoRol.buscarPorNombre(TipoRol.MIEMBRO));
         comunidad.agregarMembresia(membresia);
         usuario.unirseAComunidad(membresia);
-
         repoComunidad.modificar(comunidad);
     }
 
