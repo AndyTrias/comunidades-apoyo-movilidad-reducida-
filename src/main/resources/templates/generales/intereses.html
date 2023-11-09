@@ -69,48 +69,39 @@
 
     <main class="flex flex-row h-full">
         <div class="w-1/2 flex flex-col justify-center items-center p-10">
-            <h1 class="text-2xl mb-4">Mis Intereses</h1>
-            <div class="flex justify-center items-center overflow-scroll flex-wrap flex-grow">
-                <input class="customCheckBoxInput" id="cCB1" type="radio" name="entidades" value="Entidad 1">
-                <label class="customCheckBoxWrapper" for="cCB1">
-                    <div class="customCheckBox">
-                        <div class="inner">Entidad 1</div>
-                    </div>
-                </label>
-                <input class="customCheckBoxInput" id="cCB2" type="radio" name="entidades" value="Entidad 2">
-                <label class="customCheckBoxWrapper" for="cCB2">
-                    <div class="customCheckBox">
-                        <div class="inner">Entidad 2</div>
-                    </div>
-                </label>
-                <input class="customCheckBoxInput" id="cCB3" type="radio" name="entidades" value="Entidad 3">
-                <label class="customCheckBoxWrapper" for="cCB3">
-                    <div class="customCheckBox">
-                        <div class="inner">Entidad 3</div>
-                    </div>
-                </label>
-                <input class="customCheckBoxInput" id="cCB4" type="radio" name="entidades" value="Entidad 4">
-                <label class="customCheckBoxWrapper" for="cCB4">
-                    <div class="customCheckBox">
-                        <div class="inner">Entidad 4</div>
-                    </div>
-                </label>
-                <input class="customCheckBoxInput" id="cCB5" type="radio" name="entidades" value="Entidad 5">
-                <label class="customCheckBoxWrapper" for="cCB5">
-                    <div class="customCheckBox">
-                        <div class="inner">Entidad 5</div>
-                    </div>
-                </label>
-                <input class="customCheckBoxInput" id="cCB6" type="radio" name="entidades">
-                <label class="customCheckBoxWrapper" for="cCB6">
-                    <button class="customCheckBox inner" onclick="window.dialog.showModal();">+</button>
-                </label>
+            <div class="flex flex-row justify-center items-center mb-4">
+                <h1 class="text-2xl">Mis Intereses</h1>
+                <button class="fabButton rounded" onclick="window.dialog.showModal();">+</button>
             </div>
-            <div class="flex flex-row overflow-scroll flex-wrap flex-grow p-10 gap-4 h-96">
-                <div class="circle">Baño</div>
-                <div class="circle">Baño</div>
-                <div class="circle">Baño</div>
-                <div class="circle">Baño</div>
+            <div class="flex flex-col overflow-scroll mb-4 h-96 pt-10">
+                <div class="flex flex-row justify-center items-center">
+                    <div class="flex-col">
+                        <input class="customCheckBoxInput" id="cCB{{this.entidad.id}}" type="radio" name="entidades" value="{{this.entidad.id}}">
+                        <label class="customCheckBoxWrapper" for="cCB{{this.entidad.id}}">
+                            <button class="customCheckBox rounded flex flex-row justify-between gap-4">
+                                <div class="inner mr-16">Santander rio Argentina</div>
+                                <div class="inner ml-16">baño hombres</div>
+                            </button>
+                        </label>
+                    </div>
+                    <button class="fabButton mb-4 danger ml-4">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+                <div class="flex flex-row justify-center items-center">
+                    <div class="flex-col w-full">
+                        <input class="customCheckBoxInput" id="cCB{{this.entidad.id}}" type="radio" name="entidades" value="{{this.entidad.id}}">
+                        <label class="customCheckBoxWrapper" for="cCB{{this.entidad.id}}">
+                            <button class="customCheckBox rounded flex flex-row justify-between gap-4 w-full">
+                                <div class="inner mr-16">Santander rio Argentina</div>
+                                <div class="inner ml-16">baño</div>
+                            </button>
+                        </label>
+                    </div>
+                    <button class="fabButton mb-4 danger ml-4" onclick="window.dialog2.showModal(3); setId(3)">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
             </div>
             <button class="button" onclick="guardarCambios()">Guardar Cambios</button>
         </div>
@@ -124,15 +115,9 @@
 
 
 
-
-
-
-
-
-
         <dialog id="dialog">
             <button onclick="window.dialog.close();" aria-label="close" class="x">❌</button>
-            <h1 class="text-2xl mb-4">Interesate en una nueva entidad!</h1>
+            <h1 class="text-2xl mb-4">Interesate en una nueva entidad y servicio!</h1>
 
             <div class="mb-4 w-full">
                 <select required="" id="rol" name="prestadora" class="input">
@@ -141,8 +126,25 @@
                 </select>
             </div>
 
+            <div class="mb-4 w-full">
+                <select required="" id="rol" name="prestadora" class="input">
+                    <option selected="" disabled="" hidden="">Seleccionar servicio</option>
+                    <option value="1">Servicio 2</option>
+                </select>
+            </div>
+
             <button class="button" onclick="window.location.reload()">Agregar</button>
         </dialog>
+
+        <dialog id="dialog2">
+            <button onclick="window.dialog.close();" aria-label="close" class="x">❌</button>
+            <h1 class="text-2xl mb-4">Estas seguro que deseas borrar el interes?</h1>
+            <div>
+                <button class="button" onclick="window.dialog.close();">No</button>
+                <button class="button text-white bg-red-600" onclick="eliminarInteres()">Si</button>
+            </div>
+        </dialog>
+
     </main>
 
     <footer class="bg-white rounded-lg shadow mt-auto">
@@ -158,28 +160,15 @@
     </footer>
 
     <script>
-        function guardarCambios() {
-        const interesesSeleccionados = document.querySelectorAll('input[name="entidades"]:checked');
-        const bañosSeleccionados = document.querySelectorAll('.circle.selected');
+        let id;
 
-        console.log("Intereses Seleccionados:");
-        interesesSeleccionados.forEach((interes) => {
-            console.log(interes.value);
-        });
+        function eliminarInteres(){
+            console.log(id);
+        }
 
-        console.log("Baños Seleccionados:");
-        bañosSeleccionados.forEach((baño) => {
-            console.log("Baño");
-        });
-    }
-
-    const circles = document.querySelectorAll('.circle');
-
-    circles.forEach((circle) => {
-        circle.addEventListener('click', () => {
-            circle.classList.toggle('selected');
-        });
-    });
+        function setId(newId) {
+            id = newId;
+        }
 
     </script>
 
