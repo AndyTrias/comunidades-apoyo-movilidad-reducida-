@@ -17,7 +17,9 @@
                 <select required="" id="rol" name="prestadora" class="input">
                     <option selected="" disabled="" hidden="">Seleccionar prestadora</option>
 
-                    <option value="1">Subterráneos de Buenos Aires Sociedad del Estado</option>
+                    {{#each prestadoras}}
+                        <option value="{{this.id}}">{{this.nombre}}</option>
+                    {{/each}}
 
                 </select>
             </div>
