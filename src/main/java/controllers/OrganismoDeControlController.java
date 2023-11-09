@@ -32,6 +32,7 @@ public class OrganismoDeControlController extends BaseController {
     ctx.render("show/rankings.hbs", model);
   }
 
+
   public void index(Context ctx) throws FileNotFoundException {
     OrganismoDeControl organismoDeControl = repoOrganismoDeControl.buscarPorUsarioDesignado(usuarioLogueado(ctx).getId());
     String rutaInforme = buscarRutaInforme(Long.valueOf(ctx.pathParam("id")));
@@ -89,7 +90,6 @@ public class OrganismoDeControlController extends BaseController {
   }
 
 }
-
 
 
 
