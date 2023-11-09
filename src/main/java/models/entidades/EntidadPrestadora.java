@@ -40,7 +40,7 @@ public class EntidadPrestadora {
   private Usuario personaDesignada;
 
   @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
-  @JoinColumn(name = "entidad_prestadora_id")
+  @JoinColumn(name = "entidad_prestadora_id", nullable = false)
   @Getter
   private List<Entidad> entidades;
 
