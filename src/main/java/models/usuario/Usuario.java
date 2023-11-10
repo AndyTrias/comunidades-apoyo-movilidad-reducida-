@@ -158,4 +158,8 @@ public class Usuario {
     public Incidente getRevisionDeIncidente(Long id) {
         return revisionDeIncidentes.stream().filter(r -> r.getId().equals(id)).findFirst().get();
     }
+
+    public void eliminarInteres(Interes interes) {
+        this.intereses.remove(interes);
+    }
 }

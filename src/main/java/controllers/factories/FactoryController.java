@@ -61,6 +61,7 @@ public class FactoryController {
       );
 
       case "Intereses" -> new InteresesController(
+          new RepoInteres(),
           new RepoUsuario(),
           new RepoEntidad(),
           new RepoServicio()

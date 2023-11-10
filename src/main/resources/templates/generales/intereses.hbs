@@ -1,29 +1,28 @@
 {{#partial "contenido"}}
     <main class="flex flex-row h-full">
         <div class="w-1/2 flex flex-col justify-center items-center p-10">
-            <h1 class="text-2xl mb-4">Mis Intereses</h1>
-            <div class="flex justify-center items-center overflow-scroll flex-wrap flex-grow">
-                {{#each intereses}}
-                    <input class="customCheckBoxInput" id="cCB{{this.id}}" type="radio" name="entidades" value="{{this.id}}">
-                    <label class="customCheckBoxWrapper" for="cCB{{this.id}}">
-                        <div class="customCheckBox">
-                            <div class="inner">{{this.entidad.nombre}}</div>
-                        </div>
-                    </label>
-                {{/each}}
-                <input class="customCheckBoxInput" id="cCB6" type="radio" name="entidades" value="add">
-                <label class="customCheckBoxWrapper" for="cCB6">
-                    <button class="customCheckBox inner" onclick="window.dialog.showModal();">+</button>
-                </label>
+            <div class="flex flex-row justify-center items-center mb-4">
+                <h1 class="text-2xl">Mis Intereses</h1>
+                <button class="fabButton rounded" onclick="window.dialog.showModal();">+</button>
             </div>
-            <div class="flex flex-row overflow-scroll flex-wrap flex-grow p-10 gap-4 h-96">
-                {{#each intereses}}
-                    <div class="circle servicio" id={{this.id}}>
-                        {{this.servicio.nombre}}
+            <div class="flex flex-col overflow-scroll mb-4 h-96 pt-10">
+            {{#each intereses}}
+                <div class="flex flex-row justify-center items-center">
+                    <div class="flex-col w-full">
+                        <input class="customCheckBoxInput" id="cCB{{this.entidad.id}}" type="radio" name="entidades" value="{{this.entidad.id}}">
+                        <label class="customCheckBoxWrapper" for="cCB{{this.entidad.id}}">
+                            <button class="customCheckBox rounded flex flex-row justify-between gap-4 w-full">
+                                <div class="inner mr-16">{{this.entidad.nombre}}</div>
+                                <div class="inner ml-16">{{this.servicio.nombre}}</div>
+                            </button>
+                        </label>
                     </div>
-                {{/each}}
+                    <button class="fabButton mb-4 danger ml-4" onclick="window.dialog2.showModal(); setId({{this.id}})">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            {{/each}}
             </div>
-            <button class="button" onclick="guardarCambios()">Guardar Cambios</button>
         </div>
 
         <div class="w-1/2 flex flex-col justify-center items-center">
@@ -32,61 +31,67 @@
 
 
 
-
-
-
-
-
-
-
-
-
         <dialog id="dialog">
             <button onclick="window.dialog.close();" aria-label="close" class="x">❌</button>
-            <h1 class="text-2xl mb-4">Interesate en una nueva entidad!</h1>
+            <h1 class="text-2xl mb-4">Agrega un Interes!</h1>
+            <form action="/intereses" method="POST">
+                <div class="mb-4 w-full">
+                    <select required="" name="entidad" id="entidad" class="input">
+                        <option selected="" disabled="" hidden="">Seleccionar entidad</option>
+                        {{#each entidades}}
+                            <option value={{this.id}}>{{this.nombre}}</option>
+                        {{/each}}
+                    </select>
+                </div>
 
-            <div class="mb-4 w-full">
-                <select required="" id="rol" name="prestadora" class="input">
-                    <option selected="" disabled="" hidden="">Seleccionar entidad</option>
-                    <option value="1">Entidad 1</option>
-                </select>
+                <div class="mb-4 w-full">
+                    <select required="" name="servicio" id="servicio" class="input">
+                        <option selected="" disabled="" hidden="">Seleccionar servicio</option>
+                        {{#each servicios}}
+                            <option value={{this.id}}>{{this.nombre}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+
+                <button class="button" type="submit">Agregar</button>
+            </form>
+        </dialog>
+
+        <dialog id="dialog2">
+            <button onclick="window.dialog2.close();" aria-label="close" class="x">❌</button>
+            <h1 class="text-2xl mb-4">Estas seguro que deseas borrar el interes?</h1>
+            <div>
+                <button class="button" onclick="window.dialog2.close();">No</button>
+                <button class="button text-white bg-red-600" onclick="eliminarInteres()">Si</button>
             </div>
-
-            <button class="button" onclick="window.location.reload()">Agregar</button>
         </dialog>
     </main>
 {{/partial}}
 
 {{#partial "agregarScript"}}
 <script>
-        function guardarCambios() {
-        const entidadesSeleccionadas = document.querySelectorAll('input[name="entidades"]:checked');
-        const servicios = document.querySelectorAll('.servicio');
 
-        entidadesSeleccionadas.forEach((entidad) => {
-            /* if servicio.id = entidad.value then show, if not, hide */
-            servicios.forEach((servicio) => {
-                if (servicio.id === entidad.value) {
-                    servicio.style.display = "block";
-                } else {
-                    servicio.style.display = "none";
-                }
-            });
-        });
+    let id;
 
-        console.log("Baños Seleccionados:");
-        bañosSeleccionados.forEach((baño) => {
-            console.log("Baño");
+    function eliminarInteres() {
+        console.log(id);
+        fetch('/intereses/' + id, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(function(response) {
+            if (response.ok) {
+                window.location.reload();
+            } else {
+                alert('Error al eliminar el interes');
+            }
         });
     }
 
-    const circles = document.querySelectorAll('.circle');
-
-    circles.forEach((circle) => {
-        circle.addEventListener('click', () => {
-            circle.classList.toggle('selected');
-        });
-    });
+    function setId(newId) {
+        id = newId;
+    }
 
 </script>
 {{/partial}}

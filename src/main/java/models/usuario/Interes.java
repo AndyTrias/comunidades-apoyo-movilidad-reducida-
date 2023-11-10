@@ -1,5 +1,7 @@
 package models.usuario;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import models.servicios.Servicio;
 import models.entidades.Entidad;

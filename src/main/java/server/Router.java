@@ -104,6 +104,8 @@ public class Router implements WithSimplePersistenceUnit {
 
     app.routes(() -> {
       app.get("intereses", ((InteresesController) FactoryController.controller("Intereses"))::index);
+      app.post("intereses", ((InteresesController) FactoryController.controller("Intereses"))::save);
+      app.delete("intereses/{id}", ((InteresesController) FactoryController.controller("Intereses"))::delete);
     });
 
     app.exception(CredencialesInvalidaException.class, ExceptionHandler::handleInvalidCredentials);
