@@ -18,8 +18,6 @@ public class EntidadPrestadoraController extends BaseController {
     model.put("entidadPrestadora", true);
     model.put("prestadora", repoEntidadPrestadora.buscarporUsuarioDesignado(usuarioLogueado(ctx).getId()));
     model.put("rankings", repoInformes.buscarTodos());
-    ctx.render("show/rankings.hbs", model);
+    ctx.render("rankings/rankings.hbs", model);
   }
 }
-
-

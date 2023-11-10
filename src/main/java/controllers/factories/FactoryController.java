@@ -57,7 +57,9 @@ public class FactoryController {
 
       case "Informe" -> new InformesController(
           new RepoEntidad(),
-          new RepoInformes()
+          new RepoInformes(),
+          new RepoEntidadPrestadora(),
+          new RepoOrganismoDeControl()
       );
 
       case "Intereses" -> new InteresesController(
@@ -69,8 +71,7 @@ public class FactoryController {
 
       case "Organismo De Control" -> new OrganismoDeControlController(
           new RepoOrganismoDeControl(),
-          new RepoInformes(),
-          new RepoEntidad()
+          new RepoInformes()
       );
 
       case "Entidad Prestadora" -> new EntidadPrestadoraController(
