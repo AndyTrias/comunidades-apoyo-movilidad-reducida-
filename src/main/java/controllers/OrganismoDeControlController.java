@@ -1,5 +1,7 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -13,9 +15,12 @@ import models.repositorios.RepoInformes;
 import models.repositorios.RepoOrganismoDeControl;
 import server.exceptions.EntidadNoExistenteException;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 public class OrganismoDeControlController extends BaseController {
@@ -33,16 +38,19 @@ public class OrganismoDeControlController extends BaseController {
   }
 
 
-  public void index(Context ctx) throws FileNotFoundException {
+  public void index(Context ctx) throws IOException {
+    Map<String, Object> model = new HashMap<>();
     OrganismoDeControl organismoDeControl = repoOrganismoDeControl.buscarPorUsarioDesignado(usuarioLogueado(ctx).getId());
     String rutaInforme = buscarRutaInforme(Long.valueOf(ctx.pathParam("id")));
 
-    JsonArray jsonArray = parseJsonFile(rutaInforme);
-    Map<String, List<Entidad>> mapCriterioEntidades = createCriterioEntidadesMap(jsonArray, organismoDeControl);
+    JsonNode nodo = parsearJson(rutaInforme);
+    String criterio = nodo.get(0).get("Criterio").asText();
+    List<Entidad> entidades = parsearRanking(nodo.get(0).get("Ranking"), organismoDeControl);
 
-    Map<String, Object> model = new HashMap<>();
-    model.put("mapCriterioEntidades", mapCriterioEntidades);
+    model.put("criterio", criterio);
+    model.put("entidades", entidades);
     ctx.render("show/ranking.hbs", model);
+
   }
 
   public String buscarRutaInforme(Long id) {
@@ -51,45 +59,30 @@ public class OrganismoDeControlController extends BaseController {
         .getPath();
   }
 
-  private JsonArray parseJsonFile(String filePath) throws FileNotFoundException {
-    JsonParser parser = new JsonParser();
-    JsonElement jsonElement = parser.parse(new FileReader(filePath));
-    return jsonElement.getAsJsonArray();
-  }
-
-  private Map<String, List<Entidad>> createCriterioEntidadesMap(JsonArray jsonArray, OrganismoDeControl organismoDeControl) {
-    Map<String, List<Entidad>> mapCriterioEntidades = new HashMap<>();
-
-    for (JsonElement element : jsonArray) {
-      JsonObject jsonObject = element.getAsJsonObject();
-      String criterio = jsonObject.get("Criterio").getAsString();
-      JsonArray rankingArray = jsonObject.get("Ranking").getAsJsonArray();
-
-      List<Entidad> entidades = processRankingArray(rankingArray, organismoDeControl);
-      mapCriterioEntidades.put(criterio, entidades);
+  public JsonNode parsearJson(String rutaInforme) throws IOException {
+    ObjectMapper objectMapper = new ObjectMapper();
+    try {
+      return objectMapper.readTree(new File(rutaInforme));
+    } catch (FileNotFoundException e) {
+      throw new EntidadNoExistenteException("No se pudo procesar el informe");
     }
-    return mapCriterioEntidades;
   }
 
-  private List<Entidad> processRankingArray(JsonArray rankingArray, OrganismoDeControl organismoDeControl) {
+  private List<Entidad> parsearRanking(JsonNode rankingNode, OrganismoDeControl organismoDeControl) {
+    List<Entidad> entidadesDelOrganismo = organismoDeControl.obtenerEntidades();
     List<Entidad> entidades = new ArrayList<>();
-    for (JsonElement rankElement : rankingArray) {
-      String[] ids = rankElement.getAsString().split(",\\s*");
-      for (String id : ids) {
-        Long entityId = Long.parseLong(id);
-        Optional<Entidad> optionalEntidad = Optional.ofNullable(repoEntidad.buscar(entityId));
+    String[] rankingArray = rankingNode.get(0).asText().split(",");
 
-        optionalEntidad.ifPresent(entidad -> {
-          if (organismoDeControl.obtenerEntidades().contains(entidad)) {
+    Arrays.stream(rankingArray)
+        .map(String::trim) // Trim leading and trailing whitespace
+        .map(Long::parseLong)
+        .forEach(id -> {
+          Entidad entidad = repoEntidad.buscar(id);
+          if (entidadesDelOrganismo.contains(entidad)) {
             entidades.add(entidad);
           }
         });
-      }
-    }
+
     return entidades;
   }
-
 }
-
-
-

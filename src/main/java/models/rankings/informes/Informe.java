@@ -1,10 +1,9 @@
 package models.rankings.informes;
+
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "informe")
@@ -15,7 +14,6 @@ public class Informe {
     @Getter
     private Long id;
 
-
     @Getter
     @Column(name = "fecha", nullable = false)
     public Date fecha;
@@ -24,10 +22,14 @@ public class Informe {
     @Column(name = "path", nullable = false)
     public String path;
 
+    @Getter
+    @Column(name = "nombre", nullable = false)
+    public String nombre;
 
-    public Informe(Date fecha, String path) {
+    public Informe(Date fecha, String path, String nombre) {
         this.fecha = fecha;
         this.path = path;
+        this.nombre = nombre;
     }
 
     public Informe() {

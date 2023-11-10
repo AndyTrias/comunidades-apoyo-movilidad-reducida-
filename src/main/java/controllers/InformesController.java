@@ -2,7 +2,10 @@ package controllers;
 
 
 import lombok.AllArgsConstructor;
+import models.configs.Config;
+import models.entidades.Entidad;
 import models.external.json.ServicioJson;
+import models.rankings.criterios.CriteriosDeEntidades;
 import models.rankings.criterios.MayorCantidad;
 import models.rankings.criterios.MayorTiempo;
 import models.rankings.estrategiaDeExportacion.EstrategiaDeExportacion;
@@ -14,7 +17,9 @@ import models.repositorios.RepoEntidad;
 import models.repositorios.RepoInformes;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 
 @AllArgsConstructor
@@ -25,19 +30,27 @@ public class InformesController extends BaseController {
   private RepoInformes repoInformes;
 
   public void generarRankings() {
+    List<CriteriosDeEntidades> criterios = Arrays.asList(
+        new MayorTiempo("Tiempo de resolucion"),
+        new MayorCantidad("Cantidad de incidentes")
+    );
+
+    List<Entidad> entidades = repoEntidad.buscarTodos();
     EstrategiaDeExportacion estrategia = new ExportarAJson(new ServicioJson());
 
-    GeneradorDeInformes generadorDeInformes = new GeneradorDeInformes();
-    generadorDeInformes.agregarCriterioDeEntidad(new MayorTiempo("Tiempo de resolucion"));
-    generadorDeInformes.agregarCriterioDeEntidad(new MayorCantidad("Cantidad de incidentes"));
-    String rutaArchivo = "ranking_" + LocalDate.now() + ".json";
+    for (CriteriosDeEntidades criterio : criterios) {
+      GeneradorDeInformes generadorDeInformes = new GeneradorDeInformes();
+      generadorDeInformes.agregarCriterioDeEntidad(criterio);
 
-    Exportador exportador = new Exportador(generadorDeInformes, estrategia);
-    exportador.exportarConEstrategia(repoEntidad.buscarTodos(), rutaArchivo);
+      String nombreArchivo = Config.PATH_INFORMES + criterio.getNombreInterno() + "_" + LocalDate.now() + ".json";
 
+      Exportador exportador = new Exportador(generadorDeInformes, estrategia);
+      exportador.exportarConEstrategia(entidades, nombreArchivo);
 
-    Informe informe = new Informe(new Date(), rutaArchivo);
-    repoInformes.agregar(informe);
+      Informe informe = new Informe(new Date(), nombreArchivo, criterio.getNombre());
+      repoInformes.agregar(informe);
+    }
   }
+
 
 }

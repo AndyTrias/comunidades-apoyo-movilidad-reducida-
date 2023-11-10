@@ -26,11 +26,11 @@ public class HomeController extends BaseController {
       }
 
       case ENTIDAD_PRESTADORA -> {
-        ctx.redirect("/entidadPrestadora");
+        ctx.redirect("/entidadPrestadora/");
       }
 
       case ORGANISMO_DE_CONTROL -> {
-        ctx.redirect("/organismoDeControl");
+        ctx.redirect("/organismoDeControl/");
       }
 
     }

@@ -2,10 +2,13 @@ package models.external.json;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import models.configs.Config;
 import models.rankings.estrategiaDeExportacion.AdapterJson;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -43,10 +46,11 @@ public class ServicioJson implements AdapterJson {
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     String json = gson.toJson(jsonList);
 
+
     try (FileWriter fileWriter = new FileWriter(rutaArchivo)) {
       fileWriter.write(json);
     } catch (IOException e) {
-      e.getStackTrace();
+        e.getStackTrace();
     }
     return rutaArchivo;
   }
