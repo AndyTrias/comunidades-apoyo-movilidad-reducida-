@@ -211,10 +211,14 @@ public class AgregarDatosTest {
     @Order(8)
     @Test
     void agregarComunidad() {
-        Comunidad comunidad = new Comunidad("comunidad de baños del Mitre");
-        Comunidad comunidad1 = new Comunidad("comunidad de baños de Urquiza");
+        Comunidad comunidad = new Comunidad("Baños de Trenes Argentinos");
+        Comunidad comunidad1 = new Comunidad("Baños de Metrovias");
+        Comunidad comunidad2 = new Comunidad("Baños de La linea Mitre");
+        Comunidad comunidad3 = new Comunidad("Servicios de Belgrano C");
         repoComunidad.agregar(comunidad);
         repoComunidad.agregar(comunidad1);
+        repoComunidad.agregar(comunidad2);
+        repoComunidad.agregar(comunidad3);
     }
 
     @Order(9)
@@ -222,6 +226,8 @@ public class AgregarDatosTest {
     void agregarPrestacionAComunidad() {
         Comunidad comunidad = repoComunidad.buscar(1L);
         Comunidad comunidad1 = repoComunidad.buscar(2L);
+        Comunidad comunidad2 = repoComunidad.buscar(3L);
+        Comunidad comunidad3 = repoComunidad.buscar(4L);
 
         PrestacionDeServicio prestacionDeServicio = repoPrestacion.buscar(1L);
         PrestacionDeServicio prestacionDeServicio1 = repoPrestacion.buscar(2L);
@@ -241,6 +247,11 @@ public class AgregarDatosTest {
 
         repoComunidad.modificar(comunidad1);
 
+        comunidad2.agregarServiciosDeInteres(prestacionDeServicio, prestacionDeServicio1);
+        repoComunidad.modificar(comunidad2);
+
+        comunidad3.agregarServiciosDeInteres(prestacionDeServicio);
+        repoComunidad.modificar(comunidad3);
     }
 
     @Order(10)
