@@ -26,4 +26,8 @@ public abstract class CriteriosEntidadesQueUsanIncidentes implements CriteriosDe
             .filter(Incidente::ocurrioEstaSemana)
             .collect(Collectors.toList());
     }
+
+    public String getNombreInterno() {
+        return this.nombre.replace(" ", "_");
+    }
 }

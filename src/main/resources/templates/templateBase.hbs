@@ -13,8 +13,8 @@
             rel="stylesheet"
     />
     <link rel="stylesheet" href="\css\style.css">
-    <link rel="stylesheet" href="\css\background.css">
     <link rel="stylesheet" href="\css\incidentes.css">
+    <link rel="stylesheet" href="\css\components.css">
     <script src="\js\script.js"></script>
     <script src="\js\incidentes.js"></script>
     <script>
@@ -27,60 +27,71 @@
     {{#block "agregarAlHead"}}
     {{/block}}
 </head>
-<body class="h-screen flex flex-col bg-gradient-to-l from-indigo-400 via-purple-500 to-cyan-500">
+<body class="h-screen flex flex-col background">
 
-    <header>
-        <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-            <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
-                     stroke-linejoin="round" stroke-width="2"
-                     class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
-                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-                </svg>
-                <a class="ml-3 text-xl" href="/">
-                    Monitoreo de Estado de Servicios
+    <header class="shadow">
+        <nav class="bg-white border-gray-200 px-4 lg:px-6 py-4 dark:bg-gray-800">
+            <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
+                <a href="/" class="flex items-center">
+                    <span class="text-xl font-semibold">Monitoreo de Estado de Servicio</span>
                 </a>
-            </a>
-            <nav class="md:ml-auto flex flex-wrap items-center gap-3 text-base justify-center">
-                {{#if administrador}}
-                    <a class="mr-5 text-white hover:text-gray-900" href="admin/usuarios">
-                        Usuarios
-                    </a>
-                    <a class="mr-5 text-white hover:text-gray-900" href="/admin/cargaManual">
-                        Carga Manual
-                    </a>
-                    <a class="mr-5 text-white hover:text-gray-900" href="admin/cargaMasiva">
-                        Carga Masiva
-                    </a>
-                {{else if entidadPrestadora}}
-                {{else if organismoDeControl}}
-                {{else if notlogged}}
-                {{else}}
-                    <a class="mr-5 text-white hover:text-gray-900" href="/comunidades">
-                        Comunidades
-                    </a>
-                    <a class="mr-5 text-white hover:text-gray-900" href="/revisionDeIncidentes">
-                        Revision de incidentes
-                    </a>
-                    <a class="mr-5 text-white hover:text-gray-900" href="/perfil">
-                        Perfil
-                    </a>
-                {{/if}}
-                {{#unless notlogged}}
+                <button data-collapse-toggle="mobile-menu-2" type="button" class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="mobile-menu-2" aria-expanded="false">
+                    <span class="sr-only">Open main menu</span>
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
+                    <svg class="hidden w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                </button>
+                <div class="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
+                    <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
+                        {{#if administrador}}
+                                <li>
+                                    <a class="linkButton" href="admin/usuarios">
+                                        Usuarios
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="linkButton" href="/admin/cargaManual">
+                                        Carga Manual
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="linkButton" href="admin/cargaMasiva">
+                                        Carga Masiva
+                                    </a>
+                                </li>
+                        {{else if entidadPrestadora}}
+                        {{else if organismoDeControl}}
+                        {{else if notlogged}}
+                        {{else}}
+                            <li>
+                                <a href="/intereses" class="linkButton">Intereses</a>
+                            </li>
+                            <li>
+                                <a href="/comunidades" class="linkButton">Comunidades</a>
+                            </li>
+                            <li>
+                                <a href="/revisionDeIncidentes" class="linkButton">Revision de Incidentes</a>
+                            </li>
+                            <li>
+                                <a href="/perfil" class="linkButton">Perfil</a>
+                            </li>
+                        {{/if}}
+                        {{#unless notlogged}}
 
-                    <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" onclick="goBack()">
-                        <!-- El botón para volver a la página anterior -->
-                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded">
-                            Volver
-                        </button>
-                    </a>
-                    <a href="/logout"
-                       class="flex flex-col justify-center items-center bg-red-400 border-0 py-1 px-3 focus:outline-none hover:bg-red-600 rounded ml-auto text-base mt-4 md:mt-0 w-20 h-8">
-                        <i class="fas fa-sign-out-alt text-white"></i>
-                    </a>
-                {{/unless}}
-            </nav>
-        </div>
+                            <li onclick="goBack()">
+                                <a class="linkButton">
+                                    Volver
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/logout" class="linkButton text-red-600">
+                                    Cerrar Sesión
+                                </a>
+                            </li>
+                        {{/unless}}
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </header>
 
 
@@ -88,25 +99,17 @@
     {{/block}}
 
 
-    <footer class="text-gray-600 body-font mt-auto">
-    <div class="container p-5 mx-auto flex items-center sm:flex-row flex-col">
-        <a class="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
-                 stroke-linejoin="round" stroke-width="2"
-                 class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
-                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-            </svg>
-            <span class="ml-3 text-xl">
-            Monitoreo de Estado de Servicios
-          </span>
-        </a>
-        <p class="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">©
-            2023 Diseño de Sistemas UTN —
-            <a href="https://github.com/dds-utn/2023-tpa-mama-grupo-06" class="text-gray-600 ml-1"
-               rel="noopener noreferrer" target="_blank">Github</a>
-        </p>
-    </div>
-</footer>
+    <footer class="bg-white rounded-lg shadow mt-auto">
+        <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
+          <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a href="#" class="hover:underline">Diseño de Sistemas UTN</a>. Todos los derechos reservados.
+        </span>
+            <ul class="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
+                <li>
+                    <a href="https://github.com/dds-utn/2023-tpa-mama-grupo-06" rel="noopener noreferrer" target="_blank" class="mr-4 hover:underline md:mr-6 ">Github</a>
+                </li>
+            </ul>
+        </div>
+    </footer>
 
     {{#block "agregarScript"}}
     {{/block}}

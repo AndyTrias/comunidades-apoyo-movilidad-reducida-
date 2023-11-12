@@ -53,8 +53,6 @@ public class informesTest {
       ServicioJson servicioJsonMock = Mockito.mock(ServicioJson.class);
       EstrategiaDeExportacion estrategia = new ExportarAJson(servicioJsonMock);
 
-//      String nombreArchivo = "ranking_" + LocalDate.now() + ".json";
-
       Exportador exportador = new Exportador(generadorDeInformes, estrategia);
       exportador.exportarConEstrategia(repoEntidad.buscarTodos(), "ranking_" + LocalDate.now() + ".json");
 

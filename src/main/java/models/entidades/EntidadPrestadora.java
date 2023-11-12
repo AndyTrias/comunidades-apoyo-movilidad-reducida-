@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -23,42 +24,41 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = "entidad_prestadora")
 public class EntidadPrestadora {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Setter
-    @Getter
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Setter
+  @Getter
+  private Long id;
 
-    @Getter
-    @Column(name = "nombre")
-    private String nombre;
+  @Getter
+  @Column(name = "nombre")
+  private String nombre;
 
-    @Setter
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
-    @Getter
-    private Usuario personaDesignada;
+  @Setter
+  @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+  @Getter
+  private Usuario personaDesignada;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
-    @JoinColumn(name = "entidad_prestadora_id")
-    private List<Entidad> entidades;
+  @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+  @JoinColumn(name = "entidad_prestadora_id", nullable = false)
+  @Getter
+  private List<Entidad> entidades;
 
-    @Transient
-    private AdapterEnviadorDeInformacion enviadorDeInformacion;
 
-    public EntidadPrestadora(String nombre){
-        this.nombre = nombre;
-        this.entidades = new ArrayList<>();
-    }
+  public EntidadPrestadora(String nombre) {
+    this.nombre = nombre;
+    this.entidades = new ArrayList<>();
+  }
 
-    public EntidadPrestadora() {
+  public EntidadPrestadora() {
 
-    }
+  }
 
-    public void enviarInformacion(){
-        enviadorDeInformacion.enviarInformacion();
-    }
+  public void agregarEntidad(Entidad entidad) {
+    entidades.add(entidad);
+  }
 
-    public void agregarEntidad(Entidad entidad){
-        entidades.add(entidad);
-    }
+  public void agregarEntidades(Entidad... entidades) {
+    this.entidades.addAll(Arrays.asList(entidades));
+  }
 }

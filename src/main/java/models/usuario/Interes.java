@@ -1,5 +1,7 @@
 package models.usuario;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import models.servicios.Servicio;
 import models.entidades.Entidad;
@@ -11,6 +13,7 @@ import javax.persistence.*;
 @Table(name = "interes")
 public class Interes {
     @Id
+    @Getter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -23,9 +26,5 @@ public class Interes {
     @Setter
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Entidad entidad;
-
-
-    public Interes(){
-    }
 
 }

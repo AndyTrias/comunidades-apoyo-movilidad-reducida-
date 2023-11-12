@@ -53,14 +53,31 @@ public class FactoryController {
       );
 
       case "Home" -> new HomeController(
-          new RepoOrganismoDeControl(),
-          new RepoEntidadPrestadora()
       );
 
       case "Informe" -> new InformesController(
-          new RepoEntidad()
+          new RepoEntidad(),
+          new RepoInformes(),
+          new RepoEntidadPrestadora(),
+          new RepoOrganismoDeControl()
       );
 
+      case "Intereses" -> new InteresesController(
+          new RepoInteres(),
+          new RepoUsuario(),
+          new RepoEntidad(),
+          new RepoServicio()
+      );
+
+      case "Organismo De Control" -> new OrganismoDeControlController(
+          new RepoOrganismoDeControl(),
+          new RepoInformes()
+      );
+
+      case "Entidad Prestadora" -> new EntidadPrestadoraController(
+          new RepoEntidadPrestadora(),
+          new RepoInformes()
+      );
 
       default -> null;
     };

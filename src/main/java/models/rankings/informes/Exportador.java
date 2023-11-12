@@ -4,11 +4,14 @@ import models.entidades.Entidad;
 import lombok.Setter;
 import models.rankings.estrategiaDeExportacion.EstrategiaDeExportacion;
 
+import java.io.IOException;
 import java.util.List;
 
 public class Exportador {
-  private GeneradorDeInformes exportable;
-@Setter private EstrategiaDeExportacion estrategia;
+ @Setter
+ private GeneradorDeInformes exportable;
+@Setter
+private EstrategiaDeExportacion estrategia;
 
   public Exportador(GeneradorDeInformes exportable, EstrategiaDeExportacion estrategia) {
     this.exportable = exportable;

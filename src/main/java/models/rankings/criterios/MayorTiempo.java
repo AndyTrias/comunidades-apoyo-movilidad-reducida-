@@ -20,12 +20,9 @@ public class MayorTiempo extends CriteriosEntidadesQueUsanIncidentes {
 
 
     private float promedioTiempoDeCierre(Entidad entidad) {
-        List<Incidente> incidentes = obtenerIncidentesDeEntidadEnlaSemana(entidad);
-
-        OptionalDouble promedio = incidentes.stream()
+        return (float) obtenerIncidentesDeEntidadEnlaSemana(entidad).stream()
             .mapToDouble(Incidente::tiempoActivo)
-            .average();
-
-        return (float) promedio.orElse(0.0);
+            .average()
+            .orElse(0.0);
     }
 }

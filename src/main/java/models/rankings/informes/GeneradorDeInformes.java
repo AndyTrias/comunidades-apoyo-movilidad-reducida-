@@ -30,9 +30,11 @@ public class GeneradorDeInformes {
     for (CriteriosDeEntidades criterio : criteriosDeEntidades) {
       List<String> columnas = new ArrayList<>();
       columnas.add(criterio.getNombre());
+
       List<String> rankingNombres = criterio.generarRanking(entidades).stream()
-          .map(Entidad::getNombre)
+          .map(entidad -> String.valueOf(entidad.getId()))
           .collect(Collectors.toList());
+
       String rankings = String.join(", ", rankingNombres);
       columnas.add(rankings);
 

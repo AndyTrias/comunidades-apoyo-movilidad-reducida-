@@ -88,14 +88,29 @@ public class Router implements WithSimplePersistenceUnit {
 
       app.get("/", ((HomeController) FactoryController.controller("Home"))::index);
       app.get("admin", ((HomeController) FactoryController.controller("Home"))::showAdmin, TipoRol.ADMINISTRADOR_PLATAFORMA);
-      app.get("organismoDeControl", ((HomeController) FactoryController.controller("Home"))::showOrganismo, TipoRol.ORGANISMO_DE_CONTROL);
-      app.get("entidadPrestadora", ((HomeController) FactoryController.controller("Home"))::showEntidad, TipoRol.ENTIDAD_PRESTADORA);
+
+    });
+
+    app.routes(() -> {
+      app.get("organismoDeControl/", ((OrganismoDeControlController) FactoryController.controller("Organismo De Control"))::show, TipoRol.ORGANISMO_DE_CONTROL);
+      app.get("organismoDeControl/ranking/{id}", ((InformesController) FactoryController.controller("Informe"))::rankingOrganismo, TipoRol.ORGANISMO_DE_CONTROL);
+    });
+
+    app.routes(() -> {
+      app.get("entidadPrestadora/", ((EntidadPrestadoraController) FactoryController.controller("Entidad Prestadora"))::show, TipoRol.ENTIDAD_PRESTADORA);
+      app.get("entidadPrestadora/ranking/{id}", ((InformesController) FactoryController.controller("Informe"))::rankingPrestadora, TipoRol.ENTIDAD_PRESTADORA);
 
     });
 
     app.routes(() -> {
       app.get("perfil", ((PerfilController) FactoryController.controller("Perfil"))::index);
       app.post("perfil", ((PerfilController) FactoryController.controller("Perfil"))::save);
+    });
+
+    app.routes(() -> {
+      app.get("intereses", ((InteresesController) FactoryController.controller("Intereses"))::index);
+      app.post("intereses", ((InteresesController) FactoryController.controller("Intereses"))::save);
+      app.delete("intereses/{id}", ((InteresesController) FactoryController.controller("Intereses"))::delete);
     });
 
     app.exception(CredencialesInvalidaException.class, ExceptionHandler::handleInvalidCredentials);

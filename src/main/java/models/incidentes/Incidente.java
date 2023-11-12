@@ -106,7 +106,7 @@ public class Incidente {
         return fechaDeAperturaLocalDate.isAfter(haceUnaSemana);
     }
 
-    public boolean noOcurrioHace24Hs() {
+    public boolean ocurrioHaceMasDe24Hs() {
         LocalDate hoy = LocalDate.now();
         LocalDate fechaDeAperturaLocalDate = fechaDeApertura.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate hace24Hs = hoy.minus(1, ChronoUnit.DAYS);

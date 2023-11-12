@@ -6,6 +6,7 @@ import models.localizacion.Localizacion;
 import models.servicios.PrestacionDeServicio;
 import lombok.Getter;
 import lombok.Setter;
+import models.servicios.Servicio;
 
 import javax.persistence.*;
 
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "entidad")
@@ -44,11 +46,9 @@ public class Entidad {
     }
 
     public List<PrestacionDeServicio> getPrestacionesDeServicios() {
-        List<PrestacionDeServicio> prestaciones = new ArrayList<>();
-        for (Establecimiento establecimiento : this.establecimientos) {
-            prestaciones.addAll(establecimiento.getServicios());
-        }
-        return prestaciones;
+        return this.establecimientos.stream()
+            .flatMap(establecimiento -> establecimiento.getServicios().stream())
+            .collect(Collectors.toList());
     }
 
     public void agregarEstablecimiento(Establecimiento establecimiento) {
@@ -56,10 +56,8 @@ public class Entidad {
     }
 
     public List<Incidente> getIncidentes() {
-        List<Incidente> incidentes = new ArrayList<>();
-        for (Establecimiento establecimiento : this.establecimientos) {
-            establecimiento.getServicios().forEach(servicio -> incidentes.addAll(servicio.getIncidentes()));
-        }
-        return incidentes;
+        return this.getPrestacionesDeServicios().stream()
+            .flatMap(prestacion -> prestacion.getIncidentes().stream())
+            .collect(Collectors.toList());
     }
 }

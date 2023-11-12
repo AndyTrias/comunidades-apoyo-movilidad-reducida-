@@ -1,58 +1,53 @@
 {{#partial "contenido"}}
-    <main class="p-3 flex flex-wrap justify-center gap-4">
-        <form class="glass p-10 flex flex-col w-full sm:w-1/2 md:w-2/5" action="/admin/usuarios/entidad" method="POST">
+    <main class="p-8 flex flex-wrap justify-center gap-4">
+        <form class="p-8 flex flex-col md:w-1/2 w-full rounded mt-4 items-center shadow-2xl bg-gray-100" action="/admin/usuarios/entidad" method="POST">
             <h2 class="text-3xl font-bold text-gray-800 mb-2">
                 Designar Usuario de Entidades Prestadoras
             </h2>
-            <div class="mb-4">
+            <div class="mb-4 w-full">
                 <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
-                <input type="text" id="email" name="email"
-                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                       required>
+                <input type="text" id="email" name="email" class="input" required="">
             </div>
-            <div class="mb-4">
+            <div class="mb-4 w-full">
                 <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Contraseña</label>
-                <input type="password" id="password" name="password"
-                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                       required>
+                <input type="password" id="password" name="password" class="input" required="">
             </div>
-            <div class="mb-4">
+            <div class="mb-4 w-full">
                 <label for="rol" class="block text-gray-700 text-sm font-bold mb-2">Entidad Prestadora</label>
-                <select required id="rol" name="prestadora"
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        required>
-                    <option selected disabled hidden>Seleccionar prestadora</option>
+                <select required="" id="rol" name="prestadora" class="input">
+                    <option selected="" disabled="" hidden="">Seleccionar prestadora</option>
+
                     {{#each prestadoras}}
                         <option value="{{this.id}}">{{this.nombre}}</option>
                     {{/each}}
+
                 </select>
             </div>
 
-            <button type="submit"
-                    class="block w-full bg-indigo-600 mt-2 py-2 rounded-2xl hover:bg-indigo-700 hover:-translate-y-1 transition-all duration-500 text-white font-semibold mb-2">
+            <button type="submit" class="button w-1/2">
                 Crear Usuario
             </button>
         </form>
-        <form class="glass p-10 flex flex-col w-full sm:w-1/2 md:w-2/5" action="/admin/usuarios/organismo" method="POST">
+        <form class="p-8 flex flex-col md:w-1/2 w-full rounded mt-4 items-center shadow-2xl bg-gray-100" action="/admin/usuarios/organismo" method="POST">
             <h1 class="text-3xl font-bold text-gray-800 mb-2">
                 Designar Usuario de Organismo de Control
             </h1>
-            <div class="mb-4">
+            <div class="mb-4 w-full">
                 <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
                 <input type="text" id="email" name="email"
-                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                       class="input"
                        required>
             </div>
-            <div class="mb-4">
+            <div class="mb-4 w-full">
                 <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Contraseña</label>
                 <input type="password" id="password" name="password"
-                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                       class="input"
                        required>
             </div>
-            <div class="mb-4">
+            <div class="mb-4 w-full">
                 <label for="organismo" class="block text-gray-700 text-sm font-bold mb-2">Organismo de control</label>
                 <select required id="organismo" name="organismo"
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        class="input"
                         required>
                     <option selected disabled hidden>Seleccionar organismo</option>
                     {{#each organismos}}
@@ -62,7 +57,7 @@
             </div>
 
             <button type="submit"
-                    class="block w-full bg-indigo-600 mt-2 py-2 rounded-2xl hover:bg-indigo-700 hover:-translate-y-1 transition-all duration-500 text-white font-semibold mb-2">
+                    class="button w-1/2">
                 Crear Usuario
             </button>
         </form>

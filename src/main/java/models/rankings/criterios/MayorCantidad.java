@@ -1,6 +1,7 @@
 package models.rankings.criterios;
 
 import models.entidades.Entidad;
+import models.incidentes.Incidente;
 
 import java.util.Comparator;
 import java.util.List;
@@ -21,7 +22,7 @@ public class MayorCantidad extends CriteriosEntidadesQueUsanIncidentes {
   private int cantidadDeIncidentesEnLaSemana(Entidad entidad) {
     return (int) obtenerIncidentesDeEntidadEnlaSemana(entidad)
         .stream()
-        .filter(incidente -> !incidente.noOcurrioHace24Hs())
+        .filter(Incidente::ocurrioHaceMasDe24Hs)
         .count();
   }
 

@@ -1,0 +1,4 @@
+{
+    "java.debug.settings.onBuildFailureProceed": true,
+    "livePreview.defaultPreviewPath": "/src/main/resources/templates/admin/seleccionarLocalidad.html"
+}
