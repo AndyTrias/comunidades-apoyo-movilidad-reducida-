@@ -3,7 +3,7 @@
 {% block contenido %}
 
 
-<div class="mx-auto p-5 flex flex-col items-center md:flex-row">
+<div class="mx-auto p-5 flex flex-col items-center md:flex-row w-full">
     <div class="w-full md:w-1/2">
         <div class="flex items-center space-x-4 mb-2 mx-auto">
             <label for="filter" class="text-white">Filtro:</label>
@@ -14,15 +14,15 @@
             </select>
         </div>
   
-        <div class="space-y-4 incidentesContainer w-full overflow-y-auto">
+        <div class="space-y-4 incidentesContainer w-full overflow-y-auto h-full">
             {% for incidente in incidentes %}
                 <a href="/incidentes/{{ incidente.id }}"
-                    class="cristal incidente"
+                    class="cristal incidente secondary"
                     data-abierto="{{ incidente.abierto }}"
                     {% if incidente.abierto %}
-                        style="display: {% if filter_param == 'abierto' or filter_param == 'todos' %}block{% else %}none{% endif %};"
+                        style="display: {% if filter_param == 'abierto' or filter_param == 'todos' %}flex{% else %}none{% endif %};"
                     {% else %}
-                        style="display: {% if filter_param == 'cerrado' or filter_param == 'todos' %}block{% else %}none{% endif %};"
+                        style="display: {% if filter_param == 'cerrado' or filter_param == 'todos' %}flex{% else %}none{% endif %};"
                     {% endif %}
                 >
                     <div class="leftContainer">
@@ -58,7 +58,7 @@
             console.log(isAbierto)
 
             if ((selectedValue === 'abierto' && isAbierto) || (selectedValue === 'cerrado' && !isAbierto) || selectedValue === 'todos') {
-                incident.style.display = 'block';
+                incident.style.display = 'flex';
             } else {
                 incident.style.display = 'none';
             }
