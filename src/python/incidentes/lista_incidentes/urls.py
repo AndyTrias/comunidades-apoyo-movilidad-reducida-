@@ -1,8 +1,8 @@
-from django.contrib import admin
 from django.urls import path
-import views
+from . import views
 
 urlpatterns = [
-    path("", views, name="lista_incidentes"),
-    path("incidente/<int:id>", views, name="incidente")
+    path("", views.lista_incidentes, name="lista_incidentes"),
+    path("/<int:id>/", views.incidente, name="incidente"),
+    path("/cerrar_incidente/<int:id>/", views.cerrar_incidente, name="cerrar_incidente"),
 ]

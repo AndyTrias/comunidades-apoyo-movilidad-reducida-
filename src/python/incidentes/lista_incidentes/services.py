@@ -10,8 +10,8 @@ def getIncidente(id):
 def cerrarIncidente(id):
     models.FechasDeCierre.objects.create(incidente_id=id, fecha_cierre=datetime.now())
 
-def estaCerrado(id):
-    return models.FechasDeCierre.objects.filter(incidente_id=id).exists()
+def abierto(id):
+    return not models.FechasDeCierre.objects.filter(incidente_id=id).exists()
 
 def getPrestacion(id_incidente):
     models.PrestacionDeServicio.objects.get(incidente_id=id_incidente)
