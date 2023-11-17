@@ -91,7 +91,8 @@ public class Initializer implements WithSimplePersistenceUnit {
     adminComunidad.setNombre("Administrador de Comunidad");
     adminComunidad.setTipoRol(TipoRol.ADMINISTRADOR_COMUNIDAD);
     adminComunidad.agregarPermisos(
-        buscadorDePermisos.buscarPermisoPorNombre("agregar_servicio_de_interes")
+        buscadorDePermisos.buscarPermisoPorNombre("agregar_servicio_de_interes"),
+        buscadorDePermisos.buscarPermisoPorNombre("afectar_prestaciones")
     );
     entityManager().persist(adminComunidad);
 
@@ -127,7 +128,7 @@ public class Initializer implements WithSimplePersistenceUnit {
       InformesController informesController = (InformesController) FactoryController.controller("Informe");
       informesController.generarRankings();
       System.out.println("Tarea programada ejecutada");
-    }, 7, 7, TimeUnit.DAYS);
+    }, 0, 1, TimeUnit.MINUTES);
   }
 
 

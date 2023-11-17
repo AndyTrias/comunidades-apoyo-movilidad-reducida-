@@ -1,20 +1,24 @@
 {{#partial "contenido"}}
-    <h1 class="text-3xl font-semibold text-gray-900">
-        Listado de Comunidades
-    </h1>
+    <div class="mx-auto p-5 flex gap-4 flex-col items-center">
+        <div class="flex flex-row gap-4">
+            <h1 class="text-3xl font-semibold text-gray-900">
+                Listado de Comunidades
+            </h1>
 
-    <button class="bg-indigo-400 text-white font-bold py-2 px-4 rounded hover:bg-indigo-500" > <a href="/comunidades/create">Crear Comunidad</a> </button>
-    <form action="comunidades/unirse" method="post">
+            <button class="button" > <a href="/comunidades/create">Crear Comunidad</a> </button>
+        </div>
+        <form action="comunidades/unirse" method="post" class="flex flex-col gap-4">
 
-        <label for="comunidad_id"></label>
-        <select id="comunidad_id" name="comunidad_id" class="border rounded-md py-1 px-2" required>
-            <option selected disabled hidden value="">Seleccionar comunidad</option>
-            {{#each comunidadesQNoPretUsu}}
-                <option value="{{this.id}}">{{this.nombre}}</option>
-            {{/each}}
-        </select>
-        <button class="bg-indigo-400 text-white font-bold py-2 px-4 rounded hover:bg-indigo-500">Unirme a una Comunidad</button>
-    </form>
+            <label for="comunidad_id"></label>
+            <select id="comunidad_id" name="comunidad_id" class="border rounded-md py-1 px-2" required>
+                <option selected disabled hidden value="">Seleccionar comunidad</option>
+                {{#each comunidadesQNoPretUsu}}
+                    <option value="{{this.id}}">{{this.nombre}}</option>
+                {{/each}}
+            </select>
+            <button class="button">Unirme a una Comunidad</button>
+        </form>
+    </div>
 
 
     <section class="text-gray-600 body-font container p-10 mx-auto flex justify-center flex-wrap gap-5">

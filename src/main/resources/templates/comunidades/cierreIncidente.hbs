@@ -1,8 +1,8 @@
 {{#partial "contenido"}}
 
 
-    <div class="flex flex-col items-center">
-        <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
+    <div class="flex flex-col items-center h-full justify-center">
+        <div class="rounded-lg secondary overflow-hidden flex items-center">
             <div class="p-6 flex flex-col justify-center items-center">
                 <h1 class="title-font text-lg font-medium text-gray-900 mb-2 capitalize">{{incidente.incidente.prestacionDeServicio.nombre}}</h1>
                 <form action="{{incidente.id}}/cerrar" method="POST"
@@ -27,7 +27,7 @@
 
                     {{#if incidente.abierto}}
                         <button type="submit"
-                                class="inline-flex text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded text-lg">
+                                class="button ">
                             Cerrar Incidente
                         </button>
                     {{else}}

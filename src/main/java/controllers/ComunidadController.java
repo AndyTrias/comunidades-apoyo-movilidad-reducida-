@@ -21,7 +21,6 @@ public class ComunidadController extends BaseController {
   private RepoPrestacion repoPrestacion;
   private RepoUsuario repoUsuario;
 
-
   public void index(Context ctx) {
     Usuario usuario = usuarioLogueado(ctx);
     List<Comunidad> comunidades = usuario.getComunidades();
@@ -47,7 +46,7 @@ public class ComunidadController extends BaseController {
   public void save(Context ctx) {
 
     Usuario usuario = usuarioLogueado(ctx);
-    Comunidad comunidad = crearComunidadConAdmin(usuario, ctx.formParam("nombre"));
+    Comunidad comunidad = crearComunidadConAdmin(usuario, ctx.formParam("nombre"), ctx.formParams("prestaciones"));
 
     List<String> servicioIds = ctx.formParams("prestaciones");
 
@@ -73,6 +72,10 @@ public class ComunidadController extends BaseController {
 
 
     comunidad.agregarServicioDeInteres(prestacion);
+    List<Membresia> membresias = comunidad.getMembresias();
+    for (Membresia membresia : membresias) {
+      membresia.agregarAfectacion(prestacion, true);
+    }
     repoComunidad.modificar(comunidad);
     ctx.redirect("/comunidades/" + comunidad.getId());
   }
@@ -143,8 +146,14 @@ public class ComunidadController extends BaseController {
   }
 
 
-  private Comunidad crearComunidadConAdmin(Usuario usuario, String nombre) {
+  private Comunidad crearComunidadConAdmin(Usuario usuario, String nombre, List<String> prestaciones) {
     Comunidad comunidad = new Comunidad(nombre);
+    for (String id : prestaciones) {
+      PrestacionDeServicio prestacion = repoPrestacion.buscar(Long.parseLong(id));
+      if (prestacion != null) {
+        comunidad.agregarServicioDeInteres(prestacion);
+      }
+    }
     Membresia membresia = new Membresia(comunidad, usuario, new RepoRol().buscarPorNombre(TipoRol.ADMINISTRADOR_COMUNIDAD));
     comunidad.agregarMembresia(membresia);
     usuario.unirseAComunidad(membresia);
@@ -169,6 +178,9 @@ public class ComunidadController extends BaseController {
         comunidad.agregarServicioDeInteres(prestacionDeServicio);
       }
     }
+
+
+
   }
 
 }

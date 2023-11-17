@@ -296,7 +296,8 @@ public class AgregarDatosTest {
 
     @Order(13)
     @Test
-    void agregarIncidenteARevisar() {
+    void agregarIncidenteARevisar() throws InterruptedException {
+        Thread.sleep(1000);
         Usuario usuario = repoUsuario.buscar(1L);
         PrestacionDeServicio banioMedrano1 = repoPrestacion.buscar(1L);
 

@@ -397,6 +397,7 @@ ol.stepper li.active::after {
     border-radius: 8px !important;
     width: 100%;
     outline: none;
+    box-shadow: 0 0 10px 0 rgb(0,0,0);
 }
 
 dialog {

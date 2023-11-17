@@ -3,6 +3,7 @@ package controllers;
 import io.javalin.http.Context;
 import lombok.AllArgsConstructor;
 import models.entidades.Entidad;
+import models.incidentes.Incidente;
 import models.repositorios.RepoEntidad;
 import models.repositorios.RepoInteres;
 import models.repositorios.RepoServicio;
@@ -28,11 +29,13 @@ public class InteresesController extends BaseController{
         List<Interes> intereses = usuario.getIntereses();
         List<Entidad> entidades = repoEntidad.buscarTodos();
         List<Servicio> servicios = repoServicio.buscarTodos();
+        List<Incidente> incidentes = usuario.getIncidentesDeInteres();
 
         Map<String, Object> model = new HashMap<>();
         model.put("intereses", intereses);
         model.put("entidades", entidades);
         model.put("servicios", servicios);
+        model.put("incidentes", incidentes);
         ctx.render("generales/intereses.hbs", model);
     }
 

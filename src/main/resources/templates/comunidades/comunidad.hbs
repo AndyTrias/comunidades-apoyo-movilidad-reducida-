@@ -1,5 +1,5 @@
 {{#partial "contenido"}}
-    <div class="mx-auto p-5 flex flex-col items-center md:flex-row">
+    <div class="flex flex-col items-center md:flex-row h-full">
         <div class="flex flex-col justify-center items-center w-full md:w-1/2 mb-4 md:mb-0 rounded m-5">
             <div class="bg-gradient-to-br from-green-400 to-cyan-500"></div>
             <img
@@ -11,7 +11,7 @@
                 {{/if}}
                     alt="Image"
             />
-            <h1 class="text-2xl font-semibold text-white capitalize">{{comunidad.nombre}}</h1>
+            <h1 class="text-2xl font-semibold text-black capitalize">{{comunidad.nombre}}</h1>
             <p class="text-sm"></p>
 
             <section class="text-gray-600 body-font">
@@ -19,19 +19,19 @@
                     <div class="flex flex-wrap -m-4 text-center">
                         <div class="p-4 sm:w-1/4 w-1/2">
                             <h2 class="title-font font-medium sm:text-4xl text-3xl text-gray-900">{{estadisticas.miembros}}</h2>
-                            <p class="leading-relaxed text-white">Miembros</p>
+                            <p class="leading-relaxed text-black">Miembros</p>
                         </div>
                         <div class="p-4 sm:w-1/4 w-1/2">
                             <h2 class="title-font font-medium sm:text-4xl text-3xl text-gray-900">{{estadisticas.abiertos}}</h2>
-                            <p class="leading-relaxed text-white">Incidentes Abiertos</p>
+                            <p class="leading-relaxed text-black">Incidentes Abiertos</p>
                         </div>
                         <div class="p-4 sm:w-1/4 w-1/2">
                             <h2 class="title-font font-medium sm:text-4xl text-3xl text-gray-900">{{estadisticas.cerrados}}</h2>
-                            <p class="leading-relaxed text-white">Incidentes Cerrados</p>
+                            <p class="leading-relaxed text-black">Incidentes Cerrados</p>
                         </div>
                         <div class="p-4 sm:w-1/4 w-1/2">
                             <h2 class="title-font font-medium sm:text-4xl text-3xl text-gray-900">{{estadisticas.prestaciones}}</h2>
-                            <a href="/comunidades/{{comunidad.id}}/prestaciones" class="leading-relaxed text-white">Servicios de Interés</a>
+                            <a href="/comunidades/{{comunidad.id}}/prestaciones" class="leading-relaxed text-black linkButton">Servicios de Interés</a>
                         </div>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
                                 <option value="{{this.id}}">{{this.nombre}}</option>
                             {{/each}}
                         </select>
-                        <button class="bg-indigo-400 text-white font-bold mx-3 py-2 px-4 rounded hover:bg-indigo-500">Agregar nuevo servicio de interés
+                        <button class="button">Agregar nuevo servicio de interés
                         </button>
                     </form>
                 </div>
@@ -61,7 +61,7 @@
                     <option value="cerrado">Cerrado</option>
                 </select>
                 <a href="/comunidades/{{comunidad.id}}/incidentes/create"
-                   class="bg-indigo-400 text-white font-bold py-2 px-4 rounded hover:bg-indigo-500 shadow">
+                   class="button">
                     <i class="fas fa-plus"></i> Abrir Incidente
                 </a>
             </div>
@@ -69,7 +69,7 @@
             <div class="space-y-4 incidentesContainer w-full overflow-y-auto">
                 {{#each incidentes}}
                     <a href="/comunidades/{{comunidad.id}}/incidentes/{{this.id}}"
-                       class="cristal incidente"
+                       class="cristal incidente secondary"
                        data-abierto={{this.abierto}}
                     >
                         <div class="leftContainer">

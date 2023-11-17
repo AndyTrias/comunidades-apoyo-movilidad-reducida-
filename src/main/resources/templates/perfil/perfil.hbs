@@ -1,69 +1,53 @@
 {{#partial "contenido"}}
 
-    <div class="mb-auto">
-        <!-- Perfil de Usuario -->
-        <div>
+    <div class="flex flex-col justify-center items-center p-5">
             <h2 class="text-2xl font-semibold mb-4">Perfil de Usuario</h2>
             <form action="/perfil" method="POST">
                 <div class="mb-4">
-                    <label for="nombre" class="block text-gray-700 font-bold">Nombre:</label>
-                    <input type="text" id="nombre" name="nombre" value={{usuario.nombre}} class="border border-gray-300 p-2 w-full" required>
+                    <label for="nombre" class="block text-black font-bold">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" value={{usuario.nombre}} class="input text-black" required>
 
                 </div>
                 <div class="mb-4">
-                    <label for="apellido" class="block text-gray-700 font-bold">Apellido:</label>
-                    <input type="text" id="apellido" name="apellido"  value={{usuario.apellido}} class="border border-gray-300 p-2 w-full" required>
+                    <label for="apellido" class="block text-black font-bold">Apellido:</label>
+                    <input type="text" id="apellido" name="apellido"  value={{usuario.apellido}} class="input text-black" required>
                 </div>
                 <div class="mb-4">
-                    <label for="email" class="block text-gray-700 font-bold">Correo Electrónico:</label>
-                    <input type="email" id="email" name="email" value={{usuario.correoElectronico}} class="border border-gray-300 p-2 w-full" required>
+                    <label for="email" class="block text-black font-bold">Correo Electrónico:</label>
+                    <input type="email" id="email" name="email" value={{usuario.correoElectronico}} class="input text-black" required>
                 </div>
                 <div class="mb-4">
-                    <label for="telefono" class="block text-gray-700 font-bold">Teléfono:</label>
-                    <input type="tel" id="telefono" name="telefono" value={{usuario.telefono}} class="border border-gray-300 p-2 w-full" required>
+                    <label for="telefono" class="block text-black font-bold">Teléfono:</label>
+                    <input type="tel" id="telefono" name="telefono" value={{usuario.telefono}} class="input text-black" required>
                 </div>
                 <div class="mb-4">
-                    <label for="medioNotificacion" class="block text-gray-700 font-bold">Método de Notificación:</label>
-                    <select id="medioNotificacion" name="medioNotificacion" class="border border-gray-300 p-2 w-full" required>
+                    <label for="medioNotificacion" class="block text-black font-bold">Método de Notificación:</label>
+                    <select id="medioNotificacion" name="medioNotificacion" class="input text-black" required>
                         <option value="NotificarPorMail">Correo Electrónico</option>
                         <option value="NotificarPorWhatsApp">WhatsApp</option>
                     </select>
                 </div>
                 <div class="mb-4">
-                    <label for="cuandoEnviar" class="block text-gray-700 font-bold">Cuando Enviar las notificaciones?:</label>
-                    <select id="cuandoEnviar" name="cuandoEnviar" class="border border-gray-300 p-2 w-full" required>
+                    <label for="cuandoEnviar" class="block text-black font-bold">Cuando Enviar las notificaciones?:</label>
+                    <select id="cuandoEnviar" name="cuandoEnviar" class="input text-black" required>
                         <option value="CuandoSuceden">Cuando suceden</option>
                         <option value="SinApuros" onclick="clickSinApuros()">Sin apuros (hay que agregar minimo un horario)</option>
                     </select>
                 </div>
                 <div class="mb-4">
-                    <label for="horarios" class="block text-gray-700 font-bold">Horarios:</label>
-                    <div id="horariosContainer" class="flex flex-row gap-4">
+                    <label for="horarios" class="block text-black font-bold">Horarios:</label>
+                    <div id="horariosContainer" class="flex flex-col gap-4">
                         {{#each horarios}}
-                            <input type="time" id="horarios" name="horarios" value={{this.horario}} class="border border-gray-300 p-2">
+                            <input type="time" id="horarios" name="horarios" value={{this.horario}} class="input text-black">
                         {{/each}}
-                        <input type="time" name="horarios" class="horarios border border-gray-300 p-2">
+                        <input type="time" name="horarios" class="horarios input">
                     </div>
-                    <button onclick="agregarHorario()" type="button" class="mt-2 bg-indigo-300 text-white py-2 px-4 rounded-md hover:bg-indigo-500">Agregar nuevo horario</button>
+                    <button onclick="agregarHorario()" type="button" class="linkButton">Agregar nuevo horario</button>
                 </div>
-                <button type="submit" class="bg-indigo-500 text-white py-2 px-4 rounded-full hover:bg-indigo-600">Guardar</button>
+                <button type="submit" class="button">Guardar</button>
             </form>
-        </div>
 
-        <!-- Intereses -->
-        <div >
-            <h2 class="text-2xl font-semibold mb-4">Intereses</h2>
-            <div class="slider-container overflow-hidden">
-                <div class="slider-content flex flex-wrap gap-3">
-                    {{# each intereses}}
-                    <div class="slide cristal p-4 rounded-lg">
-                        <h2 class="text-lg font-semibold">Interés</h2>
-                        <p class="text-sm text-gray-500">{{this.servicio}}</p>
-                    </div>
-                    {{/each}}
-                </div>
-            </div>
-        </div>
+
     </div>
     <script>
         function agregarHorario() {
@@ -72,7 +56,7 @@
             input.type = "time";
             input.id = "horarios";
             input.name = "horarios";
-            input.className = "border border-gray-300 p-2";
+            input.className = "input text-black";
             horariosContainer.appendChild(input);
         }
 

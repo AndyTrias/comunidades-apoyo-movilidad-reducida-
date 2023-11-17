@@ -27,6 +27,21 @@
 
         <div class="w-1/2 flex flex-col justify-center items-center">
             <h1>Incidentes de Intereses</h1>
+            <div class="flex flex-col overflow-scroll mb-4 h-96 pt-10">
+                {{#each incidentes}}
+                    <a href="#"
+                       class="cristal incidente"
+                    >
+                        <div class="leftContainer">
+                            <h2 class="text-lg font-semibold">{{this.prestacionDeServicio.nombre}}</h2>
+                            <p class="text-sm text-gray-500 overflow-hidden whitespace-nowrap text-ellipsis block w-24">{{this.observaciones}}</p>
+                            <div class="mt-4 flex flex-col sm:flex-row">
+                                <span class="mr-2 text-gray-400">por <strong>{{this.abiertoPor.nombre}}</strong> </span>
+                                <span class="text-gray-400">{{this.fechaDeApertura}}</span>
+                            </div>
+                        </div>
+                    </a>
+                {{/each}}
         </div>
 
 

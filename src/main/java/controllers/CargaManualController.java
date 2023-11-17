@@ -57,9 +57,26 @@ public class CargaManualController extends BaseController {
     Map<String, Object> model = new HashMap<>();
     String idProvincia = ctx.queryParam("provincia");
 
+    model.put("provincia", idProvincia);
     model.put("municipios", Georef.getInstancia().listadoMunicipios(idProvincia).municipios);
 
     ctx.render("admin/seleccionarMunicipio.hbs", model);
+  }
+
+  public void seleccionarLocalidad(Context ctx) {
+    Map<String, Object> model = new HashMap<>();
+    String idProvincia = ctx.queryParam("provincia");
+    String idMunicipio = ctx.queryParam("municipio");
+
+    model.put("provincia", idProvincia);
+    model.put("municipio", idMunicipio);
+    model.put("localidades", Georef.getInstancia().listadoLocalidades(idProvincia, idMunicipio).localidades);
+
+    ctx.render("admin/seleccionarLocalidad.hbs", model);
+  }
+
+  public void guardarUbicacion(Context ctx) {
+
   }
 
 

@@ -45,7 +45,7 @@ public class InformesController extends BaseController {
   }
 
   public void rankingPrestadora(Context ctx) throws IOException {
-    EntidadPrestadora prestadora = repoEntidadPrestadora.buscarporUsuarioDesignado(usuarioLogueado(ctx).getId());
+     EntidadPrestadora prestadora = repoEntidadPrestadora.buscarporUsuarioDesignado(usuarioLogueado(ctx).getId());
     renderizarRanking(ctx, prestadora.getEntidades());
   }
 
@@ -59,7 +59,7 @@ public class InformesController extends BaseController {
 
     model.put("criterio", criterio);
     model.put("entidades", entidades);
-    ctx.render("rankings/ranking.hbs", model);
+    ctx.render("generales/ranking.hbs", model);
   }
 
   public String buscarRutaInforme(Long id) {

@@ -162,4 +162,12 @@ public class Usuario {
     public void eliminarInteres(Interes interes) {
         this.intereses.remove(interes);
     }
+
+    public List<Incidente> getIncidentesDeInteres() {
+        return intereses.stream()
+            .map(Interes::getIncidente)
+            .filter(Optional::isPresent)
+            .map(Optional::get)
+            .toList();
+    }
 }

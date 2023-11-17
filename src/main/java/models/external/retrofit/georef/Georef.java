@@ -67,11 +67,15 @@ public class Georef extends ApiCaller {
         }
     }
 
-    public ListadoLocalidades listadoLocalidades(String idProvincia, String idMunicipio) throws IOException {
+    public ListadoLocalidades listadoLocalidades(String idProvincia, String idMunicipio) {
         GeorefService georefService = this.retrofit.create(GeorefService.class);
         Call<ListadoLocalidades> requestLocalidadesArg = georefService.localidades(idProvincia, idMunicipio);
-        Response<ListadoLocalidades> responseLocalidadesArg = requestLocalidadesArg.execute();
-        return responseLocalidadesArg.body();
+        try {
+            Response<ListadoLocalidades> responseLocalidadesArg = requestLocalidadesArg.execute();
+            return responseLocalidadesArg.body();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public ListadoLocalidades listadoLocalidades(long id) throws IOException {
