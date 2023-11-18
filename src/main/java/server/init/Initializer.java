@@ -128,7 +128,7 @@ public class Initializer implements WithSimplePersistenceUnit {
       InformesController informesController = (InformesController) FactoryController.controller("Informe");
       informesController.generarRankings();
       System.out.println("Tarea programada ejecutada");
-    }, 0, 1, TimeUnit.MINUTES);
+    }, 7, 7, TimeUnit.DAYS);
   }
 
 
