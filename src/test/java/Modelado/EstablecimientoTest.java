@@ -1,15 +1,18 @@
 package Modelado;
 
-import localizacion.UbicacionExacta;
-import servicios.PrestacionDeServicio;
-import servicios.Servicio;
-import entidades.Establecimiento;
-import localizacion.Localizacion;
-import org.junit.Before;
-import org.junit.Test;
+import models.localizacion.UbicacionExacta;
+import models.servicios.PrestacionDeServicio;
+import models.servicios.Servicio;
+import models.entidades.Establecimiento;
+import models.localizacion.Localizacion;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 import java.util.Set;
-import static org.junit.Assert.*;
 
 public class EstablecimientoTest {
   private Establecimiento establecimiento;
@@ -19,7 +22,7 @@ public class EstablecimientoTest {
   private Localizacion localizacion;
   
 
-  @Before
+  @BeforeEach
   public void setUp() {
     Servicio banio = new Servicio("Banios");
     Servicio escalera = new Servicio("Escaleras");

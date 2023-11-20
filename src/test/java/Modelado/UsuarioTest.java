@@ -1,79 +1,52 @@
 package Modelado;
 
-import comunidades.Comunidad;
-import comunidades.Membresia;
-import comunidades.Rol;
-import usuario.Usuario;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import models.comunidades.Comunidad;
+import models.comunidades.Membresia;
+import models.usuario.Rol;
+import models.usuario.Usuario;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.util.HashSet;
 import java.util.List;
 
 public class UsuarioTest {
     private Usuario usuario;
     private Comunidad comunidad;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         usuario = new Usuario("John", "Doe", "");
         comunidad = new Comunidad("Comunidad de Prueba");
     }
 
-
     @Test
     public void testUnirseAComunidad() {
-        Rol rol = new Rol("Rol de Prueba", new HashSet<>());
-        comunidad.agregarRol(rol);
-
-        usuario.unirseAComunidad(comunidad, rol);
+        Membresia membresiaNueva = new Membresia(comunidad, usuario, new Rol());
+        usuario.unirseAComunidad(membresiaNueva);
 
         List<Membresia> membresias = usuario.getMembresias();
-        Assert.assertEquals(1, membresias.size());
+        assertEquals(1, membresias.size());
 
         Membresia membresia = membresias.get(0);
-        Assert.assertEquals(comunidad, membresia.getComunidad());
-        Assert.assertEquals(rol, membresia.getRol());
+        assertEquals(comunidad, membresia.getComunidad());
     }
 
-    @Test(expected = Exception.class)
-    public void testAbandonarComunidadNoPertenece() throws Exception {
+    @Test
+    public void testAbandonarComunidadNoPertenece() {
         Comunidad otraComunidad = new Comunidad("Otra Comunidad");
-        usuario.abandonarComunidad(otraComunidad);
+        assertThrows(Exception.class, () -> usuario.abandonarComunidad(otraComunidad));
     }
 
     @Test
     public void testAbandonarComunidad() throws Exception {
-        Rol rol = new Rol("Rol de Prueba", new HashSet<>());
-        comunidad.agregarRol(rol);
-        usuario.unirseAComunidad(comunidad, rol);
-
+        Membresia membresiaNueva = new Membresia(comunidad, usuario, new Rol());
+        usuario.unirseAComunidad(membresiaNueva);
         usuario.abandonarComunidad(comunidad);
 
         List<Membresia> membresias = usuario.getMembresias();
-        Assert.assertEquals(0, membresias.size());
+        assertEquals(0, membresias.size());
     }
-
-
-    @Test
-    public void testAgregarRol() {
-        Rol rol = new Rol(" Rolde Prueba", new HashSet<>());
-        comunidad.agregarRol(rol);
-
-        List<Rol> roles = comunidad.getRoles();
-        Assert.assertEquals(2, roles.size()); // El rol base más el nuevo rol
-        Assert.assertTrue(roles.contains(rol));
-    }
-
-    @Test
-    public void testEliminarRol() {
-        Rol rol = new Rol("Rol de Prueba", new HashSet<>());
-        comunidad.agregarRol(rol);
-
-        comunidad.eliminarRol(rol);
-
-        List<Rol> roles = comunidad.getRoles();
-        Assert.assertEquals(1, roles.size()); // Solo el rol base
-        }
 }
+

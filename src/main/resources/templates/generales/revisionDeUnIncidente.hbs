@@ -1,0 +1,57 @@
+{{#partial "agregarAlHead"}}
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.css' rel='stylesheet' />
+
+{{/partial}}
+{{#partial "contenido"}}
+
+    <h1 class="text-3xl font-semibold text-gray-900">
+        Incidente a revisar
+    </h1>
+
+    <div class="rounded-md w-full h-full bg-indigo-500 p-4">
+
+        <section class="w-3/4 h-full flex justify-center items-center md:flex-row flex-col">
+            <div class="w-full h-96">
+                <div id='map' class="w-5/6 h-full"></div>
+            </div>
+
+            <div class="grid gap-4 grid-cols-1 grid-rows-2">
+                <h2 class="text-2xl font-semibold text-white overflow-hidden ">
+                    {{incidente.prestacionDeServicio.nombre}}
+                </h2>
+                <div class="text-white overflow-hidden">
+                    {{incidente.observaciones}}
+                </div>
+                <span class="items-center overflow-hidden">
+                        ¿Se ha solucionado el incidente?
+                    </span>
+                <form method="POST">
+                    <div class="inline-flex">
+                        <button name="Si" value="Si" type="submit" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-4 px-10 rounded-l">
+                            SI
+                        </button>
+                        <button name="No" value="No" type="submit" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-4 px-10 rounded-r">
+                            NO
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <div id="latitud" class="hidden">
+        {{incidente.prestacionDeServicio.ubicacionExacta.latitud}}
+    </div>
+
+    <div id="longitud" class="hidden">
+        {{incidente.prestacionDeServicio.ubicacionExacta.longitud}}
+    </div>
+
+    {{#partial "agregarScript"}}
+        <script src="\js\localizacion.js"></script>
+    {{/partial}}
+
+
+{{/partial}}
+{{> templates/templateBase}}

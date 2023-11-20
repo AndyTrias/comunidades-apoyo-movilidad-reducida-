@@ -1,78 +1,92 @@
 package Modelado;
 
-import incidentes.Incidente;
-import localizacion.UbicacionExacta;
-import servicios.PrestacionDeServicio;
-import servicios.Servicio;
-import usuario.Usuario;
-import entidades.Entidad;
-import entidades.Establecimiento;
-import localizacion.Localizacion;
-import org.junit.Assert;
-import org.junit.Test;
-import org.mockito.Mockito;
-import rankings.criterios.MayorTiempo;
+import models.entidades.Entidad;
+import models.entidades.Establecimiento;
+import models.incidentes.Incidente;
+import models.localizacion.Localizacion;
+import models.localizacion.UbicacionExacta;
+import models.rankings.criterios.MayorTiempo;
+import models.servicios.PrestacionDeServicio;
+import models.servicios.Servicio;
+import models.usuario.Usuario;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class RankingMayorTiempoTest {
+    private List<Entidad> entidades;
+
+    @BeforeEach
+    public void setUp() {
+        entidades = createEntitiesWithIncidents(3);
+    }
 
     @Test
-    public void generarRankingdeMayorTiempo() {
-        Entidad entidad1 = new Entidad("Entidad 1", new Localizacion());
-        Entidad entidad2 = new Entidad("Entidad 2", new Localizacion());
-        Entidad entidad3 = new Entidad("Entidad 3", new Localizacion());
-
-        PrestacionDeServicio prestacion1 = new PrestacionDeServicio(new Servicio("Servicio 1"), "Prestacion 1", new UbicacionExacta(1, 1));
-        PrestacionDeServicio prestacion2 = new PrestacionDeServicio(new Servicio("Servicio 2"), "Prestacion 2", new UbicacionExacta(2, 2));
-        PrestacionDeServicio prestacion3 = new PrestacionDeServicio(new Servicio("Servicio 3"), "Prestacion 3", new UbicacionExacta(3, 3));
-
-        Usuario usuario1 = new Usuario("Manu", "Torrente", "");
-        Usuario usuario2 = new Usuario("Andy", "Trias", "");
-        Usuario usuario3 = new Usuario("Franco", "Pesce", "");
-
-        Incidente incidente1 = new Incidente(usuario1, "Observaciones 1", prestacion1);
-        incidente1.cerrar();
-        Incidente incidente2 = new Incidente(usuario2, "Observaciones 2", prestacion2);
-        incidente2.cerrar();
-        Incidente incidente3 = new Incidente(usuario3, "Observaciones 3", prestacion3);
-        Incidente incidente4 = new Incidente(usuario1, "Observaciones 4", prestacion2);
-
-        // Afectan a la entidad 1
-        /*when(incidente1.tiempoActivo()).thenReturn(15L);
-
-        // Afectan a la entidad 2
-        when(incidente2.tiempoActivo()).thenReturn(20L);
-        when(incidente4.tiempoActivo()).thenReturn(1L);
-
-        // Afecta a la entidad 3
-        when(incidente3.tiempoActivo()).thenReturn(30L);*/
-
-        Localizacion localizacion1 = Mockito.mock(Localizacion.class);
-
-        entidad1.agregarEstablecimiento(new Establecimiento("Establecimiento 1", localizacion1));
-        entidad1.getPrestacionesDeServicios().add(prestacion1);
-        entidad2.agregarEstablecimiento(new Establecimiento("Establecimiento 2", localizacion1));
-        entidad2.getPrestacionesDeServicios().add(prestacion2);
-        entidad3.agregarEstablecimiento(new Establecimiento("Establecimiento 3", localizacion1));
-        entidad3.getPrestacionesDeServicios().add(prestacion3);
-
-        List<Entidad> entidades = new ArrayList<>();
-        entidades.add(entidad1);
-        entidades.add(entidad2);
-        entidades.add(entidad3);
-
-        // Create the Ranking instance
-        MayorTiempo ranking = new MayorTiempo("Mayor Tiempo");
-
-
-        // Generate the Ranking
+    public void elOrdenDelRankingEsCorrecto() {
+        MayorTiempo ranking = new MayorTiempo("Mayor Tiempo de resolucion");
         List<Entidad> rankingList = ranking.generarRanking(entidades);
 
-        // Validamos que el orden sea Entidad 3, Entidad 1, Entidad 2
-        Assert.assertEquals(entidad3, rankingList.get(2));
-        Assert.assertEquals(entidad1, rankingList.get(0));
-        Assert.assertEquals(entidad2, rankingList.get(1));
+        assertEquals(entidades.get(0), rankingList.get(0));
+        assertEquals(entidades.get(1), rankingList.get(1));
+        assertEquals(entidades.get(2), rankingList.get(2));
+    }
+
+    private List<Entidad> createEntitiesWithIncidents(int numEntidades) {
+        List<Entidad> entities = new ArrayList<>();
+        for (int i = 1; i <= numEntidades; i++) {
+            Entidad entidad = createEntityWithIncidents("Entidad " + i, i);
+            entities.add(entidad);
+        }
+        return entities;
+    }
+
+    private Entidad createEntityWithIncidents(String name, int numEstablecimientos) {
+        Entidad entidad = new Entidad(name, new Localizacion());
+        for (int i = 0; i < numEstablecimientos; i++) {
+            Establecimiento establecimiento = createEstablecimientoWithIncidents("Establecimiento " + (i + 1));
+            entidad.agregarEstablecimiento(establecimiento);
+        }
+        return entidad;
+    }
+
+    private Establecimiento createEstablecimientoWithIncidents(String name) {
+        Establecimiento establecimiento = new Establecimiento(name, new Localizacion());
+        List<PrestacionDeServicio> prestaciones = createPrestaciones(3);
+        for (PrestacionDeServicio prestacion : prestaciones) {
+            establecimiento.agregarServicioPrestado(prestacion);
+            createIncidents(prestacion, 3);
+        }
+        return establecimiento;
+    }
+
+    private List<PrestacionDeServicio> createPrestaciones(int num) {
+        List<PrestacionDeServicio> prestaciones = new ArrayList<>();
+        for (int i = 0; i < num; i++) {
+            prestaciones.add(new PrestacionDeServicio(new Servicio("Servicio " + (i + 1)), "Prestacion " + (i + 1), new UbicacionExacta(i + 1, i + 1)));
+        }
+        return prestaciones;
+    }
+
+    private void createIncidents(PrestacionDeServicio prestacion, int numIncidents) {
+        for (int i = 0; i < numIncidents; i++) {
+            Usuario usuario = new Usuario("Usuario", "Apellido", "");
+            int minutesBeforeNow = (i + 1) * 10; // Incrementing time for each incident
+            Date incidentDate = generateIncidentDate(minutesBeforeNow);
+            Incidente incidente = new Incidente(usuario, "Observaciones", prestacion, incidentDate);
+            incidente.cerrar();
+        }
+    }
+
+    private Date generateIncidentDate(int minutesBeforeNow) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MINUTE, -minutesBeforeNow);
+        return calendar.getTime();
     }
 }
+

@@ -1,0 +1,31 @@
+{{#partial "agregarAlHead"}}
+    <link rel="stylesheet" href="\css\drag&drop.css">
+    <script src="\js\drag&drop.js"></script>
+{{/partial}}
+
+{{#partial "contenido"}}
+        
+        <div class="item flex flex-col md:flex-row justify-center items-center h-full">
+            <div class="w-1/2 hidden md:flex justify-center items-center">
+                <img class="h-96 w-96 mb-3" src="\img\dropImage.png"  alt="imagen drag&drop"/>
+            </div>
+
+            <form class="w-full md:w-1/2 p-5" action="/admin/cargaMasiva" method="POST" enctype="multipart/form-data">
+                <div>
+                    <h1 class="text-2xl text-center text-black p-5">
+                        Carga masiva de entidades prestados y organismos de control
+                    </h1>
+                </div>
+                
+                <div class="drop-zone border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                    <span class="drop-zone__prompt text-xl text-center text-gray-500">Seleccione el archivo a cargar</span>
+                    <input type="file" name="archivo" class="drop-zone__input" formenctype="multipart/form-data" multiple>
+                </div>
+
+                <button type="submit" class="hover:bg-indigo-700 hover:text-white hover:-translate-y-1 transition-all duration-500 bg-white text-indigo-800 mt-4 px-4 py-2 rounded-2xl font-bold mb-2 w-full">
+                   Cargar Entidades
+                </button>
+            </form>
+        </div>
+{{/partial}}
+{{> templates/templateBase }}

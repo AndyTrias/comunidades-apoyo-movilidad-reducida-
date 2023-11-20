@@ -1,0 +1,113 @@
+{{#partial "contenido"}}
+    <main class="flex flex-row h-full">
+        <div class="w-1/2 flex flex-col justify-center items-center p-10">
+            <div class="flex flex-row justify-center items-center mb-4">
+                <h1 class="text-2xl">Mis Intereses</h1>
+                <button class="fabButton rounded" onclick="window.dialog.showModal();">+</button>
+            </div>
+            <div class="flex flex-col overflow-scroll mb-4 h-96 pt-10">
+            {{#each intereses}}
+                <div class="flex flex-row justify-center items-center">
+                    <div class="flex-col w-full">
+                        <input class="customCheckBoxInput" id="cCB{{this.entidad.id}}" type="radio" name="entidades" value="{{this.entidad.id}}">
+                        <label class="customCheckBoxWrapper" for="cCB{{this.entidad.id}}">
+                            <button class="customCheckBox rounded flex flex-row justify-between gap-4 w-full">
+                                <div class="inner mr-16">{{this.entidad.nombre}}</div>
+                                <div class="inner ml-16">{{this.servicio.nombre}}</div>
+                            </button>
+                        </label>
+                    </div>
+                    <button class="fabButton mb-4 danger ml-4" onclick="window.dialog2.showModal(); setId({{this.id}})">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            {{/each}}
+            </div>
+        </div>
+
+        <div class="w-1/2 flex flex-col justify-center items-center">
+            <h1>Incidentes de Intereses</h1>
+            <div class="flex flex-col overflow-scroll mb-4 h-96 pt-10">
+                {{#each incidentes}}
+                    <a href="#"
+                       class="cristal incidente"
+                    >
+                        <div class="leftContainer">
+                            <h2 class="text-lg font-semibold">{{this.prestacionDeServicio.nombre}}</h2>
+                            <p class="text-sm text-gray-500 overflow-hidden whitespace-nowrap text-ellipsis block w-24">{{this.observaciones}}</p>
+                            <div class="mt-4 flex flex-col sm:flex-row">
+                                <span class="mr-2 text-gray-400">por <strong>{{this.abiertoPor.nombre}}</strong> </span>
+                                <span class="text-gray-400">{{this.fechaDeApertura}}</span>
+                            </div>
+                        </div>
+                    </a>
+                {{/each}}
+        </div>
+
+
+
+        <dialog id="dialog">
+            <button onclick="window.dialog.close();" aria-label="close" class="x">❌</button>
+            <h1 class="text-2xl mb-4">Agrega un Interes!</h1>
+            <form action="/intereses" method="POST">
+                <div class="mb-4 w-full">
+                    <select required="" name="entidad" id="entidad" class="input">
+                        <option selected="" disabled="" hidden="">Seleccionar entidad</option>
+                        {{#each entidades}}
+                            <option value={{this.id}}>{{this.nombre}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+
+                <div class="mb-4 w-full">
+                    <select required="" name="servicio" id="servicio" class="input">
+                        <option selected="" disabled="" hidden="">Seleccionar servicio</option>
+                        {{#each servicios}}
+                            <option value={{this.id}}>{{this.nombre}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+
+                <button class="button" type="submit">Agregar</button>
+            </form>
+        </dialog>
+
+        <dialog id="dialog2">
+            <button onclick="window.dialog2.close();" aria-label="close" class="x">❌</button>
+            <h1 class="text-2xl mb-4">Estas seguro que deseas borrar el interes?</h1>
+            <div>
+                <button class="button" onclick="window.dialog2.close();">No</button>
+                <button class="button text-white bg-red-600" onclick="eliminarInteres()">Si</button>
+            </div>
+        </dialog>
+    </main>
+{{/partial}}
+
+{{#partial "agregarScript"}}
+<script>
+
+    let id;
+
+    function eliminarInteres() {
+        console.log(id);
+        fetch('/intereses/' + id, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(function(response) {
+            if (response.ok) {
+                window.location.reload();
+            } else {
+                alert('Error al eliminar el interes');
+            }
+        });
+    }
+
+    function setId(newId) {
+        id = newId;
+    }
+
+</script>
+{{/partial}}
+{{> templates/templateBase }}

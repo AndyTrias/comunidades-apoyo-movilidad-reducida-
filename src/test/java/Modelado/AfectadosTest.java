@@ -1,15 +1,16 @@
 package Modelado;
 
-import comunidades.Comunidad;
-import localizacion.UbicacionExacta;
-import servicios.PrestacionDeServicio;
-import servicios.Servicio;
-import usuario.Usuario;
+import models.comunidades.Comunidad;
+import models.comunidades.Membresia;
+import models.usuario.Rol;
+import models.localizacion.UbicacionExacta;
+import models.servicios.PrestacionDeServicio;
+import models.servicios.Servicio;
+import models.usuario.Usuario;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
 
 public class AfectadosTest {
 
@@ -37,7 +38,8 @@ public class AfectadosTest {
   @Test
   public void TestMesientoAfectado()
   {
-    andy.unirseAComunidad(comunidad1, comunidad1.getRoles().get(0));
+    Membresia membresiaNueva = new Membresia(comunidad1, andy, new Rol());
+    andy.unirseAComunidad(membresiaNueva);
     andy.getMembresia(comunidad1).cambiarAfectacion(banioMedrano, true);
 
     Assertions.assertTrue(andy.getMembresia(comunidad1).getAfectacion(banioMedrano).isAfectado());

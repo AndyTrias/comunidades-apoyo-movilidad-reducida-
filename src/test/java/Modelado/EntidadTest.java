@@ -1,19 +1,23 @@
 package Modelado;
 
-import entidades.Entidad;
-import entidades.Establecimiento;
-import localizacion.Localizacion;
-import org.junit.Before;
-import org.junit.Test;
+import models.entidades.Entidad;
+import models.entidades.Establecimiento;
+import models.localizacion.Localizacion;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import java.util.Set;
-import static org.junit.Assert.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 public class EntidadTest {
   private Entidad entidad;
   private Establecimiento establecimiento1;
   private Establecimiento establecimiento2;
 
-  @Before
+  @BeforeEach
   public void setUp() {
     entidad = new Entidad("Santander Rio Argentina", new Localizacion());
     establecimiento1 = new Establecimiento("Sucursal Almagro", new Localizacion());

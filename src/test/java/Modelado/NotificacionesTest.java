@@ -1,26 +1,27 @@
 package Modelado;
 
-import comunidades.Comunidad;
-import usuario.Interes;
-import usuario.configuraciones.formas.CuandoSuceden;
-import usuario.configuraciones.formas.EstrategiaDeNotificacion;
-import usuario.configuraciones.formas.SinApuros;
-import usuario.configuraciones.medios.MedioPreferido;
-import usuario.configuraciones.medios.mail.AdapterMail;
-import usuario.configuraciones.medios.mail.NotificarPorMail;
-import usuario.configuraciones.medios.whatsapp.NotificarPorWhatsApp;
-import entidades.Entidad;
-import entidades.Establecimiento;
-import incidentes.Incidente;
-import incidentes.RevisionDeIncidente;
-import localizacion.Localizacion;
-import localizacion.UbicacionExacta;
-import servicios.PrestacionDeServicio;
-import servicios.Servicio;
-import usuario.Usuario;
-import usuario.configuraciones.ConfiguracionDeNotificaciones;
-import notificaciones.FactoryConfiguracionDeNotificaciones;
-import notificaciones.Notificacion;
+import models.comunidades.Comunidad;
+import models.comunidades.Membresia;
+import models.usuario.Rol;
+import models.usuario.Interes;
+import models.usuario.configuraciones.formas.CuandoSuceden;
+import models.usuario.configuraciones.formas.EstrategiaDeNotificacion;
+import models.usuario.configuraciones.formas.SinApuros;
+import models.usuario.configuraciones.medios.MedioPreferido;
+import models.usuario.configuraciones.medios.mail.AdapterMail;
+import models.usuario.configuraciones.medios.mail.NotificarPorMail;
+import models.usuario.configuraciones.medios.whatsapp.NotificarPorWhatsApp;
+import models.entidades.Entidad;
+import models.entidades.Establecimiento;
+import models.incidentes.Incidente;
+import models.localizacion.Localizacion;
+import models.localizacion.UbicacionExacta;
+import models.servicios.PrestacionDeServicio;
+import models.servicios.Servicio;
+import models.usuario.Usuario;
+import models.usuario.configuraciones.ConfiguracionDeNotificaciones;
+import models.notificaciones.FactoryConfiguracionDeNotificaciones;
+import models.notificaciones.Notificacion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -68,29 +69,31 @@ public class NotificacionesTest {
         this.entidad1 = new Entidad("entidad1", new Localizacion());
         entidad1.agregarEstablecimiento(establecimiento1);
 
-        /*RepoEntidades.getInstance().agregarEntidad(entidad1);*/
-        /*RepoUsuarios.getInstance().agregarUsuario(fede);*/
-
         // Creamos la configuracion de notificaciones
         ConfiguracionDeNotificaciones config = FactoryConfiguracionDeNotificaciones.crearConfiguracionDeNotificaciones("M_C");
         franco.setConfiguracionDeNotificaciones(config);
         fede.setConfiguracionDeNotificaciones(config);
 
         // Agregamos los usuarios a las comunidades y les asignamos un rol
-        comunidad1.aceptarUsuario(franco);
-        comunidad2.aceptarUsuario(franco);
-        comunidad2.aceptarUsuario(fede);
-        comunidad3.aceptarUsuario(fede);
+        Membresia francoCom1 = new Membresia(comunidad1, franco, new Rol());
+        franco.unirseAComunidad(francoCom1);
+        comunidad1.agregarMembresia(francoCom1);
 
-        franco.unirseAComunidad(comunidad1, comunidad1.getRoles().get(0));
-        franco.unirseAComunidad(comunidad2, comunidad2.getRoles().get(0));
-        fede.unirseAComunidad(comunidad2, comunidad2.getRoles().get(0));
-        fede.unirseAComunidad(comunidad3, comunidad3.getRoles().get(0));
+        Membresia francoCom2 = new Membresia(comunidad2, franco, new Rol());
+        franco.unirseAComunidad(francoCom2);
+        comunidad2.agregarMembresia(francoCom2);
+
+        Membresia fedeCom2 = new Membresia(comunidad2, fede, new Rol());
+        fede.unirseAComunidad(fedeCom2);
+        comunidad2.agregarMembresia(fedeCom2);
+
+        Membresia fedeCom3 = new Membresia(comunidad3, fede, new Rol());
+        fede.unirseAComunidad(fedeCom3);
+        comunidad3.agregarMembresia(fedeCom3);
 
         this.configMockFranco = Mockito.mock(ConfiguracionDeNotificaciones.class);
         this.configMockFede = Mockito.mock(ConfiguracionDeNotificaciones.class);
 
-        RevisionDeIncidente.getInstance().eliminarTodosLosIncidentes();
     }
 
     @Test
@@ -100,7 +103,7 @@ public class NotificacionesTest {
         fede.setConfiguracionDeNotificaciones(configMockFede);
 
         // Creamos el incidente
-        Incidente incidente = new Incidente(franco, "baño sucio",banioMedrano);
+        Incidente incidente = new Incidente(franco, "baño sucio",banioMedrano, new Date());
 
         Mockito.verify(configMockFranco, Mockito.times(1)).notificar(Mockito.any(Notificacion.class));
     }
@@ -111,7 +114,7 @@ public class NotificacionesTest {
         franco.setConfiguracionDeNotificaciones(configMockFranco);
         fede.setConfiguracionDeNotificaciones(configMockFede);
 
-        Incidente incidente = new Incidente(franco, "baño sucio",banioMedrano);
+        Incidente incidente = new Incidente(franco, "baño sucio",banioMedrano, new Date());
 
         Mockito.verify(configMockFede, Mockito.times(1)).notificar(Mockito.any(Notificacion.class));
     }
@@ -119,7 +122,7 @@ public class NotificacionesTest {
     @Test
     public void testNoSeLeEnviaNotificacionAFedeCuandoFrancoCreaUnIncidenteEnOtraComunidad() throws Exception {
         // Franco se va de la comunidad 2 entonces no comparten comunidad
-        comunidad2.eliminarUsuario(franco);
+        comunidad2.eliminarMemebresia(franco.getMembresia(comunidad2));
         franco.abandonarComunidad(comunidad2);
 
         // Seteamos la configuracion de notificaciones de franco y fede como mocks
@@ -127,7 +130,7 @@ public class NotificacionesTest {
         fede.setConfiguracionDeNotificaciones(configMockFede);
 
         // Franco crea el incidente
-        Incidente incidente = new Incidente(franco, "baño sucio",banioMedrano);
+        Incidente incidente = new Incidente(franco, "baño sucio",banioMedrano, new Date());
 
         Mockito.verify(configMockFede, Mockito.times(0)).notificar(Mockito.any(Notificacion.class));
     }
@@ -142,7 +145,7 @@ public class NotificacionesTest {
         fede.agregarInteres(interes);
 
         // Franco crea el incidente en el baño de castro barros
-        Incidente incidente = new Incidente(franco, "baño sucio",banioCastroBarros);
+        Incidente incidente = new Incidente(franco, "baño sucio",banioCastroBarros, new Date());
 
         // Aunque franco no este en la comunidad 3, fede esta interesado en el baño de castro barros y se le deberia notificar
         //Mockito.verify(configMockFede, Mockito.times(1)).notificar(Mockito.any(Notificacion.class));
@@ -154,7 +157,7 @@ public class NotificacionesTest {
         franco.getConfiguracionDeNotificaciones().setMedioPreferido(medioPreferidoFranco);
         fede.setConfiguracionDeNotificaciones(configMockFede);
 
-        Incidente incidente = new Incidente(franco, "baño sucio", banioMedrano);
+        Incidente incidente = new Incidente(franco, "baño sucio", banioMedrano, new Date());
 
         Mockito.verify(medioPreferidoFranco, Mockito.times(1)).notificar(Mockito.any(Notificacion.class));
     }
@@ -165,7 +168,7 @@ public class NotificacionesTest {
         franco.getConfiguracionDeNotificaciones().setMedioPreferido(medioPreferidoFranco);
         fede.setConfiguracionDeNotificaciones(configMockFede);
 
-        Incidente incidente = new Incidente(franco, "baño sucio", banioMedrano);
+        Incidente incidente = new Incidente(franco, "baño sucio", banioMedrano, new Date());
 
         Mockito.verify(medioPreferidoFranco, Mockito.times(1)).notificar(Mockito.any(Notificacion.class));
     }
@@ -176,7 +179,7 @@ public class NotificacionesTest {
         franco.getConfiguracionDeNotificaciones().setEstrategiaDeNotificacion(estrategiaDeNotificacionFranco);
         fede.setConfiguracionDeNotificaciones(configMockFede);
 
-        Incidente incidente = new Incidente(franco, "baño sucio", banioMedrano);
+        Incidente incidente = new Incidente(franco, "baño sucio", banioMedrano, new Date());
 
         Mockito.verify(estrategiaDeNotificacionFranco, Mockito.times(1)).notificar(Mockito.any(Notificacion.class));
     }
@@ -187,7 +190,7 @@ public class NotificacionesTest {
         franco.getConfiguracionDeNotificaciones().setEstrategiaDeNotificacion(estrategiaDeNotificacionFranco);
         fede.setConfiguracionDeNotificaciones(configMockFede);
 
-        Incidente incidente = new Incidente(franco, "baño sucio", banioMedrano);
+        Incidente incidente = new Incidente(franco, "baño sucio", banioMedrano, new Date());
 
         Mockito.verify(estrategiaDeNotificacionFranco, Mockito.times(1)).notificar(Mockito.any(Notificacion.class));
     }
@@ -198,7 +201,7 @@ public class NotificacionesTest {
         fede.setConfiguracionDeNotificaciones(configMockFede);
 
         // Franco crea el incidente
-        Incidente incidente = new Incidente(franco, "baño sucio", banioMedrano);
+        Incidente incidente = new Incidente(franco, "baño sucio", banioMedrano, new Date());
         // Se abre el incidente en todas las comunidades de franco
         franco.getComunidades().forEach(comunidad -> comunidad.abrirIncidente(incidente));
         // Se cierra el incidente
@@ -213,13 +216,13 @@ public class NotificacionesTest {
         franco.setConfiguracionDeNotificaciones(configMockFranco);
         fede.setConfiguracionDeNotificaciones(configMockFede);
 
-        Incidente incidente = new Incidente(franco, "baño sucio", banioMedrano);
+        Incidente incidente = new Incidente(franco, "baño sucio", banioMedrano, new Date());
 
         UbicacionExacta ubicacionExactaFranco = new UbicacionExacta(1,1);
         franco.setUbicacionExacta(ubicacionExactaFranco);
 
         // deberia recibir una notificacion por la revision del incidente y otra por la creacion del incidente
-        Mockito.verify(configMockFranco, Mockito.times(2)).notificar(Mockito.any(Notificacion.class));
+        Mockito.verify(configMockFranco, Mockito.times(1)).notificar(Mockito.any(Notificacion.class));
     }
 
     @Test
@@ -235,7 +238,7 @@ public class NotificacionesTest {
         config.setEstrategiaDeNotificacion(sinApuros);
         fede.setConfiguracionDeNotificaciones(config);
 
-        Incidente incidente = new Incidente(fede, "baño sucio", banioCastroBarros);
+        Incidente incidente = new Incidente(fede, "baño sucio", banioCastroBarros, new Date());
 
         //Thread.sleep(180000);
 

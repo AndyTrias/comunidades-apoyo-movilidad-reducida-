@@ -1,0 +1,51 @@
+{{#partial "contenido"}}
+    <div class="mx-auto p-5 flex gap-4 flex-col items-center">
+        <div class="flex flex-row gap-4">
+            <h1 class="text-3xl font-semibold text-gray-900">
+                Listado de Comunidades
+            </h1>
+
+            <button class="button" > <a href="/comunidades/create">Crear Comunidad</a> </button>
+        </div>
+        <form action="comunidades/unirse" method="post" class="flex flex-col gap-4">
+
+            <label for="comunidad_id"></label>
+            <select id="comunidad_id" name="comunidad_id" class="border rounded-md py-1 px-2" required>
+                <option selected disabled hidden value="">Seleccionar comunidad</option>
+                {{#each comunidadesQNoPretUsu}}
+                    <option value="{{this.id}}">{{this.nombre}}</option>
+                {{/each}}
+            </select>
+            <button class="button">Unirme a una Comunidad</button>
+        </form>
+    </div>
+
+
+    <section class="text-gray-600 body-font container p-10 mx-auto flex justify-center flex-wrap gap-5">
+      {{#each comunidades}}
+            <a class="flex flex-col lg:w-1/5 md:w-2/3 p-4 w-3/4 hover:bg-indigo-300 rounded transition duration-500 text-left shadow-md"
+                href="/comunidades/{{this.id}}"
+            >
+                <div class="block relative h-48 rounded overflow-hidden">
+                  <img alt="ecommerce" class="object-cover object-center w-full h-full block"
+                      {{#if this.imagen}}
+                       src={{this.imagen}}
+                      {{else}}
+                       src="https://source.unsplash.com/random/200x200?sig=1"
+                      {{/if}}>
+                </div>
+                <div class="mt-4">
+                  <h2 class="text-gray-900 title-font text-lg font-medium capitalize">{{this.nombre}}</h2>
+                  <p class="mt-1 content-center max-w-xs text-ellipsis overflow-hidden whitespace-nowrap">
+                      {{#each this.serviciosDeInteres}}
+                        {{this.servicio.nombre}} |
+                      {{/each}}
+                  </p>
+                </div>
+            </a>
+        {{/each}}
+    </section>
+
+
+{{/partial}}
+{{> templates/templateBase }}

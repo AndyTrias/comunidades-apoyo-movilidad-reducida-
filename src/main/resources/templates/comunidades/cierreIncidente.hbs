@@ -1,0 +1,49 @@
+{{#partial "contenido"}}
+
+
+    <div class="flex flex-col items-center h-full justify-center">
+        <div class="rounded-lg secondary overflow-hidden flex items-center">
+            <div class="p-6 flex flex-col justify-center items-center">
+                <h1 class="title-font text-lg font-medium text-gray-900 mb-2 capitalize">{{incidente.incidente.prestacionDeServicio.nombre}}</h1>
+                <form action="{{incidente.id}}/cerrar" method="POST"
+                      class="p-6 flex flex-col justify-center items-center">
+                    <h3 class="text-xl font-medium text-gray-700 mb-2">Datos del Incidente</h3>
+                    <div class="mb-4 flex flex-col">
+                        <p class="text-gray-600 mb-2">
+                            <strong>Fecha:</strong> {{incidente.incidente.fechaDeApertura}}</p>
+                    </div>
+                    <div class="mb-4 flex flex-col">
+                        <p class="text-gray-600 mb-2">
+                            <strong>Usuario:</strong> {{incidente.incidente.abiertoPor.nombre}}</p>
+                    </div>
+                    <div class="mb-4 flex flex-col">
+                        <p class="text-gray-600 mb-2"><strong>Prestación
+                            Servicio:</strong> {{incidente.incidente.prestacionDeServicio.nombre}}</p>
+                    </div>
+                    <div class="mb-4 flex flex-col">
+                        <p class="text-gray-600 mb-2">
+                            <strong>Descripción:</strong> {{incidente.incidente.observaciones}}</p>
+                    </div>
+
+                    {{#if incidente.abierto}}
+                        <button type="submit"
+                                class="button ">
+                            Cerrar Incidente
+                        </button>
+                    {{else}}
+                        <div class="inline-flex text-red-500  py-2 px-6 focus:outline-none rounded text-lg">
+                            <p> Incidente Cerrado </p>
+                        </div>
+                        <p>Cerrado Por: {{incidente.cerradoPor.nombre}}</p>
+                        <p>Fecha de Cierre: {{incidente.fechaDeCierre}}</p>
+                    {{/if}}
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+{{/partial}}
+{{> templates/templateBase }}

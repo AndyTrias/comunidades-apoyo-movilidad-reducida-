@@ -1,25 +1,26 @@
 package Persistencia;
 
-import comunidades.Permiso;
-import entidades.Entidad;
-import entidades.EntidadPrestadora;
-import entidades.Establecimiento;
-import localizacion.Localizacion;
+import models.comunidades.Membresia;
+import models.entidades.Entidad;
+import models.entidades.EntidadPrestadora;
+import models.entidades.Establecimiento;
+import models.localizacion.Localizacion;
+import models.repositorios.*;
+import models.usuario.configuraciones.formas.SinApuros;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
-import comunidades.Comunidad;
-import comunidades.Rol;
-import incidentes.Incidente;
-import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
-import repositiorios.*;
-import servicios.PrestacionDeServicio;
-import servicios.Servicio;
-import usuario.Interes;
-import usuario.Usuario;
+import models.comunidades.Comunidad;
+import models.usuario.Rol;
+import models.incidentes.Incidente;
+import models.servicios.PrestacionDeServicio;
+import models.servicios.Servicio;
+import models.usuario.Interes;
+import models.usuario.Usuario;
 
-public class PersistenciaTest implements SimplePersistenceTest {
+import java.util.Date;
+
+public class PersistenciaTest {
 
     private RepoUsuario repoUsuario;
     private RepoComunidad repoComunidad;
@@ -48,19 +49,23 @@ public class PersistenciaTest implements SimplePersistenceTest {
 
     @Test
     void unirseAComunidad(){
-        Usuario usuario = repoUsuario.buscar(1L);
+        Usuario usuario = repoUsuario.buscar(3L);
         Comunidad comunidad = repoComunidad.buscar(1L);
-        Rol rol = comunidad.aceptarUsuario(usuario);
-        usuario.unirseAComunidad(comunidad, rol);
+
+        Membresia membresiaNueva = new Membresia(comunidad, usuario, new Rol());
+        usuario.unirseAComunidad(membresiaNueva);
+        comunidad.agregarMembresia(membresiaNueva);
+
         repoUsuario.modificar(usuario);
+        repoComunidad.modificar(comunidad);
     }
 
     @Test
     void persisteIncidenteTest(){
-        Usuario usuario = repoUsuario.buscar(1L);
+        Usuario usuario = repoUsuario.buscar(3L);
         PrestacionDeServicio prestacionDeServicio = repoPrestacion.buscar(1L);
         Comunidad comunidad = repoComunidad.buscar(1L);
-        Incidente incidente = new Incidente(usuario, "baño sucio", prestacionDeServicio);
+        Incidente incidente = new Incidente(usuario, "baño sucio", prestacionDeServicio, new Date());
         comunidad.abrirIncidente(incidente);
         repoComunidad.agregar(comunidad);
     }
@@ -84,7 +89,7 @@ public class PersistenciaTest implements SimplePersistenceTest {
 
     @Test
     void agregarInteresAUsuario(){//agrega una ubicacion sin datos y una localizacion relacionada
-        Usuario usuario = repoUsuario.buscar(1L);
+        Usuario usuario = repoUsuario.buscar(3L);
         Interes interes = new Interes();
         interes.setEntidad(entidad);
         interes.setServicio(servicio);
@@ -94,12 +99,12 @@ public class PersistenciaTest implements SimplePersistenceTest {
 
     @Test
     void agregarPermisoARol(){
-        Comunidad comunidad = repoComunidad.buscar(1L);
-        Rol rolBase = comunidad.getRoles().get(0);
-        Permiso leer = new Permiso();
-        leer.setNombre("leer");
-        rolBase.agregarPermiso(leer);
-        repoComunidad.modificar(comunidad);
+//        Comunidad comunidad = repoComunidad.buscar(1L);
+//        Rol rolBase = comunidad.getRoles().get(0);
+//        Permiso leer = new Permiso();
+//        leer.setNombre("leer");
+//        rolBase.agregarPermiso(leer);
+//        repoComunidad.modificar(comunidad);
     }
 
     @Test
@@ -114,5 +119,23 @@ public class PersistenciaTest implements SimplePersistenceTest {
         EntidadPrestadora santander = repoEntidadPrestadora.buscar(1L);
         santander.agregarEntidad(entidad);
         repoEntidadPrestadora.agregar(santander);
+    }
+
+    @Test
+    void agregarNotificacionSinApuros(){
+        Usuario usuario = repoUsuario.buscar(1L);
+
+        Date horario = new Date();
+        horario.setMinutes(21);
+        SinApuros sinApuros = new SinApuros(horario);
+        usuario.getConfiguracionDeNotificaciones().setEstrategiaDeNotificacion(sinApuros);
+        repoUsuario.modificar(usuario);
+
+    }
+
+    @Test
+    void asd(){
+        Usuario usuario2 = repoUsuario.buscar(1L);
+
     }
 }

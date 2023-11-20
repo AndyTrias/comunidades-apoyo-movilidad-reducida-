@@ -1,0 +1,61 @@
+{{#partial "agregarAlHead"}}
+    <link rel="stylesheet" href="\css\auth.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/css/intlTelInput.css">
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
+    <script src="\js\form.js"></script>
+{{/partial}}
+
+{{#partial "contenido"}}
+    <div class="flex flex-col items-center justify-center h-full">
+        <div class="container" id="container">
+            <form class="form-container sign-up" action="register" method="POST">
+                <div>
+                    <h1>Crea tu Cuenta</h1>
+                    <input type="text" name="nombre" placeholder="Nombre" required>
+                    <input type="text" name="apellido" placeholder="Apellido" required>
+                    <input type="email" name="email" placeholder="Correo Electrónico" required>
+                    <input type="password" name="password" placeholder="Contraseña" required>
+                    <input type="tel" name="telefono" placeholder="Número de teléfono" required>
+                    <button type="submit" class="button mt-2">Registrarse</button>
+                </div>
+            </form>
+            <form class="form-container sign-in" action="login" method="POST">
+                <div>
+                    <h1>Iniciar Sesion</h1>
+                    <input type="email" name="email" placeholder="Correo Electronico">
+                    <input type="password" name="password" placeholder="Contraseña">
+                    <a href="#">Olvidaste tu Contraseña?</a>
+                    <button class="button mt-2">Iniciar Sesion</button>
+                </div>
+            </form>
+            <div class="toggle-container">
+                <div class="toggle">
+                    <div class="toggle-panel toggle-left">
+                        <h1>Hola de nuevo!</h1>
+                        <p>Inicia sesion con tus datos personales para poder reportar incidentes</p>
+                        <button class="notShown button text background" id="login">Iniciar Sesion</button>
+                    </div>
+                    <div class="toggle-panel toggle-right">
+                        <h1>Hola Ciudadano!</h1>
+                        <p>Registrate con tus datos personales para poder empezar a reportar incidentes</p>
+                        <button class="notShown button text background" id="register" type="submit">Registrate</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const container = document.getElementById('container');
+        const registerBtn = document.getElementById('register');
+        const loginBtn = document.getElementById('login');
+
+        registerBtn.addEventListener('click', () => {
+            container.classList.add("active");
+        });
+
+        loginBtn.addEventListener('click', () => {
+            container.classList.remove("active");
+        });
+    </script>
+{{/partial}}
+{{> templates/templateBase }}

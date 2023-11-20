@@ -1,0 +1,71 @@
+@startuml diagramaDeComponentes
+
+!define RECTANGLE class
+
+node "Client PC" {
+  [Web Browser] as Browser
+}
+
+node "Client Mobile" {
+  [Mobile Browser] as MobileBrowser
+}
+
+node "Servidor de Aplicacion" as server {
+  
+node "Aplicacion" {
+  node "Controller" {
+    [Router] as router
+    [Controladores] as controller
+    [Hibernate] as hibernate
+    [Javalin] as javalin
+    [Repositorios] as repos
+  }
+  node "View" {
+    [Templates] as templates
+    [Handelbars] as handelbars
+  }
+  node "Model" {
+    [Lógica de negocios] as negocios
+    [Adapters] as adapters
+    [Retrofit] as retrofit
+  }
+}
+}
+
+node "Base de datos" {
+  [Motor MySQL] as db
+  database Database {
+  }
+}
+
+node "Servidor de Aplicacion" as server1 {
+  [Georef] as georef
+}
+
+node "Servidor de Aplicacion" as server2 {
+  [Servicio Rankings] as rankings  
+}
+
+node "Servidor de Aplicacion" as server3 {
+  [Servicio Fusión comununidades] as fusion  
+}
+
+
+MobileBrowser --> javalin : HTTP
+retrofit --> fusion : API REST
+retrofit --> georef : API REST
+retrofit --> rankings : API REST
+Browser --> javalin : HTTP
+javalin --> router
+controller --> repos
+controller --> templates
+templates --> handelbars
+controller --> negocios : Uses
+negocios --> adapters
+repos --> hibernate
+hibernate --> db
+db --> Database
+adapters --> retrofit
+router --> controller
+
+@enduml

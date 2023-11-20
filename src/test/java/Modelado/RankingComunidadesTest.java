@@ -1,16 +1,17 @@
 package Modelado;
 
-import comunidades.Comunidad;
-import localizacion.UbicacionExacta;
-import org.junit.Assert;
-import org.junit.Test;
+import models.comunidades.Comunidad;
+import models.localizacion.UbicacionExacta;
+import models.rankings.criteriosNoUsados.ImpactoComunidades;
+import models.servicios.PrestacionDeServicio;
+import models.servicios.Servicio;
 import org.junit.jupiter.api.BeforeEach;
-import rankings.criterios.ImpactoComunidades;
-import servicios.PrestacionDeServicio;
-import servicios.Servicio;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RankingComunidadesTest {
 
@@ -44,9 +45,9 @@ public class RankingComunidadesTest {
         List<Comunidad> resultado = ranking.generarRanking(comunidades);
 
         // Verificar el orden de las comunidades en el Ranking
-        Assert.assertEquals(comunidades.get(0), resultado.get(0));  // comunidad1 tiene mayor impacto (más miembros / menos incidentes)
-        Assert.assertEquals(comunidades.get(1), resultado.get(1));
-        Assert.assertEquals(comunidades.get(2), resultado.get(2));
+        assertEquals(comunidades.get(0), resultado.get(0));  // comunidad1 tiene mayor impacto (más miembros / menos incidentes)
+        assertEquals(comunidades.get(1), resultado.get(1));
+        assertEquals(comunidades.get(2), resultado.get(2));
     }
 
 }

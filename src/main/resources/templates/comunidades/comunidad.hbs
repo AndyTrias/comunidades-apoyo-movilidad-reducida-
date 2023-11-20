@@ -1,0 +1,98 @@
+{{#partial "contenido"}}
+    <div class="flex flex-col items-center md:flex-row h-full">
+        <div class="flex flex-col justify-center items-center w-full md:w-1/2 mb-4 md:mb-0 rounded m-5">
+            <div class="bg-gradient-to-br from-green-400 to-cyan-500"></div>
+            <img
+                    class="rounded-full w-48 h-48 my-5"
+                {{#if comunidad.imagen}}
+                    src={{comunidad.imagen}}
+                {{else}}
+                    src="https://source.unsplash.com/random/200x200?sig=1"
+                {{/if}}
+                    alt="Image"
+            />
+            <h1 class="text-2xl font-semibold text-black capitalize">{{comunidad.nombre}}</h1>
+            <p class="text-sm"></p>
+
+            <section class="text-gray-600 body-font">
+                <div class="container px-5 py-5 mx-auto">
+                    <div class="flex flex-wrap -m-4 text-center">
+                        <div class="p-4 sm:w-1/4 w-1/2">
+                            <h2 class="title-font font-medium sm:text-4xl text-3xl text-gray-900">{{estadisticas.miembros}}</h2>
+                            <p class="leading-relaxed text-black">Miembros</p>
+                        </div>
+                        <div class="p-4 sm:w-1/4 w-1/2">
+                            <h2 class="title-font font-medium sm:text-4xl text-3xl text-gray-900">{{estadisticas.abiertos}}</h2>
+                            <p class="leading-relaxed text-black">Incidentes Abiertos</p>
+                        </div>
+                        <div class="p-4 sm:w-1/4 w-1/2">
+                            <h2 class="title-font font-medium sm:text-4xl text-3xl text-gray-900">{{estadisticas.cerrados}}</h2>
+                            <p class="leading-relaxed text-black">Incidentes Cerrados</p>
+                        </div>
+                        <div class="p-4 sm:w-1/4 w-1/2">
+                            <h2 class="title-font font-medium sm:text-4xl text-3xl text-gray-900">{{estadisticas.prestaciones}}</h2>
+                            <a href="/comunidades/{{comunidad.id}}/prestaciones" class="leading-relaxed text-black linkButton">Servicios de Interés</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="w-full md:w-1/2">
+            {{# if membresia.esAdministrador }}
+                <div class="flex space-x-8 p-3 mx-auto" >
+                    <form action="/comunidades/{{comunidad.id}}/prestacion" method="post">
+                        <select id="prestacion" name="prestacion" class="border rounded-md py-1 px-2" required>
+                            <option selected disabled hidden value="">Seleccionar Prestacion</option>
+                            {{#each prestacionesNoPertenecenAComunidad}}
+                                <option value="{{this.id}}">{{this.nombre}}</option>
+                            {{/each}}
+                        </select>
+                        <button class="button">Agregar nuevo servicio de interés
+                        </button>
+                    </form>
+                </div>
+            {{/if}}
+            <div class="flex items-center space-x-4 mb-2 mx-auto">
+                <label for="filter" class="text-white">Filtro:</label>
+                <select id="filter" class="border rounded-md py-1 px-2" onchange="searchFilter()">
+                    <option value="todos">Todos</option>
+                    <option value="abierto">Abierto</option>
+                    <option value="cerrado">Cerrado</option>
+                </select>
+                <a href="/comunidades/{{comunidad.id}}/incidentes/create"
+                   class="button">
+                    <i class="fas fa-plus"></i> Abrir Incidente
+                </a>
+            </div>
+
+            <div class="space-y-4 incidentesContainer w-full overflow-y-auto">
+                {{#each incidentes}}
+                    <a href="/comunidades/{{comunidad.id}}/incidentes/{{this.id}}"
+                       class="cristal incidente secondary"
+                       data-abierto={{this.abierto}}
+                    >
+                        <div class="leftContainer">
+                            <h2 class="text-lg font-semibold">{{this.incidente.prestacionDeServicio.nombre}}</h2>
+                            <p class="text-sm text-gray-500 overflow-hidden whitespace-nowrap text-ellipsis block w-24">{{this.incidente.observaciones}}</p>
+                            <div class="mt-4 flex flex-col sm:flex-row">
+                                <span class="mr-2 text-gray-400">por <strong>{{this.incidente.abiertoPor.nombre}}</strong> </span>
+                                <span class="text-gray-400">{{this.incidente.fechaDeApertura}}</span>
+                            </div>
+                        </div>
+                        {{#if this.abierto}}
+                            <div class="icono bg-green-400">
+                                <i class="fas fa-lock-open fa-lg"></i>
+                            </div>
+                        {{else}}
+                            <div class="icono bg-red-400">
+                                <i class="fas fa-lock fa-lg"></i>
+                            </div>
+                        {{/if}}
+                    </a>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+{{/partial}}
+{{> templates/templateBase }}

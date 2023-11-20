@@ -1,30 +1,31 @@
 package Persistencia;
 
-import comunidades.Comunidad;
-import comunidades.Permiso;
-import comunidades.Rol;
-import entidades.Entidad;
-import entidades.EntidadPrestadora;
-import entidades.Establecimiento;
-import entidades.OrganismoDeControl;
-import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
-import localizacion.Localizacion;
-import localizacion.UbicacionExacta;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import models.comunidades.Comunidad;
+import models.comunidades.Membresia;
+import models.usuario.TipoRol;
+import models.entidades.Entidad;
+import models.entidades.EntidadPrestadora;
+import models.entidades.Establecimiento;
+import models.entidades.OrganismoDeControl;
+import models.incidentes.Incidente;
+import models.localizacion.Localizacion;
+import models.localizacion.UbicacionExacta;
+import models.repositorios.*;
+import org.junit.jupiter.api.*;
 
-import com.twilio.rest.api.v2010.account.incomingphonenumber.Local;
+//import repositiorios.*;
+import models.servicios.PrestacionDeServicio;
+import models.servicios.Servicio;
+import models.usuario.Usuario;
 
-import repositiorios.*;
-import servicios.PrestacionDeServicio;
-import servicios.Servicio;
-import usuario.Interes;
-import usuario.Usuario;
+import java.util.Date;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class AgregarDatosTest implements SimplePersistenceTest {
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+public class AgregarDatosTest {
 
     private RepoUsuario repoUsuario;
     private RepoComunidad repoComunidad;
@@ -34,12 +35,10 @@ public class AgregarDatosTest implements SimplePersistenceTest {
     private RepoEntidadPrestadora repoEntidadPrestadora;
     private RepoLocalizacion repoLocalizacion;
     private RepoOrganismoDeControl repoOrganismoDeControl;
+    private RepoPrestacion repoPrestacion;
+    private RepoRol repoRol;
 
-    private Servicio servicio;
-    private Comunidad comunidad;
-    private Entidad entidad;
-    private Establecimiento establecimiento;
-    private EntidadPrestadora santander;
+    private RepoIncidentes repoIncidentes;
 
 
     @BeforeEach
@@ -52,47 +51,210 @@ public class AgregarDatosTest implements SimplePersistenceTest {
         repoLocalizacion = new RepoLocalizacion();
         repoEntidadPrestadora = new RepoEntidadPrestadora();
         repoOrganismoDeControl = new RepoOrganismoDeControl();
+        repoPrestacion = new RepoPrestacion();
+        repoRol = new RepoRol();
+        repoIncidentes = new RepoIncidentes();
 
-        servicio = new Servicio("baño hombres");
-        comunidad = new Comunidad("comunidad1");
-        entidad = new Entidad("Santander Rio Argentina", new Localizacion());
-        establecimiento = new Establecimiento("Sucursal Almagro", new Localizacion());
     }
 
-    @Test
-    void agregarComunidad() {
-        Servicio servicio = repoServicio.buscar(1L);
-        PrestacionDeServicio banioMedrano = new PrestacionDeServicio(servicio, "baño Medrano", new UbicacionExacta(1, 1));
-        comunidad.agregarServicioDeInteres(banioMedrano);
-        repoComunidad.agregar(comunidad);
-    }
-
+    @Order(1)
     @Test
     void agregarServicio() {
-        repoServicio.agregar(servicio);
+        Servicio banio = new Servicio("Baño");
+        Servicio escalera = new Servicio("Escalera mecanica");
+        repoServicio.agregar(banio);
+        repoServicio.agregar(escalera);
+    }
+
+    @Order(2)
+    @Test
+    void agregarOrganismoDeControlyPrestadoras() {
+        OrganismoDeControl ciudad = new OrganismoDeControl("Comisión Nacional de Regulación del Transporte");
+        EntidadPrestadora trenesArgentinos = new EntidadPrestadora("Trenes Argentinos");
+        EntidadPrestadora metrovias = new EntidadPrestadora("Metrovías S.A.");
+        ciudad.agregarPrestadora(trenesArgentinos);
+        ciudad.agregarPrestadora(metrovias);
+
+        repoOrganismoDeControl.agregar(ciudad);
+    }
+
+
+    @Order(3)
+    @Test
+    void agregarEntidades() {
+        Localizacion localizacion = new Localizacion();
+        Servicio servicio = repoServicio.buscar(1L);
+
+        Entidad lineaA = new Entidad("Linea Mitre", localizacion);
+        EntidadPrestadora prestadora = repoEntidadPrestadora.buscar(1L);
+        prestadora.agregarEntidades(lineaA);
+
+        Establecimiento retiro = new Establecimiento("Estacion Retiro", localizacion);
+        lineaA.agregarEstablecimiento(retiro);
+        Establecimiento belgranoC = new Establecimiento("Estacion Belgrano C", localizacion);
+        lineaA.agregarEstablecimiento(belgranoC);
+
+        PrestacionDeServicio baniobelgranoC = new PrestacionDeServicio(servicio, "Baño Belgrano C", new UbicacionExacta(1, 1));
+        retiro.agregarServicioPrestado(baniobelgranoC);
+        PrestacionDeServicio banioRetiro = new PrestacionDeServicio(servicio, "Baño Retiro", new UbicacionExacta(1, 1));
+        belgranoC.agregarServicioPrestado(banioRetiro);
+
+
+        repoEntidadPrestadora.modificar(prestadora);
+    }
+
+    @Order(4)
+    @Test
+    void agregarEstacionesLineaRoca() {
+        Localizacion localizacion = new Localizacion();
+        Servicio servicio = repoServicio.buscar(1L); // Asegúrate de que el ID del servicio sea correcto
+
+        Entidad lineaRoca = new Entidad("Linea Roca", localizacion); // Crea la entidad si no existe
+
+        EntidadPrestadora prestadora = repoEntidadPrestadora.buscar(1L);
+        prestadora.agregarEntidades(lineaRoca);
+
+        Establecimiento estacionKostekiSantillan = new Establecimiento("Estacion Kosteki y Santillán", localizacion);
+        lineaRoca.agregarEstablecimiento(estacionKostekiSantillan);
+
+        Establecimiento estacionAvellaneda = new Establecimiento("Estacion Avellaneda", localizacion);
+        lineaRoca.agregarEstablecimiento(estacionAvellaneda);
+
+        PrestacionDeServicio banoEstacionKostekiSantillan = new PrestacionDeServicio(servicio, "Baño - Estacion Kosteki y Santillán", new UbicacionExacta(1, 1));
+        estacionKostekiSantillan.agregarServicioPrestado(banoEstacionKostekiSantillan);
+
+        PrestacionDeServicio banoEstacionAvellaneda = new PrestacionDeServicio(servicio, "Baño - Estacion Avellaneda", new UbicacionExacta(1, 1));
+        estacionAvellaneda.agregarServicioPrestado(banoEstacionAvellaneda);
+
+        repoEntidadPrestadora.modificar(prestadora);
+    }
+
+    @Order(5)
+    @Test
+    void agregarEstacionesLineaBelgrano() {
+        Localizacion localizacion = new Localizacion();
+        Servicio servicio = repoServicio.buscar(1L); // Asegúrate de que el ID del servicio sea correcto
+
+        Entidad lineaBelgrano = new Entidad("Linea Belgrano", localizacion); // Crea la entidad si no existe
+
+        EntidadPrestadora prestadora = repoEntidadPrestadora.buscar(1L);
+        prestadora.agregarEntidades(lineaBelgrano);
+
+        Establecimiento estacionRetiro = new Establecimiento("Estacion Rafael Castillo", localizacion);
+        lineaBelgrano.agregarEstablecimiento(estacionRetiro);
+
+        Establecimiento estacionCiudadJardin = new Establecimiento("Estacion Ciudad Jardin", localizacion);
+        lineaBelgrano.agregarEstablecimiento(estacionCiudadJardin);
+
+        PrestacionDeServicio banoEstacionRetiro = new PrestacionDeServicio(servicio, "Baño - Estacion Rafael Castillo", new UbicacionExacta(1, 1));
+        estacionRetiro.agregarServicioPrestado(banoEstacionRetiro);
+
+        PrestacionDeServicio banoEstacionCiudadJardin = new PrestacionDeServicio(servicio, "Baño - Estacion Ciudad Jardin", new UbicacionExacta(1, 1));
+        estacionCiudadJardin.agregarServicioPrestado(banoEstacionCiudadJardin);
+
+        repoEntidadPrestadora.modificar(prestadora);
+    }
+
+    @Order(6)
+    @Test
+    void agregarEstacionesLineaUrquiza() {
+        Localizacion localizacion = new Localizacion();
+        Servicio servicio = repoServicio.buscar(1L); // Asegúrate de que el ID del servicio sea correcto
+
+        Entidad lineaUrquiza = new Entidad("Línea Urquiza", localizacion); // Crea la entidad si no existe
+
+        EntidadPrestadora prestadora = repoEntidadPrestadora.buscar(2L); // Utiliza 2L para la EntidadPrestadora de Metrovías S.A.
+        prestadora.agregarEntidades(lineaUrquiza);
+
+        Establecimiento estacionLugano = new Establecimiento("Estación Lugano", localizacion);
+        lineaUrquiza.agregarEstablecimiento(estacionLugano);
+
+        Establecimiento estacionMitre = new Establecimiento("Estación Mitre", localizacion);
+        lineaUrquiza.agregarEstablecimiento(estacionMitre);
+
+        PrestacionDeServicio banoEstacionLugano = new PrestacionDeServicio(servicio, "Baño Lugano", new UbicacionExacta(1, 1));
+        estacionLugano.agregarServicioPrestado(banoEstacionLugano);
+
+        PrestacionDeServicio banoEstacionMitre = new PrestacionDeServicio(servicio, "Baño Mitre", new UbicacionExacta(1, 1));
+        estacionMitre.agregarServicioPrestado(banoEstacionMitre);
+
+        repoEntidadPrestadora.modificar(prestadora);
     }
 
     @Test
-    void agregarEntidadPrestadora(){
-      EntidadPrestadora santander = new EntidadPrestadora("Santander Rio Argentina");
-      santander.setPersonaDesignada(new Usuario());
-      repoEntidadPrestadora.agregar(santander);
+    @Order(7)
+    void agregarEstacionesOtraLinea() {
+        Localizacion localizacion = new Localizacion();
+        Servicio servicio = repoServicio.buscar(1L); // Asegúrate de que el ID del servicio sea correcto
+
+        Entidad otraLinea = new Entidad("Otra Línea Metrovías S.A.", localizacion); // Crea la entidad si no existe
+
+        EntidadPrestadora prestadora = repoEntidadPrestadora.buscar(2L); // Utiliza 2L para la EntidadPrestadora de Metrovías S.A.
+        prestadora.agregarEntidades(otraLinea);
+
+        Establecimiento estacion1 = new Establecimiento("Estación 1 Metrovias", localizacion);
+        otraLinea.agregarEstablecimiento(estacion1);
+
+        Establecimiento estacion2 = new Establecimiento("Estación 2 Metrovias", localizacion);
+        otraLinea.agregarEstablecimiento(estacion2);
+
+        PrestacionDeServicio banoEstacion1 = new PrestacionDeServicio(servicio, "Baño Estación 1", new UbicacionExacta(1, 1));
+        estacion1.agregarServicioPrestado(banoEstacion1);
+
+        PrestacionDeServicio banoEstacion2 = new PrestacionDeServicio(servicio, "Baño Estación 2", new UbicacionExacta(1, 1));
+        estacion2.agregarServicioPrestado(banoEstacion2);
+
+        repoEntidadPrestadora.modificar(prestadora);
     }
 
+
+    @Order(8)
     @Test
-    void agregarOrganismoDeControl(){
-        OrganismoDeControl bancos = new OrganismoDeControl("Bancos");
-        bancos.setPersonaDesignada(new Usuario());
-        repoOrganismoDeControl.agregar(bancos);
+    void agregarComunidad() {
+        Comunidad comunidad = new Comunidad("Baños de Trenes Argentinos");
+        Comunidad comunidad1 = new Comunidad("Baños de Metrovias");
+        Comunidad comunidad2 = new Comunidad("Baños de La linea Mitre");
+        Comunidad comunidad3 = new Comunidad("Servicios de Belgrano C");
+        repoComunidad.agregar(comunidad);
+        repoComunidad.agregar(comunidad1);
+        repoComunidad.agregar(comunidad2);
+        repoComunidad.agregar(comunidad3);
     }
 
+    @Order(9)
     @Test
-    void agregarEstablecimiento(){//agrega una ubicacion sin datos y una localizacion relacionada
-        PrestacionDeServicio prestacionDeServicio = new PrestacionDeServicio(servicio, "baño Medrano", new UbicacionExacta(1, 1));
-        establecimiento.agregarServicioPrestado(prestacionDeServicio);
-        repoEstablecimiento.agregar(establecimiento);
+    void agregarPrestacionAComunidad() {
+        Comunidad comunidad = repoComunidad.buscar(1L);
+        Comunidad comunidad1 = repoComunidad.buscar(2L);
+        Comunidad comunidad2 = repoComunidad.buscar(3L);
+        Comunidad comunidad3 = repoComunidad.buscar(4L);
+
+        PrestacionDeServicio prestacionDeServicio = repoPrestacion.buscar(1L);
+        PrestacionDeServicio prestacionDeServicio1 = repoPrestacion.buscar(2L);
+        PrestacionDeServicio prestacionDeServicio2 = repoPrestacion.buscar(3L);
+        PrestacionDeServicio prestacionDeServicio3 = repoPrestacion.buscar(4L);
+        PrestacionDeServicio prestacionDeServicio4 = repoPrestacion.buscar(5L);
+        PrestacionDeServicio prestacionDeServicio5 = repoPrestacion.buscar(6L);
+
+        comunidad.agregarServiciosDeInteres(prestacionDeServicio, prestacionDeServicio1, prestacionDeServicio2, prestacionDeServicio3, prestacionDeServicio4, prestacionDeServicio5);
+        repoComunidad.modificar(comunidad);
+
+        PrestacionDeServicio prestacionDeServicio6 = repoPrestacion.buscar(7L);
+        PrestacionDeServicio prestacionDeServicio7 = repoPrestacion.buscar(8L);
+        PrestacionDeServicio prestacionDeServicio8 = repoPrestacion.buscar(9L);
+        PrestacionDeServicio prestacionDeServicio9 = repoPrestacion.buscar(10L);
+        comunidad1.agregarServiciosDeInteres(prestacionDeServicio6, prestacionDeServicio7, prestacionDeServicio8, prestacionDeServicio9);
+
+        repoComunidad.modificar(comunidad1);
+
+        comunidad2.agregarServiciosDeInteres(prestacionDeServicio, prestacionDeServicio1);
+        repoComunidad.modificar(comunidad2);
+
+        comunidad3.agregarServiciosDeInteres(prestacionDeServicio);
+        repoComunidad.modificar(comunidad3);
     }
 
+    @Order(10)
     @Test
     void agregarLocalizacion() throws Exception {
         Localizacion localizacion = new Localizacion();
@@ -100,12 +262,50 @@ public class AgregarDatosTest implements SimplePersistenceTest {
         repoLocalizacion.agregar(localizacion);
     }
 
+    @Order(11)
     @Test
     void agregarUsuarioCompleto() throws Exception {
         Usuario usuario = new Usuario("franco", "pesce", "francopescee@gmail.com");
         usuario.setContrasenia("@ashffkrh3nksdnf214123cssdf");
         usuario.setTelefono("+5491131231231");
-        usuario.setUbicacionExacta(new UbicacionExacta(1,1));
+        usuario.setUbicacionExacta(new UbicacionExacta(1, 1));
+        usuario.setRol(repoRol.buscarPorNombre(TipoRol.ADMINISTRADOR_PLATAFORMA));
         repoUsuario.agregar(usuario);
+
+        Usuario usuario2 = new Usuario("Gian", "Riccelli", "yayoriccelli@gmail.com");
+        usuario2.setContrasenia("@ashffkrh3nksdnf214123cssdf");
+        usuario2.setTelefono("+5491131231231");
+        usuario2.setUbicacionExacta(new UbicacionExacta(1, 1));
+        //usuario.setRol(repoRol.buscarPorNombre(TipoRol.ADMINISTRADOR_PLATAFORMA));
+        repoUsuario.agregar(usuario);
+
+    }
+
+    @Order(12)
+    @Test
+    void agregarMembresia() throws Exception {
+        Usuario usuario = repoUsuario.buscar(1L);
+        Comunidad comunidad = repoComunidad.buscar(1L);
+
+        Membresia membresia = new Membresia(comunidad, usuario, repoRol.buscarPorNombre(TipoRol.MIEMBRO));
+        comunidad.agregarMembresia(membresia);
+        usuario.unirseAComunidad(membresia);
+        repoComunidad.modificar(comunidad);
+    }
+
+
+    @Order(13)
+    @Test
+    void agregarIncidenteARevisar() throws InterruptedException {
+        Thread.sleep(1000);
+        Usuario usuario = repoUsuario.buscar(1L);
+        PrestacionDeServicio banioMedrano1 = repoPrestacion.buscar(1L);
+
+        Incidente incidente = new Incidente(usuario, "baño sucio", banioMedrano1, new Date());
+
+        repoIncidentes.agregar(incidente);
+
+        usuario.agregarRevisionDeIncidente(repoIncidentes.buscar(1L));
+        repoUsuario.modificar(usuario);
     }
 }
