@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ExportarCSV implements EstrategiaDeExportacion {
   public String exportar(List<List<String>> informe, String nombreArchivo) {
-    String csvFile = Config.PATH_INFORMES + nombreArchivo;
+    String csvFile = Config.getInstance().PATH_INFORMES + nombreArchivo;
 
     try (FileWriter writer = new FileWriter(csvFile)) {
       for (List<String> fila : informe) {

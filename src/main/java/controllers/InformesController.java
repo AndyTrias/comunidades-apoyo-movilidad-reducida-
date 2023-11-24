@@ -124,7 +124,7 @@ public class InformesController extends BaseController {
       GeneradorDeInformes generadorDeInformes = new GeneradorDeInformes();
       generadorDeInformes.agregarCriterioDeEntidad(criterio);
 
-      String nombreArchivo = Config.PATH_INFORMES + criterio.getNombreInterno() + "_" + LocalDate.now() + ".json";
+      String nombreArchivo = Config.getInstance().PATH_INFORMES + criterio.getNombreInterno() + "_" + LocalDate.now() + ".json";
 
       Exportador exportador = new Exportador(generadorDeInformes, estrategia);
       exportador.exportarConEstrategia(entidades, nombreArchivo);
