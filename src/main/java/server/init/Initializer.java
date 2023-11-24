@@ -4,11 +4,13 @@ import controllers.InformesController;
 import controllers.factories.FactoryController;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import models.configs.Config;
+import models.repositorios.RepoGenerico;
 import models.usuario.Permiso;
 import models.usuario.Rol;
 import models.usuario.TipoRol;
 import models.repositorios.RepoRol;
 
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +21,10 @@ import java.util.concurrent.TimeUnit;
 public class Initializer implements WithSimplePersistenceUnit {
 
   public static void init() {
+    Map<String, Object> configOverrides = setConfigOverrides(new HashMap<>());
+    System.out.println(configOverrides);
+    EntityManagerFactory em = Persistence.createEntityManagerFactory("simple-persistence-unit", configOverrides);
+    RepoGenerico.entityManager = em.createEntityManager();
     if (new RepoRol().buscarTodos().size() < 4) {
       new Initializer()
           .iniciarTransaccion()
@@ -138,9 +144,10 @@ public class Initializer implements WithSimplePersistenceUnit {
   private static HashMap<String, Object> setConfigOverrides(HashMap<String, Object> configOverrides) {
     Map<String, String> values = System.getenv();
     String[] keys = new String[] {
-            "URL",
-            "USERNAME",
-            "PASSWORD"
+            "javax.persistence.jdbc.url",
+            "javax.persistence.jdbc.user",
+            "javax.persistence.jdbc.password",
+            "javax.persistence.jdbc.driver"
     };
     for (String key: keys){
         if (values.containsKey(key)){
