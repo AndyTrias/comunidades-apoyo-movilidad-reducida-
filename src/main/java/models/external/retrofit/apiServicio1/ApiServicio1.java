@@ -19,7 +19,7 @@ public class ApiServicio1 extends ApiCaller {
     }
 
     private ApiServicio1() {
-        super(PrettyProperties.getInstance().propertyFromName("API_SERVICIO1"));
+        super(System.getenv("API_SERVICIO1"));
     }
 
     public PayloadDTO comunidadesYFusiones(PayloadDTO payloadDTO) throws IOException {

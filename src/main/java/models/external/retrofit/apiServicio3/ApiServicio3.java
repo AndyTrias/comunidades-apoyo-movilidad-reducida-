@@ -19,7 +19,7 @@ public class ApiServicio3 extends ApiCaller {
     }
 
     private ApiServicio3() {
-        super(PrettyProperties.getInstance().propertyFromName("API_SERVICIO3"));
+        super(System.getenv("API_SERVICIO3"));
     }
 
     public PayloadServicio3DTO rankingEntidades(PayloadServicio3DTO payloadServicio3DTO) throws IOException {

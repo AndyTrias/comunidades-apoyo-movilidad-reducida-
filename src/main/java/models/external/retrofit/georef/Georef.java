@@ -22,7 +22,7 @@ public class Georef extends ApiCaller {
     }
 
     private Georef() {
-        super(Config.getInstance().API_GEOREF);
+        super(System.getenv("API_GEOREF"));
     }
 
     public ListadoProvincias listadoProvincias(){
