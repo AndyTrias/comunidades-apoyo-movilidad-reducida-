@@ -19,7 +19,7 @@ public class MayorTiempo extends CriteriosEntidadesQueUsanIncidentes {
     }
 
 
-    private float promedioTiempoDeCierre(Entidad entidad) {
+    public float promedioTiempoDeCierre(Entidad entidad) {
         return (float) obtenerIncidentesDeEntidadEnlaSemana(entidad).stream()
             .mapToDouble(Incidente::tiempoActivo)
             .average()
