@@ -78,6 +78,9 @@ public class FactoryController {
           new RepoEntidadPrestadora(),
           new RepoInformes()
       );
+      case "Config" -> new ConfigController(
+          new RepoConfig()
+      );
 
       default -> null;
     };

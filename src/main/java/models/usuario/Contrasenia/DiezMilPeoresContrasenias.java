@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class DiezMilPeoresContrasenias implements PuedeValidar {
 
-    private static final String path = Config.PEORES_CONTRASENIAS; //ordenado para la busqueda
+    private static final String path = Config.getInstance().PEORES_CONTRASENIAS; //ordenado para la busqueda
 
 
     public boolean validar(String contrasenia) {

@@ -19,7 +19,7 @@ public class MayorCantidad extends CriteriosEntidadesQueUsanIncidentes {
         .collect(Collectors.toList());
   }
 
-  private int cantidadDeIncidentesEnLaSemana(Entidad entidad) {
+  public int cantidadDeIncidentesEnLaSemana(Entidad entidad) {
     return (int) obtenerIncidentesDeEntidadEnlaSemana(entidad)
         .stream()
         .filter(Incidente::ocurrioHaceMasDe24Hs)

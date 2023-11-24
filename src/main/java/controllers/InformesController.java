@@ -18,6 +18,7 @@ import models.rankings.estrategiaDeExportacion.ExportarAJson;
 import models.rankings.informes.Exportador;
 import models.rankings.informes.GeneradorDeInformes;
 import models.rankings.informes.Informe;
+import models.rankings.informes.Ranking;
 import models.repositorios.RepoEntidad;
 import models.repositorios.RepoEntidadPrestadora;
 import models.repositorios.RepoInformes;
@@ -45,7 +46,7 @@ public class InformesController extends BaseController {
   }
 
   public void rankingPrestadora(Context ctx) throws IOException {
-     EntidadPrestadora prestadora = repoEntidadPrestadora.buscarporUsuarioDesignado(usuarioLogueado(ctx).getId());
+    EntidadPrestadora prestadora = repoEntidadPrestadora.buscarporUsuarioDesignado(usuarioLogueado(ctx).getId());
     renderizarRanking(ctx, prestadora.getEntidades());
   }
 
@@ -56,10 +57,11 @@ public class InformesController extends BaseController {
     JsonNode nodo = parsearJson(rutaInforme);
     String criterio = nodo.get(0).get("Criterio").asText();
     List<Entidad> entidades = parsearRanking(nodo.get(0).get("Ranking"), entidadesDisponibles);
+    List<Ranking> ranking = obtenerRankingPorCriterio(criterio, entidades);
 
     model.put("criterio", criterio);
-    model.put("entidades", entidades);
-    ctx.render("generales/ranking.hbs", model);
+    model.put("ranking", ranking);
+    ctx.render("rankings/ranking.hbs", model);
   }
 
   public String buscarRutaInforme(Long id) {
@@ -77,6 +79,20 @@ public class InformesController extends BaseController {
     }
   }
 
+  private List<Ranking> obtenerRankingPorCriterio(String criterio, List<Entidad> entidades) {
+    List<Ranking> ranking = new ArrayList<>();
+
+    for (Entidad entidad : entidades) {
+      switch (criterio) {
+        case "Minutos de resolucion" ->
+            ranking.add(new Ranking(entidad, (int) new MayorTiempo(criterio).promedioTiempoDeCierre(entidad)));
+        case "Cantidad de incidentes" ->
+            ranking.add(new Ranking(entidad, new MayorCantidad(criterio).cantidadDeIncidentesEnLaSemana(entidad)));
+      }
+    }
+
+    return ranking;
+  }
   private List<Entidad> parsearRanking(JsonNode rankingNode, List<Entidad> entidadesDelOrganismo) {
     List<Entidad> entidades = new ArrayList<>();
     String[] rankingArray = rankingNode.get(0).asText().split(",");
@@ -97,7 +113,7 @@ public class InformesController extends BaseController {
 
   public void generarRankings() {
     List<CriteriosDeEntidades> criterios = Arrays.asList(
-        new MayorTiempo("Tiempo de resolucion"),
+        new MayorTiempo("Minutos de resolucion"),
         new MayorCantidad("Cantidad de incidentes")
     );
 
@@ -108,7 +124,7 @@ public class InformesController extends BaseController {
       GeneradorDeInformes generadorDeInformes = new GeneradorDeInformes();
       generadorDeInformes.agregarCriterioDeEntidad(criterio);
 
-      String nombreArchivo = Config.PATH_INFORMES + criterio.getNombreInterno() + "_" + LocalDate.now() + ".json";
+      String nombreArchivo = Config.getInstance().PATH_INFORMES + criterio.getNombreInterno() + "_" + LocalDate.now() + ".json";
 
       Exportador exportador = new Exportador(generadorDeInformes, estrategia);
       exportador.exportarConEstrategia(entidades, nombreArchivo);

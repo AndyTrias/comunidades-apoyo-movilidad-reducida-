@@ -3,6 +3,7 @@ package server.init;
 import controllers.InformesController;
 import controllers.factories.FactoryController;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
+import models.configs.Config;
 import models.usuario.Permiso;
 import models.usuario.Rol;
 import models.usuario.TipoRol;
@@ -128,8 +129,6 @@ public class Initializer implements WithSimplePersistenceUnit {
       InformesController informesController = (InformesController) FactoryController.controller("Informe");
       informesController.generarRankings();
       System.out.println("Tarea programada ejecutada");
-    }, 7, 7, TimeUnit.DAYS);
+    }, Config.getInstance().FRECUENCIA_RANKING, Config.getInstance().FRECUENCIA_RANKING, TimeUnit.MINUTES);
   }
-
-
 }
