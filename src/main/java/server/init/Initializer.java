@@ -9,6 +9,9 @@ import models.usuario.Rol;
 import models.usuario.TipoRol;
 import models.repositorios.RepoRol;
 
+import javax.persistence.Persistence;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -130,5 +133,21 @@ public class Initializer implements WithSimplePersistenceUnit {
       informesController.generarRankings();
       System.out.println("Tarea programada ejecutada");
     }, Config.getInstance().FRECUENCIA_RANKING, Config.getInstance().FRECUENCIA_RANKING, TimeUnit.MINUTES);
+  }
+
+  private static HashMap<String, Object> setConfigOverrides(HashMap<String, Object> configOverrides) {
+    Map<String, String> values = System.getenv();
+    String[] keys = new String[] {
+            "URL",
+            "USERNAME",
+            "PASSWORD"
+    };
+    for (String key: keys){
+        if (values.containsKey(key)){
+            configOverrides.put(key, values.get(key));
+        }
+    }
+
+    return configOverrides;
   }
 }
