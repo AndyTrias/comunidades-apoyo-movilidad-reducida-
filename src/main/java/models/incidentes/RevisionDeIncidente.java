@@ -1,6 +1,7 @@
 package models.incidentes;
 
 import lombok.NoArgsConstructor;
+import models.configs.Config;
 import models.converters.NotificadorConverter;
 import models.usuario.Usuario;
 import lombok.Setter;
@@ -24,11 +25,7 @@ public class RevisionDeIncidente {
     @Column(name = "notificador")
     private static Notificador notificador;
 
-    @Column(name = "latitud_maxima")
-    private static final double LATITUD_MAXIMA = 0.1;
 
-    @Column(name = "longitud_maxima")
-    private static final double LONGITUD_MAXIMA = 0.1;
 
     public RevisionDeIncidente() {
         notificador = new RevisionIncidente();
@@ -36,9 +33,9 @@ public class RevisionDeIncidente {
 
     public static boolean estaCerca(Usuario usuario, Incidente incidente) {
         return Math.abs(usuario.getUbicacionExacta().getLatitud() - incidente.getPrestacionDeServicio().getUbicacionExacta().getLatitud())
-                < LATITUD_MAXIMA &&
+                < Config.getInstance().LATITUD_MAXIMA &&
                 Math.abs(usuario.getUbicacionExacta().getLongitud() - incidente.getPrestacionDeServicio().getUbicacionExacta().getLongitud())
-                < LONGITUD_MAXIMA;
+                < Config.getInstance().LONGITUD_MAXIMA;
     }
 
     public static void notificar(Usuario usuario, Incidente incidente) {
