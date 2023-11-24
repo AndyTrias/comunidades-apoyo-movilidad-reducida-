@@ -12,7 +12,7 @@ public class CSVTest {
     public void testLeeTodasLasEntidades() {
         LectorEntidadPrestadora lectorEntidadPrestadora = new LectorEntidadPrestadora();
 
-        lectorEntidadPrestadora.leerCSV(Config.CSV_PATH_PRESTADORAS);
+        lectorEntidadPrestadora.leerCSV(Config.getInstance().CSV_PATH_PRESTADORAS);
 
         assertEquals(lectorEntidadPrestadora.getEntidadesLeidas().size(), 3);
     }
@@ -21,7 +21,7 @@ public class CSVTest {
     public void testLeeTodosLosOrganismos(){
         LectorOrganismoDeControl lectorOrganismoDeControl = new LectorOrganismoDeControl();
 
-        lectorOrganismoDeControl.leerCSV(Config.CSV_PATH_ORGANISMOS);
+        lectorOrganismoDeControl.leerCSV(Config.getInstance().CSV_PATH_ORGANISMOS);
 
         assertEquals(lectorOrganismoDeControl.getOrganismosLeidos().size(), 2);
     }

@@ -56,7 +56,7 @@ public class informesTest {
       Exportador exportador = new Exportador(generadorDeInformes, estrategia);
       exportador.exportarConEstrategia(repoEntidad.buscarTodos(), "ranking_" + LocalDate.now() + ".json");
 
-      String ruta = Config.PATH_INFORMES + "informes.json";
+      String ruta = Config.getInstance().PATH_INFORMES + "informes.json";
 
       Mockito.verify(servicioJsonMock).exportarAJson(informes, ruta);
     }
