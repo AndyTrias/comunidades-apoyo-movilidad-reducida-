@@ -6,7 +6,7 @@ RUN mvn clean package -DskipTests
 
 # Etapa de ejecución
 FROM openjdk:17-jdk-slim
-COPY --from=build /app/target/ejercicio-1.0-SNAPSHOT.jar /app/ejercicio.jar
+COPY --from=build /app/target/ejercicio-1.0-SNAPSHOT-jar-with-dependencies.jar /app/ejercicio.jar
 WORKDIR /app
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "ejercicio.jar"]
