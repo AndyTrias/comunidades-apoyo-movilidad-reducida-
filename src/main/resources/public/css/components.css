@@ -110,9 +110,9 @@ body {
 
 .linkButton {
     font-size: 18px;
-    color: var(--text);
+    color: #555;
     font-family: inherit;
-    font-weight: 800;
+    font-weight: 500;
     cursor: pointer;
     position: relative;
     border: none;
@@ -397,7 +397,7 @@ ol.stepper li.active::after {
     border-radius: 8px !important;
     width: 100%;
     outline: none;
-    box-shadow: 0 0 10px 0 rgb(0,0,0);
+    box-shadow: 0 0 2px 0 rgb(0,0,0);
 }
 
 dialog {

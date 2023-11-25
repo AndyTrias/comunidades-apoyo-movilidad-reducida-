@@ -10,7 +10,7 @@
         <form action="comunidades/unirse" method="post" class="flex flex-col gap-4">
 
             <label for="comunidad_id"></label>
-            <select id="comunidad_id" name="comunidad_id" class="border rounded-md py-1 px-2" required>
+            <select id="comunidad_id" name="comunidad_id" class="border rounded-md py-1 px-2 text-black" required>
                 <option selected disabled hidden value="">Seleccionar comunidad</option>
                 {{#each comunidadesQNoPretUsu}}
                     <option value="{{this.id}}">{{this.nombre}}</option>

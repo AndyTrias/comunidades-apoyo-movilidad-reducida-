@@ -4,7 +4,6 @@ import models.external.retrofit.ApiCaller;
 import models.external.retrofit.apiServicio1.responseClases.PayloadDTO;
 import retrofit2.Call;
 import retrofit2.Response;
-import server.utils.PrettyProperties;
 
 import java.io.IOException;
 
@@ -19,7 +18,7 @@ public class ApiServicio1 extends ApiCaller {
     }
 
     private ApiServicio1() {
-        super(PrettyProperties.getInstance().propertyFromName("API_SERVICIO1"));
+        super(System.getenv("API_SERVICIO1"));
     }
 
     public PayloadDTO comunidadesYFusiones(PayloadDTO payloadDTO) throws IOException {

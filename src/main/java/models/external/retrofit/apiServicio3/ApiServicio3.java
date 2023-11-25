@@ -4,7 +4,6 @@ import models.external.retrofit.ApiCaller;
 import models.external.retrofit.apiServicio3.responseClases.PayloadServicio3DTO;
 import retrofit2.Call;
 import retrofit2.Response;
-import server.utils.PrettyProperties;
 
 import java.io.IOException;
 
@@ -19,7 +18,7 @@ public class ApiServicio3 extends ApiCaller {
     }
 
     private ApiServicio3() {
-        super(PrettyProperties.getInstance().propertyFromName("API_SERVICIO3"));
+        super(System.getenv("API_SERVICIO3"));
     }
 
     public PayloadServicio3DTO rankingEntidades(PayloadServicio3DTO payloadServicio3DTO) throws IOException {
