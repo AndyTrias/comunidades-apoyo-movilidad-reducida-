@@ -14,7 +14,7 @@ public abstract class RepoGenerico<T> implements WithSimplePersistenceUnit {
     }
 
     public void agregar(T entidad) {
-        beginTransaction();
+          beginTransaction();
         persist(entidad);
         commitTransaction();
     }

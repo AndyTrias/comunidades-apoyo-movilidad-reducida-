@@ -114,7 +114,8 @@ public class Router implements WithSimplePersistenceUnit {
     });
 
     app.routes(() -> {
-      app.put("config", ((ConfigController) FactoryController.controller("Config"))::save);
+      app.get("config", ((ConfigController) FactoryController.controller("Config"))::show);
+      app.post("config", ((ConfigController) FactoryController.controller("Config"))::save);
     });
 
     app.exception(CredencialesInvalidaException.class, ExceptionHandler::handleInvalidCredentials);
