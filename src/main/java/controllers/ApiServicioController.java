@@ -47,21 +47,6 @@ public class ApiServicioController {
         }
     }
 
-    public void rankingEntidades(Context ctx) {
-        List<Entidad> entidades = repoEntidad.buscarTodos();
-
-        List<EntidadDTO> entidadesDTO = Mapper.mapEntidadesToEntidadesDTO(entidades, repoComunidad);
-        PayloadServicio3DTO payloadServicio3DTO = new PayloadServicio3DTO(entidadesDTO);
-
-        try {
-            PayloadServicio3DTO response = ApiServicio3.getInstancia().rankingEntidades(payloadServicio3DTO);
-            ObjectMapper mapper = new ObjectMapper();
-            ctx.result(mapper.writeValueAsString(response));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     private void asignarComunidades(List<ComunidadDTO> comunidades){
         comunidades.forEach(c -> {
             if (c.getEstado() == ComunidadDTO.EstadoComunidad.DESACTIVADA) {

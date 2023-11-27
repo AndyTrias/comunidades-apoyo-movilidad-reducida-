@@ -2,5 +2,5 @@ package models.rankings.informes;
 
 import models.entidades.Entidad;
 
-public record Ranking(Entidad entidad, int valor) {
+public record Ranking(Entidad entidad, Integer valor) {
 }

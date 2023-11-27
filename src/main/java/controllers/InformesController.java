@@ -3,6 +3,7 @@ package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import controllers.factories.FactoryController;
 import io.javalin.http.Context;
 import lombok.AllArgsConstructor;
 import models.configs.Config;
@@ -10,8 +11,12 @@ import models.entidades.Entidad;
 import models.entidades.EntidadPrestadora;
 import models.entidades.OrganismoDeControl;
 import models.external.json.ServicioJson;
+import models.external.retrofit.apiServicio3.ApiServicio3;
+import models.external.retrofit.apiServicio3.responseClases.EntidadDTO;
+import models.external.retrofit.apiServicio3.responseClases.PayloadServicio3DTO;
 import models.rankings.criterios.CriteriosDeEntidades;
 import models.rankings.criterios.MayorCantidad;
+import models.rankings.criterios.MayorImpacto;
 import models.rankings.criterios.MayorTiempo;
 import models.rankings.estrategiaDeExportacion.EstrategiaDeExportacion;
 import models.rankings.estrategiaDeExportacion.ExportarAJson;
@@ -19,17 +24,17 @@ import models.rankings.informes.Exportador;
 import models.rankings.informes.GeneradorDeInformes;
 import models.rankings.informes.Informe;
 import models.rankings.informes.Ranking;
-import models.repositorios.RepoEntidad;
-import models.repositorios.RepoEntidadPrestadora;
-import models.repositorios.RepoInformes;
-import models.repositorios.RepoOrganismoDeControl;
+import models.repositorios.*;
+import org.jvnet.staxex.StAxSOAPBody;
 import server.exceptions.EntidadNoExistenteException;
+import server.utils.Mapper;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @AllArgsConstructor
@@ -88,6 +93,9 @@ public class InformesController extends BaseController {
             ranking.add(new Ranking(entidad, (int) new MayorTiempo(criterio).promedioTiempoDeCierre(entidad)));
         case "Cantidad de incidentes" ->
             ranking.add(new Ranking(entidad, new MayorCantidad(criterio).cantidadDeIncidentesEnLaSemana(entidad)));
+
+        case "Mayor grado de impacto" ->
+            ranking.add(new Ranking(entidad, null));
       }
     }
 
@@ -114,7 +122,8 @@ public class InformesController extends BaseController {
   public void generarRankings() {
     List<CriteriosDeEntidades> criterios = Arrays.asList(
         new MayorTiempo("Minutos de resolucion"),
-        new MayorCantidad("Cantidad de incidentes")
+        new MayorCantidad("Cantidad de incidentes"),
+        new MayorImpacto("Mayor grado de impacto")
     );
 
     List<Entidad> entidades = repoEntidad.buscarTodos();
@@ -132,6 +141,7 @@ public class InformesController extends BaseController {
       Informe informe = new Informe(new Date(), nombreArchivo, criterio.getNombre());
       repoInformes.agregar(informe);
     }
+
   }
 
 }
