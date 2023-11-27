@@ -21,10 +21,9 @@ import java.util.concurrent.TimeUnit;
 public class Initializer implements WithSimplePersistenceUnit {
 
   public static void init() {
-    Map<String, Object> configOverrides = setConfigOverrides(new HashMap<>());
-    System.out.println(configOverrides);
+    /*Map<String, Object> configOverrides = setConfigOverrides(new HashMap<>());
     EntityManagerFactory em = Persistence.createEntityManagerFactory("simple-persistence-unit", configOverrides);
-    RepoGenerico.entityManager = em.createEntityManager();
+    RepoGenerico.entityManager = em.createEntityManager();*/
     if (new RepoRol().buscarTodos().size() < 4) {
       new Initializer()
           .iniciarTransaccion()
