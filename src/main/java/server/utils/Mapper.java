@@ -13,9 +13,12 @@ import models.repositorios.RepoComunidad;
 import models.repositorios.RepoMembresia;
 import models.repositorios.RepoPrestacion;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Mapper {
@@ -88,8 +91,8 @@ public class Mapper {
 
     public static IncidenteDTO mapIncidenteToIncidenteDTO(Incidente i, RepoComunidad repoComunidad) {
         IncidenteDTO incidenteDTO = new IncidenteDTO();
-        incidenteDTO.setFechaApertura(DateTimeConversion.dateToLocalDateTime(i.getFechaDeApertura()).toString());
-        incidenteDTO.setFechaCierre(LocalDateTime.now().plusMinutes(i.calcularPromedioFechasCierre()).format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")));
+        incidenteDTO.setFechaApertura(obtenerFechaComoString(i.getFechaDeApertura()));
+        incidenteDTO.setFechaCierre(obtenerFechaComoString(new Date(i.calcularPromedioFechasCierre())));
         List<Comunidad> comunidadesConIncidente = repoComunidad.buscarTodosPorIncidente(i);
         int cantidadDeAfectados = 0;
         for (Comunidad c : comunidadesConIncidente) {
@@ -97,6 +100,14 @@ public class Mapper {
         }
         incidenteDTO.setMiembrosAfectados(cantidadDeAfectados);
         return incidenteDTO;
+    }
+
+
+    public static String obtenerFechaComoString(Date fecha) {
+        Instant instant = fecha.toInstant();
+        LocalDateTime dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return dateTime.format(formatoFecha);
     }
 
     public static List<IncidenteDTO> mapIncidentesToIncidentesDTO(List<Incidente> incidentes, RepoComunidad repoComunidad) {
