@@ -94,9 +94,9 @@ public class AgregarDatosTest {
         Establecimiento belgranoC = new Establecimiento("Estacion Belgrano C", localizacion);
         lineaA.agregarEstablecimiento(belgranoC);
 
-        PrestacionDeServicio baniobelgranoC = new PrestacionDeServicio(servicio, "Baño Belgrano C", new UbicacionExacta(1, 1));
+        PrestacionDeServicio baniobelgranoC = new PrestacionDeServicio(servicio, "Baño Belgrano C", new UbicacionExacta(-58.44937311888542, -34.55760118182227));
         retiro.agregarServicioPrestado(baniobelgranoC);
-        PrestacionDeServicio banioRetiro = new PrestacionDeServicio(servicio, "Baño Retiro", new UbicacionExacta(1, 1));
+        PrestacionDeServicio banioRetiro = new PrestacionDeServicio(servicio, "Baño Retiro", new UbicacionExacta(-58.37491306829704, -34.59115726819361));
         belgranoC.agregarServicioPrestado(banioRetiro);
 
 
@@ -120,7 +120,7 @@ public class AgregarDatosTest {
         Establecimiento estacionAvellaneda = new Establecimiento("Estacion Avellaneda", localizacion);
         lineaRoca.agregarEstablecimiento(estacionAvellaneda);
 
-        PrestacionDeServicio banoEstacionKostekiSantillan = new PrestacionDeServicio(servicio, "Baño - Estacion Kosteki y Santillán", new UbicacionExacta(1, 1));
+        PrestacionDeServicio banoEstacionKostekiSantillan = new PrestacionDeServicio(servicio, "Baño - Estacion Kosteki y Santillán", new UbicacionExacta(-58.376587215544404, -34.66115614252646));
         estacionKostekiSantillan.agregarServicioPrestado(banoEstacionKostekiSantillan);
 
         PrestacionDeServicio banoEstacionAvellaneda = new PrestacionDeServicio(servicio, "Baño - Estacion Avellaneda", new UbicacionExacta(1, 1));
@@ -146,10 +146,10 @@ public class AgregarDatosTest {
         Establecimiento estacionCiudadJardin = new Establecimiento("Estacion Ciudad Jardin", localizacion);
         lineaBelgrano.agregarEstablecimiento(estacionCiudadJardin);
 
-        PrestacionDeServicio banoEstacionRetiro = new PrestacionDeServicio(servicio, "Baño - Estacion Rafael Castillo", new UbicacionExacta(1, 1));
+        PrestacionDeServicio banoEstacionRetiro = new PrestacionDeServicio(servicio, "Baño - Estacion Rafael Castillo", new UbicacionExacta(-58.626473115905426, -34.69858414548738));
         estacionRetiro.agregarServicioPrestado(banoEstacionRetiro);
 
-        PrestacionDeServicio banoEstacionCiudadJardin = new PrestacionDeServicio(servicio, "Baño - Estacion Ciudad Jardin", new UbicacionExacta(1, 1));
+        PrestacionDeServicio banoEstacionCiudadJardin = new PrestacionDeServicio(servicio, "Baño - Estacion Ciudad Jardin", new UbicacionExacta(-58.595324846961276, -34.604819192026895));
         estacionCiudadJardin.agregarServicioPrestado(banoEstacionCiudadJardin);
 
         repoEntidadPrestadora.modificar(prestadora);
@@ -172,7 +172,7 @@ public class AgregarDatosTest {
         Establecimiento estacionMitre = new Establecimiento("Estación Mitre", localizacion);
         lineaUrquiza.agregarEstablecimiento(estacionMitre);
 
-        PrestacionDeServicio banoEstacionLugano = new PrestacionDeServicio(servicio, "Baño Lugano", new UbicacionExacta(1, 1));
+        PrestacionDeServicio banoEstacionLugano = new PrestacionDeServicio(servicio, "Baño Lugano", new UbicacionExacta(-58.47689828500522, -34.677405669173204));
         estacionLugano.agregarServicioPrestado(banoEstacionLugano);
 
         PrestacionDeServicio banoEstacionMitre = new PrestacionDeServicio(servicio, "Baño Mitre", new UbicacionExacta(1, 1));

@@ -14,7 +14,7 @@
             </div>
             <div class="mb-4 w-full">
                 <label for="rol" class="block text-gray-700 text-sm font-bold mb-2">Entidad Prestadora</label>
-                <select required="" id="rol" name="prestadora" class="input">
+                <select required="" id="rol" name="prestadora" class="input" data-te-select-init data-te-select-filter="true">
                     <option selected="" disabled="" hidden="">Seleccionar prestadora</option>
 
                     {{#each prestadoras}}
@@ -47,6 +47,7 @@
             <div class="mb-4 w-full">
                 <label for="organismo" class="block text-gray-700 text-sm font-bold mb-2">Organismo de control</label>
                 <select required id="organismo" name="organismo"
+                        data-te-select-init data-te-select-filter="true"
                         class="input"
                         required>
                     <option selected disabled hidden>Seleccionar organismo</option>

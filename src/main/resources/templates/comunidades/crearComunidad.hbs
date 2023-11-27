@@ -12,12 +12,15 @@
             <!-- Selección de prestaciones de servicios -->
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2">Prestaciones de Servicios:</label>
-                <div class="flex flex-wrap">
-                    {{#each servicios}}
-                        <label class="mr-4 mb-2 cursor-pointer">
-                            <input type="checkbox" name="prestaciones" value="{{this.id}}" class="mr-2"> {{this.nombre}}
-                        </label>
-                    {{/each}}
+                <div class="flex flex-wrap w-full">
+                    <select required name="prestaciones" id="prestaciones" class="w-full" style="width: 100% !important;" data-te-select-init data-te-select-filter="true" data-te-select-placeholder="Example placeholder"
+                            multiple>
+                        <option selected="" disabled="" hidden="" class="w-full">Seleccionar prestación</option>
+                        {{#each servicios}}
+                            <option value="{{this.id}}">{{this.nombre}}</option>
+                        {{/each}}
+
+                    </select>
                 </div>
             </div>
             <!-- Botón para crear la comunidad -->
