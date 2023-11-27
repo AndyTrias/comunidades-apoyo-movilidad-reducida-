@@ -13,6 +13,8 @@
     width: 768px;
     max-width: 100%;
     min-height: 480px;
+    display: flex;
+    flex-direction: column;
 }
 
 .container p{
@@ -167,4 +169,28 @@
 
 .container.active .toggle-right{
     transform: translateX(200%);
+}
+
+#showLogin, #showRegister {
+    display: none;
+}
+
+@media (max-width: 768px){
+    #showLogin, #showRegister {
+        display: block;
+    }
+
+    .toggle-container {
+        display: none;
+    }
+
+    .sign-up, .sign-in{
+        width: 100%;
+    }
+
+    .container {
+        border-radius: 0;
+        height: 102vh;
+        position: absolute;
+    }
 }
