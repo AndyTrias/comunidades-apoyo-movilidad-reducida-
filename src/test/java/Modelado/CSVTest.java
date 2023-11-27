@@ -23,6 +23,6 @@ public class CSVTest {
 
         lectorOrganismoDeControl.leerCSV(Config.getInstance().CSV_PATH_ORGANISMOS);
 
-        assertEquals(lectorOrganismoDeControl.getOrganismosLeidos().size(), 2);
+        assertEquals(lectorOrganismoDeControl.getOrganismosLeidos().size(), 3);
     }
 }

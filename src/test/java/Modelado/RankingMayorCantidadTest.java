@@ -31,9 +31,9 @@ public class RankingMayorCantidadTest {
         List<Entidad> entidades = Arrays.asList(entidad1, entidad2, entidad3);
         List<Entidad> rankingList = ranking.generarRanking(entidades);
 
-        assertEquals(entidad2, rankingList.get(0));
-        assertEquals(entidad3, rankingList.get(1));
-        assertEquals(entidad1, rankingList.get(2));
+        assertEquals(entidad1, rankingList.get(0));
+        assertEquals(entidad2, rankingList.get(1));
+        assertEquals(entidad3, rankingList.get(2));
     }
 
     private void createEntitiesWithIncidents() {

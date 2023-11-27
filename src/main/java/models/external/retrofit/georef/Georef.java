@@ -22,7 +22,7 @@ public class Georef extends ApiCaller {
     }
 
     private Georef() {
-        super(Config.getInstance().API_GEOREF);
+        super(Config.getInstance().API_GEOREF == null ? "https://apis.datos.gob.ar/georef/api/" : Config.getInstance().API_GEOREF);
     }
 
     public ListadoProvincias listadoProvincias(){

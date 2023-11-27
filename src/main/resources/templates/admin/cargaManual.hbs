@@ -11,6 +11,7 @@
             <div class="mb-4">
                 <label for="prestadora" class="block text-gray-700 text-sm font-bold mb-2">Entidad Prestadora:</label>
                 <select required id="prestadora" name="prestadora"
+                        data-te-select-init data-te-select-filter="true"
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         required>
                     <option selected disabled hidden>Seleccionar prestadora</option>
@@ -47,7 +48,7 @@
             </div>
             <div class="mb-4">
                 <label for="entidad" class="block text-gray-700 text-sm font-bold mb-2">Entidad:</label>
-                <select id="entidad" name="entidad"
+                <select id="entidad" name="entidad" data-te-select-init data-te-select-filter="true"
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         required>
                     <option selected disabled hidden>Seleccionar Entidad</option>
@@ -92,9 +93,10 @@
         <div class="mb-4">
             <label for="establecimiento" class="block text-gray-700 text-sm font-bold mb-2">Establecimiento:</label>
             <select id="establecimiento" name="establecimiento"
+                    data-te-select-init data-te-select-filter="true"
                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     required>
-                <option selected disabled hidden>Seleccionar Establecimiento</option>
+                <option selected disabled hidden data-te-select-init>Seleccionar Establecimiento</option>
                 {{#each establecimientos}}
                     <option value="{{this.id}}">{{this.nombre}}</option>
                 {{/each}}

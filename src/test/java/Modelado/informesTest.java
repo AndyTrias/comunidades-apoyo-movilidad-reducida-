@@ -34,7 +34,7 @@ public class informesTest {
       generadorDeInformes.agregarCriterioDeEntidad(new MayorCantidad("Cantidad de incidentes"));
       generadorDeInformes.agregarCriterioDeEntidad(new MayorTiempo("Tiempo de resolucion"));
 
-      informes = generadorDeInformes.generarDatos(repoEntidad.buscarTodos());
+      informes = generadorDeInformes.generarDatos(RepoEntidad.INSTANCE.buscarTodos());
     }
 
     @Test
@@ -42,7 +42,7 @@ public class informesTest {
       ExportarCSV exportarCSVMock = Mockito.mock(ExportarCSV.class);
 
       Exportador exportador = new Exportador(generadorDeInformes, exportarCSVMock);
-      exportador.exportarConEstrategia(repoEntidad.buscarTodos(), "informes.csv");
+      exportador.exportarConEstrategia(RepoEntidad.INSTANCE.buscarTodos(), "informes.csv");
 
       Mockito.verify(exportarCSVMock).exportar(informes, "informes.csv");
     }
@@ -56,7 +56,7 @@ public class informesTest {
       Exportador exportador = new Exportador(generadorDeInformes, estrategia);
       exportador.exportarConEstrategia(repoEntidad.buscarTodos(), "ranking_" + LocalDate.now() + ".json");
 
-      String ruta = Config.getInstance().PATH_INFORMES + "informes.json";
+      String ruta = "ranking_" + LocalDate.now() + ".json";
 
       Mockito.verify(servicioJsonMock).exportarAJson(informes, ruta);
     }

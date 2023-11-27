@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.css' rel='stylesheet' />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comunidades</title>
+    <link
+      href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../public/css/style.css">
+	<style>
+        body { margin:5; margin-right: 5; padding:10; }
+        #map { position:absolute; top:0; bottom:0; width:100%; margin-right: 5;}
+	</style>
+</head>
+	<body>
+        <h1 class="text-3xl font-semibold text-gray-900">
+            Incidentes a revisar
+        </h1>
+    
+        <div class="rounded-md bg-indigo-500 p-4">
+            <div class="flex flex-col bg-gray-200">
+            <div class="text-gray-700 text-center bg-gray-400 px-4 py-2 m-2">1</div>
+            <div class="text-gray-700 text-center bg-gray-400 px-4 py-2 m-2">2</div>
+            <div class="text-gray-700 text-center bg-gray-400 px-4 py-2 m-2">3</div>
+        </div>
+
+            <h2 class="text-2xl font-semibold text-white">
+                Casa Rosada
+            <h2/>
+    
+    
+            <section class="text-white-600 body-font relative">
+                <div class="container px-5 py-24 mx-auto flex sm:flex-nowrap flex-wrap">
+    
+                    <div class="container flex sm:flex-nowrap flex-wrap ">
+                        <div class="grid gap-4 grid-cols-1 grid-rows-2">
+                            <span>
+                                <div id = 'map'></div>
+                            </span>
+                            <span class="text-center body-font relative">
+                                ¿Se ha solucionado el incidente?
+                            </span>
+                            <span>
+                                <div class="inline-flex">
+                                <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-4 px-10 rounded-l">
+                                    SI
+                                </button>
+                                <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-4 px-10 rounded-r">
+                                    NO
+                                </button>
+                            </div>
+                            </span>
+                        </div>
+                        
+                    </div>
+    
+
+            </section>
+        </div>
+		
+	</body>
+    <script> 
+        mapboxgl.accessToken = 'pk.eyJ1IjoiZ3JpY2NlbGxpIiwiYSI6ImNsbm02enBteTI1bTYybW1zcm42eWU5OXYifQ.LyEGBVsVDCzzhzNbdD32tg'; // Nuestro Token de acceso
+        var map = new mapboxgl.Map({
+            container: 'map', // id del contenedor
+            style: 'mapbox://styles/mapbox/streets-v9', // localización del mapa de estilo
+            center: [-58.370223,-34.608188], // Posición inicial
+            zoom: 14 // Zoom inicial
+        });
+
+        map.scrollZoom.disable(); // Deshabilitamos el zoom con el scroll
+        map.dragPan.disable(); // Deshabilitamos el arrastre del mapa
+        var marker = new mapboxgl.Marker({
+            color: "#9878e0", // Color del marcador (en hexadecimal)
+        }) // Inicializamos el marcador
+            .setLngLat({lng:-58.370223,lat:-34.608188}) // Le asignamos la posición
+            .addTo(map); // Añadimos el marcador al mapa
+        </script>
+
+
+
+        
+</html>
