@@ -1,13 +1,16 @@
 package models.repositorios;
 
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
+import lombok.Setter;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.transaction.Transactional;
 import java.util.List;
 
 public abstract class RepoGenerico<T> implements WithSimplePersistenceUnit {
     private final Class<T> entityClass;
+    public static EntityManager entityManager;
 
     protected RepoGenerico(Class<T> entityClass) {
         this.entityClass = entityClass;
