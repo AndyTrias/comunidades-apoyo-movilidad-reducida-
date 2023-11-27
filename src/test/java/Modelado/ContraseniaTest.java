@@ -15,7 +15,7 @@ public class ContraseniaTest {
     ValidadorDeContrasenia validadorDeContrasenia;
     @BeforeEach
     public void setUp() throws Exception {
-        this.validadorDeContrasenia = ServiceLocator.getValidadorCompleto();
+        this.validadorDeContrasenia = ServiceLocator.validador;
     }
 
     @Test
