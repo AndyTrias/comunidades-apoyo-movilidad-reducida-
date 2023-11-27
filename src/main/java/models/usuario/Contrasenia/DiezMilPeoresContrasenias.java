@@ -12,6 +12,7 @@ public class DiezMilPeoresContrasenias implements PuedeValidar {
 
 
     public boolean validar(String contrasenia) {
+        System.out.println(path);
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String line;
             while ((line = br.readLine()) != null) {
