@@ -1,0 +1,113 @@
+{{#partial "agregarAlHead"}}
+    <link rel="stylesheet" href="\css\drag&drop.css">
+    <script src="\js\drag&drop.js"></script>
+{{/partial}}
+
+{{#partial "contenido"}}
+
+    <div class="w-1/2 p-10 container mx-auto my-4" style="background-color: rgba(255, 255, 255, 0.5);">
+        <h1 class="text-2xl mb-4">Configuracion valores</h1>
+        <div class="flex flex-col items-center">
+            <div class="tarjeta">
+
+                <form class="w-full md:w-1/2 p-5" action="admin/config" method="POST" enctype="multipart/form-data">
+                <!-- Campos de entrada para longitud, latitud y tiempo para el primer ranking -->
+                <div class="mb-4">
+                    <label for="longitud">Longitud:</label>
+                    <!-- Campo de entrada editable para longitud -->
+                    <input type="text" id="longitud" name="longitud" placeholder="Ingrese la longitud" class="border rounded p-1" value="{{longitud}}" readonly>
+                </div>
+
+                <div class="mb-4">
+                    <label for="latitud">Latitud:</label>
+                    <!-- Campo de entrada editable para latitud -->
+                    <input type="text" id="latitud" name="latitud" placeholder="Ingrese la latitud" class="border rounded p-1" value="{{latitud}}" readonly>
+                </div>
+
+                <!-- Botón para guardar los valores -->
+                <button id="guardarBtn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" disabled>
+                    Guardar
+                </button>
+                </form>
+                <form method="post" action="/sugerenciaDeFusion">
+                    <button class="button" id="fusion" type="submit">Fusionar Comunidades Parecidas</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Habilitar el botón cuando se ingrese algo en los campos de entrada
+        document.getElementById('longitud').addEventListener('input', habilitarBoton);
+        document.getElementById('latitud').addEventListener('input', habilitarBoton);
+        var fusion = document.getElementById('fusion')
+
+        /* if service is not up, disable button*/
+        fetch('{{API_SERVICIO1}}',
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+        ).catch(function (err) {
+            console.log('Fetch Error :-S', err);
+            fusion.disabled = true;
+            fusion.style.zIndex = "-100"
+        });
+
+        function habilitarBoton() {
+            document.getElementById('guardarBtn').disabled = false;
+        }
+    });
+    </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var latitudInput = document.getElementById('latitud');
+        var longitudInput = document.getElementById('longitud');
+
+        // Habilitar edición cuando se hace clic en el campo
+        latitudInput.addEventListener('click', function () {
+            latitudInput.readOnly = false;
+        });
+
+        longitudInput.addEventListener('click', function () {
+            longitudInput.readOnly = false;
+        });
+
+        // Guardar los valores de latitud y longitud cuando se cambian
+        [latitudInput, longitudInput].forEach(function (input) {
+            input.addEventListener('change', function () {
+                // Obtener los valores de latitud y longitud después de la edición
+                var latitudEditada = latitudInput.value;
+                var longitudEditada = longitudInput.value;
+
+                // Realizar la acción de guardar, por ejemplo, utilizando fetch
+                fetch('/ruta_de_guardar', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        latitud: latitudEditada,
+                        longitud: longitudEditada
+                        // Agrega otros datos si es necesario
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Respuesta del servidor:', data);
+                    // Puedes agregar lógica adicional después de guardar
+                })
+                .catch(error => {
+                    console.error('Error al enviar la solicitud:', error);
+                });
+            });
+        });
+    });
+    </script>
+{{/partial}}
+{{> templates/templateBase }}
+```

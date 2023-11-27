@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoreo estados y servicios</title>
+    <link
+            href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+            rel="stylesheet"
+    />
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+            rel="stylesheet"
+    />
+    <link rel="stylesheet" href="..\..\public\css\style.css">
+    <link rel="stylesheet" href="..\..\public\css\incidentes.css">
+    <link rel="stylesheet" href="..\..\public\css\components.css">
+    <script src="..\..\public\js\script.js"></script>
+    <script src="..\..\public\js\incidentes.js"></script>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+    <link rel="stylesheet" href="https://unpkg.com/flowbite@latest/dist/flowbite.min.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="..\..\public\css\auth.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/css/intlTelInput.css">
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
+    <script src="..\..\public\js\form.js"></script>
+</head>
+<body class="h-screen flex flex-col background">
+
+    <header class="shadow">
+        <nav class="bg-white border-gray-200 px-4 lg:px-6 py-4 dark:bg-gray-800">
+            <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
+                <a href="/" class="flex items-center">
+                    <span class="text-xl font-bold text-gray-900 dark:text-white lg:text-2xl">
+                        Monitoreo de Estado de Servicio
+                    </span>
+                </a>
+                <button data-collapse-toggle="mobile-menu-2" type="button" class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="mobile-menu-2" aria-expanded="false">
+                    <span class="sr-only">Open main menu</span>
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
+                    <svg class="hidden w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                </button>
+                <div class="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
+                    <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+
+    <div class="flex flex-col items-center justify-center h-full">
+        <div class="container" id="container">
+            <form class="form-container sign-up" action="register" method="POST">
+                <div>
+                    <h1 class="mb-2 text-2xl font-semibold text-center text-black">
+                        Crea tu Cuenta
+                    </h1>
+                    <input type="text" name="nombre" placeholder="Nombre" required>
+                    <input type="text" name="apellido" placeholder="Apellido" required>
+                    <input type="email" name="email" placeholder="Correo Electrónico" required>
+                    <input type="password" name="password" placeholder="Contraseña" required>
+                    <input type="tel" name="telefono" placeholder="Número de teléfono" required>
+                    <button type="submit" class="button mt-2">Registrarse</button>
+                    <button class="notShown linkButton text background mt-4" id="showLogin" type="button">Ya tienes cuenta? Inicia Sesion</button>
+                </div>
+            </form>
+            <form class="form-container sign-in" action="login" method="POST">
+                <div>
+                    <h1 class="mb-2 text-2xl font-semibold text-center text-black">
+                        Iniciar Sesion
+                    </h1>
+                    <input type="email" name="email" placeholder="Correo Electronico">
+                    <input type="password" name="password" placeholder="Contraseña">
+                    <a href="#">Olvidaste tu Contraseña?</a>
+                    <button class="button mt-2">Iniciar Sesion</button>
+                </div>
+                <button class="notShown linkButton text background mt-4" id="showRegister" type="button">No tienes cuenta? Registrate</button>
+            </form>
+            <div class="toggle-container">
+                <div class="toggle">
+                    <div class="toggle-panel toggle-left">
+                        <h1>Hola de nuevo!</h1>
+                        <p>Inicia sesion con tus datos personales para poder reportar incidentes</p>
+                        <button class="notShown button text background" id="login">Iniciar Sesion</button>
+                    </div>
+                    <div class="toggle-panel toggle-right">
+                        <h1>Hola Ciudadano!</h1>
+                        <p>Registrate con tus datos personales para poder empezar a reportar incidentes</p>
+                        <button class="notShown button text background" id="register" type="submit">Registrate</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const container = document.getElementById('container');
+        const registerBtn = document.getElementById('register');
+        const loginBtn = document.getElementById('login');
+        const showRegisterBtn = document.getElementById('showRegister');
+        const showLoginBtn = document.getElementById('showLogin');
+
+        registerBtn.addEventListener('click', () => {
+            container.classList.add("active");
+        });
+
+        loginBtn.addEventListener('click', () => {
+            container.classList.remove("active");
+        });
+
+        showRegisterBtn.addEventListener('click', () => {
+            container.classList.add("active");
+        });
+
+        showLoginBtn.addEventListener('click', () => {
+            container.classList.remove("active");
+        });
+    </script>
+
+
+    <footer class="bg-white rounded-lg shadow mt-auto">
+        <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
+          <span class="text-sm sm:text-center" style="color:#474b52">© 2023 <a href="#" class="hover:underline">Diseño de Sistemas UTN</a>. Todos los derechos reservados.
+        </span>
+            <ul class="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-400 dark:text-gray-400 sm:mt-0">
+                <li>
+                    <a href="https://github.com/dds-utn/2023-tpa-mama-grupo-06" rel="noopener noreferrer" target="_blank" class="mr-4 hover:underline md:mr-6 text-black ">Github</a>
+                </li>
+            </ul>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.js"></script>
+</body>
+</html>

@@ -19,9 +19,9 @@
   
 .cristal:hover {
     letter-spacing: 3px;
-    background-color: hsl(261deg 80% 48%) !important;
+    background-color: #4240D4 !important;
     color: hsl(0, 0%, 100%);
-    box-shadow: rgb(93 24 220) 0px 7px 29px 0px;
+    box-shadow: #4240D4 0px 7px 29px 0px;
 }
 
 .cristal:active {
@@ -52,7 +52,19 @@
 }
 
 .cristal:hover .icono {
-    background-color: hsl(261deg 80% 48%);
+    background-color: #4240D4;
     color: hsl(0, 0%, 100%);
-    box-shadow: rgb(93 24 220) 0px 7px 29px 0px;
+    box-shadow: #4240D4 0px 7px 29px 0px;
+}
+
+.cristal:hover h2 {
+    color: #fff;
+}
+
+.cristal:hover span {
+    color: #fff;
+}
+
+.cristal:hover p {
+    color: #fff;
 }

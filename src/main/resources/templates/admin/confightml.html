@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monitoreo estados y servicios</title>
+  <link
+          href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+          rel="stylesheet"
+  />
+  <link
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+          rel="stylesheet"
+  />
+  <link rel="stylesheet" href="..\..\public\css\style.css">
+  <link rel="stylesheet" href="..\..\public\css\background.css">
+  <link rel="stylesheet" href="..\..\public\css\incidentes.css">
+  <link rel="stylesheet" href="..\..\public\css\components.css">
+  <script src="\js\script.js"></script>
+  <script src="\js\incidentes.js"></script>
+  <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+  <link rel="stylesheet" href="https://unpkg.com/flowbite@latest/dist/flowbite.min.css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.css" rel="stylesheet" />
+</head>
+<body class="h-screen flex flex-col background">
+
+<header class="shadow">
+  <nav class="bg-white border-gray-200 px-4 lg:px-6 py-4 dark:bg-gray-800">
+    <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
+      <a href="/" class="flex items-center">
+        <span class="text-xl font-semibold">Monitoreo de Estado de Servicio</span>
+      </a>
+      <button data-collapse-toggle="mobile-menu-2" type="button" class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="mobile-menu-2" aria-expanded="false">
+        <span class="sr-only">Open main menu</span>
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
+        <svg class="hidden w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+      </button>
+      <div class="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
+        <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
+          <li>
+            <a href="/comunidades" class="linkButton">Comunidades</a>
+          </li>
+          <li>
+            <a href="/revisionDeIncidentes" class="linkButton">Revision de Incidentes</a>
+          </li>
+          <li>
+            <a href="/perfil" class="linkButton">Perfil</a>
+          </li>
+
+          <li onclick="goBack()">
+            <a class="linkButton">
+              Volver
+            </a>
+          </li>
+          <li>
+            <a href="/logout" class="linkButton text-red-600">
+              Cerrar Sesión
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main class="flex flex-row h-full items-center justify-center">
+  <div class="w-1/2 p-10 container mx-auto my-4" style="background-color: rgba(255, 255, 255, 0.5);">
+    <h1 class="text-2xl mb-4">Configuracion valores</h1>
+    <div class="flex flex-col items-center">
+      <div class="tarjeta">
+        <!-- Campos de entrada para longitud, latitud y tiempo para el primer ranking -->
+        <div class="mb-4">
+          <label for="longitud">Longitud:</label>
+          <!-- Campo de entrada editable para longitud -->
+          <input type="text" id="longitud" name="longitud" placeholder="Ingrese la longitud" class="border rounded p-1" value="{{longitud}}" readonly>
+        </div>
+
+        <div class="mb-4">
+          <label for="latitud">Latitud:</label>
+          <!-- Campo de entrada editable para latitud -->
+          <input type="text" id="latitud" name="latitud" placeholder="Ingrese la latitud" class="border rounded p-1" value="{{latitud}}" readonly>
+        </div>
+
+        <!-- Botón para guardar los valores -->
+        <button id="guardarBtn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" disabled>
+          Guardar
+        </button>
+      </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+
+
+<footer class="bg-white rounded-lg shadow mt-auto">
+  <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
+          <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a href="#" class="hover:underline">Diseño de Sistemas UTN</a>. Todos los derechos reservados.
+        </span>
+    <ul class="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
+      <li>
+        <a href="https://github.com/dds-utn/2023-tpa-mama-grupo-06" rel="noopener noreferrer" target="_blank" class="mr-4 hover:underline md:mr-6 ">Github</a>
+      </li>
+    </ul>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var latitudInput = document.getElementById('latitud');
+        var longitudInput = document.getElementById('longitud');
+
+        // Habilitar edición cuando se hace clic en el campo
+        latitudInput.addEventListener('click', function () {
+            latitudInput.readOnly = false;
+        });
+
+        longitudInput.addEventListener('click', function () {
+            longitudInput.readOnly = false;
+        });
+
+        // Guardar los valores de latitud y longitud cuando se cambian
+        [latitudInput, longitudInput].forEach(function (input) {
+            input.addEventListener('change', function () {
+                // Obtener los valores de latitud y longitud después de la edición
+                var latitudEditada = latitudInput.value;
+                var longitudEditada = longitudInput.value;
+
+                // Realizar la acción de guardar, por ejemplo, utilizando fetch
+                fetch('/ruta_de_guardar', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        latitud: latitudEditada,
+                        longitud: longitudEditada
+                        // Agrega otros datos si es necesario
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Respuesta del servidor:', data);
+                    // Puedes agregar lógica adicional después de guardar
+                })
+                .catch(error => {
+                    console.error('Error al enviar la solicitud:', error);
+                });
+            });
+        });
+    });
+    </script>
+</body>
+</html>

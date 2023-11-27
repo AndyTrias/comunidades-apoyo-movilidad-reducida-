@@ -4,7 +4,6 @@ import models.external.retrofit.ApiCaller;
 import models.external.retrofit.apiServicio3.responseClases.PayloadServicio3DTO;
 import retrofit2.Call;
 import retrofit2.Response;
-import server.utils.PrettyProperties;
 
 import java.io.IOException;
 

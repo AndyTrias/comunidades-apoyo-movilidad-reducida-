@@ -2,7 +2,7 @@
     <main class="flex flex-row h-full">
         <div class="w-1/2 flex flex-col justify-center items-center p-10">
             <div class="flex flex-row justify-center items-center mb-4">
-                <h1 class="text-2xl">Mis Intereses</h1>
+                <h1 class="mb-2 text-2xl font-semibold text-center text-black">Mis Intereses</h1>
                 <button class="fabButton rounded" onclick="window.dialog.showModal();">+</button>
             </div>
             <div class="flex flex-col overflow-scroll mb-4 h-96 pt-10">
@@ -26,18 +26,16 @@
         </div>
 
         <div class="w-1/2 flex flex-col justify-center items-center">
-            <h1>Incidentes de Intereses</h1>
-            <div class="flex flex-col overflow-scroll mb-4 h-96 pt-10">
+            <h1 class="mb-2 text-2xl font-semibold text-center text-black">Incidentes de Intereses</h1>
+            <div class="flex flex-col overflow-scroll mb-4 h-96 pt-10 gap-4">
                 {{#each incidentes}}
-                    <a href="#"
-                       class="cristal incidente"
-                    >
+                    <a class="cristal incidente secondary cursor-pointer">
                         <div class="leftContainer">
-                            <h2 class="text-lg font-semibold">{{this.prestacionDeServicio.nombre}}</h2>
-                            <p class="text-sm text-gray-500 overflow-hidden whitespace-nowrap text-ellipsis block w-24">{{this.observaciones}}</p>
+                            <h2 class="text-lg font-semibold text-black">{{this.prestacionDeServicio.nombre}}</h2>
+                            <p class="text-sm text-black overflow-hidden whitespace-nowrap text-ellipsis block w-48">{{this.observaciones}}</p>
                             <div class="mt-4 flex flex-col sm:flex-row">
-                                <span class="mr-2 text-gray-400">por <strong>{{this.abiertoPor.nombre}}</strong> </span>
-                                <span class="text-gray-400">{{this.fechaDeApertura}}</span>
+                                <span class="mr-2 text-black">por <strong>{{this.abiertoPor.nombre}}</strong> </span>
+                                <span class="text-black">{{this.fechaDeApertura}}</span>
                             </div>
                         </div>
                     </a>
@@ -47,37 +45,41 @@
 
 
         <dialog id="dialog">
-            <button onclick="window.dialog.close();" aria-label="close" class="x">❌</button>
-            <h1 class="text-2xl mb-4">Agrega un Interes!</h1>
-            <form action="/intereses" method="POST">
-                <div class="mb-4 w-full">
-                    <select required="" name="entidad" id="entidad" class="input">
-                        <option selected="" disabled="" hidden="">Seleccionar entidad</option>
-                        {{#each entidades}}
-                            <option value={{this.id}}>{{this.nombre}}</option>
-                        {{/each}}
-                    </select>
-                </div>
+            <div class="flex flex-col w-full h-1/2 justify-center items-center p-20">
+                <button onclick="window.dialog.close();" aria-label="close" class="x">❌</button>
+                <h1 class="text-2xl mb-4">Agrega un Interes!</h1>
+                <form action="/intereses" method="POST">
+                    <div class="mb-4 w-full">
+                        <select required="" name="entidad" id="entidad" class="input" data-te-select-init data-te-select-filter="true">
+                            <option selected="" disabled="" hidden="" data-te-select-init data-te-select-filter="true">Seleccionar entidad</option>
+                            {{#each entidades}}
+                                <option value={{this.id}}>{{this.nombre}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
 
-                <div class="mb-4 w-full">
-                    <select required="" name="servicio" id="servicio" class="input">
-                        <option selected="" disabled="" hidden="">Seleccionar servicio</option>
-                        {{#each servicios}}
-                            <option value={{this.id}}>{{this.nombre}}</option>
-                        {{/each}}
-                    </select>
-                </div>
+                    <div class="mb-4 w-full">
+                        <select required="" name="servicio" id="servicio" class="input" data-te-select-init data-te-select-filter="true">
+                            <option selected="" disabled="" hidden="">Seleccionar servicio</option>
+                            {{#each servicios}}
+                                <option value={{this.id}}>{{this.nombre}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
 
-                <button class="button" type="submit">Agregar</button>
-            </form>
+                    <button class="button" type="submit">Agregar</button>
+                </form>
+            </div>
         </dialog>
 
         <dialog id="dialog2">
-            <button onclick="window.dialog2.close();" aria-label="close" class="x">❌</button>
-            <h1 class="text-2xl mb-4">Estas seguro que deseas borrar el interes?</h1>
-            <div>
-                <button class="button" onclick="window.dialog2.close();">No</button>
-                <button class="button text-white bg-red-600" onclick="eliminarInteres()">Si</button>
+            <div class="flex flex-col w-full h-1/2 justify-center items-center p-20">
+                <button onclick="window.dialog2.close();" aria-label="close" class="x">❌</button>
+                <h1 class="text-2xl mb-4">Estas seguro que deseas borrar el interes?</h1>
+                <div>
+                    <button class="button" onclick="window.dialog2.close();">No</button>
+                    <button class="button text-white bg-red-600" onclick="eliminarInteres()">Si</button>
+                </div>
             </div>
         </dialog>
     </main>

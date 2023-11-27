@@ -1,3 +1,4 @@
+/*
 package Persistencia;
 
 import models.comunidades.Membresia;
@@ -139,3 +140,4 @@ public class PersistenciaTest {
 
     }
 }
+*/

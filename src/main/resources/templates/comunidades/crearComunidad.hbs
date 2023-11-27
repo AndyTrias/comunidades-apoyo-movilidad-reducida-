@@ -1,29 +1,32 @@
 {{#partial "contenido"}}
 
-    <div class="container mx-auto">
+    <div class="h-full flex justify-center items-center">
         <!-- Formulario para crear comunidad -->
-        <form action="/comunidades" method="POST" class="bg-white p-8 rounded-lg shadow-lg">
-            <h2 class="text-2xl font-semibold mb-4">Crear Comunidad</h2>
+        <form action="/comunidades" method="POST" class="bg-white p-8 rounded-lg shadow-lg w-1/2">
+            <h2 class="text-2xl font-semibold mb-4 text-black">Crear Comunidad</h2>
             <!-- Campo para ingresar el nombre de la comunidad -->
             <div class="mb-4">
                 <label for="nombre" class="block text-gray-700 text-sm font-bold mb-2">Nombre de la Comunidad:</label>
-                <input type="text" id="nombre" name="nombre" class="border rounded-md py-2 px-3 w-full focus:outline-none focus:border-indigo-400" required>
+                <input type="text" id="nombre" name="nombre" class="input" required>
             </div>
             <!-- Selección de prestaciones de servicios -->
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2">Prestaciones de Servicios:</label>
-                <div class="flex flex-wrap">
-                    {{#each servicios}}
-                        <label class="mr-4 mb-2 cursor-pointer">
-                            <input type="checkbox" name="prestaciones" value="{{this.id}}" class="mr-2"> {{this.nombre}}
-                        </label>
-                    {{/each}}
+                <div class="flex flex-wrap w-full">
+                    <select required name="prestaciones" id="prestaciones" class="w-full" style="width: 100% !important;" data-te-select-init data-te-select-filter="true" data-te-select-placeholder="Example placeholder"
+                            multiple>
+                        <option selected="" disabled="" hidden="" class="w-full">Seleccionar prestación</option>
+                        {{#each servicios}}
+                            <option value="{{this.id}}">{{this.nombre}}</option>
+                        {{/each}}
+
+                    </select>
                 </div>
             </div>
             <!-- Botón para crear la comunidad -->
             <div class="text-center">
 
-                <button type="submit" class="button>
+                <button type="submit" class="button">
                     Crear Comunidad
                 </button>
             </div>
