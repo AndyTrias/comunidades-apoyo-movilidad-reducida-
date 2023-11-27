@@ -50,7 +50,7 @@ public class ComunidadController extends BaseController {
 
     List<String> servicioIds = ctx.formParams("prestaciones");
 
-    agregarServiciosDeInteresAComunidad(servicioIds, comunidad);
+    //agregarServiciosDeInteresAComunidad(servicioIds, comunidad);
 
     repoComunidad.agregar(comunidad);
 
@@ -149,9 +149,11 @@ public class ComunidadController extends BaseController {
   private Comunidad crearComunidadConAdmin(Usuario usuario, String nombre, List<String> prestaciones) {
     Comunidad comunidad = new Comunidad(nombre);
     for (String id : prestaciones) {
-      PrestacionDeServicio prestacion = repoPrestacion.buscar(Long.parseLong(id));
-      if (prestacion != null) {
-        comunidad.agregarServicioDeInteres(prestacion);
+      if (id.length() < 6) {
+        PrestacionDeServicio prestacion = repoPrestacion.buscar(Long.parseLong(id));
+        if (prestacion != null) {
+          comunidad.agregarServicioDeInteres(prestacion);
+        }
       }
     }
     Membresia membresia = new Membresia(comunidad, usuario, new RepoRol().buscarPorNombre(TipoRol.ADMINISTRADOR_COMUNIDAD));
@@ -173,9 +175,11 @@ public class ComunidadController extends BaseController {
         .toList();
 
     for (Long id : idsLong) {
-      PrestacionDeServicio prestacionDeServicio = repoPrestacion.buscar(id);
-      if (prestacionDeServicio != null) {
-        comunidad.agregarServicioDeInteres(prestacionDeServicio);
+      if (id < 6) {
+        PrestacionDeServicio prestacionDeServicio = repoPrestacion.buscar(id);
+        if (prestacionDeServicio != null) {
+          comunidad.agregarServicioDeInteres(prestacionDeServicio);
+        }
       }
     }
 

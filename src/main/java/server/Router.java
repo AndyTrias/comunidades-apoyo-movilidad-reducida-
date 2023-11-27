@@ -113,8 +113,8 @@ public class Router implements WithSimplePersistenceUnit {
     });
 
     app.routes(() -> {
-      app.get("admin/config", ((ConfigController) FactoryController.controller("Config"))::show);
-      app.post("admin/config", ((ConfigController) FactoryController.controller("Config"))::save);
+      app.get("admin/config", ((ConfigController) FactoryController.controller("Config"))::show, TipoRol.ADMINISTRADOR_PLATAFORMA);
+      app.post("admin/config", ((ConfigController) FactoryController.controller("Config"))::save, TipoRol.ADMINISTRADOR_PLATAFORMA);
     });
 
     app.exception(CredencialesInvalidaException.class, ExceptionHandler::handleInvalidCredentials);
