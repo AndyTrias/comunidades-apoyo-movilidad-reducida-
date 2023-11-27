@@ -11,6 +11,10 @@ public class ValidadorDeContrasenia {
     this.validadores = new ArrayList<>();
   }
 
+  public ValidadorDeContrasenia(List<PuedeValidar> validadores) {
+    this.validadores = validadores;
+  }
+
   public boolean validarContrasenia(String contrasenia) {
     return validadores.stream().allMatch(validador -> validador.validar(contrasenia));
   }

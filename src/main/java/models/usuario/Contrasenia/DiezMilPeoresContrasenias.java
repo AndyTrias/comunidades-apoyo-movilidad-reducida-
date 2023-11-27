@@ -10,9 +10,10 @@ public class DiezMilPeoresContrasenias implements PuedeValidar {
 
     private static final String path = Config.getInstance().PEORES_CONTRASENIAS; //ordenado para la busqueda
 
-
     public boolean validar(String contrasenia) {
-        System.out.println(path);
+        String workingDirectory = System.getProperty("user.dir");
+        System.out.println("Working Directory = " + workingDirectory);
+        System.out.println("WD + path = " + workingDirectory + path);
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String line;
             while ((line = br.readLine()) != null) {
