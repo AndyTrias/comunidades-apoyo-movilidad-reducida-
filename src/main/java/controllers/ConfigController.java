@@ -1,5 +1,6 @@
 package controllers;
 
+import controllers.factories.FactoryController;
 import io.javalin.http.Context;
 import lombok.AllArgsConstructor;
 import models.configs.Config;
@@ -20,6 +21,7 @@ public class ConfigController {
         Map<String, Object> model = new HashMap<>();
         model.put("latitud", latitud);
         model.put("longitud", longitud);
+        model.put("API_SERVICIO1", System.getenv("API_SERVICIO1"));
         ctx.render("admin/configuracion.hbs", model);
     }
     public void save(Context ctx){

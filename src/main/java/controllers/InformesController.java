@@ -3,6 +3,7 @@ package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import controllers.factories.FactoryController;
 import io.javalin.http.Context;
 import lombok.AllArgsConstructor;
 import models.configs.Config;

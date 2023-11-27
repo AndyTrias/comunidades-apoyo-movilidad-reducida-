@@ -42,6 +42,7 @@ public class ApiServicioController {
             PayloadDTO response = ApiServicio1.getInstancia().comunidadesYFusiones(payloadDTO);
             asignarComunidades(response.getComunidades());
             asignarFusiones(response.getFusiones());
+            ctx.redirect("/admin/config");
         } catch (Exception e) {
             e.printStackTrace();
         }
