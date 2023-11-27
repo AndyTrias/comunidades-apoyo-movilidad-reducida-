@@ -1,4 +1,3 @@
-/*
 package Persistencia;
 
 import controllers.InformesController;
@@ -28,4 +27,4 @@ public class RankingTest {
     new InformesController(repoEntidad, repoInformes, repoEntidadPrestadora, repoOrganismoDeControl).generarRankings();
   }
 }
-*/
+
