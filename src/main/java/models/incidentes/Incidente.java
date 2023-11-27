@@ -35,7 +35,7 @@ public class Incidente {
 
     @Setter
     @Getter
-    @Column(name = "observaciones", columnDefinition = "longtext")
+    @Column(name = "observaciones", columnDefinition = "text")
     private String observaciones;
 
     @Getter

@@ -12,8 +12,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Afectacion {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Getter
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
   private Long id;
 
   @Getter
