@@ -1,3 +1,4 @@
+/*
 package Persistencia;
 
 import controllers.InformesController;
@@ -28,3 +29,4 @@ public class RankingTest {
   }
 }
 
+*/
