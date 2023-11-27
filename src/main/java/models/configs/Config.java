@@ -1,7 +1,6 @@
 package models.configs;
 
 import models.repositorios.RepoConfig;
-import server.utils.PrettyProperties;
 
 import javax.persistence.*;
 
@@ -21,7 +20,7 @@ public class Config {
   @Column(name = "path_informes")
   public final String PATH_INFORMES = "src/main/resources/informes/";
   @Column(name = "api_georef")
-  public final String API_GEOREF = PrettyProperties.getInstance().propertyFromName("API_GEOREF");
+  public final String API_GEOREF = System.getenv("API_GEOREF");
   @Column(name = "latitud_maxima")
   public double LATITUD_MAXIMA = 0.1;
   @Column(name = "longitud_maxima")

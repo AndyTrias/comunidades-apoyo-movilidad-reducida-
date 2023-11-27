@@ -21,9 +21,12 @@ public abstract class CriteriosEntidadesQueUsanIncidentes implements CriteriosDe
     public abstract List<Entidad> generarRanking(List<Entidad> entidades);
 
     protected List<Incidente> obtenerIncidentesDeEntidadEnlaSemana(Entidad entidad) {
+//        return entidad.getPrestacionesDeServicios().stream()
+//            .flatMap(prestacion -> prestacion.getIncidentes().stream())
+//            .filter(Incidente::ocurrioEstaSemana)
+//            .collect(Collectors.toList());
         return entidad.getPrestacionesDeServicios().stream()
             .flatMap(prestacion -> prestacion.getIncidentes().stream())
-            .filter(Incidente::ocurrioEstaSemana)
             .collect(Collectors.toList());
     }
 

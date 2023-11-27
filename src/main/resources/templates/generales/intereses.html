@@ -116,24 +116,26 @@
 
 
         <dialog id="dialog">
-            <button onclick="window.dialog.close();" aria-label="close" class="x">❌</button>
-            <h1 class="text-2xl mb-4">Interesate en una nueva entidad y servicio!</h1>
+            <div class="flex flex-col w-full h-1/2 justify-center items-center p-20">
+                <button onclick="window.dialog.close();" aria-label="close" class="x">❌</button>
+                <h1 class="text-2xl mb-4">Interesate en una nueva entidad y servicio!</h1>
 
-            <div class="mb-4 w-full">
-                <select required="" id="rol" name="prestadora" class="input">
-                    <option selected="" disabled="" hidden="">Seleccionar entidad</option>
-                    <option value="1">Entidad 1</option>
-                </select>
+                <div class="mb-4 w-full">
+                    <select required="" id="rol" name="prestadora" class="input">
+                        <option selected="" disabled="" hidden="">Seleccionar entidad</option>
+                        <option value="1">Entidad 1</option>
+                    </select>
+                </div>
+
+                <div class="mb-4 w-full">
+                    <select required="" id="rol" name="prestadora" class="input">
+                        <option selected="" disabled="" hidden="">Seleccionar servicio</option>
+                        <option value="1">Servicio 2</option>
+                    </select>
+                </div>
+
+                <button class="button" onclick="window.location.reload()">Agregar</button>
             </div>
-
-            <div class="mb-4 w-full">
-                <select required="" id="rol" name="prestadora" class="input">
-                    <option selected="" disabled="" hidden="">Seleccionar servicio</option>
-                    <option value="1">Servicio 2</option>
-                </select>
-            </div>
-
-            <button class="button" onclick="window.location.reload()">Agregar</button>
         </dialog>
 
         <dialog id="dialog2">

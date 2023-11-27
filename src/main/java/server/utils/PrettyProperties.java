@@ -1,3 +1,4 @@
+/*
 package server.utils;
 
 import java.io.FileInputStream;
@@ -36,3 +37,4 @@ public class PrettyProperties {
         return this.prop.getProperty(name, null);
     }
 }
+*/

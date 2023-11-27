@@ -1,86 +1,88 @@
 {{#partial "contenido"}}
-    <form action="admin/entidad" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <h2 class="text-lg font-semibold mb-4">Entidad</h2>
-        <div class="mb-4">
-            <label for="entidad-nombre" class="block text-gray-700 text-sm font-bold mb-2">Nombre:</label>
-            <input type="text" id="entidad-nombre" name="nombre"
-                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                   required>
-        </div>
-        <div class="mb-4">
-            <label for="prestadora" class="block text-gray-700 text-sm font-bold mb-2">Entidad Prestadora:</label>
-            <select required id="prestadora" name="prestadora"
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    required>
-                <option selected disabled hidden>Seleccionar prestadora</option>
-                {{#each prestadoras}}
-                    <option value="{{this.id}}">{{this.nombre}}</option>
-                {{/each}}
-            </select>
-        </div>
+    <div class="p-10 flex flex-col gap-4 justify-center items-center">
+        <form action="admin/entidad" method="POST" class="w-1/2 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <h2 class="text-lg font-semibold mb-4">Entidad</h2>
+            <div class="mb-4">
+                <label for="entidad-nombre" class="block text-gray-700 text-sm font-bold mb-2">Nombre:</label>
+                <input type="text" id="entidad-nombre" name="nombre"
+                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                       required>
+            </div>
+            <div class="mb-4">
+                <label for="prestadora" class="block text-gray-700 text-sm font-bold mb-2">Entidad Prestadora:</label>
+                <select required id="prestadora" name="prestadora"
+                        data-te-select-init data-te-select-filter="true"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        required>
+                    <option selected disabled hidden>Seleccionar prestadora</option>
+                    {{#each prestadoras}}
+                        <option value="{{this.id}}">{{this.nombre}}</option>
+                    {{/each}}
+                </select>
+            </div>
 
-        <div class="flex items-center justify-between">
-            <a href="./cargaManual/seleccionarUbicacion"
-                    class="flex-row bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                Seleccionar ubicacion
-            </a>
-        </div>
-
-
-        <div class="flex items-center justify-between">
-            <button type="submit"
-                    class="button">
-                Crear Entidad
-            </button>
-        </div>
-    </form>
+            <div class="flex items-center justify-between">
+                <a href="./cargaManual/seleccionarUbicacion"
+                        class="flex-row bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    Seleccionar ubicacion
+                </a>
+            </div>
 
 
-    <form action="admin/establecimiento" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <h2 class="text-lg font-semibold mb-4">Establecimiento</h2>
-        <div class="mb-4">
-            <label for="establecimiento-nombre" class="block text-gray-700 text-sm font-bold mb-2">Nombre:</label>
-            <input type="text" id="establecimiento-nombre" name="nombre"
-                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                   required>
-        </div>
-        <div class="mb-4">
-            <label for="entidad" class="block text-gray-700 text-sm font-bold mb-2">Entidad:</label>
-            <select id="entidad" name="entidad"
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    required>
-                <option selected disabled hidden>Seleccionar Entidad</option>
-                {{#each entidades}}
-                    <option value="{{this.id}}">{{this.nombre}}</option>
-                {{/each}}
-            </select>
-        </div>
-        <div class="flex items-center justify-between">
-            <button type="submit"
-                    class="button">
-                Crear Establecimiento
-            </button>
-        </div>
-    </form>
+            <div class="flex items-center justify-between">
+                <button type="submit"
+                        class="button">
+                    Crear Entidad
+                </button>
+            </div>
+        </form>
 
 
-    <form action="admin/servicio" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <h2 class="text-lg font-semibold mb-4">Servicio</h2>
-        <div class="mb-4">
-            <label for="entidad-servicio" class="block text-gray-700 text-sm font-bold mb-2">Nombre:</label>
-            <input type="text" id="entidad-servicio" name="nombre"
-                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                   required>
-        </div>
-        <div class="flex items-center justify-between">
-            <button type="submit"
-                    class="button">
-                Crear Servicio
-            </button>
-        </div>
-    </form>
+        <form action="admin/establecimiento" method="POST" class="w-1/2 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <h2 class="text-lg font-semibold mb-4">Establecimiento</h2>
+            <div class="mb-4">
+                <label for="establecimiento-nombre" class="block text-gray-700 text-sm font-bold mb-2">Nombre:</label>
+                <input type="text" id="establecimiento-nombre" name="nombre"
+                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                       required>
+            </div>
+            <div class="mb-4">
+                <label for="entidad" class="block text-gray-700 text-sm font-bold mb-2">Entidad:</label>
+                <select id="entidad" name="entidad" data-te-select-init data-te-select-filter="true"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        required>
+                    <option selected disabled hidden>Seleccionar Entidad</option>
+                    {{#each entidades}}
+                        <option value="{{this.id}}">{{this.nombre}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <div class="flex items-center justify-between">
+                <button type="submit"
+                        class="button">
+                    Crear Establecimiento
+                </button>
+            </div>
+        </form>
 
-    <form action="admin/prestacion" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+
+        <form action="admin/servicio" method="POST" class="w-1/2 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <h2 class="text-lg font-semibold mb-4">Servicio</h2>
+            <div class="mb-4">
+                <label for="entidad-servicio" class="block text-gray-700 text-sm font-bold mb-2">Nombre:</label>
+                <input type="text" id="entidad-servicio" name="nombre"
+                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                       required>
+            </div>
+            <div class="flex items-center justify-between">
+                <button type="submit"
+                        class="button">
+                    Crear Servicio
+                </button>
+            </div>
+        </form>
+
+        <form action="admin/prestacion" method="POST" class="w-1/2 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <h2 class="text-lg font-semibold mb-4">Prestacion</h2>
         <div class="mb-4">
             <label for="prestacion-nombre" class="block text-gray-700 text-sm font-bold mb-2">Nombre:</label>
@@ -91,9 +93,10 @@
         <div class="mb-4">
             <label for="establecimiento" class="block text-gray-700 text-sm font-bold mb-2">Establecimiento:</label>
             <select id="establecimiento" name="establecimiento"
+                    data-te-select-init data-te-select-filter="true"
                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     required>
-                <option selected disabled hidden>Seleccionar Establecimiento</option>
+                <option selected disabled hidden data-te-select-init>Seleccionar Establecimiento</option>
                 {{#each establecimientos}}
                     <option value="{{this.id}}">{{this.nombre}}</option>
                 {{/each}}
@@ -117,5 +120,6 @@
             </button>
         </div>
     </form>
+    </div>
 {{/partial}}
 {{> templates/templateBase }}

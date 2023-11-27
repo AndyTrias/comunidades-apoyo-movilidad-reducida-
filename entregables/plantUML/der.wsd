@@ -3,205 +3,318 @@
 entity "Usuario" as eUsuario{
   id_usuario: number <<generated>>
   --
-  nombre : varchar(20)
-  apellido : varchar(30)
-  correo : varchar(50)
-  contraseña : varchar(20)
-  membresias :
-  interes :
-  localizaciones :
+  nombre : varchar(255)
+  apellido : varchar(255)
+  correo : varchar(255)
+  contraseña : varchar(255)
+  configuracionDeNotificaciones_id : BIGINT,FK
+  rol_id : BIGINT,FK
+  UbicacionExacta_id : BIGINT,FK
 
 }
 
-entity "Interes" as eInteres{
-  id_interes: number <<generated>>
-  id_Servicio:FK
-  id_Entidad:FK
+entity "usuario_incidente" as eUsuarioIncidente{
+  usuario_id : BIGINT,FK
+  revisionDeIncidentes_id : BIGINT,FK
 }
 
-entity "interes_servicio" as eInteres_servicio {
-    id_Servicio: PK, FK
-    id_Interes: PK, FK
-}
-
-entity "Servicio" as eServicio
-{
-  id_servicio:number <<generated>>
+entity "membresia" as eMembresia{
+  id_membresia: number <<generated>>
   --
-  informacion:varchar(100)
+  comunidad_id : BIGINT,FK
+  rol_id : BIGINT,FK
+  usuario_id : BIGINT,FK
 }
 
-
-
-entity "Memebresia" as eMemebresia{
- id_comunidad : FK
- id_rol : FK
- afectaciones : FK
-}
-
-entity "Comunidad" as eComunidad{
-  id_comunidad : number <<generated>>
-  nombre : varchar(30)
-  servicioDeInteres : FK
-  incidentesAbiertos : FK
-  incidentesCerrados : FK
-  notificador:?
-}
-
-entity "Rol" as eRol{
-  id_rol : number <<generated>>
-  usuario : FK
-  permiso : FK
-  nombre : varchar(30)
-}
-
-entity "Permiso" as ePermiso{
-  id_permiso : number <<generated>>
-  nombre : varchar(30)
-}
-
-entity "Incidente" as eIncidente{
-  id_incidente: number <<generated>>
-  abiertoPorUsuario:FK
-  prestacionDeServicio:FK
-  observaciones:varchar(100)
-}
-
-entity "Fecha_Incidente" as eFechaIncidente{
-  id_fecha_incidente: number <<generated>>
+entity "comunidad" as eComunidad{
+  id_comunidad: number <<generated>>
   --
-  id_incidente: FK
-  fecha: DATETIME
+  nombre : varchar(255)
+  notificador: varchar(255)
 }
 
-entity "Afectacion" as eAfectacion {
-  id_afectacion: number <<generated>>
-  afectado:boolean
-  prestacionDeServicio:FK
+entity "rol" as eRol{
+  id_rol: number <<generated>>
+  --
+  nombre : varchar(255)
+  tipo: varchar(255)
 }
 
-entity "PrestacionDeServicio" as ePrestacionDeServicio {
- id_prestacion_servicio: number <<generated>>
- servicio:FK
- incidentes:FK
- nombre:varchar(30)
+entity "rol_permiso" as eRolPermiso{
+  rol_id : BIGINT,FK,PK
+  permiso_id : BIGINT,FK,PK
 }
 
-entity "Establecimiento" as eEstablecimiento {
-  id_establecimiento: number <<generated>>
-  localizacion:FK
-  servicios:FK
+
+
+entity "organismo_de_control" as eOrganismoDeControl{
+  id_organismo_de_control: number <<generated>>
+  --
+  nombre : varchar(255)
+  personaDesignada_id : BIGINT,FK
 }
 
-entity "Entidad" as eEntidad {
-  id_entidad: number <<generated>>
-  Establecimientos:FK
-  localizacion:FK
-  nombre:varchar(30)
-}
-
-entity "EntidadPrestadora" as eEntidadPrestadora {
+entity "entidad_prestadora" as eEntidadPrestadora{
   id_entidad_prestadora: number <<generated>>
-  personaDesignada:FK
-  serviciosPrestados:FK
-}
-
-
-entity "Ubicacion" as eUbicacion {
-  id_ubicacion: number <<generated>>
   --
-  id_provincia:FK
-  id_municipio:FK
-  id_localidad:FK
+  nombre : varchar(255)
+  personaDesignada_id : BIGINT,FK
+  organismo_de_control_id : BIGINT,FK
 }
 
-entity "Provincia" as eProvincia {
-  id_provincia: number <<generated>>
+entity "establecimiento" as eEstablecimiento{
+  id_establecimiento: number <<generated>>
   --
-  nombre:varchar(30)
+  nombre : varchar(255)
+  localizacion_id : BIGINT,FK
+  entidad_id : BIGINT,FK
 }
 
-entity "Municipio" as eMunicipio {
-  id_municipio: number <<generated>>
+entity "entidad" as eEntidad{
+  id_entidad: number <<generated>>
   --
-  nombre:varchar(30)
+  nombre : varchar(255)
+  localizacion_id : BIGINT,FK
+  entidad_prestadora_id : BIGINT,FK
 }
 
-entity "Localidad" as eLocalidad {
-  id_localidad: number <<generated>>
+entity "afectacion" as eAfectacion{
+  id_afectacion: number <<generated>>
   --
-  nombre:varchar(30)
+  afectado : 
+  prestacionDeServicio_ID : BIGINT,FK
+  membresia_ID : BIGINT,FK
 }
 
-entity "Localizacion" as eLocalizacion {
+entity "prestacion_de_servicio" as ePrestacionDeServicio{
+  id_prestacion_de_servicio: number <<generated>>
+  --
+  nombre : varchar(255)
+  servicio_id : BIGINT,FK
+  UbicacionExacta_id: BIGINT,FK
+  establecimiento_id : BIGINT,FK
+}
+
+entity "localizacion" as eLocalizacion{
   id_localizacion: number <<generated>>
   --
-  id_ubicacion:FK
-
+  localidad_id : BIGINT,FK
+  municipio_id : BIGINT,FK
+  provincia_id : BIGINT,FK
+  usuario_id : BIGINT,FK
 }
 
-entity "prestacion_comunidad" as ePrestacion_Comunidad{
-  id_prestacion_servicio: PK, FK
-  id_comunidad: PK, FK
-}
-
-entity "prestacion_incidente" as ePrestacion_Incidente{
-  id_prestacion_servicio: PK, FK
-  id_incidente: PK, FK
-}
-
-entity "Organismo de Control" as eOrganismo{
-  id_organismo: number <<generated>>
+entity "localidad" as eLocalidad{
+  id_localidad: number <<generated>>
   --
-  id_usuario: FK
-  id_entidad_prestadora: FK
+  nombre : varchar(255)
+  municipio_id : BIGINT,FK
+  provincia_id : BIGINT,FK
 }
 
-entity "UbicacionExacta" as eUbicacionExacta {
+entity "municipio" as eMunicipio{
+  id_municipio: number <<generated>>
+  --
+  nombre : varchar(255)
+  provincia_id : BIGINT,FK
+}
+
+entity "provincia" as eProvincia{
+  id_provincia: number <<generated>>
+  --
+  nombre : varchar(255)
+}
+
+entity "ubicacion_exacta" as eUbicacionExacta{
   id_ubicacion_exacta: number <<generated>>
   --
-  latitud: int
-  longitud: int
+  latitud : DOUBLE
+  longitud : DOUBLE
 }
 
-entity "organismo_prestadora" as eOrganismo_Prestadora {
-  id_organismo:PK, FK
-  id_entidad_prestadora: PK, FK
+entity "interes" as eInteres{
+  id_interes: number <<generated>>
+  --
+  entidad_id : BIGINT,FK
+  servicio_id : BIGINT,FK
+  usuario_id : BIGINT,FK
 }
 
-ePrestacionDeServicio ||--|| eUbicacionExacta
-eUsuario ||--o|eUbicacionExacta
-eLocalizacion ||--|| eEntidad
-eLocalizacion ||--|| eEstablecimiento
-eUsuario ||--o{ eLocalizacion
-eLocalizacion ||--|{ eUbicacion
-eProvincia ||--|{ eUbicacion
-eMunicipio ||--|{ eUbicacion
-eLocalidad ||--|{ eUbicacion
-eFechaIncidente |o--|| eIncidente
-eComunidad ||--o{ eIncidente
-eRol ||--o{ ePermiso
-eUsuario||--o|eInteres
-eMemebresia ||--||eRol
-eRol ||--o{eUsuario
-eMemebresia ||--||eComunidad
-eComunidad ||--|{eRol
-eInteres||--o{ eInteres_servicio
-eInteres_servicio }o--|| eServicio
-eMemebresia ||---o{ eAfectacion
-eEntidadPrestadora ||--|| eUsuario
-eEntidadPrestadora ||--|{ eEntidad
-eEntidad ||--|{ eEstablecimiento
-ePrestacionDeServicio ||--|| eServicio
+entity "permiso" as ePermiso{
+  id_permiso: number <<generated>>
+  --
+  nombre : varchar(255)
+  nombreInterno : varchar(255)
+}
+
+entity "horarios" as eHorarios{
+  sinApuros_id : BIGINT,FK
+  horario : DATETIME(6)
+}
+
+entity "incidente" as eIncidente{
+  id_incidente: number <<generated>>
+  --
+  fecha_de_apertura : DATETIME(6)
+  notificador : varchar(255)
+  observaciones : LONGTEXT  
+  abiertoPor_id : BIGINT,FK
+  prestacion_de_servicio_id : BIGINT,FK
+}
+
+entity "informe" as eInforme{
+  id_informe: number <<generated>>
+  --
+  fecha : DATE
+  nombre : varchar(255)
+  path: varchar(255)
+}
+
+entity "notificacion" as eNotificacion{
+  id_notificacion: number <<generated>>
+  --
+  asunto : varchar(255)
+  cuerpo : varchar(255)
+  estrategia_de_notificacion_id : varchar(255)
+  destinatario_id : BIGINT,FK
+}
+
+entity "estrategiadenotificacion_notificacion" as eEstrategiadenotificacionNotificacion{
+  sinApuros_id : BIGINT,FK
+  aNotificar_id : BIGINT,FK
+}
+
+entity "configuracion_de_notificaciones" as eConfiguracionDeNotificaciones{
+  id_configuracion_de_notificaciones: number <<generated>>
+  --
+  metodo_preferido : varchar(255)
+  estrategiaDeNotificacion_id : BIGINT,FK
+}
+
+entity "estrategia_de_notificacion" as eEstrategiaDeNotificacion{
+  id_estrategia_de_notificacion: number <<generated>>
+  --
+  nombre : varchar(255)
+  descripcion : varchar(255)
+}
+
+entity "comunidad_prestacion_de_servicio" as eComunidadPrestacionDeServicio{
+  comunidad_id : BIGINT,FK
+  servicioDeInteres_id : BIGINT,FK
+}
+
+entity "servicio" as eServicio{
+  id_servicio: number <<generated>>
+  --
+  nombre : varchar(255)
+}
+
+entity "revision_de_incidente" as eRevisionDeIncidente{
+  id_revision_de_incidente: number <<generated>>
+}
+
+entity "fechas_de_cierra" as eFechasDeCierra{
+  incidente_id : BIGINT,FK
+  fechasDeCierre : DATETIME(6)
+}
+
+entity "incidente_de_comunidad" as eIncidenteDeComunidad{
+  id_incidente_de_comunidad: number <<generated>>
+  --
+  estado : BIT(1)
+  fechas_de_cierre: DATETIME(6)
+  cerradoPor_id : BIGINT,FK
+  incidente_id : BIGINT,FK
+  comunidad_id : BIGINT,FK
+}
+
+entity "fusion" as eFusion{
+  fusion_id: number <<generated>>
+  --
+  estado : varchar(255)
+  fecha_creada : DATETIME(6)
+  comunidad1_id : BIGINT,FK
+  comunidad2_id : BIGINT,FK
+}
+
+entity "configuraciones" as eConfiguraciones{
+  id_configuraciones: number <<generated>>
+  --
+ api_georef : varchar(255)
+ path_csv_organismos : varchar(255)
+ path_csv_prestadoras : varchar(255)
+ frecuencia_ranking : INT
+ latitud_maxima : DOUBLE
+ longitud_maxima : DOUBLE
+ path_informes : varchar(255)
+ path_peores_contrasenias : varchar(255)
+}
+
+eUsuario}|--||eUbicacionExacta
+eUsuario}|--||eRol
+eUsuario}|--||eConfiguracionDeNotificaciones
+
+eMembresia}|--||eRol
+eMembresia}|--||eUsuario
+eMembresia}|--||eComunidad
+
+eLocalizacion}|--||eLocalidad
+eLocalizacion}|--||eMunicipio
+eLocalizacion}|--||eProvincia
+eLocalizacion}|--||eUsuario
+
+eLocalidad}|--||eMunicipio
+eLocalidad}|--||eProvincia
+
+eMunicipio}|--||eProvincia
+
+eInteres}|--||eEntidad
+eInteres}|--||eServicio
+eInteres}|--||eUsuario
+
+eUsuarioIncidente}|--||eUsuario
+eUsuarioIncidente}|--||eIncidente
+
+eIncidente}|--||ePrestacionDeServicio
+eIncidente}|--||eUsuario
+
+ePrestacionDeServicio}|--||eServicio
+ePrestacionDeServicio}|--||eUbicacionExacta
+ePrestacionDeServicio}|--||eEstablecimiento
+
+eEstablecimiento}|--||eEntidad
+eEstablcimiento}|--||eLocalizacion
+
+eRolPermiso}|--||eRol
+eRolPermiso}|--||ePermiso
+
+eFechasDeCierra}|--||eIncidente
+
+eFusion}|--||eComunidad
+eFusion}|--||eComunidad
+
+eNotificacion}|--||eUsuario
+
+eEstrategiadenotificacionNotificacion }|--|| eEstrategiaDeNotificacion
+eEstrategiadenotificacionNotificacion }|--|| eNotificacion
+
+eOrganismoDeControl}|--||eUsuario
+
+eEntidadPrestadora}|--||eOrganismoDeControl
+eEntidadPrestadora}|--||eUsuario
+
+eEntidad}|--||eLocalizacion
+eEntidad}|--||eEntidadPrestadora
+
+eIncidenteDeComunidad }|--|| eIncidente
+eIncidenteDeComunidad }|--|| eComunidad
+eIncidenteDeComunidad }|--|| eUsuario
+
+eHorarios }|--|| eEstrategiaDeNotificacion
+
+eComunidadPrestacionDeServicio }|--|| eComunidad
+eComunidadPrestacionDeServicio }|--|| ePrestacionDeServicio
+
+eAfectacion }|--|| eMembresia
 eAfectacion }|--|| ePrestacionDeServicio
-eEstablecimiento ||--|{ ePrestacionDeServicio
-ePrestacionDeServicio ||--|{ ePrestacion_Comunidad
-eComunidad ||--|{ ePrestacion_Comunidad
-ePrestacionDeServicio ||---|{ ePrestacion_Incidente
-eIncidente ||---|{ ePrestacion_Incidente
-eOrganismo ||-|| eUsuario
-eOrganismo ||--|{ eOrganismo_Prestadora
-eEntidadPrestadora ||----|{ eOrganismo_Prestadora
-
-
 @enduml

@@ -5,11 +5,11 @@
 {{/partial}}
 {{#partial "contenido"}}
 
-    <h1 class="text-3xl font-semibold text-gray-900">
+    <h1 class="text-3xl font-semibold text-gray-900 mt-4">
         Incidente a revisar
     </h1>
 
-    <div class="rounded-md w-full h-full bg-indigo-500 p-4">
+    <div class="rounded-md w-full h-full p-4">
 
         <section class="w-3/4 h-full flex justify-center items-center md:flex-row flex-col">
             <div class="w-full h-96">
@@ -17,21 +17,21 @@
             </div>
 
             <div class="grid gap-4 grid-cols-1 grid-rows-2">
-                <h2 class="text-2xl font-semibold text-white overflow-hidden ">
+                <h2 class="text-2xl font-semibold text-black overflow-hidden ">
                     {{incidente.prestacionDeServicio.nombre}}
                 </h2>
-                <div class="text-white overflow-hidden">
+                <div class="text-black overflow-hidden">
                     {{incidente.observaciones}}
                 </div>
-                <span class="items-center overflow-hidden">
+                <span class="items-center overflow-hidden text-black">
                         ¿Se ha solucionado el incidente?
                     </span>
                 <form method="POST">
                     <div class="inline-flex">
-                        <button name="Si" value="Si" type="submit" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-4 px-10 rounded-l">
+                        <button name="Si" value="Si" type="submit" class="button">
                             SI
                         </button>
-                        <button name="No" value="No" type="submit" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-4 px-10 rounded-r">
+                        <button name="No" value="No" type="submit" class="button">
                             NO
                         </button>
                     </div>

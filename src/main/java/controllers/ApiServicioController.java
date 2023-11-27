@@ -42,21 +42,7 @@ public class ApiServicioController {
             PayloadDTO response = ApiServicio1.getInstancia().comunidadesYFusiones(payloadDTO);
             asignarComunidades(response.getComunidades());
             asignarFusiones(response.getFusiones());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void rankingEntidades(Context ctx) {
-        List<Entidad> entidades = repoEntidad.buscarTodos();
-
-        List<EntidadDTO> entidadesDTO = Mapper.mapEntidadesToEntidadesDTO(entidades, repoComunidad);
-        PayloadServicio3DTO payloadServicio3DTO = new PayloadServicio3DTO(entidadesDTO);
-
-        try {
-            PayloadServicio3DTO response = ApiServicio3.getInstancia().rankingEntidades(payloadServicio3DTO);
-            ObjectMapper mapper = new ObjectMapper();
-            ctx.result(mapper.writeValueAsString(response));
+            ctx.redirect("/admin/config");
         } catch (Exception e) {
             e.printStackTrace();
         }
