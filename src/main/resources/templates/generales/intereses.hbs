@@ -50,8 +50,8 @@
                 <h1 class="text-2xl mb-4">Agrega un Interes!</h1>
                 <form action="/intereses" method="POST">
                     <div class="mb-4 w-full">
-                        <select required="" name="entidad" id="entidad" class="input" data-te-select-init data-te-select-filter="true">
-                            <option selected="" disabled="" hidden="" data-te-select-init data-te-select-filter="true">Seleccionar entidad</option>
+                        <select required="" name="entidad" id="entidad" class="input" >
+                            <option selected="" disabled="" hidden="">Seleccionar entidad</option>
                             {{#each entidades}}
                                 <option value={{this.id}}>{{this.nombre}}</option>
                             {{/each}}
@@ -59,7 +59,7 @@
                     </div>
 
                     <div class="mb-4 w-full">
-                        <select required="" name="servicio" id="servicio" class="input" data-te-select-init data-te-select-filter="true">
+                        <select required="" name="servicio" id="servicio" class="input" >
                             <option selected="" disabled="" hidden="">Seleccionar servicio</option>
                             {{#each servicios}}
                                 <option value={{this.id}}>{{this.nombre}}</option>

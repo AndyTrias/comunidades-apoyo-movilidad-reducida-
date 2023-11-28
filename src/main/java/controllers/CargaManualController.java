@@ -100,7 +100,7 @@ public class CargaManualController extends BaseController {
       throw new PermisosInvalidosException("No tienes permisos para crear un entidad");
     }
 
-    EntidadPrestadora entidadPrestadora = repoEntidadPrestadora.buscar(Long.valueOf(ctx.formParam("prestadora")));
+    EntidadPrestadora entidadPrestadora = repoEntidadPrestadora.buscar(Long.valueOf(ctx.formParams("prestadora").get(1)));
     Entidad entidad = new Entidad(ctx.formParam("nombre"), new Localizacion());
     entidadPrestadora.agregarEntidad(entidad);
     repoEntidadPrestadora.modificar(entidadPrestadora);
@@ -115,7 +115,7 @@ public class CargaManualController extends BaseController {
       throw new PermisosInvalidosException("No tienes permisos para crear un establecimiento");
     }
 
-    Entidad entidad = repoEntidad.buscar(Long.valueOf(Objects.requireNonNull(ctx.formParam("entidad"))));
+    Entidad entidad = repoEntidad.buscar(Long.valueOf(Objects.requireNonNull(ctx.formParams("entidad").get(1))));
     if (entidad == null) {
       throw new EntidadNoExistenteException("No existe esa entidad");
     }
@@ -141,7 +141,7 @@ public class CargaManualController extends BaseController {
     }
 
 
-    Establecimiento establecimiento = repoEstablecimiento.buscar(Long.valueOf(Objects.requireNonNull(ctx.formParam("establecimiento"))));
+    Establecimiento establecimiento = repoEstablecimiento.buscar(Long.valueOf(Objects.requireNonNull(ctx.formParams("establecimiento").get(1))));
     if (establecimiento == null) {
       throw new EntidadNoExistenteException("No existe ese establecimiento");
     }
