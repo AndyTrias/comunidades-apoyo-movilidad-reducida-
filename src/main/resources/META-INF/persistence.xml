@@ -12,17 +12,17 @@
         <properties>
             <property name="hibernate.archive.autodetection" value="class"/>
 
-            <property name="hibernate.connection.driver_class" value="com.mysql.cj.jdbc.Driver" />
+            <!--<property name="hibernate.connection.driver_class" value="com.mysql.cj.jdbc.Driver" />
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/tp?createDatabaseIfNotExist=true&amp;useSSL=false&amp;serverTimezone=UTC" />
             <property name="hibernate.connection.username" value="root" />
             <property name="hibernate.connection.password" value="" />
-            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>-->
 
-            <!--<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://dpg-clgb8t714gps73b19rc0-a.ohio-postgres.render.com:5432/dbtpa?createDatabaseIfNotExist=true&amp;useSSL=false&amp;serverTimezone=UTC"/>
             <property name="javax.persistence.jdbc.user" value="root"/>
             <property name="javax.persistence.jdbc.password" value="QpKTKvxfwrMHdPwmTNedb0emOJYqQEbl"/>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>-->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
 
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
