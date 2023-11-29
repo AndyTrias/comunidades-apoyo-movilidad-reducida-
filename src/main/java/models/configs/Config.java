@@ -3,6 +3,7 @@ package models.configs;
 import models.repositorios.RepoConfig;
 
 import javax.persistence.*;
+import java.util.concurrent.TimeUnit;
 
 @Entity
 @Table(name = "configuraciones")
@@ -27,6 +28,8 @@ public class Config {
   public double LONGITUD_MAXIMA = 0.1;
   @Column(name = "frecuencia_ranking")
   public int FRECUENCIA_RANKING = 10080;
+  @Column(name = "unidad_frecuencia_ranking")
+  public String UNIDAD_FRECUENCIA_RANKING = TimeUnit.MINUTES.name();
 
   private static Config INSTANCE = null;
 

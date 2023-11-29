@@ -10,24 +10,39 @@
         <div class="flex flex-col items-center">
             <div class="tarjeta">
 
-                <form class="w-full md:w-1/2 p-5" action="admin/config" method="POST" enctype="multipart/form-data">
-                <!-- Campos de entrada para longitud, latitud y tiempo para el primer ranking -->
-                <div class="mb-4">
-                    <label for="longitud">Longitud:</label>
-                    <!-- Campo de entrada editable para longitud -->
-                    <input type="text" id="longitud" name="longitud" placeholder="Ingrese la longitud" class="border rounded p-1" value="{{longitud}}" readonly>
-                </div>
+                <form class="w-full md:w-1/2 p-5" action="/admin/config" method="POST">
+                    <!-- Campos de entrada para longitud, latitud y tiempo para el primer ranking -->
+                    <div class="mb-4">
+                        <label for="longitud">Longitud:</label>
+                        <!-- Campo de entrada editable para longitud -->
+                        <input type="text" id="longitud" name="longitud" placeholder="Ingrese la longitud" class="border rounded p-1" value="{{longitud}}">
+                    </div>
 
-                <div class="mb-4">
-                    <label for="latitud">Latitud:</label>
-                    <!-- Campo de entrada editable para latitud -->
-                    <input type="text" id="latitud" name="latitud" placeholder="Ingrese la latitud" class="border rounded p-1" value="{{latitud}}" readonly>
-                </div>
+                    <div class="mb-4">
+                        <label for="latitud">Latitud:</label>
+                        <!-- Campo de entrada editable para latitud -->
+                        <input type="text" id="latitud" name="latitud" placeholder="Ingrese la latitud" class="border rounded p-1" value="{{latitud}}">
+                    </div>
 
-                <!-- Botón para guardar los valores -->
-                <button id="guardarBtn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" disabled>
-                    Guardar
-                </button>
+                    <div class="mb-4">
+                        <label for="frecuencia">Frecuencia:</label>
+                        <!-- Campo de entrada editable para longitud -->
+                        <input type="text" id="frecuencia" name="frecuencia" placeholder="Ingrese la frecuencia" class="border rounded p-1" value="{{frecuencia}}">
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="unidadFrecuencia">UnidadFrecuencia:</label>
+                        <!-- option minutos, segundos, horas, dias-->
+                        <select name="unidadFrecuencia" id="unidadFrecuencia" class="border rounded p-1">
+
+                        </select>
+                    </div>
+
+
+                    <!-- Botón para guardar los valores -->
+                    <button id="guardarBtn" class="button" type="submit">
+                        Guardar
+                    </button>
                 </form>
                 <form method="post" action="/sugerenciaDeFusion">
                     <button class="button" id="fusion" type="submit">Fusionar Comunidades Parecidas</button>
@@ -60,6 +75,21 @@
         function habilitarBoton() {
             document.getElementById('guardarBtn').disabled = false;
         }
+
+        var unidadFrecuencia = document.getElementById('unidadFrecuencia');
+        var unidadAnterior = "{{unidadFrecuencia}}";
+        var opciones = ["MINUTES", "SECONDS", "HOURS", "DAYS"];
+        opciones.forEach(function (opcion) {
+            var option = document.createElement("option");
+            option.text = opcion;
+            option.value = opcion;
+            if (opcion === unidadAnterior) {
+                option.selected = true;
+            }
+            unidadFrecuencia.add(option);
+        });
+
+
     });
     </script>
 
@@ -107,6 +137,8 @@
             });
         });
     });
+
+
     </script>
 {{/partial}}
 {{> templates/templateBase }}
