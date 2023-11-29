@@ -16,14 +16,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 public class Initializer implements WithSimplePersistenceUnit {
 
+  private static ScheduledFuture<?> tareaProgramada;
+
   public static void init() {
-    Map<String, Object> configOverrides = setConfigOverrides(new HashMap<>());
+    /*Map<String, Object> configOverrides = setConfigOverrides(new HashMap<>());
     EntityManagerFactory em = Persistence.createEntityManagerFactory("simple-persistence-unit", configOverrides);
-    RepoGenerico.entityManager = em.createEntityManager();
+    RepoGenerico.entityManager = em.createEntityManager();*/
     if (new RepoRol().buscarTodos().size() < 4) {
       new Initializer()
           .iniciarTransaccion()
@@ -132,12 +135,14 @@ public class Initializer implements WithSimplePersistenceUnit {
 
   public static void activarProcesos() {
     ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-
-    executor.scheduleWithFixedDelay(() -> {
+    if (tareaProgramada != null && !tareaProgramada.isDone()) {
+      tareaProgramada.cancel(true);
+    }
+    tareaProgramada = executor.scheduleWithFixedDelay(() -> {
       InformesController informesController = (InformesController) FactoryController.controller("Informe");
       informesController.generarRankings();
       System.out.println("Tarea programada ejecutada");
-    }, Config.getInstance().FRECUENCIA_RANKING, Config.getInstance().FRECUENCIA_RANKING, TimeUnit.MINUTES);
+    }, Config.getInstance().FRECUENCIA_RANKING, Config.getInstance().FRECUENCIA_RANKING, TimeUnit.valueOf(Config.getInstance().UNIDAD_FRECUENCIA_RANKING));
   }
 
   private static HashMap<String, Object> setConfigOverrides(HashMap<String, Object> configOverrides) {

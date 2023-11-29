@@ -82,7 +82,7 @@ public class ComunidadController extends BaseController {
 
   public void unir(Context ctx) {
     Usuario usuario = usuarioLogueado(ctx);
-    Comunidad comunidad = obtenerComunidad(ctx.formParam("comunidad_id"));
+    Comunidad comunidad = obtenerComunidad(ctx.formParams("comunidad_id").get(1));
 
 
     Membresia membresia = new Membresia(comunidad, usuario, new RepoRol().buscarPorNombre(TipoRol.MIEMBRO));

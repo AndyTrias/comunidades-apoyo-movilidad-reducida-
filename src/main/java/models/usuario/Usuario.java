@@ -104,7 +104,7 @@ public class Usuario {
     }
 
     public void setContrasenia(String contrasenia) throws CredencialesInvalidaException {
-        if (ServiceLocator.getValidadorCompleto().validarContrasenia(contrasenia)) {
+        if (ServiceLocator.validador.validarContrasenia(contrasenia)) {
             this.contrasenia = contrasenia;
         }
         else {

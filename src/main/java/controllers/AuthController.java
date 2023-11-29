@@ -90,7 +90,7 @@ public class AuthController {
   public void registerEntidad(Context ctx) {
     String email = ctx.formParam("email");
     String password = ctx.formParam("password");
-    String prestadora = ctx.formParam("prestadora");
+    String prestadora = ctx.formParams("prestadora").get(1);
 
     if (repoUsuario.buscarPorEmail(email).orElse(null) != null) {
       throw new CredencialesInvalidaException("Ya existe un usuario con ese email");
@@ -114,7 +114,7 @@ public class AuthController {
     public void registerOrganismo(Context ctx) {
         String email = ctx.formParam("email");
         String password = ctx.formParam("password");
-        String organismo = ctx.formParam("organismo");
+        String organismo = ctx.formParams("organismo").get(1);
 
         if (repoUsuario.buscarPorEmail(email).orElse(null) != null) {
             throw new CredencialesInvalidaException("Ya existe un usuario con ese email");
