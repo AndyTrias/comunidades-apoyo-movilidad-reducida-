@@ -193,4 +193,8 @@
         height: 102vh;
         position: absolute;
     }
+
+    .container.active .sign-in, .container.active .sign-up{
+        transform: translateX(0%);
+    }
 }
