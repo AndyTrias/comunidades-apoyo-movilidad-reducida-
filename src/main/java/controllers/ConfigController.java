@@ -26,6 +26,7 @@ public class ConfigController {
         model.put("frecuencia", config.FRECUENCIA_RANKING);
         model.put("unidad", config.UNIDAD_FRECUENCIA_RANKING);
         model.put("API_SERVICIO1", System.getenv("API_SERVICIO1"));
+        model.put("administrador", true);
         ctx.render("admin/configuracion.hbs", model);
     }
     public void save(Context ctx){

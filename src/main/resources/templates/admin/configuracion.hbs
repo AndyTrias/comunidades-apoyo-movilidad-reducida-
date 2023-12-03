@@ -37,15 +37,10 @@
 
                         </select>
                     </div>
-
-
                     <!-- Botón para guardar los valores -->
                     <button id="guardarBtn" class="button" type="submit">
                         Guardar
                     </button>
-                </form>
-                <form method="post" action="/sugerenciaDeFusion">
-                    <button class="button" id="fusion" type="submit">Fusionar Comunidades Parecidas</button>
                 </form>
             </div>
         </div>
@@ -57,20 +52,6 @@
         document.getElementById('longitud').addEventListener('input', habilitarBoton);
         document.getElementById('latitud').addEventListener('input', habilitarBoton);
         var fusion = document.getElementById('fusion')
-
-        /* if service is not up, disable button*/
-        fetch('{{API_SERVICIO1}}',
-        {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }
-        ).catch(function (err) {
-            console.log('Fetch Error :-S', err);
-            fusion.disabled = true;
-            fusion.style.zIndex = "-100"
-        });
 
         function habilitarBoton() {
             document.getElementById('guardarBtn').disabled = false;

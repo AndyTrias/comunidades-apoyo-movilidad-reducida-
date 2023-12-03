@@ -23,15 +23,30 @@ public class ComunidadController extends BaseController {
 
   public void index(Context ctx) {
     Usuario usuario = usuarioLogueado(ctx);
-    List<Comunidad> comunidades = usuario.getComunidades();
+    List<Comunidad> comunidades = new ArrayList<>();
+    if (usuario.esAdministrador()) {
+      comunidades.addAll(repoComunidad.buscarTodos());
+
+    } else {
+      comunidades.addAll(usuario.getComunidades());
+    }
+
     Map<String, Object> model = new HashMap<>();
-    model.put("comunidades", comunidades);
 
     List<Comunidad> comunidadesNoPertenecientes = repoComunidad.buscarTodos().stream().
         filter(comunidad -> !usuario.getComunidades().contains(comunidad)).
         toList();
 
+    model.put("comunidades", comunidades);
     model.put("comunidadesQNoPretUsu", comunidadesNoPertenecientes);
+    model.put("administrador", usuario.esAdministrador());
+    ctx.render("comunidades/comunidades.hbs", model);
+  }
+
+  public void indexAdmin(Context ctx) {
+    List<Comunidad> comunidades = repoComunidad.buscarTodos();
+    Map<String, Object> model = new HashMap<>();
+    model.put("comunidades", comunidades);
     ctx.render("comunidades/comunidades.hbs", model);
   }
 
@@ -47,13 +62,7 @@ public class ComunidadController extends BaseController {
 
     Usuario usuario = usuarioLogueado(ctx);
     Comunidad comunidad = crearComunidadConAdmin(usuario, ctx.formParam("nombre"), ctx.formParams("prestaciones"));
-
-    List<String> servicioIds = ctx.formParams("prestaciones");
-
-    //agregarServiciosDeInteresAComunidad(servicioIds, comunidad);
-
     repoComunidad.agregar(comunidad);
-
     ctx.redirect("/comunidades");
   }
 
@@ -97,7 +106,7 @@ public class ComunidadController extends BaseController {
     Comunidad comunidad = obtenerComunidad(ctx.pathParam("id"));
     Usuario usuario = usuarioLogueado(ctx);
 
-    if (!usuario.getComunidades().contains(comunidad)) {
+    if (!usuario.getComunidades().contains(comunidad) && !usuario.getTipoRol().equals(TipoRol.ADMINISTRADOR_PLATAFORMA)) {
       throw new PermisosInvalidosException("No tienes los permisos para ver esta comunidad");
     }
 
@@ -167,24 +176,6 @@ public class ComunidadController extends BaseController {
     return repoPrestacion.buscarTodos().stream()
         .filter(p -> !comunidad.getServiciosDeInteres().contains(p))
         .toList();
-  }
-
-  private void agregarServiciosDeInteresAComunidad(List<String> servicioIds, Comunidad comunidad) {
-    List<Long> idsLong = servicioIds.stream()
-        .map(Long::parseLong)
-        .toList();
-
-    for (Long id : idsLong) {
-      if (id < 6) {
-        PrestacionDeServicio prestacionDeServicio = repoPrestacion.buscar(id);
-        if (prestacionDeServicio != null) {
-          comunidad.agregarServicioDeInteres(prestacionDeServicio);
-        }
-      }
-    }
-
-
-
   }
 
 }

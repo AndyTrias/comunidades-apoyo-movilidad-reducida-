@@ -85,6 +85,8 @@ public class Router implements WithSimplePersistenceUnit {
       app.post("admin/usuarios/entidad", ((AuthController) FactoryController.controller("Auth"))::registerEntidad, TipoRol.ADMINISTRADOR_PLATAFORMA);
       app.post("admin/usuarios/organismo", ((AuthController) FactoryController.controller("Auth"))::registerOrganismo, TipoRol.ADMINISTRADOR_PLATAFORMA);
 
+      app.get("admin/comunidades", ((ComunidadController) FactoryController.controller("Comunidad"))::indexAdmin, TipoRol.ADMINISTRADOR_PLATAFORMA);
+
       app.get("/", ((HomeController) FactoryController.controller("Home"))::index);
       app.get("admin", ((HomeController) FactoryController.controller("Home"))::showAdmin, TipoRol.ADMINISTRADOR_PLATAFORMA);
 

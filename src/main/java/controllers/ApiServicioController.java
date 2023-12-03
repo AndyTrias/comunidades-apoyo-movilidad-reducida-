@@ -15,10 +15,13 @@ import models.external.retrofit.apiServicio3.ApiServicio3;
 import models.external.retrofit.apiServicio3.responseClases.EntidadDTO;
 import models.external.retrofit.apiServicio3.responseClases.PayloadServicio3DTO;
 import models.repositorios.*;
+import server.exceptions.EntidadNoExistenteException;
 import server.utils.Mapper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 public class ApiServicioController {
@@ -30,7 +33,12 @@ public class ApiServicioController {
     private RepoEntidad repoEntidad;
 
     public void fusionDeComunidades(Context ctx) {
-        List<Comunidad> comunidades = repoComunidad.buscarTodos();
+
+        List<Comunidad> comunidades = ctx.formParams("comunidades").stream()
+            .filter(id -> id.length() < 6)
+            .map(id -> repoComunidad.buscar(Long.parseLong(id)))
+            .collect(Collectors.toList());
+
         List<Fusion> fusiones = repoFusion.buscarTodos();
         List<Establecimiento> establecimientos = repoEstablecimiento.buscarTodos();
 
@@ -44,7 +52,7 @@ public class ApiServicioController {
             asignarFusiones(response.getFusiones());
             ctx.redirect("/admin/config");
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new EntidadNoExistenteException("No se pudo conectar con el servicio de fusion");
         }
     }
 
