@@ -19,65 +19,59 @@ import java.util.Set;
 
 @AllArgsConstructor
 public class CargaMasivaController {
-    private RepoEntidadPrestadora repoEntidadPrestadora;
-    private RepoOrganismoDeControl repoOrganismoDeControl;
+  private RepoEntidadPrestadora repoEntidadPrestadora;
+  private RepoOrganismoDeControl repoOrganismoDeControl;
 
 
+  public void show(Context ctx) {
+    Map<String, Object> model = new HashMap<>();
+    model.put("administrador", true);
+    ctx.render("admin/cargaMasiva.hbs", model);
+  }
 
-    public void show(Context ctx){
-        Map<String, Object> model = new HashMap<>();
-        model.put("administrador", true);
-        ctx.render("admin/cargaMasiva.hbs", model);
-    }
-    public void cargaMasiva(Context ctx){
-        LectorEntidadPrestadora lectorEntidadPrestadora = new LectorEntidadPrestadora();
-        LectorOrganismoDeControl lectorOrganismoDeControl = new LectorOrganismoDeControl();
+  public void cargaEntidades(Context ctx) {
+    LectorEntidadPrestadora lectorEntidadPrestadora = new LectorEntidadPrestadora();
 
-        UploadedFile uploadedFile = ctx.uploadedFile("archivo");
+    UploadedFile uploadedFile = obtenerArchivo(ctx);
+    lectorEntidadPrestadora.leerCSV("src/main/resources/uploads/" + uploadedFile.filename());
+    Map<EntidadPrestadora, Long> entidades = lectorEntidadPrestadora.getEntidadesLeidas();
 
-        if (uploadedFile == null) {
-            ctx.redirect("/admin/cargaMasiva");
-            return;
-        }
 
-        FileUtil.streamToFile(uploadedFile.content(), "src/main/resources/uploads/" + uploadedFile.filename());
-        if (esEntidadPrestadora(uploadedFile.filename())){
-            lectorEntidadPrestadora.leerCSV("src/main/resources/uploads/" + uploadedFile.filename());
-            cargarEntidadesPrestadoras(lectorEntidadPrestadora.getEntidadesLeidas());
-
-        } else if (esOrganismoDeControl(uploadedFile.filename())){
-            lectorOrganismoDeControl.leerCSV("src/main/resources/uploads/" + uploadedFile.filename());
-            cargarOrganismosDeControl(lectorOrganismoDeControl.getOrganismosLeidos());
-
-        } else {
-            ctx.redirect("/admin/cargaMasiva");
-        }
-
-        ctx.redirect("/admin/cargaMasiva");
+    for (Map.Entry<EntidadPrestadora, Long> entidad : entidades.entrySet()) {
+      OrganismoDeControl organismo = repoOrganismoDeControl.buscar(entidad.getValue());
+      if (organismo == null) {
+        throw new EntidadNoExistenteException("No existe el organismo de control con id: " + entidad.getValue());
+      }
+      organismo.agregarPrestadora(entidad.getKey());
+      repoOrganismoDeControl.modificar(organismo);
     }
 
-    private void cargarEntidadesPrestadoras(Map<EntidadPrestadora, Long> entidadPrestadoras){
-        for (Map.Entry<EntidadPrestadora, Long> entidad : entidadPrestadoras.entrySet()){
-            OrganismoDeControl organismo = repoOrganismoDeControl.buscar(entidad.getValue());
-            if (organismo == null){
-                throw new EntidadNoExistenteException("No existe el organismo de control con id: " + entidad.getValue());
-            }
-            organismo.agregarPrestadora(entidad.getKey());
-            repoOrganismoDeControl.modificar(organismo);
-        }
+    ctx.redirect("/admin/cargaMasiva");
+  }
+
+  public void cargaOrganismos(Context ctx) {
+    LectorOrganismoDeControl lectorOrganismoDeControl = new LectorOrganismoDeControl();
+
+    UploadedFile uploadedFile = obtenerArchivo(ctx);
+    lectorOrganismoDeControl.leerCSV("src/main/resources/uploads/" + uploadedFile.filename());
+
+    for (OrganismoDeControl organismo : lectorOrganismoDeControl.getOrganismosLeidos()) {
+      repoOrganismoDeControl.agregar(organismo);
     }
 
-    private void cargarOrganismosDeControl(Set<OrganismoDeControl> organismosDeControl){
-        organismosDeControl.forEach(organismoDeControl -> {
-            repoOrganismoDeControl.agregar(organismoDeControl);
-        });
+    ctx.redirect("/admin/cargaMasiva");
+  }
+
+  private UploadedFile obtenerArchivo(Context ctx) {
+    UploadedFile uploadedFile = ctx.uploadedFile("archivo");
+
+    if (uploadedFile == null) {
+      ctx.redirect("/admin/cargaMasiva");
+      throw new EntidadNoExistenteException("No se ha cargado ningun archivo");
     }
 
-    private boolean esEntidadPrestadora(String nombreArchivo){
-        return nombreArchivo.contains("prestadora") || nombreArchivo.contains("entidad prestadora") || nombreArchivo.contains("entidades prestadoras");
-    }
+    FileUtil.streamToFile(uploadedFile.content(), "src/main/resources/uploads/" + uploadedFile.filename());
 
-    private boolean esOrganismoDeControl(String nombreArchivo){
-        return nombreArchivo.contains("organismo") || nombreArchivo.contains("organismos") || nombreArchivo.contains("control");
-    }
+    return uploadedFile;
+  }
 }
