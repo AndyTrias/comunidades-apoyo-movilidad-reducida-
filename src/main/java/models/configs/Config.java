@@ -15,11 +15,11 @@ public class Config {
   @Column(name = "path_peores_contrasenias")
   public final String PEORES_CONTRASENIAS = "resources/public/10000Peores.txt";
   @Column(name = "path_csv_organismos")
-  public final String CSV_PATH_ORGANISMOS = "src/main/java/models/readerCSV/organismos_de_control.csv";
+  public final String CSV_PATH_ORGANISMOS = "resources/public/organismos_de_control.csv";
   @Column(name = "path_csv_prestadoras")
-  public final String CSV_PATH_PRESTADORAS = "src/main/java/models/readerCSV/entidades_prestadoras.csv";
+  public final String CSV_PATH_PRESTADORAS = "resources/public/entidades_prestadoras.csv";
   @Column(name = "path_informes")
-  public final String PATH_INFORMES = "src/main/resources/informes/";
+  public final String PATH_INFORMES = "resources/public/informes/";
   @Column(name = "api_georef")
   public final String API_GEOREF = System.getenv("API_GEOREF");
   @Column(name = "latitud_maxima")
