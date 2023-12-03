@@ -1,4 +1,3 @@
-/*
 package Persistencia;
 
 import models.comunidades.Comunidad;
@@ -295,8 +294,8 @@ public class AgregarDatosTest {
     }
 
 
-    */
-/*@Order(13)
+
+@Order(13)
     @Test
     void agregarIncidenteARevisar() throws InterruptedException {
         Thread.sleep(1000);
@@ -309,7 +308,7 @@ public class AgregarDatosTest {
 
         usuario.agregarRevisionDeIncidente(repoIncidentes.buscar(1L));
         repoUsuario.modificar(usuario);
-    }*//*
+    }
 
 }
-*/
+

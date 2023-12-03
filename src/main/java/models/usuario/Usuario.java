@@ -159,6 +159,10 @@ public class Usuario {
         return revisionDeIncidentes.stream().filter(r -> r.getId().equals(id)).findFirst().get();
     }
 
+    public boolean esAdministrador() {
+        return rol.getTipoRol().equals(TipoRol.ADMINISTRADOR_PLATAFORMA);
+    }
+
     public void eliminarInteres(Interes interes) {
         this.intereses.remove(interes);
     }
