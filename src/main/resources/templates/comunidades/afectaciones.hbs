@@ -13,8 +13,7 @@
                                         <i class="far fa-eye text-blue-500"></i> Observador
                                     </div>
                                     <div>
-                                        <input type="checkbox" id="{{this.id}}" name="afectacion" value={{this.id}}
-                                               class="hidden" {{#if this.afectado}}checked{{/if}}>
+                                        <input type="checkbox" id="{{this.id}}" name="afectacion" class="hidden" value='{{this.id}}' {{#if this.afectado}}checked{{/if}}>
                                         <div class="relative w-14 h-8 bg-gray-300 rounded-full">
                                             <div class="w-6 h-6 bg-white rounded-full shadow-md transform translate-x-0 transition-transform"></div>
                                         </div>
@@ -29,6 +28,7 @@
                     <button type="submit" class="button">
                         Guardar
                     </button>
+                </div>
                 </form>
             {{else}}
                 <p>No hay afectaciones</p>
