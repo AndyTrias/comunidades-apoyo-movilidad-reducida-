@@ -106,7 +106,7 @@ public class Mapper {
     public static String obtenerFechaComoString(Date fecha) {
         Instant instant = fecha.toInstant();
         LocalDateTime dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
-        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return dateTime.format(formatoFecha);
     }
 
