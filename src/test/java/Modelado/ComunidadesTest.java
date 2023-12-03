@@ -78,6 +78,7 @@ public class ComunidadesTest {
     public void testCantidadDeAfectados(){
         Membresia membresiaNueva = new Membresia(comunidad1, franco, new Rol());
         franco.unirseAComunidad(membresiaNueva);
+        comunidad1.agregarMembresia(membresiaNueva);
         franco.getMembresia(comunidad1).cambiarAfectacion(banioMedrano, true);
         assertEquals(comunidad1.getCantidadDeAfectados(banioMedrano), 1);
 
