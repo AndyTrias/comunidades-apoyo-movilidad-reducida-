@@ -15,6 +15,7 @@ import models.external.retrofit.apiServicio3.ApiServicio3;
 import models.external.retrofit.apiServicio3.responseClases.EntidadDTO;
 import models.external.retrofit.apiServicio3.responseClases.PayloadServicio3DTO;
 import models.repositorios.*;
+import server.exceptions.EntidadNoExistenteException;
 import server.utils.Mapper;
 
 import java.util.ArrayList;
@@ -51,7 +52,7 @@ public class ApiServicioController {
             asignarFusiones(response.getFusiones());
             ctx.redirect("/admin/config");
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new EntidadNoExistenteException("No se pudo conectar con el servicio de fusion");
         }
     }
 

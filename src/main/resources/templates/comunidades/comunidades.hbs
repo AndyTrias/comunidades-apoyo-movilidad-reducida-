@@ -7,7 +7,7 @@
             <button class="button"><a href="/comunidades/create">Crear Comunidad</a></button>
         </div>
 
-        {{#if usuario.esAdministrador}}
+        {{#if administrador}}
             <form method="post" action="/sugerenciaDeFusion" class="flex flex-col gap-4">
                 <label for="comunidad_id"></label>
                 <div class="mb-4">
