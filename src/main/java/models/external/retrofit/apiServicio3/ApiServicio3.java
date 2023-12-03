@@ -22,7 +22,6 @@ public class ApiServicio3 extends ApiCaller {
     }
 
     public PayloadServicio3DTO rankingEntidades(PayloadServicio3DTO payloadServicio3DTO) throws IOException {
-        payloadServicio3DTO.getEntidades().forEach(e -> System.out.println(e.getId()));
         IApiServicio3 iApiServicio3 = this.retrofit.create(IApiServicio3.class);
         Call<PayloadServicio3DTO> requestComunidadesYFusiones = iApiServicio3.rankingEntidades(payloadServicio3DTO);
         Response<PayloadServicio3DTO> responseComunidadesYFusiones = requestComunidadesYFusiones.execute();

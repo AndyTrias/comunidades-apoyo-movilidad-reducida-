@@ -1,6 +1,6 @@
 {{#partial "contenido"}}
     {{#if rankings}}
-        <div class="relative overflow-x-auto shadow-md sm:rounded-lg p-15">
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg p-16">
             <div class="pb-4">
                 <button id="dropdownRadioButton" data-dropdown-toggle="dropdownRadio"
                         class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
@@ -66,7 +66,7 @@
                     </ul>
                 </div>
             </div>
-            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <table class="w-full text-sm text-left text-gray-500 shadow-2xl">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
 
@@ -82,8 +82,8 @@
                 </tr>
                 </thead>
                 {{# each rankings}}
-                    <tbody>
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <tbody class="ranking-row bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" data-filter="{{this.filtro}}">
                         <th scope="row"
                             class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             {{this.fecha}}
@@ -107,5 +107,35 @@
             </div>
         </div>
     {{/if}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Captura el evento de cambio en los botones de radio
+            var radioButtons = document.querySelectorAll('input[name="filter-radio"]');
+            radioButtons.forEach(function (radioButton) {
+                radioButton.addEventListener('change', function () {
+                    // Obtiene el valor del botón de radio seleccionado
+                    var selectedFilter = document.querySelector('input[name="filter-radio"]:checked').value;
+
+                    // Oculta todas las filas
+                    var rows = document.querySelectorAll('.ranking-row');
+                    rows.forEach(function (row) {
+                        row.style.display = 'none';
+                    });
+
+                    // Muestra las filas que cumplen con el filtro seleccionado
+                    if (selectedFilter === 'todos') {
+                        rows.forEach(function (row) {
+                            row.style.display = 'table-row';
+                        });
+                    } else {
+                        // Filtra y muestra las filas según la opción seleccionada
+                        document.querySelectorAll('.ranking-row-' + selectedFilter).forEach(function (row) {
+                            row.style.display = 'table-row';
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 {{/partial}}
 {{> templates/templateBase }}
