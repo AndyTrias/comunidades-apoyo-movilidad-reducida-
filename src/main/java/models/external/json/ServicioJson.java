@@ -6,7 +6,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import models.configs.Config;
 import models.entidades.Entidad;
 import models.rankings.estrategiaDeExportacion.AdapterJson;
 import models.rankings.informes.Ranking;

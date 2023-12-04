@@ -1,9 +1,6 @@
 package controllers;
 
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import controllers.factories.FactoryController;
 import io.javalin.http.Context;
 import lombok.AllArgsConstructor;
 import models.configs.Config;
@@ -11,9 +8,6 @@ import models.entidades.Entidad;
 import models.entidades.EntidadPrestadora;
 import models.entidades.OrganismoDeControl;
 import models.external.json.ServicioJson;
-import models.external.retrofit.apiServicio3.ApiServicio3;
-import models.external.retrofit.apiServicio3.responseClases.EntidadDTO;
-import models.external.retrofit.apiServicio3.responseClases.PayloadServicio3DTO;
 import models.rankings.criterios.CriteriosDeEntidades;
 import models.rankings.criterios.MayorCantidad;
 import models.rankings.criterios.MayorImpacto;
@@ -24,15 +18,13 @@ import models.rankings.informes.Exportador;
 import models.rankings.informes.GeneradorDeInformes;
 import models.rankings.informes.Informe;
 import models.rankings.informes.Ranking;
-import models.repositorios.*;
-import org.jvnet.staxex.StAxSOAPBody;
+import models.repositorios.RepoEntidad;
+import models.repositorios.RepoEntidadPrestadora;
+import models.repositorios.RepoInformes;
+import models.repositorios.RepoOrganismoDeControl;
 import server.exceptions.EntidadNoExistenteException;
-import server.utils.Mapper;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;

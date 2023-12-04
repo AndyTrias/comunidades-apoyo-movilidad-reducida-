@@ -4,7 +4,6 @@ import models.entidades.Entidad;
 import models.rankings.informes.Ranking;
 
 import java.util.List;
-import java.util.Map;
 
 public interface CriteriosDeEntidades {
   List<Ranking> generarRanking(List<Entidad> entidades);

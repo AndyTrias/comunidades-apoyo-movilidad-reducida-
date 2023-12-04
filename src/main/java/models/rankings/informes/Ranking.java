@@ -1,6 +1,5 @@
 package models.rankings.informes;
 
-import lombok.Data;
 import models.entidades.Entidad;
 
 

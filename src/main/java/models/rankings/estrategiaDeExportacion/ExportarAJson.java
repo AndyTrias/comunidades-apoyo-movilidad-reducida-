@@ -1,14 +1,11 @@
 package models.rankings.estrategiaDeExportacion;
 
-import models.configs.Config;
-import models.external.json.ServicioJson;
 import lombok.Getter;
 import lombok.Setter;
+import models.external.json.ServicioJson;
 import models.rankings.informes.Ranking;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 
 public class ExportarAJson implements EstrategiaDeExportacion {
