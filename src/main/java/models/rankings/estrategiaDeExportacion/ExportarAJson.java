@@ -4,9 +4,11 @@ import models.configs.Config;
 import models.external.json.ServicioJson;
 import lombok.Getter;
 import lombok.Setter;
+import models.rankings.informes.Ranking;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 
 public class ExportarAJson implements EstrategiaDeExportacion {
@@ -18,8 +20,8 @@ public class ExportarAJson implements EstrategiaDeExportacion {
     this.adapter = adapter;
   }
 
-  public String exportar(List<List<String>> lista, String rutaArchivo) {
-    return adapter.exportarAJson(lista, rutaArchivo);
+  public void exportar(List<Ranking> lista, String rutaArchivo) {
+    adapter.exportarAJson(lista, rutaArchivo);
   }
 
 }

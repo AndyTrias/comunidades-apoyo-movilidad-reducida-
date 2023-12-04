@@ -1,28 +1,26 @@
 package models.rankings.estrategiaDeExportacion;
 
 import models.configs.Config;
+import models.rankings.informes.Ranking;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.List;
 
+
 public class ExportarCSV implements EstrategiaDeExportacion {
-  public String exportar(List<List<String>> informe, String nombreArchivo) {
-    String csvFile = Config.getInstance().PATH_INFORMES + nombreArchivo;
 
-    try (FileWriter writer = new FileWriter(csvFile)) {
-      for (List<String> fila : informe) {
-        writer.append(fila.get(0));
-        writer.append(",");
-        writer.append(fila.get(1));
-        writer.append("\n");
+  public void exportar(List<Ranking> informe, String nombreArchivo) {
+    String csvFilePath = Config.getInstance().PATH_INFORMES + nombreArchivo;
+    try {
+      PrintWriter pw = new PrintWriter(new File(csvFilePath));
+      for (Ranking ranking : informe) {
+        pw.println(ranking.entidad().getId() + "," + ranking.valor());
       }
-
-    } catch (IOException e) {
-      e.getStackTrace();
+      pw.close();
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
     }
-    return csvFile;
   }
-
-
 }

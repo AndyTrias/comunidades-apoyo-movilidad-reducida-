@@ -33,6 +33,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -57,67 +59,22 @@ public class InformesController extends BaseController {
 
   public void renderizarRanking(Context ctx, List<Entidad> entidadesDisponibles) throws IOException {
     Map<String, Object> model = new HashMap<>();
-    String rutaInforme = buscarRutaInforme(Long.valueOf(ctx.pathParam("id")));
+    Informe inf = buscarInforme(Long.valueOf(ctx.pathParam("id")));
+    String rutaInforme = inf.getPath();
 
-    JsonNode nodo = parsearJson(rutaInforme);
-    String criterio = nodo.get(0).get("Criterio").asText();
-    List<Entidad> entidades = parsearRanking(nodo.get(0).get("Ranking"), entidadesDisponibles);
-    List<Ranking> ranking = obtenerRankingPorCriterio(criterio, entidades);
+    List<Ranking> ranking = new ServicioJson().importarDesdeJson(rutaInforme);
+    ranking = ranking.stream().filter(r -> entidadesDisponibles.contains(r.entidad())).collect(Collectors.toList());
 
-    model.put("criterio", criterio);
+    model.put("criterio", inf.getNombre());
     model.put("ranking", ranking);
     ctx.render("rankings/ranking.hbs", model);
   }
 
-  public String buscarRutaInforme(Long id) {
+  public Informe buscarInforme(Long id) {
     return Optional.ofNullable(repoInformes.buscar(id))
-        .orElseThrow(() -> new EntidadNoExistenteException("No existe el informe"))
-        .getPath();
+        .orElseThrow(() -> new EntidadNoExistenteException("No existe el informe"));
+
   }
-
-  private JsonNode parsearJson(String rutaInforme) throws IOException {
-    ObjectMapper objectMapper = new ObjectMapper();
-    try {
-      return objectMapper.readTree(new File(rutaInforme));
-    } catch (FileNotFoundException e) {
-      throw new EntidadNoExistenteException("No se pudo procesar el informe");
-    }
-  }
-
-  private List<Ranking> obtenerRankingPorCriterio(String criterio, List<Entidad> entidades) {
-    List<Ranking> ranking = new ArrayList<>();
-
-    for (Entidad entidad : entidades) {
-      switch (criterio) {
-        case "Minutos de resolucion" ->
-            ranking.add(new Ranking(entidad, (int) new MayorTiempo(criterio).promedioTiempoDeCierre(entidad)));
-        case "Cantidad de incidentes" ->
-            ranking.add(new Ranking(entidad, new MayorCantidad(criterio).cantidadDeIncidentesEnLaSemana(entidad)));
-
-        case "Mayor grado de impacto" ->
-            ranking.add(new Ranking(entidad, null));
-      }
-    }
-
-    return ranking;
-  }
-  private List<Entidad> parsearRanking(JsonNode rankingNode, List<Entidad> entidadesDelOrganismo) {
-    List<Entidad> entidades = new ArrayList<>();
-    String[] rankingArray = rankingNode.get(0).asText().split(",");
-
-    Arrays.stream(rankingArray)
-        .map(String::trim)
-        .map(Long::parseLong)
-        .forEach(id -> {
-          Entidad entidad = repoEntidad.buscar(id);
-          if (entidadesDelOrganismo.contains(entidad)) {
-            entidades.add(entidad);
-          }
-        });
-
-    return entidades;
-  }
-
 
   public void generarRankings() {
     List<CriteriosDeEntidades> criterios = Arrays.asList(
@@ -128,20 +85,28 @@ public class InformesController extends BaseController {
 
     List<Entidad> entidades = repoEntidad.buscarTodos();
     EstrategiaDeExportacion estrategia = new ExportarAJson(new ServicioJson());
+    GeneradorDeInformes generadorDeInformes = new GeneradorDeInformes();
 
     for (CriteriosDeEntidades criterio : criterios) {
-      GeneradorDeInformes generadorDeInformes = new GeneradorDeInformes();
-      generadorDeInformes.agregarCriterioDeEntidad(criterio);
 
-      String nombreArchivo = Config.getInstance().PATH_INFORMES + criterio.getNombreInterno() + "_" + LocalDate.now() + ".json";
-
+      String nombreArchivo = crearNombreArchivo(criterio);
       Exportador exportador = new Exportador(generadorDeInformes, estrategia);
-      exportador.exportarConEstrategia(entidades, nombreArchivo);
+      exportador.exportarConEstrategia(entidades, criterio, nombreArchivo);
 
       Informe informe = new Informe(new Date(), nombreArchivo, criterio.getNombre());
       repoInformes.agregar(informe);
     }
 
+  }
+
+  public String crearNombreArchivo(CriteriosDeEntidades criterio) {
+    LocalDateTime currentDateTime = LocalDateTime.now();
+
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
+    String formattedDateTime = currentDateTime.format(formatter);
+
+    return Config.getInstance().PATH_INFORMES + criterio.getNombreInterno() +
+        "_" + formattedDateTime + ".json";
   }
 
 }

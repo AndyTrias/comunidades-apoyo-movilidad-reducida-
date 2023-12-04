@@ -2,6 +2,7 @@ package models.rankings.criterios;
 
 import models.incidentes.Incidente;
 import models.entidades.Entidad;
+import models.rankings.informes.Ranking;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -12,9 +13,10 @@ public class MayorTiempo extends CriteriosEntidadesQueUsanIncidentes {
         super(nombre);
     }
 
-    public List<Entidad> generarRanking(List<Entidad> entidades) {
+    public List<Ranking> generarRanking(List<Entidad> entidades) {
         return entidades.stream()
             .sorted(Comparator.comparingDouble(this::promedioTiempoDeCierre))
+            .map(entidad -> new Ranking(entidad, (int) promedioTiempoDeCierre(entidad)))
             .collect(Collectors.toList());
     }
 

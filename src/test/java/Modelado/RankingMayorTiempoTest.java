@@ -6,6 +6,7 @@ import models.incidentes.Incidente;
 import models.localizacion.Localizacion;
 import models.localizacion.UbicacionExacta;
 import models.rankings.criterios.MayorTiempo;
+import models.rankings.informes.Ranking;
 import models.servicios.PrestacionDeServicio;
 import models.servicios.Servicio;
 import models.usuario.Usuario;
@@ -30,7 +31,7 @@ public class RankingMayorTiempoTest {
     @Test
     public void elOrdenDelRankingEsCorrecto() {
         MayorTiempo ranking = new MayorTiempo("Mayor Tiempo de resolucion");
-        List<Entidad> rankingList = ranking.generarRanking(entidades);
+        List<Ranking> rankingList = ranking.generarRanking(entidades);
 
         assertEquals(entidades.get(0), rankingList.get(0));
         assertEquals(entidades.get(1), rankingList.get(1));

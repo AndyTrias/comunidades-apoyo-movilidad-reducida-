@@ -4,6 +4,7 @@ import models.entidades.Entidad;
 import models.external.retrofit.apiServicio3.ApiServicio3;
 import models.external.retrofit.apiServicio3.responseClases.EntidadDTO;
 import models.external.retrofit.apiServicio3.responseClases.PayloadServicio3DTO;
+import models.rankings.informes.Ranking;
 import models.repositorios.RepoComunidad;
 import server.utils.Mapper;
 
@@ -18,21 +19,21 @@ public class MayorImpacto extends CriteriosEntidadesQueUsanIncidentes{
     super(nombre);
   }
 
-  public List<Entidad> generarRanking(List<Entidad> entidades) {
+  public List<Ranking> generarRanking(List<Entidad> entidades) {
     List<EntidadDTO> entidadesDTO = Mapper.mapEntidadesToEntidadesDTO(entidades, new RepoComunidad());
     PayloadServicio3DTO payloadServicio3DTO = new PayloadServicio3DTO(entidadesDTO);
 
     try {
       PayloadServicio3DTO response = ApiServicio3.getInstancia().rankingEntidades(payloadServicio3DTO);
 
-      List<Long> rankedIds =
-          response.getEntidades().stream()
-              .mapToLong(EntidadDTO::getId)
-              .boxed()
-              .toList();
+      List<Long> rankedIds = response.getEntidades().stream()
+          .mapToLong(EntidadDTO::getId)
+          .boxed()
+          .toList();
 
       return rankedIds.stream()
           .flatMap(id -> entidades.stream().filter(entidad -> entidad.getId() == id))
+          .map(entidad -> new Ranking(entidad, null))
           .collect(Collectors.toList());
 
     } catch (Exception e) {

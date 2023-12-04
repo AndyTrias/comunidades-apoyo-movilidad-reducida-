@@ -2,9 +2,9 @@ package models.rankings.informes;
 
 import models.entidades.Entidad;
 import lombok.Setter;
+import models.rankings.criterios.CriteriosDeEntidades;
 import models.rankings.estrategiaDeExportacion.EstrategiaDeExportacion;
 
-import java.io.IOException;
 import java.util.List;
 
 public class Exportador {
@@ -18,7 +18,7 @@ private EstrategiaDeExportacion estrategia;
     this.estrategia = estrategia;
   }
 
-  public String exportarConEstrategia(List<Entidad> entidades, String nombreArchivo) {
-    return this.estrategia.exportar(this.exportable.generarDatos(entidades), nombreArchivo);
+  public void exportarConEstrategia(List<Entidad> entidades, CriteriosDeEntidades criterio, String nombreArchivo) {
+    this.estrategia.exportar(this.exportable.generarDatos(entidades, criterio), nombreArchivo);
   }
 }

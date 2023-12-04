@@ -1,8 +1,9 @@
 package models.rankings.estrategiaDeExportacion;
 
-import java.io.IOException;
+import models.rankings.informes.Ranking;
+
 import java.util.List;
 
 public interface EstrategiaDeExportacion {
-  public String exportar(List<List<String>> informe, String nombreArchivo) ;
+  public void exportar(List<Ranking> informe, String nombreArchivo);
 }

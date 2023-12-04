@@ -3,6 +3,7 @@ package models.rankings.criterios;
 
 import models.incidentes.Incidente;
 import lombok.Getter;
+import models.rankings.informes.Ranking;
 import models.servicios.PrestacionDeServicio;
 import models.entidades.Entidad;
 
@@ -18,7 +19,7 @@ public abstract class CriteriosEntidadesQueUsanIncidentes implements CriteriosDe
         this.nombre = nombre;
     }
 
-    public abstract List<Entidad> generarRanking(List<Entidad> entidades);
+    public abstract List<Ranking> generarRanking(List<Entidad> entidades);
 
     protected List<Incidente> obtenerIncidentesDeEntidadEnlaSemana(Entidad entidad) {
 //        return entidad.getPrestacionesDeServicios().stream()

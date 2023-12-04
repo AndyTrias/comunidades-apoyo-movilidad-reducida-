@@ -1,58 +1,76 @@
 package models.external.json;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import models.configs.Config;
+import models.entidades.Entidad;
 import models.rankings.estrategiaDeExportacion.AdapterJson;
+import models.rankings.informes.Ranking;
+import models.repositorios.RepoEntidad;
 
-import java.io.FileWriter;
+import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
+
 
 public class ServicioJson implements AdapterJson {
 
-  public String exportarAJson(List<List<String>> lista, String rutaArchivo) {
-
-    List<Map<String, Object>> jsonList = new ArrayList<>();
-
-    // Encabezados del Json
-    List<String> headers = lista.get(0);
-
-    // Iterar las listas
-    for (int i = 1; i < lista.size(); i++) {
-      List<String> fila = lista.get(i);
-      Map<String, Object> jsonObject = new LinkedHashMap<>();
-
-      // El primer encabezado es siempre una String
-      jsonObject.put(headers.get(0), fila.get(0));
-
-      // Cada lista es una lista por lo que se itera
-      for (int j = 1; j < headers.size(); j++) {
-        String header = headers.get(j);
-
-        // Obtener los valores restantes de la fila y agregarlos a una lista
-        List<String> values = new ArrayList<>(fila.subList(j, fila.size()));
-        jsonObject.put(header, values);
-      }
-
-      jsonList.add(jsonObject);
-    }
-
-    Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    String json = gson.toJson(jsonList);
-
-
-    try (FileWriter fileWriter = new FileWriter(rutaArchivo)) {
-      fileWriter.write(json);
+  @Override
+  public void exportarAJson(List<Ranking> informe, String nombreArchivo) {
+    ObjectMapper mapper = new ObjectMapper();
+    mapper.enable(SerializationFeature.INDENT_OUTPUT);
+    SimpleModule module = new SimpleModule();
+    module.addSerializer(Ranking.class, new RankingJsonSerializer());
+    module.addDeserializer(Ranking.class, new RankingJsonDeserializer());
+    mapper.registerModule(module);
+    try {
+      mapper.writeValue(new File(nombreArchivo), informe);
     } catch (IOException e) {
-        e.getStackTrace();
+      e.printStackTrace();
     }
-    return rutaArchivo;
+  }
+
+  public List<Ranking> importarDesdeJson(String nombreArchivo) {
+    ObjectMapper mapper = new ObjectMapper();
+    SimpleModule module = new SimpleModule();
+    module.addDeserializer(Ranking.class, new RankingJsonDeserializer());
+    mapper.registerModule(module);
+    try {
+      return mapper.readValue(new File(nombreArchivo), new TypeReference<>() {});
+    } catch (IOException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+  private static class RankingJsonSerializer extends JsonSerializer<Ranking> {
+    @Override
+    public void serialize(Ranking value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+      gen.writeStartObject();
+      gen.writeNumberField("entidad", value.entidad().getId());
+      gen.writeNumberField("valor", value.valor());
+      gen.writeEndObject();
+    }
+  }
+
+  private static class RankingJsonDeserializer extends StdDeserializer<Ranking> {
+    public RankingJsonDeserializer() {
+      super(Ranking.class);
+    }
+
+    @Override
+    public Ranking deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+      JsonNode node = p.getCodec().readTree(p);
+      long entityId = node.get("entidad").asLong();
+      int valor = node.get("valor").asInt();
+      Entidad entidad = RepoEntidad.INSTANCE.buscar(entityId);
+
+      return new Ranking(entidad, valor);
+    }
   }
 
 }

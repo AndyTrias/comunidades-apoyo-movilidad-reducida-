@@ -6,6 +6,7 @@ import models.incidentes.Incidente;
 import models.localizacion.Localizacion;
 import models.localizacion.UbicacionExacta;
 import models.rankings.criterios.MayorCantidad;
+import models.rankings.informes.Ranking;
 import models.servicios.PrestacionDeServicio;
 import models.servicios.Servicio;
 import models.usuario.Usuario;
@@ -29,7 +30,7 @@ public class RankingMayorCantidadTest {
 
         MayorCantidad ranking = new MayorCantidad("Mayor cantidad de incidentes");
         List<Entidad> entidades = Arrays.asList(entidad1, entidad2, entidad3);
-        List<Entidad> rankingList = ranking.generarRanking(entidades);
+        List<Ranking> rankingList = ranking.generarRanking(entidades);
 
         assertEquals(entidad1, rankingList.get(0));
         assertEquals(entidad2, rankingList.get(1));
