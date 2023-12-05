@@ -74,9 +74,26 @@ public class Router implements WithSimplePersistenceUnit {
       app.get("admin/cargaManual", ((CargaManualController) FactoryController.controller("Administrador de plataforma"))::cargaManual, TipoRol.ADMINISTRADOR_PLATAFORMA);
       app.get("admin/cargaManual/seleccionarUbicacion", ((CargaManualController) FactoryController.controller("Administrador de plataforma"))::seleccionarUbicacion, TipoRol.ADMINISTRADOR_PLATAFORMA);
       app.get("admin/cargaManual/seleccionarMunicipio", ((CargaManualController) FactoryController.controller("Administrador de plataforma"))::seleccionarMunicipio, TipoRol.ADMINISTRADOR_PLATAFORMA);
-      app.post("admin/entidad", ((CargaManualController) FactoryController.controller("Administrador de plataforma"))::guardarEntidad, TipoRol.ADMINISTRADOR_PLATAFORMA, TipoRol.ORGANISMO_DE_CONTROL, TipoRol.ENTIDAD_PRESTADORA);
-      app.post("admin/establecimiento", ((CargaManualController) FactoryController.controller("Administrador de plataforma"))::guardarEstablecimiento, TipoRol.ADMINISTRADOR_PLATAFORMA);
-      app.post("admin/servicio", ((CargaManualController) FactoryController.controller("Administrador de plataforma"))::guardarServicio, TipoRol.ADMINISTRADOR_PLATAFORMA);
+
+      app.get("admin/entidades", ((EntidadController) FactoryController.controller("Entidad"))::show, TipoRol.ADMINISTRADOR_PLATAFORMA);
+      app.post("admin/entidades", ((CargaManualController) FactoryController.controller("Administrador de plataforma"))::guardarEntidad, TipoRol.ADMINISTRADOR_PLATAFORMA, TipoRol.ORGANISMO_DE_CONTROL, TipoRol.ENTIDAD_PRESTADORA);
+      app.get("admin/entidades/{id}", ((EntidadController) FactoryController.controller("Entidad"))::edit, TipoRol.ADMINISTRADOR_PLATAFORMA);
+      app.post("admin/entidades/{id}", ((EntidadController) FactoryController.controller("Entidad"))::update, TipoRol.ADMINISTRADOR_PLATAFORMA);
+      app.post("admin/entidades/{id}/delete", ((EntidadController) FactoryController.controller("Entidad"))::delete, TipoRol.ADMINISTRADOR_PLATAFORMA);
+
+      app.post("admin/establecimientos", ((CargaManualController) FactoryController.controller("Administrador de plataforma"))::guardarEstablecimiento, TipoRol.ADMINISTRADOR_PLATAFORMA);
+      app.get("admin/entidades/{id}/establecimientos", ((EstablecimientoController) FactoryController.controller("Establecimiento"))::show, TipoRol.ADMINISTRADOR_PLATAFORMA);
+      app.get("admin/establecimientos/{id}", ((EstablecimientoController) FactoryController.controller("Establecimiento"))::edit, TipoRol.ADMINISTRADOR_PLATAFORMA);
+      app.post("admin/establecimientos/{id}", ((EstablecimientoController) FactoryController.controller("Establecimiento"))::update, TipoRol.ADMINISTRADOR_PLATAFORMA);
+      app.post("admin/establecimientos/{id}/delete", ((EstablecimientoController) FactoryController.controller("Establecimiento"))::delete, TipoRol.ADMINISTRADOR_PLATAFORMA);
+      app.get("admin/establecimientos", ((EstablecimientoController) FactoryController.controller("Establecimiento"))::index, TipoRol.ADMINISTRADOR_PLATAFORMA);
+
+      app.get("admin/servicios", ((ServiciosController) FactoryController.controller("Servicio"))::show, TipoRol.ADMINISTRADOR_PLATAFORMA);
+      app.post("admin/servicios", ((CargaManualController) FactoryController.controller("Administrador de plataforma"))::guardarServicio, TipoRol.ADMINISTRADOR_PLATAFORMA);
+      app.get("admin/servicios/{id}", ((ServiciosController) FactoryController.controller("Servicio"))::edit, TipoRol.ADMINISTRADOR_PLATAFORMA);
+      app.post("admin/servicios/{id}/delete", ((ServiciosController) FactoryController.controller("Servicio"))::delete, TipoRol.ADMINISTRADOR_PLATAFORMA);
+      app.post("admin/servicios/{id}", ((ServiciosController) FactoryController.controller("Servicio"))::update, TipoRol.ADMINISTRADOR_PLATAFORMA);
+
       app.post("admin/prestacion", ((CargaManualController) FactoryController.controller("Administrador de plataforma"))::guardarPrestacion, TipoRol.ADMINISTRADOR_PLATAFORMA);
 
       app.get("admin/cargaMasiva", ((CargaMasivaController) FactoryController.controller("Carga masiva"))::show, TipoRol.ADMINISTRADOR_PLATAFORMA);

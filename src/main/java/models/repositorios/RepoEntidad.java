@@ -1,6 +1,7 @@
 package models.repositorios;
 
 import models.entidades.Entidad;
+import models.entidades.Establecimiento;
 import models.servicios.PrestacionDeServicio;
 
 import java.util.List;
@@ -12,9 +13,13 @@ public class RepoEntidad extends RepoGenerico<Entidad> {
         super(Entidad.class);
     }
 
-    public List<Entidad> getEntidadesConPrestacion(PrestacionDeServicio prestacion){
-        return entityManager().createQuery("select e from Entidad e join e.establecimientos es join es.servicios p where p = :prestacion", Entidad.class)
-                .setParameter("prestacion", prestacion)
-                .getResultList();
+    public Entidad buscarEntidadporEstablecimiento(Establecimiento establecimiento) {
+        return entityManager().createQuery(
+                "SELECT e FROM Entidad e " +
+                    "JOIN e.establecimientos es " +
+                    "WHERE es.id = :establecimientoId", Entidad.class)
+            .setParameter("establecimientoId", establecimiento.getId())
+            .getSingleResult();
     }
+
 }

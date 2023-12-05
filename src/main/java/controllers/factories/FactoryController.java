@@ -27,6 +27,20 @@ public class FactoryController {
           new RepoOrganismoDeControl()
       );
 
+      case "Servicio" -> new ServiciosController(
+          new RepoServicio()
+      );
+
+      case "Entidad" -> new EntidadController(
+          new RepoEntidad(),
+          new RepoEntidadPrestadora()
+      );
+
+      case "Establecimiento" -> new EstablecimientoController(
+          new RepoEstablecimiento(),
+          new RepoEntidad()
+      );
+
       case "Revision de incidentes" -> new RevisionDeIncidenteController(
           new RepoIncidentes(),
           new RepoUsuario(),

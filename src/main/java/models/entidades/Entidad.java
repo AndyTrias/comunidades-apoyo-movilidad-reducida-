@@ -35,6 +35,7 @@ public class Entidad {
     private Localizacion localizacion;
 
     @Getter
+    @Setter
     @Column(name = "nombre")
     private String nombre;
 
@@ -53,6 +54,10 @@ public class Entidad {
 
     public void agregarEstablecimiento(Establecimiento establecimiento) {
         this.establecimientos.add(establecimiento);
+    }
+
+    public void sacarEstablecimiento(Establecimiento establecimiento) {
+        this.establecimientos.remove(establecimiento);
     }
 
     public List<Incidente> getIncidentes() {

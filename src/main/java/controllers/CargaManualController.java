@@ -89,7 +89,7 @@ public class CargaManualController extends BaseController {
 
     Servicio servicio = new Servicio(ctx.formParam("nombre"));
     repoServicio.agregar(servicio);
-    ctx.redirect("/admin");
+    ctx.redirect("/admin/servicios");
   }
 
   public void guardarEntidad(Context ctx) {
@@ -104,7 +104,7 @@ public class CargaManualController extends BaseController {
     Entidad entidad = new Entidad(ctx.formParam("nombre"), new Localizacion());
     entidadPrestadora.agregarEntidad(entidad);
     repoEntidadPrestadora.modificar(entidadPrestadora);
-    ctx.redirect("/admin");
+    ctx.redirect("/admin/entidades");
   }
 
   public void guardarEstablecimiento(Context ctx) {
@@ -128,7 +128,7 @@ public class CargaManualController extends BaseController {
     entidad.agregarEstablecimiento(establecimiento);
     repoEntidad.modificar(entidad);
 
-    ctx.redirect("/admin");
+    ctx.redirect("/admin/entidades/" + entidad.getId() + "/establecimientos");
   }
 
 

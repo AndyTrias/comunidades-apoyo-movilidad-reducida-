@@ -58,6 +58,10 @@ public class EntidadPrestadora {
     entidades.add(entidad);
   }
 
+  public void sacarEntidad(Entidad entidad) {
+    entidades.remove(entidad);
+  }
+
   public void agregarEntidades(Entidad... entidades) {
     this.entidades.addAll(Arrays.asList(entidades));
   }

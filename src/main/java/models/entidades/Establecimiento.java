@@ -19,7 +19,9 @@ public class Establecimiento {
     private long id;
 
     @Column(name = "nombre")
-    @Getter private String nombre;
+    @Setter
+    @Getter
+    private String nombre;
 
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     @Getter @Setter private Localizacion localizacion;

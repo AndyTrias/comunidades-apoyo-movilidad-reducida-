@@ -1,0 +1,42 @@
+{{#partial "contenido"}}
+<div class="p-10 flex flex-col gap-4 justify-center items-center">
+    <form method="POST" class="w-1/2 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" {{#if entidad}}action="/admin/entidades/{{entidad.id}}" {{else}}action="admin/entidades"{{/if}}  >
+        <h2 class="text-lg font-semibold mb-4">Entidad</h2>
+        <div class="mb-4">
+            <label for="entidad-nombre" class="block text-gray-700 text-sm font-bold mb-2">Nombre:</label>
+            <input type="text" id="entidad-nombre" {{#if entidad}}value="{{entidad.nombre}}" {{/if}} name="nombre"
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                   required>
+        </div>
+        <div class="mb-4">
+            <label for="prestadora" class="block text-gray-700 text-sm font-bold mb-2">Entidad Prestadora:</label>
+            <select required id="prestadora" name="prestadora"
+                    data-te-select-init data-te-select-filter="true"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    required>
+                {{#if prestadora}}
+                    <option selected value="{{prestadora.id}}">{{prestadora.nombre}}</option>
+                {{else}}
+                    <option selected disabled hidden>Seleccionar prestadora</option>
+                {{/if}}
+                {{#each prestadoras}}
+                    <option value="{{this.id}}">{{this.nombre}}</option>
+                {{/each}}
+            </select>
+        </div>
+<!--        <div class="flex items-center justify-between">-->
+<!--            <a href="./cargaManual/seleccionarUbicacion"-->
+<!--               class="flex-row bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">-->
+<!--                Seleccionar ubicacion-->
+<!--            </a>-->
+<!--        </div>-->
+        <div class="flex items-center justify-between">
+            <button type="submit"
+                    class="button">
+                Guardar
+            </button>
+        </div>
+    </form>
+</div>
+{{/partial}}
+{{> templates/templateBase }}
