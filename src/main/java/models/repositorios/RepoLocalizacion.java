@@ -12,5 +12,11 @@ public class RepoLocalizacion extends RepoGenerico<Localizacion>{
         super(Localizacion.class);
     }
 
-
+    public void agregarOModificar(Localizacion localizacion) {
+        if (localizacion.getId() == 0) {
+            this.agregar(localizacion);
+        } else {
+            this.modificar(localizacion);
+        }
+    }
 }

@@ -1,5 +1,5 @@
 {{#partial "contenido"}}
-    <div class="flex flex-col items-center md:flex-row h-full">
+    <div class="flex flex-col items-center md:flex-row">
         <div class="flex flex-col justify-center items-center w-full md:w-1/2 mb-4 md:mb-0 rounded m-5">
             <div class="bg-gradient-to-br from-green-400 to-cyan-500"></div>
             <img
@@ -53,8 +53,7 @@
                     </form>
                 </div>
             {{/if}}
-            <div class="flex items-center space-x-4 mb-2 mx-auto">
-                <label for="filter" class="text-white">Filtro:</label>
+            <div class="flex items-center mb-2 justify-center gap-4">
                 <select id="filter" class="border rounded-md py-1 px-2 text-black" onchange="searchFilter()">
                     <option value="todos">Todos</option>
                     <option value="abierto">Abierto</option>

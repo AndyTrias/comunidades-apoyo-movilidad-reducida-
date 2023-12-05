@@ -3,19 +3,18 @@ package controllers;
 import io.javalin.http.Context;
 
 import lombok.AllArgsConstructor;
+import models.configs.Config;
 import models.entidades.Entidad;
 import models.entidades.EntidadPrestadora;
 import models.entidades.Establecimiento;
 import models.external.retrofit.georef.Georef;
+import models.external.retrofit.georef.responseClases.ListadoMunicipios;
 import models.external.retrofit.georef.responseClases.ListadoProvincias;
 import models.external.retrofit.georef.responseClases.Municipio;
 import models.external.retrofit.georef.responseClases.Provincia;
 import models.localizacion.Localizacion;
 import models.localizacion.UbicacionExacta;
-import models.repositorios.RepoEntidad;
-import models.repositorios.RepoEntidadPrestadora;
-import models.repositorios.RepoEstablecimiento;
-import models.repositorios.RepoServicio;
+import models.repositorios.*;
 import models.servicios.PrestacionDeServicio;
 import models.servicios.Servicio;
 import models.usuario.Usuario;
@@ -31,7 +30,7 @@ public class CargaManualController extends BaseController {
   private RepoEntidad repoEntidad;
   private RepoEstablecimiento repoEstablecimiento;
   private RepoEntidadPrestadora repoEntidadPrestadora;
-
+  private RepoLocalizacion repoLocalizacion;
 
   public void cargaManual(Context ctx) {
     Map<String, Object> model = new HashMap<>();
@@ -41,42 +40,40 @@ public class CargaManualController extends BaseController {
     model.put("establecimientos", repoEstablecimiento.buscarTodos());
     model.put("prestadoras", repoEntidadPrestadora.buscarTodos());
     model.put("administrador", true);
+    model.put("API_GEOREF", Config.getInstance().API_GEOREF);
+    model.put("provincias", Georef.getInstancia().listadoProvincias().provincias);
 
     ctx.render("admin/cargaManual.hbs", model);
   }
 
-  public void seleccionarUbicacion(Context ctx) {
-    Map<String, Object> model = new HashMap<>();
+  private Localizacion guardarLocalizacion(Context ctx) {
+    String idProvincia = ctx.formParam("provincia");
+    String idMunicipio = ctx.formParam("municipio");
+    String idLocalidad = ctx.formParam("localidad");
 
-    model.put("provincias", Georef.getInstancia().listadoProvincias().provincias);
+    if (idProvincia == null || idProvincia.isEmpty()) {
+      ctx.redirect("/admin/cargaManual");
+      return null;
+    }
 
-    ctx.render("admin/seleccionarProvincia.hbs", model);
-  }
+    if (idMunicipio == null || idMunicipio.isEmpty()) {
+      Localizacion localizacion = new Localizacion();
+      localizacion.setUbicacionAsProvincia(Integer.parseInt(idProvincia));
+      repoLocalizacion.agregarOModificar(localizacion);
+      return localizacion;
+    }
 
-  public void seleccionarMunicipio(Context ctx) {
-    Map<String, Object> model = new HashMap<>();
-    String idProvincia = ctx.queryParam("provincia");
+    if (idLocalidad == null || idLocalidad.isEmpty()) {
+      Localizacion localizacion = new Localizacion();
+      localizacion.setUbicacionAsMunicipio(Integer.parseInt(idMunicipio));
+      repoLocalizacion.agregarOModificar(localizacion);
+      return localizacion;
+    }
 
-    model.put("provincia", idProvincia);
-    model.put("municipios", Georef.getInstancia().listadoMunicipios(idProvincia).municipios);
-
-    ctx.render("admin/seleccionarMunicipio.hbs", model);
-  }
-
-  public void seleccionarLocalidad(Context ctx) {
-    Map<String, Object> model = new HashMap<>();
-    String idProvincia = ctx.queryParam("provincia");
-    String idMunicipio = ctx.queryParam("municipio");
-
-    model.put("provincia", idProvincia);
-    model.put("municipio", idMunicipio);
-    model.put("localidades", Georef.getInstancia().listadoLocalidades(idProvincia, idMunicipio).localidades);
-
-    ctx.render("admin/seleccionarLocalidad.hbs", model);
-  }
-
-  public void guardarUbicacion(Context ctx) {
-
+    Localizacion localizacion = new Localizacion();
+    localizacion.setUbicacionAsLocalidad(Long.parseLong(idLocalidad));
+    repoLocalizacion.agregarOModificar(localizacion);
+    return localizacion;
   }
 
 
@@ -101,7 +98,8 @@ public class CargaManualController extends BaseController {
     }
 
     EntidadPrestadora entidadPrestadora = repoEntidadPrestadora.buscar(Long.valueOf(ctx.formParams("prestadora").get(1)));
-    Entidad entidad = new Entidad(ctx.formParam("nombre"), new Localizacion());
+    Localizacion localizacion = guardarLocalizacion(ctx);
+    Entidad entidad = new Entidad(ctx.formParam("nombre"), localizacion);
     entidadPrestadora.agregarEntidad(entidad);
     repoEntidadPrestadora.modificar(entidadPrestadora);
     ctx.redirect("/admin/entidades");

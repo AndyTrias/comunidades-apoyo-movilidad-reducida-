@@ -33,13 +33,9 @@ public class ApiServicioController {
     private RepoEntidad repoEntidad;
 
     public void fusionDeComunidades(Context ctx) {
+        List<Comunidad> comunidades = repoComunidad.buscarTodos();
 
-        List<Comunidad> comunidades = ctx.formParams("comunidades").stream()
-            .filter(id -> id.length() < 6)
-            .map(id -> repoComunidad.buscar(Long.parseLong(id)))
-            .collect(Collectors.toList());
-
-        List<Fusion> fusiones = repoFusion.buscarTodos();
+        List<Fusion> fusiones = repoFusion.buscarNoRealizadas();
         List<Establecimiento> establecimientos = repoEstablecimiento.buscarTodos();
 
         List<ComunidadDTO> comunidadDTOS = Mapper.mapComunidadesToComunidadesDTO(comunidades, establecimientos);
@@ -50,8 +46,9 @@ public class ApiServicioController {
             PayloadDTO response = ApiServicio1.getInstancia().comunidadesYFusiones(payloadDTO);
             asignarComunidades(response.getComunidades());
             asignarFusiones(response.getFusiones());
-            ctx.redirect("/admin/config");
+            ctx.redirect("/comunidades");
         } catch (Exception e) {
+            e.printStackTrace();
             throw new EntidadNoExistenteException("No se pudo conectar con el servicio de fusion");
         }
     }
@@ -78,6 +75,7 @@ public class ApiServicioController {
             }
             fusionBuscada.setEstado(fusion.getEstado());
             fusionBuscada.setFechaCreada(fusion.getFechaCreada());
+            fusionBuscada.setRealizada(true);
             repoFusion.modificar(fusionBuscada);
 
         });
