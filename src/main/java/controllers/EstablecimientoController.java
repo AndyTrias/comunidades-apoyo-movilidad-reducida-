@@ -3,7 +3,6 @@ package controllers;
 import io.javalin.http.Context;
 import lombok.AllArgsConstructor;
 import models.entidades.Entidad;
-import models.entidades.Entidad;
 import models.entidades.Establecimiento;
 import models.repositorios.RepoEntidad;
 import models.repositorios.RepoEstablecimiento;

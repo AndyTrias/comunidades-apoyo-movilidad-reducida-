@@ -1,6 +1,6 @@
 {{#partial "contenido"}}
 <div class="p-10 flex flex-col gap-4 justify-center items-center">
-    <form method="POST" class="w-1/2 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" {{#if entidad}}action="/admin/entidades/{{entidad.id}}" {{else}}action="admin/entidades"{{/if}}  >
+    <form method="POST" class="w-1/2 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" {{#if entidad}}action="/admin/entidades/{{entidad.id}}" {{else}}action="/admin/entidades"{{/if}}  >
         <h2 class="text-lg font-semibold mb-4">Entidad</h2>
         <div class="mb-4">
             <label for="entidad-nombre" class="block text-gray-700 text-sm font-bold mb-2">Nombre:</label>

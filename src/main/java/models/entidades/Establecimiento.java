@@ -23,7 +23,7 @@ public class Establecimiento {
     @Getter
     private String nombre;
 
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @Getter
     @Setter
     private Localizacion localizacion;

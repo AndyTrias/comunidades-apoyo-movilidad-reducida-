@@ -31,7 +31,7 @@ public class Entidad {
     private Set<Establecimiento> establecimientos;
 
     @Setter
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Localizacion localizacion;
 
     @Getter
