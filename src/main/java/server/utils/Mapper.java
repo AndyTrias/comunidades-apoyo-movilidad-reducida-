@@ -42,7 +42,12 @@ public class Mapper {
     }
 
     public static Comunidad mapComunidadDTOToComunidad(ComunidadDTO c, RepoMembresia repoMembresia, RepoPrestacion repoPrestacion, RepoComunidad repoComunidad) {
-        Comunidad comunidad = repoComunidad.buscar(Long.parseLong(String.valueOf(c.getId())));
+        Comunidad comunidad;
+        if (c.getId() == null) {
+            comunidad = new Comunidad("Comunidad fusionada");
+        } else {
+            comunidad = repoComunidad.buscar(Long.parseLong(String.valueOf(c.getId())));
+        }
         c.getIdServiciosObservados().forEach(s -> comunidad.agregarServicioDeInteres(repoPrestacion.buscar(Long.parseLong(String.valueOf(s)))));
         c.getIdMiembros().forEach(m -> comunidad.agregarMembresia(repoMembresia.buscar(Long.parseLong(String.valueOf(m)))));
         return comunidad;

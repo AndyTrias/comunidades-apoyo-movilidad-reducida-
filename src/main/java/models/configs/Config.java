@@ -13,7 +13,7 @@ public class Config {
   private Long id;
 
   @Column(name = "path_peores_contrasenias")
-  public final String PEORES_CONTRASENIAS = "resources/public/10000Peores.txt";
+  public final String PEORES_CONTRASENIAS = "src/main/resources/public/10000Peores.txt";
   @Column(name = "path_csv_organismos")
   public final String CSV_PATH_ORGANISMOS = "resources/public/organismos_de_control.csv";
   @Column(name = "path_csv_prestadoras")

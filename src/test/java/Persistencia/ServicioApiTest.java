@@ -1,18 +1,17 @@
-/*
 package Persistencia;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import models.comunidades.Comunidad;
 import models.comunidades.Membresia;
+import models.repositorios.*;
+import models.servicios.Servicio;
 import models.usuario.Rol;
 import models.entidades.Establecimiento;
 import models.external.retrofit.apiServicio3.ApiServicio3;
 import models.external.retrofit.apiServicio3.responseClases.EntidadDTO;
 import models.external.retrofit.apiServicio3.responseClases.IncidenteDTO;
 import models.external.retrofit.apiServicio3.responseClases.PayloadServicio3DTO;
-import models.repositorios.RepoComunidad;
-import models.repositorios.RepoEstablecimiento;
 import models.servicios.PrestacionDeServicio;
 import models.usuario.Usuario;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,29 +22,37 @@ import java.util.List;
 public class ServicioApiTest {
     private RepoComunidad repoComunidad;
     private RepoEstablecimiento repoEstablecimiento;
+    private RepoUsuario repoUsuario;
+    private RepoPrestacion repoPrestacion;
+    private RepoMembresia repoMembresia;
 
     @BeforeEach
     public void init() {
         repoComunidad = new RepoComunidad();
         repoEstablecimiento = new RepoEstablecimiento();
+        repoUsuario = new RepoUsuario();
+        repoPrestacion = new RepoPrestacion();
+        repoMembresia = new RepoMembresia();
     }
 
     @Test
     public void datosParaProbarApi() {
-        Comunidad comunidad1 = new Comunidad("falopa1");
-        Comunidad comunidad2 = new Comunidad("falopa2");
+        Comunidad comunidad1 = new Comunidad("altaComu");
+        Comunidad comunidad2 = new Comunidad("altaComu2");
+        repoComunidad.agregar(comunidad1);
+        repoComunidad.agregar(comunidad2);
 
-        Establecimiento establecimiento1 = new Establecimiento();
-        Establecimiento establecimiento2 = new Establecimiento();
-        Establecimiento establecimiento3 = new Establecimiento();
-        Establecimiento establecimiento4 = new Establecimiento();
-        Establecimiento establecimiento5 = new Establecimiento();
+        Establecimiento establecimiento1 = repoEstablecimiento.buscar(1L);
+        Establecimiento establecimiento2 = repoEstablecimiento.buscar(2L);
+        Establecimiento establecimiento3 = repoEstablecimiento.buscar(3L);
+        Establecimiento establecimiento4 = repoEstablecimiento.buscar(4L);
+        Establecimiento establecimiento5 = repoEstablecimiento.buscar(5L);
 
-        PrestacionDeServicio prestacion1 = new PrestacionDeServicio();
-        PrestacionDeServicio prestacion2 = new PrestacionDeServicio();
-        PrestacionDeServicio prestacion3 = new PrestacionDeServicio();
-        PrestacionDeServicio prestacion4 = new PrestacionDeServicio();
-        PrestacionDeServicio prestacion5 = new PrestacionDeServicio();
+        PrestacionDeServicio prestacion1 = repoPrestacion.buscar(1L);
+        PrestacionDeServicio prestacion2 = repoPrestacion.buscar(2L);
+        PrestacionDeServicio prestacion3 = repoPrestacion.buscar(3L);
+        PrestacionDeServicio prestacion4 = repoPrestacion.buscar(4L);
+        PrestacionDeServicio prestacion5 = repoPrestacion.buscar(5L);
 
         establecimiento1.agregarServicioPrestado(prestacion1);
         establecimiento2.agregarServicioPrestado(prestacion2);
@@ -68,6 +75,16 @@ public class ServicioApiTest {
         Usuario usuario3 = new Usuario("franco", "pesce", "f@gmail.com");
         Usuario usuario4 = new Usuario("franco", "pesce", "f@gmail.com");
         Usuario usuario5 = new Usuario("franco", "pesce", "f@gmail.com");
+        usuario1.setContrasenia("@Qazxsw12");
+        usuario2.setContrasenia("@Qazxsw12");
+        usuario3.setContrasenia("@Qazxsw12");
+        usuario4.setContrasenia("@Qazxsw12");
+        usuario5.setContrasenia("@Qazxsw12");
+        repoUsuario.agregar(usuario1);
+        repoUsuario.agregar(usuario2);
+        repoUsuario.agregar(usuario3);
+        repoUsuario.agregar(usuario4);
+        repoUsuario.agregar(usuario5);
 
         Membresia membresiaNueva = new Membresia(comunidad1, usuario1, new Rol());
         usuario1.unirseAComunidad(membresiaNueva);
@@ -101,13 +118,17 @@ public class ServicioApiTest {
         usuario5.unirseAComunidad(membresiaNueva8);
         comunidad2.agregarMembresia(membresiaNueva8);
 
-        repoComunidad.agregar(comunidad1);
-        repoComunidad.agregar(comunidad2);
-        repoEstablecimiento.agregar(establecimiento1);
-        repoEstablecimiento.agregar(establecimiento2);
-        repoEstablecimiento.agregar(establecimiento3);
-        repoEstablecimiento.agregar(establecimiento4);
-        repoEstablecimiento.agregar(establecimiento5);
+        repoMembresia.agregar(membresiaNueva);
+        repoMembresia.agregar(membresiaNueva2);
+        repoMembresia.agregar(membresiaNueva3);
+        repoMembresia.agregar(membresiaNueva4);
+        repoMembresia.agregar(membresiaNueva5);
+        repoMembresia.agregar(membresiaNueva6);
+        repoMembresia.agregar(membresiaNueva7);
+        repoMembresia.agregar(membresiaNueva8);
+
+        repoComunidad.modificar(comunidad1);
+        repoComunidad.modificar(comunidad2);
     }
 
     @Test
@@ -220,4 +241,3 @@ public class ServicioApiTest {
 
     }
 }
-*/

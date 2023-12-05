@@ -2,6 +2,7 @@ package models.repositorios;
 
 import models.comunidades.Fusion;
 
+import java.util.List;
 import java.util.Optional;
 
 public class RepoFusion extends RepoGenerico<Fusion> {
@@ -18,5 +19,10 @@ public class RepoFusion extends RepoGenerico<Fusion> {
                 .setParameter("comunidad2", fusion.getComunidad2())
                 .getResultStream()
                 .findFirst();
+    }
+
+    public List<Fusion> buscarNoRealizadas() {
+        return entityManager().createQuery("select f from Fusion f where f.realizada = false", Fusion.class)
+                .getResultList();
     }
 }

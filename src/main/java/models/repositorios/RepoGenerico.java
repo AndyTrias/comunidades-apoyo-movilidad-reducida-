@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 public abstract class RepoGenerico<T> implements WithSimplePersistenceUnit {
     private final Class<T> entityClass;
@@ -37,7 +38,6 @@ public abstract class RepoGenerico<T> implements WithSimplePersistenceUnit {
     public T buscar(Long id) {
         return find(entityClass, id);
     }
-
     public List<T> buscarTodos() {
         return entityManager()
                 .createQuery("select e from " + entityClass.getSimpleName() + " e", entityClass)
@@ -45,6 +45,7 @@ public abstract class RepoGenerico<T> implements WithSimplePersistenceUnit {
 
 
     }
+
 
 
 }

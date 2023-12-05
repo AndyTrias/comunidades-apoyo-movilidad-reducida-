@@ -22,7 +22,9 @@ public class Establecimiento {
     @Getter private String nombre;
 
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
-    @Getter @Setter private Localizacion localizacion;
+    @Getter
+    @Setter
+    private Localizacion localizacion;
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     @JoinColumn(name = "establecimiento_id", nullable = false)

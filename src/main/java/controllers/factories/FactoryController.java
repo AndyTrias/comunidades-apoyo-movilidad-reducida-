@@ -45,7 +45,8 @@ public class FactoryController {
           new RepoServicio(),
           new RepoEntidad(),
           new RepoEstablecimiento(),
-          new RepoEntidadPrestadora()
+          new RepoEntidadPrestadora(),
+          new RepoLocalizacion()
       );
 
       case "Perfil" -> new PerfilController(

@@ -29,4 +29,7 @@ public class Fusion {
     @Column(name = "fecha_creada")
     private Date fechaCreada;
 
+    @Column(name = "realizada")
+    private boolean realizada;
+
 }
