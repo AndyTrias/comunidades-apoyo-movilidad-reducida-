@@ -9,6 +9,7 @@ import models.entidades.Entidad;
 import models.entidades.Establecimiento;
 import models.external.retrofit.apiServicio1.ApiServicio1;
 import models.external.retrofit.apiServicio1.responseClases.ComunidadDTO;
+import models.external.retrofit.apiServicio1.responseClases.EstadoFusion;
 import models.external.retrofit.apiServicio1.responseClases.FusionDTO;
 import models.external.retrofit.apiServicio1.responseClases.PayloadDTO;
 import models.external.retrofit.apiServicio3.ApiServicio3;
@@ -18,9 +19,7 @@ import models.repositorios.*;
 import server.exceptions.EntidadNoExistenteException;
 import server.utils.Mapper;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -32,7 +31,64 @@ public class ApiServicioController {
     private RepoPrestacion repoPrestacion;
     private RepoEntidad repoEntidad;
 
-    public void fusionDeComunidades(Context ctx) {
+    public void show(Context ctx) {
+        List<Comunidad> comunidades = repoComunidad.buscarTodos();
+        List<Fusion> fusiones = repoFusion.buscarNoRealizadas();
+
+        Map<String, Object> model = new HashMap<>();
+        model.put("comunidades", comunidades);
+        model.put("fusiones", fusiones);
+
+        ctx.render("comunidades/fusion.hbs", model);
+    }
+
+    public void sugerirComunidades(Context ctx){
+        List<String> ids = ctx.formParams("comunidades");
+
+        List<Comunidad> comunidades = ids.stream().map(id -> repoComunidad.buscar(Long.parseLong(id))).toList();
+        List<Fusion> fusiones = new ArrayList<>();
+        List<Establecimiento> establecimientos = repoEstablecimiento.buscarTodos();
+
+        llamarALaApi(comunidades, fusiones, establecimientos);
+        ctx.redirect("/admin/sugerenciaDeFusion");
+    }
+
+    public void fusionarComunidades(Context ctx){
+        List<String> ids = ctx.formParams("fusiones");
+
+        List<Fusion> fusiones = ids.stream().map(id -> repoFusion.buscar(Long.parseLong(id))).toList();
+        List<Comunidad> comunidades = new ArrayList<>(fusiones.stream().map(Fusion::getComunidad1).toList());
+        comunidades.addAll(fusiones.stream().map(Fusion::getComunidad2).toList());
+        fusiones.forEach(f -> {
+            f.setEstado(EstadoFusion.ACEPTADA);
+            f.setRealizada(true);
+        });
+        List<Establecimiento> establecimientos = repoEstablecimiento.buscarTodos();
+
+        llamarALaApi(comunidades, fusiones, establecimientos);
+        ctx.redirect("/admin/sugerenciaDeFusion");
+    }
+
+    private void llamarALaApi(List<Comunidad> comunidades, List<Fusion> fusiones, List<Establecimiento> establecimientos) {
+        List<ComunidadDTO> comunidadDTOS = Mapper.mapComunidadesToComunidadesDTO(comunidades, establecimientos);
+        List<FusionDTO> fusionesDTO = Mapper.mapFusionesToFusionesDTO(fusiones, establecimientos);
+        PayloadDTO payloadDTO = new PayloadDTO(comunidadDTOS, fusionesDTO);
+
+        try {
+            PayloadDTO response = ApiServicio1.getInstancia().comunidadesYFusiones(payloadDTO);
+            asignarFusiones(response.getFusiones());
+            asignarComunidades(response.getComunidades());
+        } catch (Exception e) {
+            fusiones.forEach(f -> {
+                f.setEstado(EstadoFusion.PROPUESTA);
+                f.setRealizada(false);
+            });
+            e.printStackTrace();
+            throw new EntidadNoExistenteException("No se pudo conectar con el servicio de fusion");
+        }
+    }
+
+    /*public void fusionDeComunidades(Context ctx) {
         List<Comunidad> comunidades = repoComunidad.buscarTodos();
 
         List<Fusion> fusiones = repoFusion.buscarNoRealizadas();
@@ -51,7 +107,7 @@ public class ApiServicioController {
             e.printStackTrace();
             throw new EntidadNoExistenteException("No se pudo conectar con el servicio de fusion");
         }
-    }
+    }*/
 
     private void asignarComunidades(List<ComunidadDTO> comunidades){
         comunidades.forEach(c -> {
@@ -75,7 +131,9 @@ public class ApiServicioController {
             }
             fusionBuscada.setEstado(fusion.getEstado());
             fusionBuscada.setFechaCreada(fusion.getFechaCreada());
-            fusionBuscada.setRealizada(true);
+            if (fusionBuscada.getEstado() == EstadoFusion.ACEPTADA) {
+                fusionBuscada.setRealizada(true);
+            }
             repoFusion.modificar(fusionBuscada);
 
         });

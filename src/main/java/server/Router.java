@@ -67,7 +67,10 @@ public class Router implements WithSimplePersistenceUnit {
     });
 
     app.routes(() -> {
-      app.post("sugerenciaDeFusion", ((ApiServicioController) FactoryController.controller("Sugerencia de fusion"))::fusionDeComunidades);
+      app.get("admin/sugerenciaDeFusion", ((ApiServicioController) FactoryController.controller("Sugerencia de fusion"))::show);
+      app.post("admin/sugerirComunidades", ((ApiServicioController) FactoryController.controller("Sugerencia de fusion"))::sugerirComunidades);
+      app.post("admin/fusionarComunidades", ((ApiServicioController) FactoryController.controller("Sugerencia de fusion"))::fusionarComunidades);
+      /*app.post("admin/sugerenciaDeFusion", ((ApiServicioController) FactoryController.controller("Sugerencia de fusion"))::fusionDeComunidades);*/
     });
 
     app.routes(() -> {

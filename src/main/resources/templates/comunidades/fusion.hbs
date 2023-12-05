@@ -1,0 +1,52 @@
+{{#partial "contenido"}}
+    <main class="flex flex-col md:flex-row justify-center items-center h-full">
+        <div class="h-full w-full flex justify-center items-center">
+            <div class="flex flex-col bg-white rounded justify-center items-center p-4 h-3/4 w-1/2 shadow-2xl secondary">
+                <h1 class="text-4xl font-bold text-black mb-2">
+                    Comunidades
+                </h1>
+                <h3 class="text-xl text-black mb-2">
+                    Seleccione las comunidades que desea fusionar
+                </h3>
+                <form action="/admin/sugerirComunidades" method="post" class="p-4">
+                    <div class="flex flex-col gap-4 border-2 border-gray-400 rounded md:h-96 h-32 overflow-scroll p-4">
+                        {{#each comunidades}}
+                        <div class="flex flex-row justify-center items-center gap-2">
+                            <label for="comunidades" class="text-2xl cursor-pointer text-black">{{this.nombre}}</label>
+                            <input type="checkbox" name="comunidades" id="{{this.id}}" value="{{this.id}}" >
+                        </div>
+                        {{/each}}
+                    </div>
+                    <button type="submit" class="button mt-4">
+                        Comprobar fusion de Comunidades
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="h-full w-full flex justify-center items-center">
+            <div class="flex flex-col bg-white rounded justify-center items-center p-4 h-3/4 w-1/2 shadow-2xl secondary">
+                <h1 class="text-4xl font-bold text-black mb-2">
+                    Fusiones
+                </h1>
+                <h3 class="text-xl text-black mb-2">
+                    Seleccione las fusiones que desea realizar
+                </h3>
+                <form action="/admin/fusionarComunidades" method="post" class="p-4">
+                    <div class="flex flex-col gap-4 border-2 border-gray-400 rounded md:h-96 h-32 overflow-scroll p-4">
+                        {{#each fusiones}}
+                        <div class="flex flex-row justify-center items-center gap-2">
+                            <label for="fusiones" class="text-2xl cursor-pointer text-black">{{this.comunidad1.nombre}} + {{this.comunidad2.nombre}}</label>
+                            <input type="checkbox" name="fusiones" id="{{this.id}}" value="{{this.id}}">
+                        </div>
+                        {{/each}}
+                    </div>
+                    <button type="submit" class="button mt-4">
+                        Fusionar Comunidades
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+{{/partial}}
+{{> templates/templateBase }}

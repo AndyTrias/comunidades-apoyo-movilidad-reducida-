@@ -8,24 +8,7 @@
         </div>
 
         {{#if administrador}}
-            <form method="post" action="/sugerenciaDeFusion" class="flex flex-col gap-4">
-                <label for="comunidad_id"></label>
-                <div class="mb-4">
-                    <div class="flex flex-wrap w-full">
-                        <select required name="comunidades" id="prestaciones" class="w-full"
-                                style="width: 100% !important;" data-te-select-init data-te-select-filter="true"
-                                data-te-select-placeholder="Example placeholder"
-                                multiple>
-                            <option selected="" disabled="" hidden=""  class="w-full">Seleccionar Comunidad</option>
-                            {{#each comunidades}}
-                                <option value="{{this.id}}">{{this.nombre}}</option>
-                            {{/each}}
-                        </select>
-                    </div>
-                </div>
-                <button class="button" id="fusion" type="submit">Fusionar Comunidades</button>
-            </form>
-
+            <a class="linkButton" href="admin/sugerenciaDeFusion">Fusionar Comunidades</a>
         {{else}}
             <form action="comunidades/unirse" method="post" class="flex flex-col gap-4">
                 <label for="comunidad_id"></label>
