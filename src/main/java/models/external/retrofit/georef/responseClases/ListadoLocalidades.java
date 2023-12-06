@@ -6,7 +6,7 @@ public class ListadoLocalidades {
     public int cantidad;
     public int inicio;
     public int total;
-    public List<Localidad> localidades;
+    public List<Localidad> localidades_censales;
     public Parametro parametros;
 
     public class Parametro {

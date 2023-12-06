@@ -38,6 +38,7 @@ public class ApiServicioController {
         Map<String, Object> model = new HashMap<>();
         model.put("comunidades", comunidades);
         model.put("fusiones", fusiones);
+        model.put("administrador", true);
 
         ctx.render("comunidades/fusion.hbs", model);
     }

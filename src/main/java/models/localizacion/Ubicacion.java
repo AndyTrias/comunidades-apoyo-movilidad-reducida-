@@ -13,19 +13,19 @@ import javax.persistence.*;
 public class Ubicacion {
     @Getter
     @Setter
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "provincia_id")
     private Provincia provincia;
 
     @Getter
     @Setter
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "municipio_id")
     private Municipio municipio;
 
     @Getter
     @Setter
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "localidad_id")
     private Localidad localidad;
 }

@@ -121,6 +121,7 @@ public class ComunidadController extends BaseController {
     model.put("prestacionesNoPertenecenAComunidad", posiblesPrestacionesNuevas);
     model.put("administrador", usuario.esAdministrador());
     model.put("administradorComunidad", membresia.esAdministrador());
+    model.put("admin", usuario.esAdministrador() || membresia.esAdministrador());
 
     ctx.render("comunidades/comunidad.hbs", model);
   }

@@ -66,10 +66,10 @@ public class Localizacion {
     public void setUbicacionAsLocalidad(long idLocalidad) {
         try {
             ListadoLocalidades localidad = adapter.getLocalidadById(idLocalidad);
-            this.ubicacion.setLocalidad(localidad.localidades.get(0));
-            this.ubicacion.setMunicipio(localidad.localidades.get(0).municipio);
-            this.ubicacion.getMunicipio().setProvincia(localidad.localidades.get(0).municipio.provincia);
-            this.ubicacion.setProvincia(localidad.localidades.get(0).provincia);
+            this.ubicacion.setLocalidad(localidad.localidades_censales.get(0));
+            this.ubicacion.setMunicipio(localidad.localidades_censales.get(0).municipio);
+            this.ubicacion.getMunicipio().setProvincia(localidad.localidades_censales.get(0).municipio.provincia);
+            this.ubicacion.setProvincia(localidad.localidades_censales.get(0).provincia);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
