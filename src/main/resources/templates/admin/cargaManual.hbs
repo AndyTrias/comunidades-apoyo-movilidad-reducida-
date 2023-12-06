@@ -22,11 +22,27 @@
                 </select>
             </div>
 
-            <div class="flex items-center justify-between">
-                <a href="./cargaManual/seleccionarUbicacion"
-                        class="flex-row bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                    Seleccionar ubicacion
-                </a>
+            <div class="flex flex-col gap-4 justify-center items-center">
+                <select id="provincia" name="provincia"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        required>
+                    <option selected disabled hidden>Seleccionar provincia</option>
+                    {{#each provincias}}
+                        <option value="{{this.id}}">{{this.nombre}}</option>
+                    {{/each}}
+                </select>
+
+                <select id="municipio" name="municipio"
+                        class="hidden shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        required>
+                    <option selected disabled hidden>Seleccionar municipio</option>
+                </select>
+
+                <select id="localidad" name="localidad"
+                        class="hidden shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        required>
+                    <option selected disabled hidden>Seleccionar localidad</option>
+                </select>
             </div>
 
 
@@ -122,5 +138,54 @@
         </div>
     </form>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            /* when select with provincias is selected, fetch the api*/
+            let provinciaId;
+            let municipioId;
+            let localidadId;
+            let url = '{{API_GEOREF}}';
+            console.log(url);
+            document.getElementById('provincia').addEventListener('change', function () {
+                provinciaId = this.value;
+                fetch(url + 'municipios?provincia=' + provinciaId + '&max=5000')
+                        .then(response => response.json())
+                        .then(data => {
+                            let municipios = data.municipios;
+                            console.log(municipios);
+                            let select = document.getElementById('municipio');
+                            select.innerHTML = '';
+                            municipios.forEach(municipio => {
+                                let option = document.createElement('option');
+                                option.value = municipio.id;
+                                option.text = municipio.nombre;
+                                select.appendChild(option);
+                            });
+                            select.classList.remove('hidden');
+                        });
+            });
+            document.getElementById('municipio').addEventListener('change', function () {
+                municipioId = this.value;
+                fetch(url + 'localidades-censales?provincia=' + provinciaId + '&municipio=' + municipioId + '&max=5000')
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(data);
+                            let localidades = data.localidades_censales;
+                            let select = document.getElementById('localidad');
+                            select.innerHTML = '';
+                            localidades.forEach(localidad => {
+                                let option = document.createElement('option');
+                                option.value = localidad.id;
+                                option.text = localidad.nombre;
+                                select.appendChild(option);
+                            });
+                            select.classList.remove('hidden');
+                        });
+            });
+            document.getElementById('localidad').addEventListener('change', function () {
+                localidadId = this.value;
+            });
+        });
+    </script>
 {{/partial}}
 {{> templates/templateBase }}

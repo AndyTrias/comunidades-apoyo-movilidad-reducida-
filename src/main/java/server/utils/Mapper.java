@@ -94,6 +94,10 @@ public class Mapper {
         return entidadDTO;
     }
 
+    public static Entidad mapEntidadDTOToEntidad(EntidadDTO e, List<Entidad> entidades) {
+        return entidades.stream().filter(entidad -> entidad.getId() == e.getId()).findFirst().orElse(null);
+    }
+
     public static IncidenteDTO mapIncidenteToIncidenteDTO(Incidente i, RepoComunidad repoComunidad) {
         IncidenteDTO incidenteDTO = new IncidenteDTO();
         incidenteDTO.setFechaApertura(obtenerFechaComoString(i.getFechaDeApertura()));

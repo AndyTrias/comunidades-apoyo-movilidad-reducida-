@@ -19,7 +19,7 @@ public class Config {
   @Column(name = "path_csv_prestadoras")
   public final String CSV_PATH_PRESTADORAS = "resources/public/entidades_prestadoras.csv";
   @Column(name = "path_informes")
-  public final String PATH_INFORMES = "resources/public/informes/";
+  public final String PATH_INFORMES = "src/main/resources/public/informes/";
   @Column(name = "api_georef")
   public final String API_GEOREF = System.getenv("API_GEOREF");
   @Column(name = "latitud_maxima")

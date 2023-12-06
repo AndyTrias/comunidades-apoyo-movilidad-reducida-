@@ -9,6 +9,7 @@ import java.util.List;
 public class EntidadDTO {
     private int id;
     private List<IncidenteDTO> incidentes;
+    private String valor;
 
     public EntidadDTO() {
         incidentes = new ArrayList<>();

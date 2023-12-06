@@ -26,20 +26,18 @@ public class MayorImpacto extends CriteriosEntidadesQueUsanIncidentes{
     try {
       PayloadServicio3DTO response = ApiServicio3.getInstancia().rankingEntidades(payloadServicio3DTO);
 
-      List<Long> rankedIds = response.getEntidades().stream()
-          .mapToLong(EntidadDTO::getId)
-          .boxed()
-          .toList();
-
-      return rankedIds.stream()
-          .flatMap(id -> entidades.stream().filter(entidad -> entidad.getId() == id))
-          .map(entidad -> new Ranking(entidad, null))
-          .collect(Collectors.toList());
+      return response.getEntidades().stream()
+              .map(entidadDTO -> new Ranking(Mapper.mapEntidadDTOToEntidad(entidadDTO, entidades), doubleStringToInt(entidadDTO.getValor())))
+              .toList();
 
     } catch (Exception e) {
       e.printStackTrace();
       return Collections.emptyList();
     }
+  }
+
+  private int doubleStringToInt(String doubleString) {
+    return (int) Double.parseDouble(doubleString);
   }
 
 }
