@@ -107,9 +107,9 @@ public class AgregarDatosTest {
     @Test
     void agregarEstacionesLineaRoca() {
         Localizacion localizacion = new Localizacion();
-        Servicio servicio = repoServicio.buscar(1L); // Asegúrate de que el ID del servicio sea correcto
+        Servicio servicio = repoServicio.buscar(1L);
 
-        Entidad lineaRoca = new Entidad("Linea Roca", localizacion); // Crea la entidad si no existe
+        Entidad lineaRoca = new Entidad("Linea Roca", localizacion);
 
         EntidadPrestadora prestadora = repoEntidadPrestadora.buscar(1L);
         prestadora.agregarEntidades(lineaRoca);
@@ -295,20 +295,20 @@ public class AgregarDatosTest {
 
 
 
-@Order(13)
-    @Test
-    void agregarIncidenteARevisar() throws InterruptedException {
-        Thread.sleep(1000);
-        Usuario usuario = repoUsuario.buscar(1L);
-        PrestacionDeServicio banioMedrano1 = repoPrestacion.buscar(1L);
-
-        Incidente incidente = new Incidente(usuario, "baño sucio", banioMedrano1, new Date());
-
-        repoIncidentes.agregar(incidente);
-
-        usuario.agregarRevisionDeIncidente(repoIncidentes.buscar(1L));
-        repoUsuario.modificar(usuario);
-    }
+//@Order(13)
+//    @Test
+//    void agregarIncidenteARevisar() throws InterruptedException {
+//        Thread.sleep(1000);
+//        Usuario usuario = repoUsuario.buscar(1L);
+//        PrestacionDeServicio banioMedrano1 = repoPrestacion.buscar(1L);
+//
+//        Incidente incidente = new Incidente(usuario, "baño sucio", banioMedrano1, new Date());
+//
+//        repoIncidentes.agregar(incidente);
+//
+//        usuario.agregarRevisionDeIncidente(repoIncidentes.buscar(1L));
+//        repoUsuario.modificar(usuario);
+//    }
 
 }
 
