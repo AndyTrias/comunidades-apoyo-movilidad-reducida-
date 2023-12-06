@@ -276,21 +276,29 @@ public class AgregarDatosTest {
         usuario2.setContrasenia("@ashffkrh3nksdnf214123cssdf");
         usuario2.setTelefono("+5491131231231");
         usuario2.setUbicacionExacta(new UbicacionExacta(1, 1));
-        //usuario.setRol(repoRol.buscarPorNombre(TipoRol.ADMINISTRADOR_PLATAFORMA));
-        repoUsuario.agregar(usuario);
-
+        usuario2.setRol(repoRol.buscarPorNombre(TipoRol.MIEMBRO));
+        repoUsuario.agregar(usuario2);
     }
 
     @Order(12)
     @Test
     void agregarMembresia() throws Exception {
-        Usuario usuario = repoUsuario.buscar(1L);
+        Usuario usuarioAdmin = repoUsuario.buscar(1L);
         Comunidad comunidad = repoComunidad.buscar(1L);
-
-        Membresia membresia = new Membresia(comunidad, usuario, repoRol.buscarPorNombre(TipoRol.MIEMBRO));
+        Membresia membresia = new Membresia(comunidad, usuarioAdmin, repoRol.buscarPorNombre(TipoRol.MIEMBRO));
         comunidad.agregarMembresia(membresia);
-        usuario.unirseAComunidad(membresia);
+        usuarioAdmin.unirseAComunidad(membresia);
         repoComunidad.modificar(comunidad);
+
+        List<Comunidad> comunidades = repoComunidad.buscarTodos();
+        Usuario usuarioComunidad = repoUsuario.buscar(2L);
+
+        for (Comunidad com : comunidades) {
+            Membresia mem = new Membresia(com, usuarioComunidad, repoRol.buscarPorNombre(TipoRol.ADMINISTRADOR_COMUNIDAD));
+            com.agregarMembresia(mem);
+            usuarioComunidad.unirseAComunidad(mem);
+            repoComunidad.modificar(com);
+        }
     }
 
 
