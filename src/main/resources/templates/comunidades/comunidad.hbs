@@ -39,7 +39,7 @@
         </div>
 
         <div class="w-full md:w-1/2">
-            {{# if membresia.esAdministrador }}
+            {{# if administrador }}
                 <div class="flex space-x-8 p-3 mx-auto" >
                     <form action="/comunidades/{{comunidad.id}}/prestacion" method="post">
                         <select id="prestacion" name="prestacion" class="border rounded-md py-1 px-2" required>

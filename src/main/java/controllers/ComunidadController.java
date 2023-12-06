@@ -75,7 +75,7 @@ public class ComunidadController extends BaseController {
     }
 
     Usuario usuario = usuarioLogueado(ctx);
-    if (usuario == null || !usuario.getMembresia(comunidad).getRol().tenesPermiso("agregar_servicio_de_interes")) {
+    if (usuario == null || (!usuario.esAdministrador() && !usuario.getMembresia(comunidad).getRol().tenesPermiso("agregar_servicio_de_interes"))) {
       throw new PermisosInvalidosException("No tienes los permisos para agregar un servicio");
     }
 
@@ -119,6 +119,7 @@ public class ComunidadController extends BaseController {
     model.put("membresia", membresia);
     model.put("estadisticas", comunidad.getEstadisticas());
     model.put("prestacionesNoPertenecenAComunidad", posiblesPrestacionesNuevas);
+    model.put("administrador", membresia.esAdministrador() || usuario.esAdministrador());
 
     ctx.render("comunidades/comunidad.hbs", model);
   }
