@@ -96,7 +96,7 @@ public class CargaManualController extends BaseController {
       throw new PermisosInvalidosException("No tienes permisos para crear un entidad");
     }
 
-    EntidadPrestadora entidadPrestadora = repoEntidadPrestadora.buscar(Long.valueOf(ctx.formParams("prestadora").get(1)));
+    EntidadPrestadora entidadPrestadora = repoEntidadPrestadora.buscar(Long.valueOf(ctx.formParams("prestadora").get(0)));
     Localizacion localizacion = guardarLocalizacion(ctx);
     Entidad entidad = new Entidad(ctx.formParam("nombre"), localizacion);
     entidadPrestadora.agregarEntidad(entidad);
