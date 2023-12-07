@@ -52,7 +52,6 @@ public class CargaManualController extends BaseController {
     String idLocalidad = ctx.formParam("localidad");
 
     if (idProvincia == null || idProvincia.isEmpty()) {
-      ctx.redirect("/admin/cargaManual");
       return null;
     }
 
