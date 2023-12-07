@@ -143,7 +143,7 @@ public class CargaManualController extends BaseController {
       throw new PermisosInvalidosException("No tienes permisos para crear un prestacion");
     }
 
-    List<Long> numbersList = ctx.formParams("prestadora").stream()
+    List<Long> numbersList = ctx.formParams("servicio").stream()
             .filter(str -> str.matches("\\d+")) // Only consider strings with digits
             .map(Long::valueOf) // Convert each string to Long
             .toList();

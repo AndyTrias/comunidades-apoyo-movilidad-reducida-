@@ -84,7 +84,7 @@ public class InformesController extends BaseController {
       String nombreArchivo = crearNombreArchivo(criterio);
       Exportador exportador = new Exportador(generadorDeInformes, estrategia);
       exportador.exportarConEstrategia(entidades, criterio, nombreArchivo);
-
+      System.out.println("Se genero el informe: " + nombreArchivo);
       Informe informe = new Informe(new Date(), nombreArchivo, criterio.getNombre());
       repoInformes.agregar(informe);
     }
@@ -96,6 +96,10 @@ public class InformesController extends BaseController {
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
     String formattedDateTime = currentDateTime.format(formatter);
+
+    System.out.println(criterio.getNombreInterno());
+    System.out.println(Config.getInstance().PATH_INFORMES + criterio.getNombreInterno() +
+            "_" + formattedDateTime + ".json");
 
     return Config.getInstance().PATH_INFORMES + criterio.getNombreInterno() +
         "_" + formattedDateTime + ".json";

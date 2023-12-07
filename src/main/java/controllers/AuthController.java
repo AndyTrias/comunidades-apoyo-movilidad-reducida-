@@ -119,7 +119,7 @@ public class AuthController {
     public void registerOrganismo(Context ctx) {
         String email = ctx.formParam("email");
         String password = ctx.formParam("password");
-        List<Long> numbersList = ctx.formParams("prestadora").stream()
+        List<Long> numbersList = ctx.formParams("organismo").stream()
                 .filter(str -> str.matches("\\d+")) // Only consider strings with digits
                 .map(Long::valueOf) // Convert each string to Long
                 .toList();

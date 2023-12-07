@@ -79,18 +79,21 @@ public class Mapper {
         return fusion;
     }
 
-    public static List<EntidadDTO> mapEntidadesToEntidadesDTO(List<Entidad> entidades, RepoComunidad repoComunidad) {
+    public static List<EntidadDTO> mapEntidadesToEntidadesDTO(List<Entidad> entidades) {
         List<EntidadDTO> entidadesDTO = new ArrayList<>();
+        System.out.println("entrando al for de lista de entidadesDTO: " + entidadesDTO);
         for (Entidad e : entidades) {
-            entidadesDTO.add(mapEntidadToEntidadDTO(e, repoComunidad));
+            entidadesDTO.add(mapEntidadToEntidadDTO(e));
         }
+        System.out.println("devolviendo lista de entidadesDTO: " + entidadesDTO);
         return entidadesDTO;
     }
 
-    public static EntidadDTO mapEntidadToEntidadDTO(Entidad e, RepoComunidad repoComunidad) {
+    public static EntidadDTO mapEntidadToEntidadDTO(Entidad e) {
         EntidadDTO entidadDTO = new EntidadDTO();
         entidadDTO.setId(Integer.parseInt(String.valueOf(e.getId())));
-        entidadDTO.setIncidentes(mapIncidentesToIncidentesDTO(e.getIncidentes(), repoComunidad));
+        entidadDTO.setIncidentes(mapIncidentesToIncidentesDTO(e.getIncidentes()));
+        System.out.println("entidadDTO: " + entidadDTO);
         return entidadDTO;
     }
 
@@ -98,16 +101,19 @@ public class Mapper {
         return entidades.stream().filter(entidad -> entidad.getId() == e.getId()).findFirst().orElse(null);
     }
 
-    public static IncidenteDTO mapIncidenteToIncidenteDTO(Incidente i, RepoComunidad repoComunidad) {
+    public static IncidenteDTO mapIncidenteToIncidenteDTO(Incidente i) {
         IncidenteDTO incidenteDTO = new IncidenteDTO();
         incidenteDTO.setFechaApertura(obtenerFechaComoString(i.getFechaDeApertura()));
         incidenteDTO.setFechaCierre(obtenerFechaComoString(new Date(i.calcularPromedioFechasCierre())));
-        List<Comunidad> comunidadesConIncidente = repoComunidad.buscarTodosPorIncidente(i);
+        List<Comunidad> comunidadesConIncidente = RepoComunidad.INSTANCE.buscarTodosPorIncidente(i);
+        System.out.println("comunidadesConIncidente: " + comunidadesConIncidente);
         int cantidadDeAfectados = 0;
         for (Comunidad c : comunidadesConIncidente) {
             cantidadDeAfectados += c.getCantidadDeAfectados(i.getPrestacionDeServicio());
+            System.out.println("cantidadDeAfectados: " + cantidadDeAfectados);
         }
         incidenteDTO.setMiembrosAfectados(cantidadDeAfectados);
+        System.out.println("incidenteDTO: " + incidenteDTO);
         return incidenteDTO;
     }
 
@@ -119,11 +125,13 @@ public class Mapper {
         return dateTime.format(formatoFecha);
     }
 
-    public static List<IncidenteDTO> mapIncidentesToIncidentesDTO(List<Incidente> incidentes, RepoComunidad repoComunidad) {
+    public static List<IncidenteDTO> mapIncidentesToIncidentesDTO(List<Incidente> incidentes) {
         List<IncidenteDTO> incidentesDTO = new ArrayList<>();
+        System.out.println("entrando al for de lista de incidentesDTO: " + incidentesDTO);
         for (Incidente i : incidentes) {
-            incidentesDTO.add(mapIncidenteToIncidenteDTO(i, repoComunidad));
+            incidentesDTO.add(mapIncidenteToIncidenteDTO(i));
         }
+        System.out.println("devolviendo lista de incidentesDTO: " + incidentesDTO);
         return incidentesDTO;
     }
 }
