@@ -79,18 +79,18 @@ public class Mapper {
         return fusion;
     }
 
-    public static List<EntidadDTO> mapEntidadesToEntidadesDTO(List<Entidad> entidades, RepoComunidad repoComunidad) {
+    public static List<EntidadDTO> mapEntidadesToEntidadesDTO(List<Entidad> entidades) {
         List<EntidadDTO> entidadesDTO = new ArrayList<>();
         for (Entidad e : entidades) {
-            entidadesDTO.add(mapEntidadToEntidadDTO(e, repoComunidad));
+            entidadesDTO.add(mapEntidadToEntidadDTO(e));
         }
         return entidadesDTO;
     }
 
-    public static EntidadDTO mapEntidadToEntidadDTO(Entidad e, RepoComunidad repoComunidad) {
+    public static EntidadDTO mapEntidadToEntidadDTO(Entidad e) {
         EntidadDTO entidadDTO = new EntidadDTO();
         entidadDTO.setId(Integer.parseInt(String.valueOf(e.getId())));
-        entidadDTO.setIncidentes(mapIncidentesToIncidentesDTO(e.getIncidentes(), repoComunidad));
+        entidadDTO.setIncidentes(mapIncidentesToIncidentesDTO(e.getIncidentes()));
         return entidadDTO;
     }
 
@@ -98,11 +98,12 @@ public class Mapper {
         return entidades.stream().filter(entidad -> entidad.getId() == e.getId()).findFirst().orElse(null);
     }
 
-    public static IncidenteDTO mapIncidenteToIncidenteDTO(Incidente i, RepoComunidad repoComunidad) {
+    public static IncidenteDTO mapIncidenteToIncidenteDTO(Incidente i) {
         IncidenteDTO incidenteDTO = new IncidenteDTO();
         incidenteDTO.setFechaApertura(obtenerFechaComoString(i.getFechaDeApertura()));
         incidenteDTO.setFechaCierre(obtenerFechaComoString(new Date(i.calcularPromedioFechasCierre())));
-        List<Comunidad> comunidadesConIncidente = repoComunidad.buscarTodosPorIncidente(i);
+        List<Comunidad> comunidadesConIncidente = RepoComunidad.INSTANCE.buscarTodosPorIncidente(i);
+        System.out.println("comunidadesConIncidente: " + comunidadesConIncidente);
         int cantidadDeAfectados = 0;
         for (Comunidad c : comunidadesConIncidente) {
             cantidadDeAfectados += c.getCantidadDeAfectados(i.getPrestacionDeServicio());
@@ -119,10 +120,10 @@ public class Mapper {
         return dateTime.format(formatoFecha);
     }
 
-    public static List<IncidenteDTO> mapIncidentesToIncidentesDTO(List<Incidente> incidentes, RepoComunidad repoComunidad) {
+    public static List<IncidenteDTO> mapIncidentesToIncidentesDTO(List<Incidente> incidentes) {
         List<IncidenteDTO> incidentesDTO = new ArrayList<>();
         for (Incidente i : incidentes) {
-            incidentesDTO.add(mapIncidenteToIncidenteDTO(i, repoComunidad));
+            incidentesDTO.add(mapIncidenteToIncidenteDTO(i));
         }
         return incidentesDTO;
     }
