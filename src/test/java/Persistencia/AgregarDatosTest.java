@@ -123,7 +123,7 @@ public class AgregarDatosTest {
         PrestacionDeServicio banoEstacionKostekiSantillan = new PrestacionDeServicio(servicio, "Baño - Estacion Kosteki y Santillán", new UbicacionExacta(-58.376587215544404, -34.66115614252646));
         estacionKostekiSantillan.agregarServicioPrestado(banoEstacionKostekiSantillan);
 
-        PrestacionDeServicio banoEstacionAvellaneda = new PrestacionDeServicio(servicio, "Baño - Estacion Avellaneda", new UbicacionExacta(1, 1));
+        PrestacionDeServicio banoEstacionAvellaneda = new PrestacionDeServicio(servicio, "Baño - Estacion Avellaneda", new UbicacionExacta(-58.37133069407539, -34.66996497542504));
         estacionAvellaneda.agregarServicioPrestado(banoEstacionAvellaneda);
 
         repoEntidadPrestadora.modificar(prestadora);
@@ -175,7 +175,7 @@ public class AgregarDatosTest {
         PrestacionDeServicio banoEstacionLugano = new PrestacionDeServicio(servicio, "Baño Lugano", new UbicacionExacta(-58.47689828500522, -34.677405669173204));
         estacionLugano.agregarServicioPrestado(banoEstacionLugano);
 
-        PrestacionDeServicio banoEstacionMitre = new PrestacionDeServicio(servicio, "Baño Mitre", new UbicacionExacta(1, 1));
+        PrestacionDeServicio banoEstacionMitre = new PrestacionDeServicio(servicio, "Baño Mitre", new UbicacionExacta(-58.44075451951553, -34.62922995767716));
         estacionMitre.agregarServicioPrestado(banoEstacionMitre);
 
         repoEntidadPrestadora.modificar(prestadora);
@@ -303,20 +303,20 @@ public class AgregarDatosTest {
 
 
 
-//@Order(13)
-//    @Test
-//    void agregarIncidenteARevisar() throws InterruptedException {
-//        Thread.sleep(1000);
-//        Usuario usuario = repoUsuario.buscar(1L);
-//        PrestacionDeServicio banioMedrano1 = repoPrestacion.buscar(1L);
-//
-//        Incidente incidente = new Incidente(usuario, "baño sucio", banioMedrano1, new Date());
-//
-//        repoIncidentes.agregar(incidente);
-//
-//        usuario.agregarRevisionDeIncidente(repoIncidentes.buscar(1L));
-//        repoUsuario.modificar(usuario);
-//    }
+@Order(13)
+    @Test
+    void agregarIncidenteARevisar() throws InterruptedException {
+        Thread.sleep(1000);
+        Usuario usuario = repoUsuario.buscar(4L);
+        PrestacionDeServicio banioMedrano1 = repoPrestacion.buscar(1L);
+
+        Incidente incidente = new Incidente(usuario, "baño sucio", banioMedrano1, new Date());
+
+        repoIncidentes.agregar(incidente);
+
+        usuario.agregarRevisionDeIncidente(repoIncidentes.buscar(9L));
+        repoUsuario.modificar(usuario);
+    }
 
 }
 

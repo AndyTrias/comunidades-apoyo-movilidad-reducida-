@@ -353,6 +353,10 @@ ol.stepper li.active::after {
     background: url("https://images.pexels.com/photos/6169668/pexels-photo-6169668.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1") no-repeat 50% / cover;
 }
 
+.carrousel>div:nth-of-type(4) {
+    background: url("https://images.pexels.com/photos/574071/pexels-photo-574071.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2") no-repeat 50% / cover;
+}
+
 .carrousel>div .component {
     font-size: 1.5rem;
     color: #fff;
