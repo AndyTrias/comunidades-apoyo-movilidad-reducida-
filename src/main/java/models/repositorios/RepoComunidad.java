@@ -36,10 +36,10 @@ public class RepoComunidad extends RepoGenerico<Comunidad>{
 
     public List<Comunidad> buscarTodosPorIncidente(Incidente i){
         TypedQuery<Comunidad> query = entityManager().createQuery(
-            "SELECT c FROM Comunidad c " +
-                "JOIN c.incidentes ic " +
-                "WHERE ic.id = :incidenteId",
-            Comunidad.class);
+                "SELECT c FROM Comunidad c " +
+                        "JOIN c.incidentes ic " +
+                        "WHERE ic.id = :incidenteId",
+                Comunidad.class);
 
         query.setParameter("incidenteId", i.getId());
 

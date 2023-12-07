@@ -148,7 +148,5 @@ public class AuthController {
     ctx.sessionAttribute("tipo_rol", usuario.getTipoRol().toString());
     ctx.sessionAttribute("usuario_id", usuario.getId().toString());
     ctx.redirect("/");
-
-
   }
 }

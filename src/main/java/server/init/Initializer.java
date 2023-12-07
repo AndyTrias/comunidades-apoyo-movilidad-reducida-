@@ -27,6 +27,7 @@ public class Initializer implements WithSimplePersistenceUnit {
     Map<String, Object> configOverrides = setConfigOverrides(new HashMap<>());
     EntityManagerFactory em = Persistence.createEntityManagerFactory("simple-persistence-unit", configOverrides);
     RepoGenerico.entityManager = em.createEntityManager();
+
     if (new RepoRol().buscarTodos().size() < 4) {
       new Initializer()
           .iniciarTransaccion()
