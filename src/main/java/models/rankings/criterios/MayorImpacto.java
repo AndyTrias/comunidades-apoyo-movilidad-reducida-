@@ -25,6 +25,7 @@ public class MayorImpacto extends CriteriosEntidadesQueUsanIncidentes{
 
     try {
       PayloadServicio3DTO response = ApiServicio3.getInstancia().rankingEntidades(payloadServicio3DTO);
+      System.out.println(response);
 
       return response.getEntidades().stream()
               .map(entidadDTO -> new Ranking(Mapper.mapEntidadDTOToEntidad(entidadDTO, entidades), doubleStringToInt(entidadDTO.getValor())))
@@ -32,6 +33,7 @@ public class MayorImpacto extends CriteriosEntidadesQueUsanIncidentes{
 
     } catch (Exception e) {
       e.printStackTrace();
+      System.out.println(e);
       return Collections.emptyList();
     }
   }
