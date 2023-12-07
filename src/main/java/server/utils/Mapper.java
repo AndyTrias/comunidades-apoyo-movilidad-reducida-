@@ -81,9 +81,11 @@ public class Mapper {
 
     public static List<EntidadDTO> mapEntidadesToEntidadesDTO(List<Entidad> entidades) {
         List<EntidadDTO> entidadesDTO = new ArrayList<>();
+        System.out.println("entrando al for de lista de entidadesDTO: " + entidadesDTO);
         for (Entidad e : entidades) {
             entidadesDTO.add(mapEntidadToEntidadDTO(e));
         }
+        System.out.println("devolviendo lista de entidadesDTO: " + entidadesDTO);
         return entidadesDTO;
     }
 
@@ -91,6 +93,7 @@ public class Mapper {
         EntidadDTO entidadDTO = new EntidadDTO();
         entidadDTO.setId(Integer.parseInt(String.valueOf(e.getId())));
         entidadDTO.setIncidentes(mapIncidentesToIncidentesDTO(e.getIncidentes()));
+        System.out.println("entidadDTO: " + entidadDTO);
         return entidadDTO;
     }
 
@@ -107,8 +110,10 @@ public class Mapper {
         int cantidadDeAfectados = 0;
         for (Comunidad c : comunidadesConIncidente) {
             cantidadDeAfectados += c.getCantidadDeAfectados(i.getPrestacionDeServicio());
+            System.out.println("cantidadDeAfectados: " + cantidadDeAfectados);
         }
         incidenteDTO.setMiembrosAfectados(cantidadDeAfectados);
+        System.out.println("incidenteDTO: " + incidenteDTO);
         return incidenteDTO;
     }
 
@@ -122,9 +127,11 @@ public class Mapper {
 
     public static List<IncidenteDTO> mapIncidentesToIncidentesDTO(List<Incidente> incidentes) {
         List<IncidenteDTO> incidentesDTO = new ArrayList<>();
+        System.out.println("entrando al for de lista de incidentesDTO: " + incidentesDTO);
         for (Incidente i : incidentes) {
             incidentesDTO.add(mapIncidenteToIncidenteDTO(i));
         }
+        System.out.println("devolviendo lista de incidentesDTO: " + incidentesDTO);
         return incidentesDTO;
     }
 }
