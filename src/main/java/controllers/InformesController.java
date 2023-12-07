@@ -84,7 +84,7 @@ public class InformesController extends BaseController {
       String nombreArchivo = crearNombreArchivo(criterio);
       Exportador exportador = new Exportador(generadorDeInformes, estrategia);
       exportador.exportarConEstrategia(entidades, criterio, nombreArchivo);
-
+      System.out.println("Se genero el informe: " + nombreArchivo);
       Informe informe = new Informe(new Date(), nombreArchivo, criterio.getNombre());
       repoInformes.agregar(informe);
     }
