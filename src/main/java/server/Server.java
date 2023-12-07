@@ -23,7 +23,7 @@ public class Server {
 
   public static void init() {
     if(app == null) {
-      int port = Integer.parseInt(System.getProperty("port", "8081"));
+      int port = Integer.parseInt(System.getProperty("port", "8080"));
       app = Javalin.create(config()).start(port);
       initTemplateEngine();
       new Router();

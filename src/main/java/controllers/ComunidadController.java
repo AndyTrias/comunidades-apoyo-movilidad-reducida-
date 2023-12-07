@@ -13,6 +13,7 @@ import server.exceptions.EntidadNoExistenteException;
 import server.exceptions.PermisosInvalidosException;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 public class ComunidadController extends BaseController {
@@ -91,7 +92,11 @@ public class ComunidadController extends BaseController {
 
   public void unir(Context ctx) {
     Usuario usuario = usuarioLogueado(ctx);
-    Comunidad comunidad = obtenerComunidad(ctx.formParams("comunidad_id").get(1));
+    List<Long> numbersList = ctx.formParams("comunidad_id").stream()
+            .filter(str -> str.matches("\\d+")) // Only consider strings with digits
+            .map(Long::valueOf) // Convert each string to Long
+            .toList();
+    Comunidad comunidad = obtenerComunidad(numbersList.get(0).toString());
 
 
     Membresia membresia = new Membresia(comunidad, usuario, new RepoRol().buscarPorNombre(TipoRol.MIEMBRO));

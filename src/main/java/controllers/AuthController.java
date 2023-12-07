@@ -14,6 +14,7 @@ import server.exceptions.CredencialesInvalidaException;
 import server.exceptions.EntidadNoExistenteException;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @AllArgsConstructor
@@ -90,7 +91,11 @@ public class AuthController {
   public void registerEntidad(Context ctx) {
     String email = ctx.formParam("email");
     String password = ctx.formParam("password");
-    String prestadora = ctx.formParams("prestadora").get(1);
+    List<Long> numbersList = ctx.formParams("prestadora").stream()
+            .filter(str -> str.matches("\\d+")) // Only consider strings with digits
+            .map(Long::valueOf) // Convert each string to Long
+            .toList();
+    String prestadora = numbersList.get(0).toString();
 
     if (repoUsuario.buscarPorEmail(email).orElse(null) != null) {
       throw new CredencialesInvalidaException("Ya existe un usuario con ese email");
@@ -114,7 +119,11 @@ public class AuthController {
     public void registerOrganismo(Context ctx) {
         String email = ctx.formParam("email");
         String password = ctx.formParam("password");
-        String organismo = ctx.formParams("organismo").get(1);
+        List<Long> numbersList = ctx.formParams("prestadora").stream()
+                .filter(str -> str.matches("\\d+")) // Only consider strings with digits
+                .map(Long::valueOf) // Convert each string to Long
+                .toList();
+        String organismo = numbersList.get(0).toString();
 
         if (repoUsuario.buscarPorEmail(email).orElse(null) != null) {
             throw new CredencialesInvalidaException("Ya existe un usuario con ese email");

@@ -52,7 +52,6 @@ public class CargaManualController extends BaseController {
     String idLocalidad = ctx.formParam("localidad");
 
     if (idProvincia == null || idProvincia.isEmpty()) {
-      ctx.redirect("/admin/cargaManual");
       return null;
     }
 
@@ -96,8 +95,11 @@ public class CargaManualController extends BaseController {
     if (usuario == null || !usuario.getRol().tenesPermiso("crear_entidad")) {
       throw new PermisosInvalidosException("No tienes permisos para crear un entidad");
     }
-
-    EntidadPrestadora entidadPrestadora = repoEntidadPrestadora.buscar(Long.valueOf(ctx.formParams("prestadora").get(1)));
+    List<Long> numbersList = ctx.formParams("prestadora").stream()
+            .filter(str -> str.matches("\\d+")) // Only consider strings with digits
+            .map(Long::valueOf) // Convert each string to Long
+            .toList();
+    EntidadPrestadora entidadPrestadora = repoEntidadPrestadora.buscar(numbersList.get(0));
     Localizacion localizacion = guardarLocalizacion(ctx);
     Entidad entidad = new Entidad(ctx.formParam("nombre"), localizacion);
     entidadPrestadora.agregarEntidad(entidad);
@@ -112,8 +114,11 @@ public class CargaManualController extends BaseController {
     if (usuario == null || !usuario.getRol().tenesPermiso("crear_establecimiento")) {
       throw new PermisosInvalidosException("No tienes permisos para crear un establecimiento");
     }
-
-    Entidad entidad = repoEntidad.buscar(Long.valueOf(Objects.requireNonNull(ctx.formParams("entidad").get(1))));
+    List<Long> numbersList = ctx.formParams("entidad").stream()
+            .filter(str -> str.matches("\\d+")) // Only consider strings with digits
+            .map(Long::valueOf) // Convert each string to Long
+            .toList();
+    Entidad entidad = repoEntidad.buscar(numbersList.get(0));
     if (entidad == null) {
       throw new EntidadNoExistenteException("No existe esa entidad");
     }
@@ -138,8 +143,11 @@ public class CargaManualController extends BaseController {
       throw new PermisosInvalidosException("No tienes permisos para crear un prestacion");
     }
 
-
-    Establecimiento establecimiento = repoEstablecimiento.buscar(Long.valueOf(Objects.requireNonNull(ctx.formParams("establecimiento").get(1))));
+    List<Long> numbersList = ctx.formParams("prestadora").stream()
+            .filter(str -> str.matches("\\d+")) // Only consider strings with digits
+            .map(Long::valueOf) // Convert each string to Long
+            .toList();
+    Establecimiento establecimiento = repoEstablecimiento.buscar(numbersList.get(0));
     if (establecimiento == null) {
       throw new EntidadNoExistenteException("No existe ese establecimiento");
     }
