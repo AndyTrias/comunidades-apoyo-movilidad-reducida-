@@ -25,8 +25,11 @@ public class EntidadController {
     EntidadPrestadora prestadoraVieja = repoEntidadPrestadora.buscarPrestadoraporEntidad(entidad.getId());
     prestadoraVieja.sacarEntidad(entidad);
 
-
-    EntidadPrestadora prestadoraNueva = repoEntidadPrestadora.buscar(Long.valueOf(Objects.requireNonNull(ctx.formParams("prestadora").get(1))));
+  List<Long> numbersList = ctx.formParams("prestadora").stream()
+          .filter(str -> str.matches("\\d+")) // Only consider strings with digits
+          .map(Long::valueOf) // Convert each string to Long
+          .toList();
+    EntidadPrestadora prestadoraNueva = repoEntidadPrestadora.buscar(numbersList.get(0));
     prestadoraNueva.agregarEntidades(entidad);
 
     repoEntidadPrestadora.modificar(prestadoraVieja);
