@@ -97,6 +97,10 @@ public class InformesController extends BaseController {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
     String formattedDateTime = currentDateTime.format(formatter);
 
+    System.out.println(criterio.getNombreInterno());
+    System.out.println(Config.getInstance().PATH_INFORMES + criterio.getNombreInterno() +
+            "_" + formattedDateTime + ".json");
+
     return Config.getInstance().PATH_INFORMES + criterio.getNombreInterno() +
         "_" + formattedDateTime + ".json";
   }
