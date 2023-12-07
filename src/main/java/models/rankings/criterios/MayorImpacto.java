@@ -20,10 +20,13 @@ public class MayorImpacto extends CriteriosEntidadesQueUsanIncidentes{
   }
 
   public List<Ranking> generarRanking(List<Entidad> entidades) {
+    System.out.println("Generando ranking de MayorImpacto");
     List<EntidadDTO> entidadesDTO = Mapper.mapEntidadesToEntidadesDTO(entidades, new RepoComunidad());
+    entidadesDTO.forEach(e -> System.out.println(e.getId()));
     PayloadServicio3DTO payloadServicio3DTO = new PayloadServicio3DTO(entidadesDTO);
-
+    System.out.println(payloadServicio3DTO);
     try {
+      System.out.println("Llamando a ApiServicio3");
       PayloadServicio3DTO response = ApiServicio3.getInstancia().rankingEntidades(payloadServicio3DTO);
       System.out.println(response);
 
