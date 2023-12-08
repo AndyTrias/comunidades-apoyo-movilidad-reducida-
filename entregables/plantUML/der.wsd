@@ -258,10 +258,11 @@ eMembresia}|--||eRol
 eMembresia}|--||eUsuario
 eMembresia}|--||eComunidad
 
-eLocalizacion}|--||eLocalidad
 eLocalizacion}|--||eMunicipio
-eLocalizacion}|--||eProvincia
 eLocalizacion}|--||eUsuario
+eLocalidad||-|{eLocalizacion
+
+eProvincia||--|{eLocalizacion
 
 eLocalidad}|--||eMunicipio
 eLocalidad}|--||eProvincia
@@ -283,7 +284,7 @@ ePrestacionDeServicio}|--||eUbicacionExacta
 ePrestacionDeServicio}|--||eEstablecimiento
 
 eEstablecimiento}|--||eEntidad
-eEstablcimiento}|--||eLocalizacion
+eEstablecimiento}|--||eLocalizacion
 
 eRolPermiso}|--||eRol
 eRolPermiso}|--||ePermiso
@@ -293,7 +294,8 @@ eFechasDeCierra}|--||eIncidente
 eFusion}|--||eComunidad
 eFusion}|--||eComunidad
 
-eNotificacion}|--||eUsuario
+' eNotificacion}|--||eUsuario
+eUsuario||-|{eNotificacion
 
 eEstrategiadenotificacionNotificacion }|--|| eEstrategiaDeNotificacion
 eEstrategiadenotificacionNotificacion }|--|| eNotificacion
@@ -304,7 +306,7 @@ eEntidadPrestadora}|--||eOrganismoDeControl
 eEntidadPrestadora}|--||eUsuario
 
 eEntidad}|--||eLocalizacion
-eEntidad}|--||eEntidadPrestadora
+eEntidad}|-||eEntidadPrestadora
 
 eIncidenteDeComunidad }|--|| eIncidente
 eIncidenteDeComunidad }|--|| eComunidad

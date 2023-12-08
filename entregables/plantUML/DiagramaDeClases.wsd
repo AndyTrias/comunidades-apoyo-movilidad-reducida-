@@ -1,14 +1,28 @@
-@startuml
+@startuml dfdsf
 
-Class PrestacionDeServicio {    
-    - servicio: Servicio
-    - incidentes: List<Incidente>
-    - nombre: String
-    - ubicacionExacta: UbicacionExacta
+Class PrestacionDeServicio #F7F8E0{
+    - nombre : String
+    - servicio : Servicio
+    - incidentes : List<Incidente>
+    - ubicacionExacta : UbicacionExacta
 
-    + funciona() : String
-    + abrirIncidente(): void
+    + agregarIncidente(Incidente) : void
+}
 
+Class LectorOrganismoDeControl #F6E3CE extends FileStream{
+    - organismosLeidos : Set<OrganismosDeControl>
+    + levantarObjetos(List<Strings[]> csvComoLista) : void
+}
+
+Class LectorEntidadPrestadora #F6E3CE extends FileStream{
+    - entidadesLeidas : Map<EntidadPrestadora, Long>
+    + levantarObjetos(List<Strings[]> csvComoLista) : void
+}
+
+Abstract Class FileStream #F6E3CE{
+    + leerCSV(String: ruta) : void
+    + csvALista(String: ruta) : List<String[]>
+    + levantarObjetos(List<Strings[]> csvComoLista) : void
 }
 
 Class UbicacionExacta {
@@ -17,10 +31,9 @@ Class UbicacionExacta {
 }
 
 
-Class Servicio {
-    + informacion(): String
+Class Servicio #F7F8E0{
+    - nombre : String
 }
-
 
 class Rol{
     -usuario: List<Usuario>
@@ -29,58 +42,62 @@ class Rol{
     +tenesPermiso(): void
 }
 
-
-
-
-class Permiso{
- - String: Nombre
-
+Enum TipoRol #F8E0E0{
+    ADMINISTRADOR_PLATAFORMA
+    MIEMBRO
+    ADMINISTRADOR_COMUNIDAD
+    ENTIDAD_PRESTADORA
+    ORGANISMO_DE_CONTROL
 }
 
 
-class Comunidad {
-    - roles: set<Rol>
-    - nombre: String
-    - serviciosDeInteres: Set<PrestacionDeServicio>
-    - incidentesAbiertos: List<Incidente>
-    - incidentesCerrados: List<Incidente>
-    - notificador: Notificador
+Class Permiso #F8E0E0{
+    - nombre : String
+    - nombreInterno : String
+}
 
 
-    + aceptarUsuario(usuario: Usuario): Rol
-    + cambiarRol(usuario: Usuario, rol: Rol): void
-    + eliminarUsuario(Usuario: Usuario): void
-    + getCantidadDeUsuarios(): int
-    + abrirIncidente(incidente: Incidente): void
-    + cerrarIncidente(incidente: Incidente): void
-    + getTodosLosIncidentes(): List<Incidente>
-    + getCantidadDeAfectados(): int
-
+class Comunidad #CED8F6{
+    - nombre
+    - membresias : List<Membresiia> 
+    - serviciosDeInteres : List<PrestacionesDeServicios>
+    - incidentes : List<Incidente>
+    - notificador : Notificador
+    
+    + agregarMembresia(Membresia) : void
+    + eliminarMembresia(Membresia) : void
+    + agregarServicioDeInteres(PrestacionesDeServicios) : void
+    + agregarServicioDeInteres(PrestacioneDeServicios) : void
+    + abrirIncidente(Incidente) : void
+    + cerrarIncidente(Incidente,usuario) : void
+    + getCantidadDeAfectados(PrestacionDeServicio) : void
+    + getEstadisticas(): map<String,Object>
+    + getIdEstablecimientoObservados(List<Establecimiento> establecimiento): List<Int>
+    + getIdServiciosObservados(): List<Int> 
+    + getIdMiembros(): List<Int>
 }
 
 
 
-class Usuario{
-    - nombre: String
-    - apellido: String
-    - correoElectronico: Email
-    - contrasenia: String
-    - telefono: String
-    - interes: Intereses
-    - membresias: List<Membresia>
-    - localizaciones: Set<Localizacion>
-    - configuracionDeNotificaciones: ConfiguracionDeNotificaciones
-    - ubicacionExacta: UbicacionExacta
+Class Usuario #F8E0E0{
+    - nombre : String
+    - apellido : String
+    - correoElectrnico : String
+    - contrasenia : String
+    - telefono : String
+    - intereses : List<Interes>
+    - membresias : List<Membresia>
+    - localizaciones : List<Localizacion>
+    - configuracionDeNotificaciones : ConfiguracionDeNotificaciones
+    - ubicacionExacta : UbicacionExacta
+    - rol : Rol
+    - revisionDeIncidentes : List<Incidente>
 
-
-    + setContrasenia(contrasena: String): void
-    + unirseAComunidad(comunidad: Comunidad, rol: Rol): void
-    + abandonarComunidad(comunidad: Comunidad): void
-    + getComunidades(): List<Comunidad>
-    + getMembresia(comunidad: Comunidad): Membresia
-    + notificar(notificacion: Notificacion): void
+    + unirseAComunidad(Comunidad) : void
+    + abandonarComunidad(Comunidad) : void
+    + agregarInteres(Interes) : void
+    + getIncidentesDeInteres() : List<Incidente>
 }
-
 
 
 
@@ -121,51 +138,54 @@ class Afectacion{
 }
 
 
-Class Localizacion {
-    - adapter: AdapterLocalizacion
-    - ubicacion: Ubicacion
 
-    + getListadoProvincias() : ListadoProvincias
-    + getMunicipiosDeProvincia(String idProvincia) : ListadoMunicipios
-    + getLocalidadesDeMunicipio(String idProvincia, String idMunicipio) : ListadoLocalidades
-    + setUbicacionAsProvincia(int idProvincia) : void
-    + setUbicacionAsMunicipio(int idMunicipio) : void
-    + setUbicacionAsLocalidad(int idLocalidad) : void
+Class Localizacion #CEF6E3{
+    -adapterLocalizacion : AdapterLocalizacion
+    -ubicacion : Ubicacion
+
+    + getListadoProvincias(): ListadoProvincias throws Exception
+    + getMunicipiosDeProvincia(idProvincia: String): ListadoMunicipios 
+    + getLocalidadesDeMunicipio(idProvincia: String, idMunicipio: String): ListadoLocalidades
+    + setUbicacionAsProvincia(idProvincia: int): void throws Exception
+    + setUbicacionAsMunicipio(idMunicipio: int): void throws Exception
+    + setUbicacionAsLocalidad(idLocalidad: long): void throws Exception
+
+}
+
+
+
+interface AdapterLocalizacion #CEF6E3{
+    + getListadoProvincias(): ListadoProvincias throws IOException
+    + getMunicipiosDeProvincia(idProvincia: String): ListadoMunicipios throws IOException
+    + getLocalidadesDeMunicipio(idProvincia: String, idMunicipio: String): ListadoLocalidades throws IOException
+    + getProvinciaById(idProvincia: int): ListadoProvincias throws IOException
+    + getMunicipioById(idMunicipio: int): ListadoMunicipios throws IOException
+    + getLocalidadById(idLocalidad: long): ListadoLocalidades throws IOException
 }
 
 
 
 
-Interface AdapterLocalizacion {
-    + getListadoProvincias() : ListadoProvincias
-    + getMunicipiosDeProvincia(String idProvincia) : ListadoMunicipios
-    + getLocalidadesDeMunicipio(String idProvincia, String idMunicipio) : ListadoLocalidades
-    + getProvinciaById(int idProvincia) : ListadoProvincias
-    + getMunicipioById(int idMunicipio) : ListadoMunicipios
-    + getLocalidadById(long idLocalidad) : ListadoLocalidades
+class AdapterLocalizacionGeorefApi #CEF6E3 implements AdapterLocalizacion {
+    - adapterServicioGeoref: Georef
+
+    + getListadoProvincias(): ListadoProvincias throws IOException
+    + getProvinciaById(idProvincia: int): ListadoProvincias throws IOException
+    + getMunicipiosDeProvincia(idProvincia: String): ListadoMunicipios throws IOException
+    + getMunicipioById(idMunicipio: int): ListadoMunicipios throws IOException
+    + getLocalidadesDeMunicipio(idProvincia: String, idMunicipio: String): ListadoLocalidades throws IOException
+    + getLocalidadById(idLocalidad: long): ListadoLocalidades throws IOException
 }
 
 
-
-
-Class AdapterLocalizacionGeorefApi {
-    - adapterServicioGeoref: ServicioGeoref
-
-    + getListadoProvincias() : ListadoProvincias
-    + getMunicipiosDeProvincia(String idProvincia) : ListadoMunicipios
-    + getLocalidadesDeMunicipio(String idProvincia, String idMunicipio) : ListadoLocalidades
-    + getProvinciaById(int idProvincia) : ListadoProvincias
-    + getMunicipioById(int idMunicipio) : ListadoMunicipios
-    + getLocalidadById(long idLocalidad) : ListadoLocalidades
+class ApiCaller {
+    # retrofit: Retrofit
 }
 
+Class Georef extends ApiCaller{
+    - instancia: Georef
 
-Class ServicioGeoref {
-    - instancia: ServicioGeoref
-    - urlAPI: String
-    - retrofit: Retrofit
-
-    + getInstancia() : ServicioGeoref
+    + getInstancia() : Georef
     + listadoProvincias() : ListadoProvincias
     + listadoProvincias(int id) : ListadoProvincias
     + listadoMunicipios(String id) : ListadoMunicipios
@@ -174,34 +194,83 @@ Class ServicioGeoref {
     + listadoLocalidades(long id) : ListadoLocalidades
 }
 
+class ApiServicio1 extends ApiCaller {
+    - instancia: ApiServicio1
 
-Class Interes {
-    - Set<Servicio>
-    - Set<Entidad>
+    + comunidadesYFusiones(payloadDTO: PayloadDTO) : PayloadDTO
+}
 
-    + estaInteresado(Servicio, Entidad)
-    + agregarServicio(Servicio)
-    + agregarEntidad(Entidad)
+class ApiServicio3 extends ApiCaller {
+    - instancia: ApiServicio3
+
+    + rankingEntidades(payloadServicio3DTO: PayloadServicio3DTO) : PayloadServicio3DTO
 }
 
 
-Class EntidadPrestadora {
-    - nombre : String    
-    - personaDesignada: Usuario
-    - serviciosPrestados: Set<Entidad>
+Class Interes #F8E0E0{
+    - servicio : Servicio
+    - entidad : Entidad
+
+    + getIncidente() : Incidente
 }
 
 
-Class OrganismoDeControl {
-    - nombre : String    
-    - personaDesignada: Usuario
-    - entidadesQuePosee: Set<EntidadPrestadora>
+
+class EntidadPrestadora #CEF6F5{
+    -nombre : String
+    - personaDesiganada : Persona
+    - entidades:List<Entidad>
+    
+    + agregarEntidad(Entidad) : void
+    + agregarEntidades(List<Entidad>) : void
 }
 
-class Ubicacion {
-    - provincia: Provincia
-    - municipio: Municipio
-    - localidad: Localidad
+
+Class OrganismoDeControl #CEF6F5{
+
+    - nombre : String
+    - personaDesiganada : Usuario
+    - entidadesQuePosee:List<Entidad>
+
+    + agregarPrestadora(EntidadPrestadora) : void
+    + obtenerEntidades() : List<Entidad>
+}
+
+Class Ubicacion #CEF6E3{
+    - provincia : Provincia
+    - municipio : Municipio
+    - localidad : Localidad
+
+    + getProvincia() : Provincia
+    + getMunicipio() : Municipio
+    + getLocalidad() : Localidad
+}
+
+Class Provincia #CEF6E3{
+    - nombre : String
+
+    + getId() : int
+    + getNombre() : String
+}
+
+Class Municipio #CEF6E3{
+    - nombre : String
+    - provincia : Provincia
+
+    + getId() : int
+    + getNombre() : String
+    + getProvincia() : Provincia
+}
+
+Class Localidad #CEF6E3{
+    - nombre : String
+    - municipio : Municipio
+    - provincia : Provincia
+
+    + getId() : long
+    + getNombre() : String
+    + getMunicipio() : Municipio
+    + getProvincia() : Provincia
 }
 
 Localizacion <-- Usuario 
@@ -246,20 +315,34 @@ ServicioGeoref <-- AdapterLocalizacionGeorefApi
 /' Entrega 3 '/
 
 /' INCIDENTES '/
-Class Incidente #bbffcc{
-    - fechaApertura: Date
-    - fechasDeCierre: List<Date>
-    - observaciones: String
-    - abiertoPor: Usuario
-    - prestacionDeServicio: PrestacionDeServicio
-    - notificador: Notificador
+Class Incidente #CEF6CE{
 
-    + notificarApertura(): void
-    + cerrar(): void
-    + calcularPromedioFechasCierre(): Date
-    + tiempoActivo(): long
-    + estaAbierto(): boolean
+    - fechaDeApertura : Date
+    - fechaDeCierre : List<Date>
+    - observaciones : String
+    - abiertoPor : Usuario
+    - prestacionDeServicio : PrestacionDeServicio
+    - notificador : Notificador
+    
+    + calcularPromedioFechasCierre : Long 
+    + tiempoActivo : Long
+    + notificarApertura() : void
+    + estaAbierto() : boolean
+    + ocurrioEstaSemana() : boolean
+    + ocurrioHaceMasDe24hs() : boolean
+
 }
+
+Class IncidenteDeComunidad #CEF6CE{
+    - abierto  : boolean
+    - incidente : Incidente
+    - cerradoPor : Usuario
+    - fechaDeCierre : Date
+    + cerrarIncidente(Usuario) : void
+}
+
+
+
 
 Incidente "*" <-- PrestacionDeServicio 
 Comunidad --> "*" Incidente
@@ -269,11 +352,26 @@ Comunidad --> Notificador
 
 /' CONFIGURACION DE NOTIFICACIONES '/
 
-Class ConfiguracionDeNotificaciones #bbffcc{
-    - estrategiaDeNotificacion: EstrategiaDeNotificacion
-    - medioPreferido: MedioPreferido
+Class ConfiguracionDeNotificaciones #F8E0E0{
+    - estrategiaDeNotificacion : EstrategiaDeNotificacion
+    - medioPreferido : MedioPreferido
 
-    + notificar()
+    + notificar(Notificacion) : void
+}
+
+class Config {
+  - PEORES_CONTRASENIAS: final String
+  - CSV_PATH_ORGANISMOS: final String
+  - CSV_PATH_PRESTADORAS: final String
+  - PATH_INFORMES: final String
+  - API_GEOREF: final String
+  - LATITUD_MAXIMA: double
+  - LONGITUD_MAXIMA: double
+  - FRECUENCIA_RANKING: int
+  - UNIDAD_FRECUENCIA_RANKING: String
+  - INSTANCE: static Config
+
+  {static} + getInstance(): Config
 }
 
 Interface MedioPreferido #bbffcc{
@@ -302,67 +400,73 @@ Interface IAdapterMail #bbffcc{
     + notificar(email: Email, asunto: String, cuerpo: String): void
 }
 
-Class AdapterWhatsApp #bbffcc{
-    + ACCOUNT_SID: String
-    + AUTH_TOKEN: String
-
-    + notificar(usuario: Usuario, notificacion: Notificacion): void
-    - enviarWhatsapp(destinatario: String, mensaje: String): void
+Interface MedioPreferido #F8E0E0{
+    + notificar(Notificacion) : void
 }
 
-Class AdapterMail #bbffcc{
-    - servicioMail: ServicioMail
+Class NotificarPorWhatsApp #F8E0E0 implements MedioPreferido{
+    - adapter : IAdapterWhatsApp
 
-    + notificar(email: Email, asunto: String, cuerpo: String): void
+    + notificar(Notificacion) : void
 }
 
-Interface EstrategiaDeNotificacion #bbffcc{
-    + notificar(notificacion: Notificacion): void
+Interface IAdapterWhatsApp #F8E0E0{
+    + notificar(Usuario, Notificacion) : void
 }
 
-Class CuandoSuceden #bbffcc{
-    + notificar(notificacion: Notificacion): void
+Class AdapterWhatsApp #F8E0E0 implements IAdapterWhatsApp{
+    - ACCOUNT_SID : String
+    - AUTH_TOKEN : String
+
+    + notificar(Usuario, Notificacion) : void
+    + enviarWhatsApp(String, String) : void
 }
 
-Class SinApuros #bbffcc{
-    - horarios: Set<Date>
-    - aNotificar: List<Notificaciones>
+Class NotificarPorMail #F8E0E0 implements MedioPreferido{
+    - adapter : IAdapterMail
 
-    + agregarHorario(horario: Date): void
-    + notificar(notificacion: Notificacion): void
-    + enviarNotificacionCuandoCorresponda(): void
+    + notificar(Notificacion) : void
+}
+
+Interface IAdapterMail #F8E0E0{
+    + notificar(String: email, String: asunto, String: cuerpo) : void
+}
+
+Class AdapterMail #F8E0E0 implements IAdapterMail{
+    - servicioMail : ServicioMail
+
+    + notificar(String: email, String: asunto, String: cuerpo) : void
+}
+Abstract Class EstrategiaDeNotificacion #F8E0E0{
+    + notificar(Notificacion) : void
+}
+
+Class SinApuros #F8E0E0 extends EstrategiaDeNotificacion{
+    - horarios : List<Date>
+    - aNotificar : List<Notificacion>
+
+    + agregarHorario(Date) : void
+    + notificar(Notificacion) : void
+    + enviarNotificacionesCuandoCorresponda() : void
+}
+
+Class CuandoSuceden #F8E0E0 extends EstrategiaDeNotificacion{
+    + notificar(Notificacion) : void
 }
 
 
-/' NOTIFICACIONES '/
 
-Interface Notificador #bbffcc{
-    + notificar(usuario: Usuario, incidente: Incidente)
+
+
+Class FactoryNotificacion #E3CEF6{
+    + crearNotificacion(String: condicion) : Notificacion
 }
 
-Class AperturaDeIncidente #bbffcc{
-    + notificar(usuario: Usuario, incidente: Incidente)
-    - notificarAUsuario(usuario: Usuario, notificacion: Notificacion)
-}
-
-Class CierreDeIncidente #bbffcc{
-    + notificar(usuario: Usuario, incidente: Incidente)
-    - notificarAUsuario(usuario: Usuario, notificacion: Notificacion)
-} 
-
-Class RevisionManualDeIncidente #bbffcc{
-    + notificar(usuario: Usuario, incidente: Incidente)
-} 
-
-Class FactoryNotificacion #bbffcc{
-    + crearNotificacion(tipoDeNotificacion: String): Notificacion
-}
-
-Class Notificacion #bbffcc{
-    - asunto: String
-    - cuerpo: String
-    - destinatario: Usuario
-    - estrategiaDeNotificacion: EstrategiaDeNotificacion
+Class Notificacion #D0A9F5{
+    - asunto : String
+    - cuerpo : String
+    - destinatario : Usuario
+    - estrategiaDeNotificacion : EstrategiaDeNotificacion
 }
 
 FactoryNotificacion ..> Notificacion
@@ -395,20 +499,45 @@ NotificarPorMail ..|> MedioPreferido
 
 /' SUGERENCIA REVISION DE INCIDENTE '/
 
-Class RevisionDeIncidente #bbffcc{
-    - notificador: Notificador
-    - incidentes: List<Incidente>
-    - LATITUD_MAXIMA: double
-    - LONGITUD_MAXIMA: double
+Class revisionDeIncidentes #CEF6CE{
+    - notificador : Notificador
+    + estaCerca(Usuario usuario, Incidente incidente) : boolean
+    + notificar(Usuario usuario, Incidente incidente) : void
+    + comprobarCercania(Usuario usuario, List<Incidente> incidente) : void
+}
 
-    + estaCerca(usuario: Usuario, incidente: Incidente): Boolean
-    + notificar(usuario: Usuario, incidente: Incidente): void
-    + agregarIncidente(incidente: Incidente): void
+Class RevisionIncidente #E3CEF6 implements Notificador {
+    + notificar(Usuario, Incidente) : void
 }
 
 RevisionDeIncidente --> Notificador
 Usuario --> UbicacionExacta
 UbicacionExacta ----> PrestacionDeServicio
+
+' Validador de Contrasenias
+interface PuedeValidar #F8E0E0 {
+    + validar(String) : boolean
+}
+
+Class ValidadorDeContrasenias #F8E0E0{
+    - validadores : List<PuedeValidar>
+
+    + validarContrasenia(String) : boolean
+}
+
+Class DiezMilPeoresContrasenias #F8E0E0 implements PuedeValidar{
+    - path : String
+   
+    + validar(String) : boolean
+}
+
+class ValidarLongitud #F8E0E0 implements PuedeValidar{
+    - minimo : int
+    - maximo : int
+
+    + validar(String) : boolean
+}
+
 
 /' AFECTADO U OBSERVADOR '/
 Class Afectacion #bbffcc{
@@ -476,36 +605,95 @@ note left of generadorDeInformes::generarDatos
 end note
 
 
-
-class Exportador {
-
-    - datos: generadorDeInformes
-    - estrategiaDeExportacion: estrategiaDeExportacion
-
-    + exportar(List<Entidad>, List<Comunidad>): void
-
+Class MayorTiempo #D8CEF6 extends CriteriosEntidadesQueUsanIncidentes{
+    + generarRanking(List<Entidad>) : List<Ranking>
+    + promedioTiempoDeCierre(Entidad) : Float
 }
 
-interface estrategiaDeExportacion {
-    + exportarConEstrategia(List<List<String>>): void
+Class MayorCantidad #D8CEF6 extends CriteriosEntidadesQueUsanIncidentes{
+    + generarRanking(List<Entidad>) : List<Ranking>
+    + cantidadDeIncidentesEnLaSemana(Entidad) : Int
 }
 
-class ExportarCSV implements estrategiaDeExportacion {
-    + exportar(List<List<String>>): void
+Class MayorImpacto #D8CEF6 extends CriteriosEntidadesQueUsanIncidentes{
+    + generarRanking(List<Entidad>) : List<Ranking>
+    + calcularImpacto(Entidad) : Float
 }
 
-note left of ExportarCSV::exportar
-    formato:
-    nombreRanking1, nombreRanking2, nombreRanking3
-    valor11, valor21, valor31
-    valor12, valor22, valor32
-    valor13, valor23, valor33
-end note
 
+class Ranking {
+    - entidad: Entidad
+    - valor: Float
+}
+
+Abstract Class CriteriosEntidadesQueUsanIncidentes #D8CEF6 implements CriteriosDeEntidades{
+    - nombre : String
+    + generarRanking(List<Entidad>) : List<Ranking>
+    + obtenerIncidentesEnLaSemana(Entidad) : List<Incidente>
+}
+
+Interface CriteriosDeEntidades #D8CEF6{
+    + generarRanking(List<Entidad>) : List<Ranking>
+}
+
+' Interface CriteriosDeComunidades #D8CEF6{
+'     + generarRanking(List<Comunidad>) : List<Comunidad>
+' }
+
+' Class ImpactoComunidades #D8CEF6 implements CriteriosDeComunidades{
+'     - nombre : String
+
+'     + generarRanking(List<Comunidad>) : List<Comunidad>
+'     + calcularImpacto(Comunidad) : Float
+' }
+
+
+Interface EstrategiaDeExportacion #D8CEF6{
+    + exportar(List<Ranking> informe, String nombreArchivo) : String
+}
+
+Class ExportarCSV #D8CEF6 implements EstrategiaDeExportacion{
+    + exportar(List<Ranking> informe, String nombreArchivo) : String
+}
+
+Class ExportarAJSon #D8CEF6 implements EstrategiaDeExportacion{
+    - adapter : ServicioJson
+    + exportar(List<Ranking> lista, String rutaArchivo) : String
+}
+
+Interface AdapterJson #D8CEF6{
+    + exportarAJson(List<List<String>>: lista, String: rutaArchivo) : String
+}
+
+
+Class GeneradorDeInformes #D8CEF6{
+    + generarDatos(List<Entidad> entidades, CriteriosDeEntidades criterio) : List<Ranking>
+}
+
+Class Exportador #D8CEF6{
+    - exportable : GeneradorDeInformes
+    - estrategia : EstrategiaDeExportacion
+
+    + exportarConEstrategia(List<Entidad> entidades, CriteriosDeEntidades criterio, String nombreArchivo) : String
+}
 
 Exportador --> estrategiaDeExportacion
 Exportador --> generadorDeInformes
 generadorDeInformes-->CriterioEntidad
 generadorDeInformes-->CriterioComunidad
+
+
+Interface Notificador #E3CEF6{
+    + notificar(Usuario, Incidente) : void
+}
+
+Class CierreIncidente #E3CEF6 implements Notificador {
+    + notificar(Usuario, Incidente) : void
+}
+
+Class AperturaIncidente #E3CEF6 implements Notificador {
+    + notificar(Usuario: usuarioAbridor, Incidente) : void
+    + notificarAUsuario(Usuario, Notificacion) : void
+}
 
 @enduml

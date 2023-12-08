@@ -416,20 +416,19 @@ Abstract Class FileStream #F6E3CE{
 }
 
 Class MayorTiempo #D8CEF6 extends CriteriosEntidadesQueUsanIncidentes{
-    + generarRanking(List<Entidad>) : List<Entidad>
+    + generarRanking(List<Entidad>) : List<Ranking>
     + promedioTiempoDeCierre(Entidad) : Float
 }
 
 Class MayorCantidad #D8CEF6 extends CriteriosEntidadesQueUsanIncidentes{
-    + generarRanking(List<Entidad>) : List<Entidad>
+    + generarRanking(List<Entidad>) : List<Ranking>
     + cantidadDeIncidentesEnLaSemana(Entidad) : Int
 }
 
 Class MayorImpacto #D8CEF6 extends CriteriosEntidadesQueUsanIncidentes{
-    + generarRanking(List<Entidad>) : List<Entidad>
+    + generarRanking(List<Entidad>) : List<Ranking>
     + calcularImpacto(Entidad) : Float
 }
-
 
 
 class Ranking {
@@ -439,12 +438,12 @@ class Ranking {
 
 Abstract Class CriteriosEntidadesQueUsanIncidentes #D8CEF6 implements CriteriosDeEntidades{
     - nombre : String
-    + generarRanking(List<Entidad>) : List<Entidad>
+    + generarRanking(List<Entidad>) : List<Ranking>
     + obtenerIncidentesEnLaSemana(Entidad) : List<Incidente>
 }
 
 Interface CriteriosDeEntidades #D8CEF6{
-    + generarRanking(List<Entidad>) : List<Entidad>
+    + generarRanking(List<Entidad>) : List<Ranking>
 }
 
 ' Interface CriteriosDeComunidades #D8CEF6{
@@ -519,17 +518,19 @@ Class AperturaIncidente #E3CEF6 implements Notificador {
 
 Comunidad  --> "*" Membresia 
 Comunidad  --> "*" PrestacionDeServicio 
-Comunidad  --> "*" IncidenteDeComunidad 
-Comunidad  --> "0..1" Notificador 
+Comunidad  -> "*" IncidenteDeComunidad 
+Notificador  --> Comunidad 
 Comunidad  --> "*" Usuario 
 
 Afectacion  --> PrestacionDeServicio 
 
 Fusion --> Comunidad
 
+Usuario  ->  Rol
+
 Membresia  -->  Usuario 
 Membresia  -->  Comunidad 
-Membresia  -->  Rol
+Membresia  ->  Rol
 Membresia  --> "*" Afectacion 
 
 Entidad  --> "*" Establecimiento 
@@ -560,19 +561,21 @@ Membresia "*" <-- Usuario
 ConfiguracionDeNotificaciones -> EstrategiaDeNotificacion
 ConfiguracionDeNotificaciones --> MedioPreferido
 
+Notificacion ---> EstrategiaDeNotificacion
+
 Usuario  -->  UbicacionExacta
 UbicacionExacta --> PrestacionDeServicio
 Config  -->  Config 
 
-Rol  --> "*" Permiso
-Rol -->  TipoRol
+Rol  -> "*" Permiso
+TipoRol <-- Rol
 
 Interes  -->  Servicio
 Interes  -->  Entidad
 
 
 Notificacion  ->  Usuario
-Notificacion  -->  EstrategiaDeNotificacion
+
 
 
 Exportador  -->  GeneradorDeInformes
@@ -582,7 +585,7 @@ Ubicacion --> Provincia
 Ubicacion  --> Municipio
 Ubicacion --> Localidad
 
-Localizacion --> Ubicacion
+Localizacion -> Ubicacion
 
 revisionDeIncidentes --> Notificador
 
@@ -590,12 +593,14 @@ ValidadorDeContrasenias -> "*" PuedeValidar
 
 
 AdapterLocalizacionGeorefApi --> Georef
-Localizacion -> AdapterLocalizacion
+Localizacion --> AdapterLocalizacion
 
 Exportador ..> "*" Entidad
-Exportador .. CriteriosDeEntidades
+CriteriosDeEntidades <. Exportador
 
-GeneradorDeInformes ..> "*" Ranking
+
+Ranking "*" <.. CriteriosDeEntidades
+Ranking "*" <.. GeneradorDeInformes
 
 Usuario --> "*" Interes
 
