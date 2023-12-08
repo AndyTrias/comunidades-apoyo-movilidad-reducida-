@@ -2,6 +2,7 @@ package controllers;
 
 import io.javalin.http.Context;
 import lombok.AllArgsConstructor;
+import models.localizacion.Localizacion;
 import models.usuario.TipoRol;
 import models.entidades.EntidadPrestadora;
 import models.entidades.OrganismoDeControl;
@@ -81,6 +82,7 @@ public class AuthController {
     usuario.setTelefono(telefono);
     usuario.setContrasenia(password);
     usuario.setRol(repoRol.buscarPorNombre(TipoRol.MIEMBRO));
+    usuario.setLocalizacion(new Localizacion());
     repoUsuario.agregar(usuario);
 
     loguear_atributos(ctx, usuario);
