@@ -52,7 +52,7 @@ public class CargaManualController extends BaseController {
     String idLocalidad = ctx.formParam("localidad");
 
     if (idProvincia == null || idProvincia.isEmpty()) {
-      return null;
+      return new Localizacion();
     }
 
     if (idMunicipio == null || idMunicipio.isEmpty()) {

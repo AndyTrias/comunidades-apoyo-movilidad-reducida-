@@ -277,6 +277,7 @@ public class AgregarDatosTest {
         usuario2.setTelefono("+5491131231231");
         usuario2.setUbicacionExacta(new UbicacionExacta(1, 1));
         usuario2.setRol(repoRol.buscarPorNombre(TipoRol.MIEMBRO));
+        usuario2.setLocalizacion(new Localizacion());
         repoUsuario.agregar(usuario2);
     }
 

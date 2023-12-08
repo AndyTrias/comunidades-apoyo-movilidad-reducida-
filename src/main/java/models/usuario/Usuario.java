@@ -60,9 +60,8 @@ public class Usuario {
 
     @Getter
     @Setter
-    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "usuario_id")
-    private Set<Localizacion> localizaciones;
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    private Localizacion localizacion;
 
     @Getter
     @Setter
@@ -91,7 +90,6 @@ public class Usuario {
         this.correoElectronico = correoElectronico;
         this.membresias = new ArrayList<>();
         this.intereses = new ArrayList<>();
-        this.localizaciones= new HashSet<>();
         this.revisionDeIncidentes = new ArrayList<>();
 
         this.configuracionDeNotificaciones = new ConfiguracionDeNotificaciones();
@@ -145,9 +143,6 @@ public class Usuario {
         this.intereses.add(interes);
     }
 
-    public void agregarLocalizacion(Localizacion localizacion) {
-        this.localizaciones.add(localizacion);
-    }
 
     public void agregarRevisionDeIncidente(Incidente incidente) {
         this.revisionDeIncidentes.add(incidente);

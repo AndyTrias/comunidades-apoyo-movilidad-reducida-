@@ -33,7 +33,8 @@ public class FactoryController {
 
       case "Entidad" -> new EntidadController(
           new RepoEntidad(),
-          new RepoEntidadPrestadora()
+          new RepoEntidadPrestadora(),
+          new RepoLocalizacion()
       );
 
       case "Establecimiento" -> new EstablecimientoController(
@@ -64,7 +65,8 @@ public class FactoryController {
       );
 
       case "Perfil" -> new PerfilController(
-            new RepoUsuario()
+            new RepoUsuario(),
+            new RepoLocalizacion()
       );
 
       case "Home" -> new HomeController(

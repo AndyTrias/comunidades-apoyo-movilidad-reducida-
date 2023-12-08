@@ -1,8 +1,6 @@
 package models.localizacion;
 
-import models.external.retrofit.georef.responseClases.ListadoLocalidades;
-import models.external.retrofit.georef.responseClases.ListadoMunicipios;
-import models.external.retrofit.georef.responseClases.ListadoProvincias;
+import models.external.retrofit.georef.responseClases.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,6 +24,27 @@ public class Localizacion {
 
     public Localizacion() {
         this.ubicacion = new Ubicacion();
+    }
+
+    public Provincia obtenerProvincia() {
+        if (this.ubicacion == null) {
+            return null;
+        }
+        return this.ubicacion.getProvincia();
+    }
+
+    public Municipio obtenerMunicipio() {
+        if (this.ubicacion == null) {
+            return null;
+        }
+        return this.ubicacion.getMunicipio();
+    }
+
+    public Localidad obtenerLocalidad() {
+        if (this.ubicacion == null) {
+            return null;
+        }
+        return this.ubicacion.getLocalidad();
     }
 
     public ListadoProvincias getListadoProvincias() throws Exception {

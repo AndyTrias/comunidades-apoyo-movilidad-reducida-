@@ -1,12 +1,15 @@
 package models.external.retrofit.georef.responseClases;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import javax.persistence.*;
 
-@Getter
+@Data
 @Entity
 @Table(name = "provincia")
+@EqualsAndHashCode(of = "id")
 public class Provincia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

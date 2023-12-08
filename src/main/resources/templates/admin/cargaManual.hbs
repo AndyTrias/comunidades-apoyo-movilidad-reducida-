@@ -25,7 +25,7 @@
             <div class="flex flex-col gap-4 justify-center items-center">
                 <select id="provincia" name="provincia"
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        required>
+                        >
                     <option selected disabled hidden>Seleccionar provincia</option>
                     {{#each provincias}}
                         <option value="{{this.id}}">{{this.nombre}}</option>
@@ -34,13 +34,13 @@
 
                 <select id="municipio" name="municipio"
                         class="hidden shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        required>
+                        >
                     <option selected disabled hidden>Seleccionar municipio</option>
                 </select>
 
                 <select id="localidad" name="localidad"
                         class="hidden shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        required>
+                        >
                     <option selected disabled hidden>Seleccionar localidad</option>
                 </select>
             </div>
