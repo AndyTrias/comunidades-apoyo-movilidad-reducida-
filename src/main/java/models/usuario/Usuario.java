@@ -91,6 +91,7 @@ public class Usuario {
         this.membresias = new ArrayList<>();
         this.intereses = new ArrayList<>();
         this.revisionDeIncidentes = new ArrayList<>();
+        this.localizacion = new Localizacion();
 
         this.configuracionDeNotificaciones = new ConfiguracionDeNotificaciones();
         configuracionDeNotificaciones.setEstrategiaDeNotificacion(new CuandoSuceden());

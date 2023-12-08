@@ -141,7 +141,8 @@ public class ComunidadController extends BaseController {
     Map<String, Object> model = new HashMap<>();
     Comunidad comunidad = obtenerComunidad(ctx.pathParam("id"));
     Membresia membresia = usuarioLogueado(ctx).getMembresia(comunidad);
-    model.put("afectaciones", membresia.getAfectaciones());
+    if (membresia != null)
+      model.put("afectaciones", membresia.getAfectaciones());
     ctx.render("comunidades/afectaciones.hbs", model);
   }
 
