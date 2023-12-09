@@ -21,7 +21,7 @@
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://dpg-clgb8t714gps73b19rc0-a.ohio-postgres.render.com:5432/dbtpa?createDatabaseIfNotExist=true&amp;useSSL=false&amp;serverTimezone=UTC"/>
             <property name="javax.persistence.jdbc.user" value="root"/>
-            <property name="javax.persistence.jdbc.password" value="QpKTKvxfwrMHdPwmTNedb0emOJYqQEbl"/>
+            <property name="javax.persistence.jdbc.password" value="${database.password}"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
 
             <property name="hibernate.show_sql" value="false"/>
