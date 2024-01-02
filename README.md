@@ -1,49 +1,14 @@
-# java-base-project
+# Trabajo Práctico de Diseño de Sistemas - UTN FRBA 2023
+* [Enunciado del TP](https://docs.google.com/document/d/1FvugQqG-AxGlrxzysiT2DvvzPWkKQaJoC1L589a66Pg/edit?usp=sharing)
+* https://tpa-mama-grupo-06.onrender.com/
+## Sistema de Apoyo a Comunidades con Movilidad Reducida 
+Este proyecto permite monitorear el estado de servicios públicos, como las escaleras mecánicas de una estación de subte, a través de comunidades de apoyo creadas para personas con movilidad reducida que utilizan estos servicios. En estas comunidades, los usuarios pueden reportar incidentes relacionados con el funcionamiento de los mismos. Cada vez que se abre o cierra un incidente, se envía una notificación correspondiente a los usuarios. Posteriormente, se generan rankings basados en estos incidentes para cada entidad prestadora de servicios. Estos rankings se elaboran teniendo en cuenta diversos criterios, como la cantidad de incidentes reportados o el tiempo de resolución. De esta manera, se proporciona una evaluación detallada de la calidad y accesibilidad de los servicios públicos, contribuyendo a mejorar la experiencia de las personas con movilidad reducida en su uso diario.
 
-Esta es una plantilla de proyecto diseñada para: 
+### Stack Tecnológico :computer:
+* [Java 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html) - Lenguaje
+* [Javalin](https://javalin.io/documentation) - Framework Web
+* [Tailwind CSS](https://tailwindcss.com/) - Framework CSS
+* [Handlebars](https://handlebarsjs.com/) - Motor de plantillas
+* [Hiberante ORM](https://hibernate.org/orm/) - ORM
+* [MySQL](https://www.mysql.com/) - Motor de base de datos
 
-* Java 17. :warning: Si bien el proyecto no lo limita explícitamente, el comando `mvn verify` no funcionará con versiones más antiguas de Java. 
-* JUnit 5. :warning: La versión 5 de JUnit es la más nueva del framework y presenta algunas diferencias respecto a la versión "clásica" (JUnit 4). Para mayores detalles, ver: 
-  *  [Apunte de herramientas](https://docs.google.com/document/d/1VYBey56M0UU6C0689hAClAvF9ILE6E7nKIuOqrRJnWQ/edit#heading=h.dnwhvummp994)
-  *  [Entrada de Blog (en inglés)](https://www.baeldung.com/junit-5-migration) 
-  *  [Entrada de Blog (en español)](https://www.paradigmadigital.com/dev/nos-espera-junit-5/)
-* Maven 3.8.1 o superior
-
-# Ejecutar tests
-
-```
-mvn test
-```
-
-# Validar el proyecto de forma exahustiva
-
-```
-mvn clean verify
-```
-
-Este comando hará lo siguiente:
-
- 1. Ejecutará los tests
- 2. Validará las convenciones de formato mediante checkstyle
- 3. Detectará la presencia de (ciertos) code smells
- 4. Validará la cobertura del proyecto
-
-# Entrega del proyecto
-
-Para entregar el proyecto, crear un tag llamado `entrega-final`. Es importante que antes de realizarlo se corra la validación
-explicada en el punto anterior. Se recomienda hacerlo de la siguiente forma:
-
-```
-mvn clean verify && git tag entrega-final && git push origin HEAD --tags
-```
-
-# Configuración del IDE (IntelliJ)
-
- 1. Tabular con dos espacios: ![Screenshot_2021-04-09_18-23-26](https://user-images.githubusercontent.com/677436/114242543-73e1fe00-9961-11eb-9a61-7e34be9fb8de.png)
- 2. Instalar y configurar Checkstyle:
-    1. Instalar el plugin https://plugins.jetbrains.com/plugin/1065-checkstyle-idea:
-    2. Configurarlo activando los Checks de Google y la versión de Checkstyle `== 8.35`: ![Screenshot_2021-04-09_18-16-13](https://user-images.githubusercontent.com/677436/114242548-75132b00-9961-11eb-972e-28e6e1412979.png)
- 3. Usar fin de linea unix
-    1. En **Settings/Preferences**, ir a a **Editor | Code Style**.
-    2. En la lista **Line separator**, seleccionar `Unix and OS X (\n)`.
- ![Screenshot 2021-04-10 03-49-00](https://user-images.githubusercontent.com/11875266/114260872-c6490c00-99ad-11eb-838f-022acc1903f4.png)
